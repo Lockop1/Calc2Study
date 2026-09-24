@@ -1119,3 +1119,7 @@ export const flash: FlashItem[] = [
     check: { kind: 'value', expected: 'integral(sqrt(1 + 2^2), x, 0, 3)' },
     difficulty: 1,
   },
+];
+
+/** Parameterized generators (optional). */
+export const generators: FlashGenerator[] = [];
