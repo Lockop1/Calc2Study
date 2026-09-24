@@ -244,14 +244,14 @@ export const flash: FlashItem[] = [
       text: 'The region bounded by $y = x^2$, $y = 0$, and $x = 2$ is rotated about the line $x = 3$. What are the radius and height of the shell at position $x$?',
     },
     options: [
-      { latex: 'r = x - 3,\\quad h = x^2', expr: '[x - 3, x^2]', mistake: 'axis-shift-sign', why: 'For 0 ≤ x ≤ 2 this is negative; the slice lies left of x = 3, so its distance to the axis is 3 − x.' },
       { latex: 'r = x,\\quad h = x^2', expr: '[x, x^2]', mistake: 'axis-shift-missing', why: 'x is the distance to the y-axis, but the axis of rotation is the line x = 3.' },
-      { latex: 'r = x^2,\\quad h = 3 - x', expr: '[x^2, 3 - x]', mistake: 'shell-radius-wrong', why: 'Radius and height are swapped: the slice is x² long and sits 3 − x from the axis.' },
+      { latex: 'r = x - 3,\\quad h = 4 - x^2', expr: '[x - 3, 4 - x^2]', mistake: 'axis-shift-sign', why: 'Two slips: x − 3 is negative (the slice lies left of x = 3), and 4 − x² is the strip above the curve, outside the region.' },
       { latex: 'r = 3 - x,\\quad h = x^2', expr: '[3 - x, x^2]' },
-      { latex: 'r = x + 3,\\quad h = x^2', expr: '[x + 3, x^2]', mistake: 'axis-shift-sign', why: 'x + 3 is the distance to the line x = −3, not to x = 3.' },
-      { latex: 'r = 2 - x,\\quad h = x^2', expr: '[2 - x, x^2]', mistake: 'shell-radius-wrong', why: '2 − x is the distance to the edge x = 2 of the region; the radius is measured to the axis x = 3.' },
+      { latex: 'r = 3 - x,\\quad h = 4 - x^2', expr: '[3 - x, 4 - x^2]', mistake: 'shell-height-wrong', why: '4 − x² measures from the curve up to y = 4, above the region; the slice runs from y = 0 to y = x².' },
+      { latex: 'r = x - 3,\\quad h = x^2', expr: '[x - 3, x^2]', mistake: 'axis-shift-sign', why: 'For 0 ≤ x ≤ 2 this is negative; the slice lies left of x = 3, so its distance to the axis is 3 − x.' },
+      { latex: 'r = x,\\quad h = 4 - x^2', expr: '[x, 4 - x^2]', mistake: 'axis-shift-missing', why: 'Two slips: x measures to the y-axis instead of x = 3, and 4 − x² is the strip above the curve.' },
     ],
-    correct: 3,
+    correct: 2,
     explanation: 'The vertical slice at $x$ runs from $y = 0$ to $y = x^2$ (height $x^2$) and lies $3 - x$ units left of the axis $x = 3$.',
     check: { kind: 'value', expected: '[3 - x, x^2]' },
     difficulty: 1,
@@ -266,13 +266,13 @@ export const flash: FlashItem[] = [
     },
     options: [
       { latex: 'r = x,\\quad h = x^2 - 2x', expr: '[x, x^2 - 2*x]', mistake: 'top-bottom-swapped', why: 'On 0 ≤ x ≤ 2 the line y = 2x lies above the parabola, so the height is 2x − x², not x² − 2x.' },
-      { latex: 'r = x,\\quad h = 2x + x^2', expr: '[x, 2*x + x^2]', mistake: 'sum-instead-of-difference', why: 'The length of the slice is top minus bottom, not the sum of the two curves.' },
-      { latex: 'r = x,\\quad h = 2x - x^2', expr: '[x, 2*x - x^2]' },
+      { latex: 'r = 2 - x,\\quad h = 2x - x^2', expr: '[2 - x, 2*x - x^2]', mistake: 'shell-radius-wrong', why: '2 − x is the distance to the right end x = 2 of the region; the radius is the distance x to the y-axis.' },
       { latex: 'r = x,\\quad h = 2x', expr: '[x, 2*x]', mistake: 'shell-height-wrong', why: 'Only the top curve was used; the slice starts on the parabola y = x², not on y = 0.' },
-      { latex: 'r = 2x - x^2,\\quad h = x', expr: '[2*x - x^2, x]', mistake: 'shell-radius-wrong', why: 'Radius and height are swapped: the slice is 2x − x² long and sits x units from the y-axis.' },
-      { latex: 'r = y,\\quad h = \\sqrt{y} - \\frac{y}{2}', expr: '[y, sqrt(y) - y/2]', mistake: 'shell-orientation-wrong', why: 'Horizontal slices are perpendicular to the y-axis; shells about the y-axis come from vertical slices.' },
+      { latex: 'r = 2 - x,\\quad h = x^2 - 2x', expr: '[2 - x, x^2 - 2*x]', mistake: 'top-bottom-swapped', why: 'Two slips: bottom minus top gives a negative height, and 2 − x measures to x = 2 instead of the y-axis.' },
+      { latex: 'r = x,\\quad h = 2x - x^2', expr: '[x, 2*x - x^2]' },
+      { latex: 'r = 2 - x,\\quad h = 2x', expr: '[2 - x, 2*x]', mistake: 'shell-height-wrong', why: 'Two slips: only the top curve was used for the height, and 2 − x measures to x = 2 instead of the y-axis.' },
     ],
-    correct: 2,
+    correct: 4,
     explanation: 'On $0 \\le x \\le 2$ the slice runs from $y = x^2$ up to $y = 2x$, so $h = 2x - x^2$, and it lies $x$ units from the y-axis.',
     check: { kind: 'value', expected: '[x, 2*x - x^2]' },
     difficulty: 1,
@@ -286,14 +286,14 @@ export const flash: FlashItem[] = [
       text: 'The region between $y = x^2$ and $y = 2x$ is rotated about the line $y = -1$ using shells. What are the radius and height of the shell for the horizontal slice at height $y$?',
     },
     options: [
-      { latex: 'r = y - 1,\\quad h = \\sqrt{y} - \\frac{y}{2}', expr: '[y - 1, sqrt(y) - y/2]', mistake: 'axis-shift-sign', why: 'The distance from height y down to the line y = −1 is y − (−1) = y + 1.' },
-      { latex: 'r = x + 1,\\quad h = 2x - x^2', expr: '[x + 1, 2*x - x^2]', mistake: 'shell-orientation-wrong', why: 'Vertical slices are perpendicular to y = −1 and sweep out washers; shells about a horizontal axis need horizontal slices.' },
-      { latex: 'r = y,\\quad h = \\sqrt{y} - \\frac{y}{2}', expr: '[y, sqrt(y) - y/2]', mistake: 'axis-shift-missing', why: 'y is the distance to the x-axis; the axis of rotation is one unit lower, at y = −1.' },
-      { latex: 'r = \\sqrt{y} - \\frac{y}{2},\\quad h = y + 1', expr: '[sqrt(y) - y/2, y + 1]', mistake: 'shell-radius-wrong', why: 'Radius and height are swapped: the slice is √y − y/2 long and sits y + 1 from the axis.' },
+      { latex: 'r = y,\\quad h = \\sqrt{y} - 2y', expr: '[y, sqrt(y) - 2*y]', mistake: 'axis-shift-missing', why: 'Two slips: y measures to the x-axis instead of y = −1, and the line y = 2x was solved as x = 2y instead of x = y/2.' },
       { latex: 'r = y + 1,\\quad h = \\sqrt{y} - \\frac{y}{2}', expr: '[y + 1, sqrt(y) - y/2]' },
-      { latex: 'r = 1 - y,\\quad h = \\sqrt{y} - \\frac{y}{2}', expr: '[1 - y, sqrt(y) - y/2]', mistake: 'axis-shift-sign', why: '1 − y is the distance to the line y = 1 for a slice below it, not the distance to y = −1.' },
+      { latex: 'r = y - 1,\\quad h = \\sqrt{y} - \\frac{y}{2}', expr: '[y - 1, sqrt(y) - y/2]', mistake: 'axis-shift-sign', why: 'The distance from height y down to the line y = −1 is y − (−1) = y + 1.' },
+      { latex: 'r = y + 1,\\quad h = \\sqrt{y} - 2y', expr: '[y + 1, sqrt(y) - 2*y]', mistake: 'inverse-function-wrong', why: 'Solving the line y = 2x for x gives x = y/2, not x = 2y.' },
+      { latex: 'r = y,\\quad h = \\sqrt{y} - \\frac{y}{2}', expr: '[y, sqrt(y) - y/2]', mistake: 'axis-shift-missing', why: 'y is the distance to the x-axis; the axis of rotation is one unit lower, at y = −1.' },
+      { latex: 'r = y - 1,\\quad h = \\sqrt{y} - 2y', expr: '[y - 1, sqrt(y) - 2*y]', mistake: 'axis-shift-sign', why: 'Two slips: the shift has the wrong sign (the radius is y + 1), and y = 2x was solved as x = 2y.' },
     ],
-    correct: 4,
+    correct: 1,
     explanation: 'At height $y$ the slice runs from the line ($x = y/2$) to the parabola ($x = \\sqrt{y}$), so $h = \\sqrt{y} - \\frac{y}{2}$; it lies $y - (-1) = y + 1$ above the axis.',
     variable: 'y',
     check: { kind: 'value', expected: '[y + 1, sqrt(y) - y/2]' },
@@ -309,13 +309,13 @@ export const flash: FlashItem[] = [
     },
     options: [
       { latex: 'r = y,\\quad h = \\sqrt{y}', expr: '[y, sqrt(y)]', mistake: 'shell-height-wrong', why: 'From the y-axis to x = √y lies outside the region; the slice runs from the curve x = √y to the line x = 2.' },
-      { latex: 'r = y,\\quad h = 2 - y^2', expr: '[y, 2 - y^2]', mistake: 'inverse-function-wrong', why: 'Solving y = x² for x gives x = √y, not x = y².' },
-      { latex: 'r = y,\\quad h = x^2', expr: '[y, x^2]', mistake: 'not-in-terms-of-variable', why: 'x² is the height of a vertical slice; a horizontal slice needs its length written in y.' },
-      { latex: 'r = 2 - \\sqrt{y},\\quad h = y', expr: '[2 - sqrt(y), y]', mistake: 'shell-radius-wrong', why: 'Radius and height are swapped: the slice is 2 − √y long and sits y above the axis.' },
-      { latex: 'r = x,\\quad h = x^2', expr: '[x, x^2]', mistake: 'shell-orientation-wrong', why: 'Vertical slices are perpendicular to the x-axis (they sweep out disks); this pair belongs to rotation about the y-axis.' },
+      { latex: 'r = 4 - y,\\quad h = 2 - y^2', expr: '[4 - y, 2 - y^2]', mistake: 'inverse-function-wrong', why: 'Two slips: y = x² was solved as x = y² instead of √y, and 4 − y measures to the top of the region instead of the x-axis.' },
+      { latex: 'r = 4 - y,\\quad h = 2 - \\sqrt{y}', expr: '[4 - y, 2 - sqrt(y)]', mistake: 'shell-radius-wrong', why: '4 − y is the distance to the top of the region (y = 4); the radius is the distance y to the x-axis.' },
       { latex: 'r = y,\\quad h = 2 - \\sqrt{y}', expr: '[y, 2 - sqrt(y)]' },
+      { latex: 'r = y,\\quad h = 2 - y^2', expr: '[y, 2 - y^2]', mistake: 'inverse-function-wrong', why: 'Solving y = x² for x gives x = √y, not x = y².' },
+      { latex: 'r = 4 - y,\\quad h = \\sqrt{y}', expr: '[4 - y, sqrt(y)]', mistake: 'shell-radius-wrong', why: 'Two slips: 4 − y measures to the top of the region instead of the x-axis, and √y is the part left of the curve, outside the region.' },
     ],
-    correct: 5,
+    correct: 3,
     explanation: 'Shells about the x-axis use horizontal slices: at height $y$ the slice runs from $x = \\sqrt{y}$ to $x = 2$, so $h = 2 - \\sqrt{y}$ and $r = y$.',
     variable: 'y',
     check: { kind: 'value', expected: '[y, 2 - sqrt(y)]' },
@@ -330,14 +330,14 @@ export const flash: FlashItem[] = [
       text: 'The region between $y = x$ and $y = x^2$ ($0 \\le x \\le 1$) is rotated about the line $x = -2$. What are the radius and height of the shell at position $x$?',
     },
     options: [
-      { latex: 'r = x + 2,\\quad h = x - x^2', expr: '[x + 2, x - x^2]' },
-      { latex: 'r = x - 2,\\quad h = x - x^2', expr: '[x - 2, x - x^2]', mistake: 'axis-shift-sign', why: 'x − 2 is negative on 0 ≤ x ≤ 1; the distance from x to the line x = −2 is x − (−2) = x + 2.' },
       { latex: 'r = x,\\quad h = x - x^2', expr: '[x, x - x^2]', mistake: 'axis-shift-missing', why: 'x is the distance to the y-axis; the axis of rotation is two units further left, at x = −2.' },
+      { latex: 'r = 2 - x,\\quad h = x^2 - x', expr: '[2 - x, x^2 - x]', mistake: 'axis-shift-sign', why: 'Two slips: 2 − x measures to the line x = 2, not x = −2, and bottom minus top gives a negative height.' },
+      { latex: 'r = x + 2,\\quad h = x^2 - x', expr: '[x + 2, x^2 - x]', mistake: 'top-bottom-swapped', why: 'On 0 ≤ x ≤ 1 the line y = x lies above y = x², so the height is x − x².' },
       { latex: 'r = 2 - x,\\quad h = x - x^2', expr: '[2 - x, x - x^2]', mistake: 'axis-shift-sign', why: '2 − x is the distance to the line x = 2 on the right, not to x = −2.' },
-      { latex: 'r = x - x^2,\\quad h = x + 2', expr: '[x - x^2, x + 2]', mistake: 'shell-radius-wrong', why: 'Radius and height are swapped: the slice is x − x² long and sits x + 2 from the axis.' },
-      { latex: 'r = y + 2,\\quad h = \\sqrt{y} - y', expr: '[y + 2, sqrt(y) - y]', mistake: 'shell-orientation-wrong', why: 'Horizontal slices are perpendicular to x = −2; shells about a vertical axis come from vertical slices.' },
+      { latex: 'r = x,\\quad h = x^2 - x', expr: '[x, x^2 - x]', mistake: 'axis-shift-missing', why: 'Two slips: x measures to the y-axis instead of x = −2, and bottom minus top gives a negative height.' },
+      { latex: 'r = x + 2,\\quad h = x - x^2', expr: '[x + 2, x - x^2]' },
     ],
-    correct: 0,
+    correct: 5,
     explanation: 'On $0 \\le x \\le 1$ the line $y = x$ lies above $y = x^2$, so $h = x - x^2$; the slice is $x - (-2) = x + 2$ from the axis.',
     check: { kind: 'value', expected: '[x + 2, x - x^2]' },
     difficulty: 1,
@@ -351,14 +351,14 @@ export const flash: FlashItem[] = [
       text: 'The region bounded by $x = 2$, $x = 4$, $y = 1$, and the curve $y = (x - 2)^2 + 3$ (the same curve as $x = 2 + \\sqrt{y - 3}$) is rotated about the line $x = 1$. What are the radius and height of the shell at position $x$?',
     },
     options: [
-      { latex: 'r = 1 - x,\\quad h = (x - 2)^2 + 2', expr: '[1 - x, (x - 2)^2 + 2]', mistake: 'axis-shift-sign', why: 'For 2 ≤ x ≤ 4 this is negative; the slice is right of x = 1, so its distance to the axis is x − 1.' },
-      { latex: 'r = x,\\quad h = (x - 2)^2 + 2', expr: '[x, (x - 2)^2 + 2]', mistake: 'axis-shift-missing', why: 'x is the distance to the y-axis; the axis of rotation is the line x = 1.' },
-      { latex: 'r = x + 1,\\quad h = (x - 2)^2 + 2', expr: '[x + 1, (x - 2)^2 + 2]', mistake: 'axis-shift-sign', why: 'x + 1 is the distance to the line x = −1, not to x = 1.' },
-      { latex: 'r = x - 2,\\quad h = (x - 2)^2 + 2', expr: '[x - 2, (x - 2)^2 + 2]', mistake: 'shell-radius-wrong', why: 'x − 2 is the distance to the left edge x = 2 of the region; the radius is measured to the axis x = 1.' },
       { latex: 'r = x - 1,\\quad h = (x - 2)^2 + 2', expr: '[x - 1, (x - 2)^2 + 2]' },
-      { latex: 'r = (x - 2)^2 + 2,\\quad h = x - 1', expr: '[(x - 2)^2 + 2, x - 1]', mistake: 'shell-radius-wrong', why: 'Radius and height are swapped: the slice is (x − 2)² + 2 long and sits x − 1 from the axis.' },
+      { latex: 'r = x,\\quad h = (x - 2)^2 + 3', expr: '[x, (x - 2)^2 + 3]', mistake: 'axis-shift-missing', why: 'Two slips: x measures to the y-axis instead of x = 1, and the bottom boundary y = 1 was not subtracted from the height.' },
+      { latex: 'r = x - 2,\\quad h = (x - 2)^2 + 2', expr: '[x - 2, (x - 2)^2 + 2]', mistake: 'shell-radius-wrong', why: 'x − 2 is the distance to the left edge x = 2 of the region; the radius is measured to the axis x = 1.' },
+      { latex: 'r = x - 1,\\quad h = (x - 2)^2 + 3', expr: '[x - 1, (x - 2)^2 + 3]', mistake: 'shell-height-wrong', why: '(x − 2)² + 3 is the top y-value; the slice starts at y = 1, so subtract 1.' },
+      { latex: 'r = x,\\quad h = (x - 2)^2 + 2', expr: '[x, (x - 2)^2 + 2]', mistake: 'axis-shift-missing', why: 'x is the distance to the y-axis; the axis of rotation is the line x = 1.' },
+      { latex: 'r = x - 2,\\quad h = (x - 2)^2 + 3', expr: '[x - 2, (x - 2)^2 + 3]', mistake: 'shell-radius-wrong', why: 'Two slips: x − 2 measures to the left edge of the region instead of x = 1, and y = 1 was not subtracted from the height.' },
     ],
-    correct: 4,
+    correct: 0,
     explanation: 'The slice at $x$ runs from $y = 1$ up to $y = (x - 2)^2 + 3$, so $h = (x - 2)^2 + 2$; it lies $x - 1$ units right of the axis $x = 1$.',
     check: { kind: 'value', expected: '[x - 1, (x - 2)^2 + 2]' },
     difficulty: 2,
@@ -372,14 +372,14 @@ export const flash: FlashItem[] = [
       text: 'The region between the y-axis and $x = 2y - y^2$ ($0 \\le y \\le 2$) is rotated about the line $y = 3$. What are the radius and height of the shell for the horizontal slice at height $y$?',
     },
     options: [
-      { latex: 'r = y - 3,\\quad h = 2y - y^2', expr: '[y - 3, 2*y - y^2]', mistake: 'axis-shift-sign', why: 'y − 3 is negative for 0 ≤ y ≤ 2; the slice is below y = 3, so its distance to the axis is 3 − y.' },
-      { latex: 'r = 3 - y,\\quad h = 2y - y^2', expr: '[3 - y, 2*y - y^2]' },
-      { latex: 'r = y,\\quad h = 2y - y^2', expr: '[y, 2*y - y^2]', mistake: 'axis-shift-missing', why: 'y is the distance to the x-axis; the axis of rotation is the line y = 3.' },
-      { latex: 'r = y + 3,\\quad h = 2y - y^2', expr: '[y + 3, 2*y - y^2]', mistake: 'axis-shift-sign', why: 'y + 3 is the distance to the line y = −3, not to y = 3.' },
       { latex: 'r = 2 - y,\\quad h = 2y - y^2', expr: '[2 - y, 2*y - y^2]', mistake: 'shell-radius-wrong', why: '2 − y is the distance to the top of the region (y = 2); the radius is measured to the axis y = 3.' },
-      { latex: 'r = 2y - y^2,\\quad h = 3 - y', expr: '[2*y - y^2, 3 - y]', mistake: 'shell-radius-wrong', why: 'Radius and height are swapped: the slice is 2y − y² long and sits 3 − y from the axis.' },
+      { latex: 'r = y,\\quad h = y^2 - 2y', expr: '[y, y^2 - 2*y]', mistake: 'axis-shift-missing', why: 'Two slips: y measures to the x-axis instead of y = 3, and left minus right gives a negative length.' },
+      { latex: 'r = 3 - y,\\quad h = 2y - y^2', expr: '[3 - y, 2*y - y^2]' },
+      { latex: 'r = 3 - y,\\quad h = y^2 - 2y', expr: '[3 - y, y^2 - 2*y]', mistake: 'top-bottom-swapped', why: 'Left minus right gives a negative length; the slice runs from x = 0 to x = 2y − y², so h = 2y − y².' },
+      { latex: 'r = y,\\quad h = 2y - y^2', expr: '[y, 2*y - y^2]', mistake: 'axis-shift-missing', why: 'y is the distance to the x-axis; the axis of rotation is the line y = 3.' },
+      { latex: 'r = 2 - y,\\quad h = y^2 - 2y', expr: '[2 - y, y^2 - 2*y]', mistake: 'shell-radius-wrong', why: 'Two slips: 2 − y measures to the top of the region instead of y = 3, and left minus right gives a negative length.' },
     ],
-    correct: 1,
+    correct: 2,
     explanation: 'The slice at height $y$ runs from $x = 0$ to $x = 2y - y^2$, and it lies $3 - y$ below the axis $y = 3$.',
     variable: 'y',
     check: { kind: 'value', expected: '[3 - y, 2*y - y^2]' },
@@ -395,13 +395,13 @@ export const flash: FlashItem[] = [
     },
     options: [
       { latex: 'r = y,\\quad h = (y - 1)^2 - \\sqrt{y - 1}', expr: '[y, (y - 1)^2 - sqrt(y - 1)]', mistake: 'top-bottom-swapped', why: 'Right minus left: x = √(y − 1) is the right boundary and x = (y − 1)² the left one.' },
+      { latex: 'r = y - 1,\\quad h = \\sqrt{y} - y^2', expr: '[y - 1, sqrt(y) - y^2]', mistake: 'inverse-function-wrong', why: 'Two slips: the −1 shifts were dropped when solving both curves for x, and y − 1 measures from y = 1 instead of the x-axis.' },
+      { latex: 'r = y - 1,\\quad h = \\sqrt{y - 1} - (y - 1)^2', expr: '[y - 1, sqrt(y - 1) - (y - 1)^2]', mistake: 'shell-radius-wrong', why: 'y − 1 is the distance to y = 1, the bottom of the region; the radius is the distance y to the x-axis.' },
       { latex: 'r = y,\\quad h = \\sqrt{y} - y^2', expr: '[y, sqrt(y) - y^2]', mistake: 'inverse-function-wrong', why: 'Solving y = x² + 1 for x gives √(y − 1), and y = √x + 1 gives (y − 1)²; the −1 shifts were dropped.' },
       { latex: 'r = y,\\quad h = \\sqrt{y - 1} - (y - 1)^2', expr: '[y, sqrt(y - 1) - (y - 1)^2]' },
-      { latex: 'r = y,\\quad h = \\sqrt{x} - x^2', expr: '[y, sqrt(x) - x^2]', mistake: 'not-in-terms-of-variable', why: 'That is the vertical height at x; a horizontal slice needs its length written in y.' },
-      { latex: 'r = y,\\quad h = \\sqrt{y - 1}', expr: '[y, sqrt(y - 1)]', mistake: 'shell-height-wrong', why: 'Measured from the y-axis to the right boundary; the slice starts at the left boundary x = (y − 1)².' },
-      { latex: 'r = \\sqrt{y - 1} - (y - 1)^2,\\quad h = y', expr: '[sqrt(y - 1) - (y - 1)^2, y]', mistake: 'shell-radius-wrong', why: 'Radius and height are swapped: the slice is √(y − 1) − (y − 1)² long and sits y above the axis.' },
+      { latex: 'r = y - 1,\\quad h = (y - 1)^2 - \\sqrt{y - 1}', expr: '[y - 1, (y - 1)^2 - sqrt(y - 1)]', mistake: 'shell-radius-wrong', why: 'Two slips: y − 1 measures from y = 1 instead of the x-axis, and left minus right gives a negative length.' },
     ],
-    correct: 2,
+    correct: 4,
     explanation: 'At height $y$ the slice runs from $x = (y-1)^2$ (on $y = \\sqrt{x} + 1$) to $x = \\sqrt{y - 1}$ (on $y = x^2 + 1$), so $h = \\sqrt{y-1} - (y-1)^2$ and $r = y$.',
     variable: 'y',
     domain: { y: [1.05, 1.95] },
@@ -417,14 +417,14 @@ export const flash: FlashItem[] = [
       text: 'The region bounded by $x = y^2$ and $x = 4$ is rotated about the line $x = 5$. What are the radius and height of the shell at position $x$ ($0 \\le x \\le 4$)?',
     },
     options: [
-      { latex: 'r = 5 - x,\\quad h = \\sqrt{x}', expr: '[5 - x, sqrt(x)]', mistake: 'shell-height-wrong', why: 'The region is symmetric about the x-axis: the slice runs from y = −√x to y = √x, so its length is 2√x.' },
+      { latex: 'r = 4 - x,\\quad h = \\sqrt{x}', expr: '[4 - x, sqrt(x)]', mistake: 'shell-radius-wrong', why: 'Two slips: 4 − x measures to the edge x = 4 of the region instead of the axis x = 5, and only the upper half of the slice was used.' },
       { latex: 'r = 5 - x,\\quad h = 2x^2', expr: '[5 - x, 2*x^2]', mistake: 'inverse-function-wrong', why: 'Solving x = y² for y gives y = ±√x, not ±x².' },
-      { latex: 'r = 5 - x,\\quad h = 4 - y^2', expr: '[5 - x, 4 - y^2]', mistake: 'not-in-terms-of-variable', why: '4 − y² is the length of a horizontal slice; a vertical slice needs its length written in x.' },
-      { latex: 'r = 5 - x,\\quad h = -2\\sqrt{x}', expr: '[5 - x, -2*sqrt(x)]', mistake: 'top-bottom-swapped', why: 'Bottom minus top gives a negative height; subtract the lower boundary −√x from the upper √x.' },
-      { latex: 'r = 2\\sqrt{x},\\quad h = 5 - x', expr: '[2*sqrt(x), 5 - x]', mistake: 'shell-radius-wrong', why: 'Radius and height are swapped: the slice is 2√x long and sits 5 − x from the axis.' },
+      { latex: 'r = 4 - x,\\quad h = 2\\sqrt{x}', expr: '[4 - x, 2*sqrt(x)]', mistake: 'shell-radius-wrong', why: '4 − x is the distance to the edge x = 4 of the region; the radius is measured to the axis x = 5.' },
       { latex: 'r = 5 - x,\\quad h = 2\\sqrt{x}', expr: '[5 - x, 2*sqrt(x)]' },
+      { latex: 'r = 5 - x,\\quad h = \\sqrt{x}', expr: '[5 - x, sqrt(x)]', mistake: 'shell-height-wrong', why: 'The region is symmetric about the x-axis: the slice runs from y = −√x to y = √x, so its length is 2√x.' },
+      { latex: 'r = 4 - x,\\quad h = 2x^2', expr: '[4 - x, 2*x^2]', mistake: 'inverse-function-wrong', why: 'Two slips: x = y² was solved as y = ±x² instead of ±√x, and 4 − x measures to x = 4 instead of the axis x = 5.' },
     ],
-    correct: 5,
+    correct: 3,
     explanation: 'The vertical slice at $x$ runs from $y = -\\sqrt{x}$ to $y = \\sqrt{x}$, so $h = 2\\sqrt{x}$; it lies $5 - x$ left of the axis $x = 5$.',
     check: { kind: 'value', expected: '[5 - x, 2*sqrt(x)]' },
     difficulty: 2,
@@ -438,14 +438,14 @@ export const flash: FlashItem[] = [
       text: 'The triangle bounded by $y = x$, $y = 2 - x$, and the x-axis is rotated about the x-axis using shells. What are the radius and height of the shell for the horizontal slice at height $y$ ($0 \\le y \\le 1$)?',
     },
     options: [
-      { latex: 'r = y,\\quad h = 2 - y', expr: '[y, 2 - y]', mistake: 'shell-height-wrong', why: 'That is only the right endpoint x = 2 − y; the slice starts at x = y, so subtract it.' },
-      { latex: 'r = y,\\quad h = 2y - 2', expr: '[y, 2*y - 2]', mistake: 'top-bottom-swapped', why: 'Left minus right gives a negative length; the height is right (2 − y) minus left (y).' },
-      { latex: 'r = y,\\quad h = 2 - 2x', expr: '[y, 2 - 2*x]', mistake: 'not-in-terms-of-variable', why: 'The height is written with x; a horizontal slice needs its length as a function of y.' },
+      { latex: 'r = 1 - y,\\quad h = 2 - 2y', expr: '[1 - y, 2 - 2*y]', mistake: 'shell-radius-wrong', why: '1 − y is the distance to the apex height y = 1; the radius is the distance y to the x-axis.' },
       { latex: 'r = y,\\quad h = 2 - 2y', expr: '[y, 2 - 2*y]' },
-      { latex: 'r = 2 - 2y,\\quad h = y', expr: '[2 - 2*y, y]', mistake: 'shell-radius-wrong', why: 'Radius and height are swapped: the slice is 2 − 2y long and sits y above the axis.' },
-      { latex: 'r = y,\\quad h = 2', expr: '[y, 2]', mistake: 'shell-height-wrong', why: '2 is the length of the base at y = 0; the slices get shorter as y increases.' },
+      { latex: 'r = y,\\quad h = 2y - 2', expr: '[y, 2*y - 2]', mistake: 'top-bottom-swapped', why: 'Left minus right gives a negative length; the height is right (2 − y) minus left (y).' },
+      { latex: 'r = 1 - y,\\quad h = 2 - y', expr: '[1 - y, 2 - y]', mistake: 'shell-height-wrong', why: 'Two slips: 2 − y is only the right endpoint (the slice starts at x = y), and 1 − y measures to the apex instead of the x-axis.' },
+      { latex: 'r = y,\\quad h = 2 - y', expr: '[y, 2 - y]', mistake: 'shell-height-wrong', why: 'That is only the right endpoint x = 2 − y; the slice starts at x = y, so subtract it.' },
+      { latex: 'r = 1 - y,\\quad h = 2y - 2', expr: '[1 - y, 2*y - 2]', mistake: 'shell-radius-wrong', why: 'Two slips: 1 − y measures to the apex instead of the x-axis, and left minus right gives a negative length.' },
     ],
-    correct: 3,
+    correct: 1,
     explanation: 'At height $y$ the slice runs from $x = y$ (on $y = x$) to $x = 2 - y$ (on $y = 2 - x$), so $h = 2 - 2y$ and $r = y$.',
     variable: 'y',
     check: { kind: 'value', expected: '[y, 2 - 2*y]' },
@@ -752,7 +752,7 @@ export const flash: FlashItem[] = [
     topic: 'volumes-shells',
     kind: 'technique',
     prompt: {
-      text: 'The region bounded by $x = 2y - y^2$ and the y-axis is rotated about the x-axis. Which setup is the most efficient?',
+      text: 'The region bounded by $x = 2y - y^2$ and the y-axis is rotated about the x-axis. Which setup avoids solving $x = 2y - y^2$ for $y$?',
     },
     options: [
       { text: 'Shells: horizontal slices, integrate in $y$ from 0 to 2' },
@@ -895,7 +895,7 @@ export const flash: FlashItem[] = [
     prompt: { latex: '\\int_0^1 2\\pi y(2 - 2y)\\,dy' },
     options: [
       { latex: '\\frac{8\\pi}{3}', expr: '8*pi/3', mistake: 'power-rule-int-coefficient', why: '∫2y dy = y²; writing 2y² gives 2π(2 − 2/3).' },
-      { latex: '-2\\pi', expr: '-2*pi', mistake: 'power-rule-int-coefficient', why: '∫2y² dy = (2/3)y³; writing 2y³ gives 2π(1 − 2).' },
+      { latex: '\\frac{4\\pi}{3}', expr: '4*pi/3', mistake: 'coefficient-mishandled', why: 'The coefficient 2 of 2y² was dropped: 2π(1 − 1/3) = 4π/3.' },
       { latex: '\\pi', expr: 'pi', mistake: 'product-rule-integral', why: 'The factors were integrated separately and multiplied: 2π·(1/2)·1; there is no product rule for integrals.' },
       { latex: '\\frac{\\pi}{3}', expr: 'pi/3', mistake: 'coefficient-mishandled', why: 'The factor 2 of 2π was lost: π·(1 − 2/3).' },
       { latex: '\\frac{2\\pi}{3}', expr: '2*pi/3' },
@@ -914,7 +914,7 @@ export const flash: FlashItem[] = [
     kind: 'evaluate',
     prompt: { latex: '\\int_0^{\\sqrt{\\pi}} 2\\pi x\\sin(x^2)\\,dx' },
     options: [
-      { latex: '4\\pi', expr: '4*pi', mistake: 'du-constant-wrong', why: 'With u = x², du = 2x dx, so 2πx dx = π du; keeping 2π doubles the answer.' },
+      { latex: '2\\pi\\left(1 - \\cos(\\sqrt{\\pi})\\right)', expr: '2*pi*(1 - cos(sqrt(pi)))', mistake: 'bounds-not-converted', why: 'x² was replaced by u but neither the limit √π nor the constant was converted: 2π[−cos u] from 0 to √π.' },
       { latex: '0', expr: '0', mistake: 'trig-antiderivative-swapped', why: 'sin u was used as its own antiderivative: π[sin u] from 0 to π is 0.' },
       { latex: '-2\\pi', expr: '-2*pi', mistake: 'trig-antiderivative-sign', why: '∫sin u du = −cos u; using +cos u flips the sign.' },
       { latex: '\\pi', expr: 'pi', mistake: 'ftc-not-subtracted', why: 'Only the upper limit was used: π(−cos π) = π; the value −π cos 0 = −π at the lower limit must be subtracted.' },
@@ -935,7 +935,7 @@ export const flash: FlashItem[] = [
     options: [
       { latex: '2\\pi\\ln 2', expr: '2*pi*log(2)', mistake: 'du-constant-wrong', why: 'With u = 1 + x², du = 2x dx, so 2πx dx = π du; keeping 2π doubles the answer.' },
       { latex: '\\pi\\ln 2', expr: 'pi*log(2)' },
-      { latex: '\\frac{\\pi}{2}\\ln 2', expr: 'pi/2*log(2)', mistake: 'du-constant-wrong', why: 'The factor 2 from du = 2x dx was compensated twice.' },
+      { latex: '\\frac{\\pi^2}{2}', expr: 'pi^2/2', mistake: 'technique-wrong', why: 'The factor x was dropped and 1/(1 + x²) was integrated to arctan x: 2π·(π/4) = π²/2.' },
       { latex: '\\pi\\ln\\left(\\frac{5}{2}\\right)', expr: 'pi*log(5/2)', mistake: 'mixed-limits-variable', why: 'The u-limits 1 and 2 were plugged into ln(1 + x²), an expression in x.' },
       { latex: '\\frac{\\pi^2}{4}', expr: 'pi^2/4', mistake: 'product-rule-integral', why: '2πx and 1/(1 + x²) were integrated separately and multiplied: π·(π/4).' },
     ],
@@ -952,7 +952,7 @@ export const flash: FlashItem[] = [
     prompt: { latex: '\\int_0^1 2\\pi x(x - x^2)\\,dx' },
     options: [
       { latex: '\\frac{\\pi}{3}', expr: 'pi/3', mistake: 'power-rule-int-coefficient', why: 'x³ and x⁴ were divided by the old exponents 2 and 3: 2π(1/2 − 1/3).' },
-      { latex: '0', expr: '0', mistake: 'power-rule-int-coefficient', why: 'The powers were raised without dividing: 2π[x³ − x⁴] from 0 to 1 is 0.' },
+      { latex: '\\frac{2\\pi}{3}', expr: '2*pi/3', mistake: 'algebra-error', why: 'The −x³ term of x(x − x²) = x² − x³ was dropped: 2π·(1/3) = 2π/3.' },
       { latex: '\\frac{\\pi}{6}', expr: 'pi/6' },
       { latex: '\\frac{7\\pi}{6}', expr: '7*pi/6', mistake: 'sign-error', why: 'The minus sign was lost: 2π(1/3 + 1/4).' },
       { latex: '\\frac{\\pi}{12}', expr: 'pi/12', mistake: 'coefficient-mishandled', why: 'The factor 2 of 2π was lost: π(1/3 − 1/4).' },
@@ -994,7 +994,7 @@ export const flash: FlashItem[] = [
       { latex: '\\pi e^4', expr: 'pi*e^4', mistake: 'ftc-not-subtracted', why: 'Only the upper limit was used; F(1) = πe must be subtracted.' },
       { latex: '\\pi(e^4 - e)', expr: 'pi*(e^4 - e)' },
       { latex: '\\pi(e - e^4)', expr: 'pi*(e - e^4)', mistake: 'ftc-order-swapped', why: 'F(1) − F(2) was computed instead of F(2) − F(1).' },
-      { latex: '\\frac{\\pi}{2}(e^4 - e)', expr: 'pi/2*(e^4 - e)', mistake: 'du-constant-wrong', why: 'The factor 2 from du = 2x dx was compensated twice.' },
+      { latex: '\\pi(4e^4 - e)', expr: 'pi*(4*e^4 - e)', mistake: 'product-rule-integral', why: 'x and e^(x²) were integrated separately (as x²/2 and e^(x²)) and multiplied: 2π[(x²/2)e^(x²)] from 1 to 2 = π(4e⁴ − e).' },
     ],
     correct: 3,
     explanation: 'Let $u = x^2$, $du = 2x\\,dx$: $\\pi\\int_1^4 e^u\\,du = \\pi(e^4 - e)$.',
@@ -1017,13 +1017,27 @@ function mulberry(seed: number): () => number {
   };
 }
 
-/** Curves that are ≥ 0 on [0, b] for every b used below, so the height is f(x) − 0. */
-const AXIS_CURVES: { latex: string; expr: string }[] = [
-  { latex: 'x^2', expr: 'x^2' },
-  { latex: 'x^3', expr: 'x^3' },
-  { latex: '\\sqrt{x}', expr: 'sqrt(x)' },
-  { latex: 'e^{x}', expr: 'exp(x)' },
-  { latex: 'x^2 + 1', expr: 'x^2 + 1' },
+/** Curves that are ≥ 0 and increasing on [0, b]: the height is f(x) − 0 and the top of the region is y = f(b). */
+const AXIS_CURVES: { latex: string; expr: string; top: (b: number) => { fb: string; latex: string; expr: string } }[] = [
+  { latex: 'x^2', expr: 'x^2', top: (b) => ({ fb: `${b * b}`, latex: `${b * b} - x^2`, expr: `${b * b} - x^2` }) },
+  { latex: 'x^3', expr: 'x^3', top: (b) => ({ fb: `${b * b * b}`, latex: `${b * b * b} - x^3`, expr: `${b * b * b} - x^3` }) },
+  {
+    latex: '\\sqrt{x}',
+    expr: 'sqrt(x)',
+    top: (b) =>
+      b === 1
+        ? { fb: '1', latex: '1 - \\sqrt{x}', expr: '1 - sqrt(x)' }
+        : { fb: `\\sqrt{${b}}`, latex: `\\sqrt{${b}} - \\sqrt{x}`, expr: `sqrt(${b}) - sqrt(x)` },
+  },
+  {
+    latex: 'e^{x}',
+    expr: 'exp(x)',
+    top: (b) =>
+      b === 1
+        ? { fb: 'e', latex: 'e - e^{x}', expr: 'e - exp(x)' }
+        : { fb: `e^{${b}}`, latex: `e^{${b}} - e^{x}`, expr: `exp(${b}) - exp(x)` },
+  },
+  { latex: 'x^2 + 1', expr: 'x^2 + 1', top: (b) => ({ fb: `${b * b + 1}`, latex: `${b * b} - x^2`, expr: `${b * b} - x^2` }) },
 ];
 
 /** Parameterized generators. */
@@ -1033,47 +1047,45 @@ export const generators: FlashGenerator[] = [
     topic: 'volumes-shells',
     kind: 'concept',
     describe:
-      'Radius and height of the shell for the region under y = f(x), 0 ≤ x ≤ b (b = 1..3), rotated about a vertical line x = −k left of the region or x = m right of it',
+      'Radius and height of the shell for the region under y = f(x), 0 ≤ x ≤ b (b = 1..3), rotated about a vertical line x = −k left of the region or x = m right of it; options form a 3 radii × 2 heights grid',
     generate(seed: number): FlashItem {
       const rng = mulberry(seed);
       const curve = AXIS_CURVES[Math.floor(rng() * AXIS_CURVES.length)];
       const f = curve.latex;
       const b = 1 + Math.floor(rng() * 3); // 1..3
+      const top = curve.top(b);
       const left = rng() < 0.5;
       type Opt = FlashItem['options'][number];
       let axis: string;
-      let correctOpt: Opt;
-      let distractors: Opt[];
-      let expected: string;
+      let r: string; // correct radius (same text in latex and mathjs)
+      let rSign: string; // radius with the shift sign flipped
+      let signWhy: string;
       let explanation: string;
       if (left) {
-        let k = 1 + Math.floor(rng() * 5); // 1..5, k ≠ b so that "k − x" and "b − x" differ
+        let k = 1 + Math.floor(rng() * 5); // 1..5
         if (k === b) k = b + 1;
         axis = `-${k}`;
-        expected = `[x + ${k}, ${curve.expr}]`;
-        correctOpt = { latex: `r = x + ${k},\\quad h = ${f}`, expr: expected };
-        distractors = [
-          { latex: `r = x - ${k},\\quad h = ${f}`, expr: `[x - ${k}, ${curve.expr}]`, mistake: 'axis-shift-sign', why: `The distance from x to the line x = −${k} is x − (−${k}) = x + ${k}, not x − ${k}.` },
-          { latex: `r = x,\\quad h = ${f}`, expr: `[x, ${curve.expr}]`, mistake: 'axis-shift-missing', why: `x is the distance to the y-axis; the axis of rotation is the line x = −${k}.` },
-          { latex: `r = ${k} - x,\\quad h = ${f}`, expr: `[${k} - x, ${curve.expr}]`, mistake: 'axis-shift-sign', why: `${k} − x measures to the line x = ${k}, not to x = −${k}.` },
-          { latex: `r = ${b} - x,\\quad h = ${f}`, expr: `[${b} - x, ${curve.expr}]`, mistake: 'shell-radius-wrong', why: `${b} − x is the distance to the edge x = ${b} of the region; the radius is measured to the axis x = −${k}.` },
-          { latex: `r = ${f},\\quad h = x + ${k}`, expr: `[${curve.expr}, x + ${k}]`, mistake: 'shell-radius-wrong', why: `Radius and height are swapped: the slice has length $${f}$ and sits $x + ${k}$ from the axis.` },
-        ];
+        r = `x + ${k}`;
+        rSign = `x - ${k}`;
+        signWhy = `the distance from x to the line x = −${k} is x − (−${k}) = x + ${k}`;
         explanation = `The slice at $x$ runs from $y = 0$ up to $y = ${f}$, and its distance to the axis $x = -${k}$ is $x - (-${k}) = x + ${k}$.`;
       } else {
         const m = b + 1 + Math.floor(rng() * 3); // b+1..b+3, right of the region
         axis = `${m}`;
-        expected = `[${m} - x, ${curve.expr}]`;
-        correctOpt = { latex: `r = ${m} - x,\\quad h = ${f}`, expr: expected };
-        distractors = [
-          { latex: `r = x - ${m},\\quad h = ${f}`, expr: `[x - ${m}, ${curve.expr}]`, mistake: 'axis-shift-sign', why: `For 0 ≤ x ≤ ${b} this is negative; the slice lies left of x = ${m}, so its distance to the axis is ${m} − x.` },
-          { latex: `r = x,\\quad h = ${f}`, expr: `[x, ${curve.expr}]`, mistake: 'axis-shift-missing', why: `x is the distance to the y-axis; the axis of rotation is the line x = ${m}.` },
-          { latex: `r = x + ${m},\\quad h = ${f}`, expr: `[x + ${m}, ${curve.expr}]`, mistake: 'axis-shift-sign', why: `x + ${m} is the distance to the line x = −${m}, not to x = ${m}.` },
-          { latex: `r = ${b} - x,\\quad h = ${f}`, expr: `[${b} - x, ${curve.expr}]`, mistake: 'shell-radius-wrong', why: `${b} − x is the distance to the edge x = ${b} of the region; the radius is measured to the axis x = ${m}.` },
-          { latex: `r = ${f},\\quad h = ${m} - x`, expr: `[${curve.expr}, ${m} - x]`, mistake: 'shell-radius-wrong', why: `Radius and height are swapped: the slice has length $${f}$ and sits $${m} - x$ from the axis.` },
-        ];
+        r = `${m} - x`;
+        rSign = `x - ${m}`;
+        signWhy = `for 0 ≤ x ≤ ${b} the slice lies left of x = ${m}, so its distance to the axis is ${m} − x`;
         explanation = `The slice at $x$ runs from $y = 0$ up to $y = ${f}$, and it lies $${m} - x$ units left of the axis $x = ${m}$.`;
       }
+      const above = `$${top.latex}$ measures from the curve up to $y = ${top.fb}$, the top of the region; that strip lies above the curve, outside the region.`;
+      const correctOpt: Opt = { latex: `r = ${r},\\quad h = ${f}`, expr: `[${r}, ${curve.expr}]` };
+      const distractors: Opt[] = [
+        { latex: `r = x,\\quad h = ${f}`, expr: `[x, ${curve.expr}]`, mistake: 'axis-shift-missing', why: `x is the distance to the y-axis; the axis of rotation is the line x = ${axis}.` },
+        { latex: `r = ${rSign},\\quad h = ${f}`, expr: `[${rSign}, ${curve.expr}]`, mistake: 'axis-shift-sign', why: `The shift has the wrong sign: ${signWhy}.` },
+        { latex: `r = ${r},\\quad h = ${top.latex}`, expr: `[${r}, ${top.expr}]`, mistake: 'shell-height-wrong', why: above },
+        { latex: `r = x,\\quad h = ${top.latex}`, expr: `[x, ${top.expr}]`, mistake: 'axis-shift-missing', why: `Two slips: x measures to the y-axis instead of x = ${axis}, and $${top.latex}$ is the strip above the curve.` },
+        { latex: `r = ${rSign},\\quad h = ${top.latex}`, expr: `[${rSign}, ${top.expr}]`, mistake: 'axis-shift-sign', why: `Two slips: the shift has the wrong sign (${signWhy}), and $${top.latex}$ is the strip above the curve.` },
+      ];
       // Rotate so the correct option's position varies with the seed.
       const all = [correctOpt, ...distractors];
       const shift = Math.floor(rng() * all.length);
@@ -1089,7 +1101,7 @@ export const generators: FlashGenerator[] = [
         options,
         correct,
         explanation,
-        check: { kind: 'value', expected },
+        check: { kind: 'value', expected: `[${r}, ${curve.expr}]` },
         difficulty: 1,
         tags: ['radius-height', 'axis-shift'],
       };
