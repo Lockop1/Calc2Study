@@ -665,8 +665,8 @@ button { font: inherit; color: inherit; }
 }
 .fc-face > * { min-width: 0; }
 .fc-prompt, .fc-recall { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; }
-.fc-text { font-size: 1.15rem; font-weight: 650; }
-.fc-math { font-size: 1.3rem; }
+.fc-text { font-size: 1.3rem; font-weight: 650; }
+.fc-math { font-size: 1.55rem; }
 .fc-recall { padding-bottom: 12px; border-bottom: 1px dashed var(--border); color: var(--muted); }
 .fc-recall .fc-text { font-size: 0.98rem; font-weight: 600; }
 .fc-recall .fc-math { font-size: 1rem; }

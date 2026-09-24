@@ -14,7 +14,7 @@ Legend: ☐ not started · ◐ in progress · ☑ done · ✗ blocked
 | 8 | Topic picker, Review mode, progress, settings | ☑ | weighted review deck, retire after 3 correct, storage in try/catch |
 | 9 | PWA/offline + mobile QA | ☑ | qa/REPORT.md: 382/384 checks pass at 390×844 incl. offline, storage-unavailable, dark mode; reset double-tap fixed; one minor layout note open |
 
-| 10 | Cards mode (flashcards of the whiteboard formulas; exempt from the 5-option rule) | ◐ | schema + test harness (orchestrator); deck (content-author); UI (ui-builder); deck verification (math-verifier) |
+| 10 | Cards mode (flashcards of the whiteboard formulas; exempt from the 5-option rule) | ☑ | 50 cards in 9 sections, math-verifier PASS; CardsScreen with flip/grade/requeue/summary/filters/reset; 962 tests, Playwright 56/56 at 390×844 incl. offline |
 
 ## Log
 
@@ -29,3 +29,4 @@ Legend: ☐ not started · ◐ in progress · ☑ done · ✗ blocked
 - Deploy: user added .github/workflows/deploy.yml (GitHub Pages on push to main); build verified to work under a sub-path.
 - Task 9 done: QA report compiled from the tester's results (container restart interrupted the agent); reset-confirm debounce added; final build verified.
 - Session 2, Task 10 (Cards): `Card` type added to content/types.ts, deck stub + `tests/cards.test.ts` written by the orchestrator; content-author writing the 50-card deck; ui-builder building CardsScreen; verifier to follow.
+- Task 10 done: deck verified (qa/verification/cards.md), Cards UI built and smoke-tested (qa/cards-smoke.mjs), suite 27 files / 962 tests, build green.

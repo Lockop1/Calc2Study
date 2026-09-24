@@ -31,6 +31,7 @@ export function Flashcard({ card, flipped, onFlip }: FlashcardProps) {
   return (
     <section
       className={cx('flashcard', flipped && 'flashcard--back')}
+      data-card={card.id}
       data-side={flipped ? 'back' : 'front'}
       aria-label={flipped ? 'Card, answer side' : 'Card'}
       onClick={onFlip}
