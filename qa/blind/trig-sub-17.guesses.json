@@ -1,0 +1,154 @@
+{
+  "1": {
+    "guess": 5,
+    "reason": "SURFACE: centre/intersection - sqrt(x^2+4) numerator (1,5) and 4x denominator (4,5); 3 is its reciprocal, 6 an odd sin x variant"
+  },
+  "2": {
+    "guess": 5,
+    "reason": "SURFACE: centre - 2 and 6 are x1/5 and x5 copies of bare sec(theta); 3 its reciprocal"
+  },
+  "3": {
+    "guess": 4,
+    "reason": "SURFACE: centre - 1 is 4 divided by cos, 2 is 4 negated, 5 mixes x"
+  },
+  "4": {
+    "guess": 1,
+    "reason": "SURFACE: intersection - dx=3cos (1,2,5,6) and sqrt=3cos (1,3,4) meet only in 1"
+  },
+  "5": {
+    "guess": 1,
+    "reason": "SURFACE: centre - 2 sign flip, 3/6 are x1/2 and x2 of 1, 4 reciprocal, 5 drops x"
+  },
+  "6": {
+    "guess": 4,
+    "reason": "SURFACE: intersection - dx=2cos (1,2,4) and sqrt=2cos (3,4,5) meet only in 4"
+  },
+  "7": {
+    "guess": 1,
+    "reason": "SURFACE: centre - 2 is x5 and 4 is x1/3 of bare sec(theta)"
+  },
+  "8": {
+    "guess": 5,
+    "reason": "SURFACE: intersection - coefficient 3/5 (1,5) and sec tan (2,3,4,5)"
+  },
+  "9": {
+    "guess": 5,
+    "reason": "SURFACE: intersection - dx=5cos (1,2,4,5) and sqrt=5cos (3,5)"
+  },
+  "10": {
+    "guess": 1,
+    "reason": "SURFACE: majority - sec/tan^2 form (1,3) with constant 4 (1,2); 3 is the halved-constant twin"
+  },
+  "11": {
+    "guess": 2,
+    "reason": "SURFACE: intersection - ln with 5x and sqrt(25x^2-9) and a plus sign; 4 is the minus twin, 5 is the theta version"
+  },
+  "12": {
+    "guess": 3,
+    "reason": "SURFACE: centre - 2 negated, 4 doubled, 6 halved copies of 2csc^2"
+  },
+  "13": {
+    "guess": 5,
+    "reason": "SURFACE: intersection - coefficient 3/5 (3,5) and sec tan (1,2,4,5); same option set as unit 8"
+  },
+  "14": {
+    "guess": 2,
+    "reason": "SURFACE: intersection - sqrt=tan (1,2) and dx=sec tan (2,3,4,5)"
+  },
+  "15": {
+    "guess": 5,
+    "reason": "SURFACE: intersection - 4arctan(3/2) (3,4,5) and 24/13 (2,5)"
+  },
+  "16": {
+    "guess": 3,
+    "reason": "SURFACE: intersection - theta/6 (3,4,5), sin2theta/12 (3,5), plus sign (1,3,4)"
+  },
+  "17": {
+    "guess": 2,
+    "reason": "SURFACE: intersection - 'x = 5 ...' (1,2,5) and sin (2,3,4)"
+  },
+  "18": {
+    "guess": 2,
+    "reason": "SURFACE tie-break (low confidence): arcsin pair (1,5) vs arcsec pair (2,6); arccos(x/4) reads like a sec->cos reciprocal distractor so picked arcsec(x/4)"
+  },
+  "19": {
+    "guess": 3,
+    "reason": "SURFACE: centre - 4sec is x2, -2sec is the sign flip, 2cos the reciprocal slip of 2sec"
+  },
+  "20": {
+    "guess": 2,
+    "reason": "MATH: 1,3,4,5,6 are false statements (cos<0 on (pi/2,pi], x can be negative, sqrt(u^2)=|u|, sin<0 for theta<0, triangle-sign mistake)"
+  },
+  "21": {
+    "guess": 4,
+    "reason": "SURFACE: intersection - arcsec x (3,4,5) and +sqrt(x^2-1)/x^2 (1,4)"
+  },
+  "22": {
+    "guess": 3,
+    "reason": "NO-CUE: perfectly symmetric (5x=3 vs 3x=5, sin/sec/tan twice each); guessed sec only because 25x^2-9 appeared in other sampled units"
+  },
+  "23": {
+    "guess": 1,
+    "reason": "MATH: the IBP option's dv reveals the integrand x/sqrt(x^2+4), whose radicand derivative is present -> u-sub"
+  },
+  "24": {
+    "guess": 3,
+    "reason": "SURFACE: centre - 6 is x2, 2 sign flip, 1 wrong ln, 5 drops ln"
+  },
+  "25": {
+    "guess": 1,
+    "reason": "SURFACE+inference: u=x^2+1 reveals radicand x^2+1 -> tan with coefficient 1; 5 is the x2 variant (centre). Cannot rule out 3 without the integrand"
+  },
+  "26": {
+    "guess": 5,
+    "reason": "MATH: the IBP option reveals the integrand x/(x^2-16)^(3/2); derivative of x^2-16 is present -> u-sub"
+  },
+  "27": {
+    "guess": 1,
+    "reason": "SURFACE: intersection - -sqrt(9-x^2)/x (1,2) and arcsin(x/3) (1,3,5)"
+  },
+  "28": {
+    "guess": 4,
+    "reason": "SURFACE: intersection - sin^3 integrand (1-5) and bounds -pi/6..pi/4 (4,6)"
+  },
+  "29": {
+    "guess": 5,
+    "reason": "SURFACE: intersection - sec^2 (1,3,5) and coefficient 2 (2,4,5)"
+  },
+  "30": {
+    "guess": 1,
+    "reason": "SURFACE: intersection - sqrt(x^2-2) numerator (1,3) and /x denominator (1,4,6); 4 is the x^2+2 twin of 1"
+  },
+  "31": {
+    "guess": 1,
+    "reason": "SURFACE: centre - 3 is /3, 6 is x3, 5 negated copies of cos^2/sin^2"
+  },
+  "32": {
+    "guess": 4,
+    "reason": "MATH: IBP option reveals integrand 1/(x^2 sqrt(x^2+4)); x^2+4 and no x factor for a u-sub -> x=2tan"
+  },
+  "33": {
+    "guess": 3,
+    "reason": "SURFACE: intersection - b=pi/4 (2,3,4,6) and -pi/6 as lower bound; 5 is the swapped twin"
+  },
+  "34": {
+    "guess": 4,
+    "reason": "SURFACE: intersection - pi/2<theta<=pi (1,2,4), tan<=0 (2,4,6), -3tan (4,6)"
+  },
+  "35": {
+    "guess": 4,
+    "reason": "NO-CUE: symmetric (x=5 vs 5x=, sin/sec/tan twice each); guessed tan from x^2+25 seen in units 2/37"
+  },
+  "36": {
+    "guess": 4,
+    "reason": "MATH: even power of cos needs the half-angle identity; others are wrong strategies"
+  },
+  "37": {
+    "guess": 2,
+    "reason": "SURFACE: intersection - sqrt(x^2+25) (2,3,5,6) and x+sqrt (1,2,5); 5 is the x1/5 twin"
+  },
+  "38": {
+    "guess": 6,
+    "reason": "SURFACE: intersection - cos^2 (1,4,5,6) and 1/3 (1,3,6); 1 is the negated twin"
+  }
+}
