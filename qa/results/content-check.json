@@ -1,0 +1,321 @@
+{
+  "generatedAt": "2026-09-24T11:34:28.721Z",
+  "counts": {
+    "staticFlash": 485,
+    "generators": 16,
+    "problems": 89,
+    "steps": 398,
+    "sweepUnits": 963,
+    "perTopic": {
+      "diff-review": {
+        "flash": 54,
+        "generators": 4,
+        "problems": 4,
+        "steps": 19
+      },
+      "antiderivatives": {
+        "flash": 62,
+        "generators": 3,
+        "problems": 13,
+        "steps": 56
+      },
+      "area": {
+        "flash": 45,
+        "generators": 1,
+        "problems": 12,
+        "steps": 52
+      },
+      "volumes-disks": {
+        "flash": 46,
+        "generators": 1,
+        "problems": 10,
+        "steps": 39
+      },
+      "volumes-shells": {
+        "flash": 48,
+        "generators": 1,
+        "problems": 10,
+        "steps": 45
+      },
+      "arc-length": {
+        "flash": 46,
+        "generators": 2,
+        "problems": 10,
+        "steps": 46
+      },
+      "ibp": {
+        "flash": 63,
+        "generators": 2,
+        "problems": 10,
+        "steps": 48
+      },
+      "trig-integrals": {
+        "flash": 65,
+        "generators": 2,
+        "problems": 10,
+        "steps": 43
+      },
+      "trig-sub": {
+        "flash": 56,
+        "generators": 0,
+        "problems": 10,
+        "steps": 50
+      }
+    }
+  },
+  "optionCounts": {
+    "5": 548,
+    "6": 415
+  },
+  "ambiguousKeys": [
+    [
+      "dr-g-exp-kx:4242",
+      "dr-g-exp-kx:500000"
+    ],
+    [
+      "dr-g-cos-kx:4242",
+      "dr-g-cos-kx:500000"
+    ],
+    [
+      "dr-g-a-pow-kx:1",
+      "dr-g-a-pow-kx:4242"
+    ],
+    [
+      "dr-g-tan-kx:4242",
+      "dr-g-tan-kx:500000"
+    ],
+    [
+      "ad-g-recip-power:1",
+      "ad-g-recip-power:500000"
+    ],
+    [
+      "ad-g-exp-kx:4242",
+      "ad-g-exp-kx:500000"
+    ],
+    [
+      "ad-g-trig-kx:4242",
+      "ad-g-trig-kx:500000"
+    ],
+    [
+      "ar-g-line-parabola-eval:20",
+      "ar-g-line-parabola-eval:500000"
+    ],
+    [
+      "al-g-root-shift:1",
+      "al-g-root-shift:20"
+    ],
+    [
+      "al-g-root-shift:4242",
+      "al-g-root-shift:500000"
+    ],
+    [
+      "ip-g-xn-ln:1",
+      "ip-g-xn-ln:4242",
+      "ip-g-xn-ln:500000"
+    ],
+    [
+      "ip-g-x-ekx:1",
+      "ip-g-x-ekx:500000"
+    ],
+    [
+      "ti-g-half-angle-kx:1",
+      "ti-g-half-angle-kx:20"
+    ],
+    [
+      "ti-g-half-angle-kx:4242",
+      "ti-g-half-angle-kx:500000"
+    ]
+  ],
+  "renderIssues": [
+    {
+      "where": "ad-f-043 opt3",
+      "problem": "suspicious text undefined",
+      "source": "{\"l\":\"\\\\int_0^{\\\\pi} \\\\sec^2 x\\\\,dx\",\"w\":\"sec²x is undefined at x = π/2, which lies in [0, π].\"}"
+    },
+    {
+      "where": "ad-s-10#3 opt1",
+      "problem": "suspicious text undefined",
+      "source": "{\"l\":\"4u - 16\\\\ln u\",\"w\":\"u is negative on [−4, −2], where ln u is undefined; the antiderivative of 1/u is ln|u|.\"}"
+    },
+    {
+      "where": "vd-s-06#0 opt4",
+      "problem": "suspicious text undefined",
+      "source": "{\"t\":\"Washers perpendicular to the x-axis, $x$ from $-1$ to 1\",\"w\":\"$\\\\sqrt{x}$ is undefined for $x < 0$; $\\\\sqrt{x} = x^2$ gives $x = 0$ or $x = 1$.\"}"
+    }
+  ],
+  "fuzz": [
+    {
+      "generator": "dr-g-exp-kx",
+      "seedsTested": 400,
+      "failing": 0,
+      "examples": []
+    },
+    {
+      "generator": "dr-g-cos-kx",
+      "seedsTested": 400,
+      "failing": 0,
+      "examples": []
+    },
+    {
+      "generator": "dr-g-a-pow-kx",
+      "seedsTested": 400,
+      "failing": 0,
+      "examples": []
+    },
+    {
+      "generator": "dr-g-tan-kx",
+      "seedsTested": 400,
+      "failing": 0,
+      "examples": []
+    },
+    {
+      "generator": "ad-g-recip-power",
+      "seedsTested": 400,
+      "failing": 0,
+      "examples": []
+    },
+    {
+      "generator": "ad-g-exp-kx",
+      "seedsTested": 400,
+      "failing": 0,
+      "examples": []
+    },
+    {
+      "generator": "ad-g-trig-kx",
+      "seedsTested": 400,
+      "failing": 0,
+      "examples": []
+    },
+    {
+      "generator": "ar-g-line-parabola-eval",
+      "seedsTested": 400,
+      "failing": 0,
+      "examples": []
+    },
+    {
+      "generator": "vd-g-washer-slice",
+      "seedsTested": 400,
+      "failing": 0,
+      "examples": []
+    },
+    {
+      "generator": "vs-g-axis-radius",
+      "seedsTested": 400,
+      "failing": 0,
+      "examples": []
+    },
+    {
+      "generator": "al-g-line-length",
+      "seedsTested": 400,
+      "failing": 0,
+      "examples": []
+    },
+    {
+      "generator": "al-g-root-shift",
+      "seedsTested": 400,
+      "failing": 0,
+      "examples": []
+    },
+    {
+      "generator": "ip-g-xn-ln",
+      "seedsTested": 400,
+      "failing": 0,
+      "examples": []
+    },
+    {
+      "generator": "ip-g-x-ekx",
+      "seedsTested": 400,
+      "failing": 0,
+      "examples": []
+    },
+    {
+      "generator": "ti-g-half-angle-kx",
+      "seedsTested": 400,
+      "failing": 0,
+      "examples": []
+    },
+    {
+      "generator": "ti-g-sincos-strategy",
+      "seedsTested": 400,
+      "failing": 0,
+      "examples": []
+    }
+  ],
+  "longestOptionSources": [
+    {
+      "id": "ar-s-08#1",
+      "len": 204,
+      "source": "T:$\\cos x$ on $\\left(0, \\frac{\\pi}{4}\\right)$ (at $\\frac{\\pi}{6}$: $\\frac{\\sqrt3}{2} > \\frac12$); $\\sin x$ on $\\left(\\frac{\\pi}{4}, \\frac{\\pi}{2}\\right)$ (at $\\frac{\\pi}{3}$: $\\frac{\\sqrt3}{2} > \\frac12$)"
+    },
+    {
+      "id": "ar-s-02#1",
+      "len": 142,
+      "source": "T:On $(-1, 0)$ the parabola is on top (at $x = -\\tfrac12$: $-1.75 > -3.5$); on $(0, 1)$ the line is on top (at $x = \\tfrac12$: $-2.5 > -3.75$)"
+    },
+    {
+      "id": "ar-f-007",
+      "len": 136,
+      "source": "T:When every horizontal segment runs between the same two curves, but vertical segments would need different formulas in different parts"
+    },
+    {
+      "id": "ar-f-008",
+      "len": 128,
+      "source": "T:Solve $f(x) = g(x)$; the smallest and largest solutions are the limits, and one integral always covers everything between them"
+    },
+    {
+      "id": "ar-s-10#1",
+      "len": 126,
+      "source": "T:$y = x^3$ on $(-1, 0)$ (at $-\\tfrac12$: $-\\tfrac18 > -\\tfrac12$); $y = x$ on $(0, 1)$ (at $\\tfrac12$: $\\tfrac12 > \\tfrac18$)"
+    },
+    {
+      "id": "ar-f-009",
+      "len": 124,
+      "source": "T:Evaluate both functions at one point strictly between $a$ and $c$; the larger value marks the top curve on all of $(a, c)$"
+    },
+    {
+      "id": "ar-f-008",
+      "len": 121,
+      "source": "T:Solve $f(x) = g(x)$; the smallest and largest solutions are the limits, and any solutions between them are split points"
+    },
+    {
+      "id": "ip-f-009",
+      "len": 117,
+      "source": "T:If the original integral reappears after integrating by parts, the choice of $u$ was wrong and you must start over."
+    },
+    {
+      "id": "ar-f-005",
+      "len": 113,
+      "source": "T:It is a signed total: $x - x^3 < 0$ on $(-1, 0)$, so that piece cancels the piece on $(0, 1)$; split at $x = 0$"
+    },
+    {
+      "id": "ar-f-006",
+      "len": 113,
+      "source": "T:The integrand is bottom − top: at $x = 0$ the line ($2$) is above the parabola ($0$), so the area is $\\tfrac92$"
+    },
+    {
+      "id": "ar-f-038",
+      "len": 112,
+      "source": "T:In $x$: two integrals, since the parabola crosses the $x$-axis at $x = 2$ and the integrand changes sign there"
+    },
+    {
+      "id": "ip-f-009",
+      "len": 112,
+      "source": "T:A non-constant factor of the integrand may be left out of both $u$ and $dv$ and multiplied back in at the end."
+    },
+    {
+      "id": "ar-f-041",
+      "len": 111,
+      "source": "T:One integral, $\\int_{-1}^{1} (x^2 - x^4)\\,dx$, because $x^2 \\ge x^4$ on $[-1, 1]$; at $x = 0$ they only touch"
+    },
+    {
+      "id": "ar-s-03#3",
+      "len": 111,
+      "source": "T:Test $y = 0$: the line gives $x = 1$, the parabola $x = -3$; so $R(y) = y + 1$ and $L(y) = \\frac{y^2}{2} - 3$"
+    },
+    {
+      "id": "ar-f-044",
+      "len": 108,
+      "source": "T:$y = x^3 - 3x$ on $(-\\sqrt3, 0)$ and $y = x$ on $(0, \\sqrt3)$, since the cubic changes sign at $\\pm\\sqrt3$"
+    }
+  ]
+}
