@@ -551,6 +551,21 @@ export const MISTAKES = {
     description: 'Used y-limits with a dx integral (or f′(x) with dy), or did not rewrite x = g(y) when integrating in y.',
     group: 'arc-length',
   },
+  'radicand-as-binomial-square': {
+    label: 'Wrote (1 + f′)² for 1 + (f′)²',
+    description: 'Squared the whole binomial instead of only the derivative under the arc-length root.',
+    group: 'arc-length',
+  },
+  'wrong-branch-chosen': {
+    label: 'Wrong branch when solving for y (or x)',
+    description: 'Took the ± or the wrong root/branch when rewriting the curve as y = f(x) or x = g(y).',
+    group: 'arc-length',
+  },
+  'abs-sign-on-interval': {
+    label: 'Sign of |expression| decided wrong on the interval',
+    description: 'Removed an absolute value with the wrong sign for the interval of integration (general, not only θ intervals).',
+    group: 'algebra',
+  },
   'arclength-no-root': {
     label: 'Forgot the square root',
     description: 'Integrated 1 + f′(x)² without the root.',
