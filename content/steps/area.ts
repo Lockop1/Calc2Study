@@ -1001,3 +1001,934 @@ export const steps: StepProblem[] = [
       recap: 'On $(0, 1)$ the square root lies above the square, so $A = \\int_0^1 (\\sqrt{x} - x^2)\\,dx = \\frac23 - \\frac13 = \\frac13$.',
     },
   },
+
+  // ───────────── ar-s-07: Level I #4, e^x over y = x ─────────────
+  {
+    id: 'ar-s-07',
+    topic: 'area',
+    title: 'Exponential over a line',
+    difficulty: 1,
+    statement: {
+      text: 'Find the area of the region bounded above by $y = e^{x}$, below by $y = x$, and on the sides by $x = 0$ and $x = 1$.',
+    },
+    steps: [
+      {
+        prompt: 'What are the limits, and is a split needed?',
+        options: [
+          {
+            text: 'Find where $e^x = x$ and use those points as the limits',
+            mistake: 'interval-not-respected',
+            why: 'The sides $x = 0$ and $x = 1$ are given; besides, $e^x = x$ has no solution.',
+          },
+          {
+            text: 'Limits $y = 1$ and $y = e$, the heights of $e^x$ at the two sides',
+            mistake: 'bounds-wrong-variable',
+            why: 'A $dx$-integral needs $x$-limits; $1$ and $e$ are $y$-values.',
+          },
+          { text: 'Limits $x = 0$ and $x = 1$; no split, since $e^x > x$ on the whole interval' },
+          {
+            text: 'Limits $0$ and $1$, split at $x = \\tfrac12$ where the top and bottom trade places',
+            mistake: 'top-bottom-swapped',
+            why: '$e^x$ stays above $x$ on the whole interval; at $x = \\tfrac12$, $e^{1/2} \\approx 1.65 > 0.5$.',
+          },
+          {
+            text: 'Limits $0$ and $1$; no split, and the lower boundary is the $x$-axis',
+            mistake: 'single-function-area',
+            why: 'The lower boundary is the line $y = x$, not the axis.',
+          },
+        ],
+        correct: 2,
+        explanation: 'The sides are given, and $e^x - x \\ge 1 > 0$ on $[0, 1]$, so one integral from $0$ to $1$ works.',
+        result: { text: 'One integral over $0 \\le x \\le 1$: top $e^x$, bottom $x$.' },
+      },
+      {
+        prompt: 'Set up the area integral.',
+        options: [
+          {
+            latex: '\\int_0^1 (x - e^{x})\\,dx',
+            expr: 'integral(x - exp(x), x, 0, 1)',
+            mistake: 'top-bottom-swapped',
+            why: 'This is bottom − top.',
+          },
+          {
+            latex: '\\int_0^1 (e^{x} + x)\\,dx',
+            expr: 'integral(exp(x) + x, x, 0, 1)',
+            mistake: 'sum-instead-of-difference',
+            why: 'The vertical length is $e^x - x$.',
+          },
+          {
+            latex: '\\int_0^1 e^{x}\\,dx',
+            expr: 'integral(exp(x), x, 0, 1)',
+            mistake: 'single-function-area',
+            why: 'This ignores the lower boundary $y = x$.',
+          },
+          { latex: '\\int_0^1 (e^{x} - x)\\,dx', expr: 'integral(exp(x) - x, x, 0, 1)' },
+          {
+            latex: '\\int_1^{e} (e^{x} - x)\\,dx',
+            expr: 'integral(exp(x) - x, x, 1, e)',
+            mistake: 'bounds-wrong-variable',
+            why: '$1$ and $e$ are the $y$-values of $e^x$ at the sides; the $x$-limits are $0$ and $1$.',
+          },
+        ],
+        correct: 3,
+        explanation: 'Top − bottom from $x = 0$ to $x = 1$.',
+        result: { latex: 'A = \\int_0^1 (e^{x} - x)\\,dx' },
+        check: { kind: 'value', expected: 'e - 3/2' },
+      },
+      {
+        prompt: 'Which is an antiderivative of $e^{x} - x$?',
+        options: [
+          {
+            latex: 'e^{x} - x^2',
+            expr: 'exp(x) - x^2',
+            mistake: 'power-rule-int-coefficient',
+            why: '$\\int x\\,dx = \\frac{x^2}{2}$; the division by 2 is missing.',
+          },
+          { latex: 'e^{x} - \\frac{x^2}{2}', expr: 'exp(x) - x^2/2' },
+          {
+            latex: '\\frac{e^{x+1}}{x+1} - \\frac{x^2}{2}',
+            expr: 'exp(x + 1)/(x + 1) - x^2/2',
+            mistake: 'exp-antiderivative-wrong',
+            why: '$e^x$ is not a power of $x$; its antiderivative is $e^x$ itself.',
+          },
+          {
+            latex: 'e^{x} - 1',
+            expr: 'exp(x) - 1',
+            mistake: 'differentiated-instead',
+            why: 'This is the derivative of $e^x - x$.',
+          },
+          {
+            latex: 'e^{x} + \\frac{x^2}{2}',
+            expr: 'exp(x) + x^2/2',
+            mistake: 'sign-error',
+            why: 'The minus sign in front of $x$ carries over to $-\\frac{x^2}{2}$.',
+          },
+        ],
+        correct: 1,
+        explanation: '$\\int e^x\\,dx = e^x$ and $\\int x\\,dx = \\frac{x^2}{2}$.',
+        result: { latex: '\\left[e^{x} - \\frac{x^2}{2}\\right]_0^1' },
+        check: { kind: 'antiderivative', integrand: 'exp(x) - x' },
+      },
+      {
+        prompt: 'Evaluate from $0$ to $1$.',
+        options: [
+          {
+            latex: 'e - \\frac{1}{2}',
+            expr: 'e - 1/2',
+            mistake: 'ftc-not-subtracted',
+            why: '$F(0) = e^0 - 0 = 1$, not $0$; it must be subtracted.',
+          },
+          {
+            latex: '\\frac{3}{2} - e',
+            expr: '3/2 - e',
+            mistake: 'ftc-order-swapped',
+            why: 'Computed $F(0) - F(1)$.',
+          },
+          {
+            latex: 'e - 2',
+            expr: 'e - 2',
+            mistake: 'power-rule-int-coefficient',
+            why: 'With $e^x - x^2$ as the antiderivative: $(e - 1) - 1$.',
+          },
+          {
+            latex: 'e - 1',
+            expr: 'e - 1',
+            mistake: 'differentiated-instead',
+            why: 'Evaluating the derivative $e^x - 1$ gives $(e - 1) - 0$.',
+          },
+          { latex: 'e - \\frac{3}{2}', expr: 'e - 3/2' },
+        ],
+        correct: 4,
+        explanation: '$\\left(e - \\frac12\\right) - (1 - 0) = e - \\frac32$.',
+        result: { latex: '= \\left(e - \\frac{1}{2}\\right) - (1 - 0) = e - \\frac{3}{2}' },
+        check: { kind: 'value', expected: 'e - 3/2' },
+      },
+    ],
+    final: {
+      latex: 'A = e - \\frac{3}{2}',
+      expr: 'e - 3/2',
+      check: { kind: 'definite-integral', integrand: 'exp(x) - x', lower: '0', upper: '1' },
+      recap: 'With the sides given and $e^x$ always above $x$, the area is one integral, $\\int_0^1 (e^x - x)\\,dx = e - \\frac32$; remember $e^0 = 1$ at the lower limit.',
+    },
+  },
+
+  // ───────────── ar-s-08: Level II #1, sin x and cos x ─────────────
+  {
+    id: 'ar-s-08',
+    topic: 'area',
+    title: 'Sine and cosine',
+    difficulty: 2,
+    statement: { text: 'Find the area between $y = \\sin x$ and $y = \\cos x$ on $\\left[0, \\frac{\\pi}{2}\\right]$.' },
+    steps: [
+      {
+        prompt: 'Where do the curves cross in $\\left[0, \\frac{\\pi}{2}\\right]$?',
+        options: [
+          {
+            text: '$\\tan x = 1$ at $x = \\frac{\\pi}{4}$ and $x = \\frac{5\\pi}{4}$, and both are split points',
+            mistake: 'interval-not-respected',
+            why: '$\\frac{5\\pi}{4}$ lies outside $\\left[0, \\frac{\\pi}{2}\\right]$.',
+          },
+          {
+            text: 'They never cross, since sine and cosine are never equal',
+            mistake: 'missing-intersection',
+            why: 'At $x = \\frac{\\pi}{4}$ both equal $\\frac{\\sqrt2}{2}$.',
+          },
+          {
+            text: 'Squaring gives $\\sin^2 x = \\cos^2 x = \\frac12$, so $x = \\frac{\\pi}{4}$ and $x = \\frac{3\\pi}{4}$',
+            mistake: 'algebra-error',
+            why: 'Squaring adds $x = \\frac{3\\pi}{4}$, where $\\sin x = -\\cos x$; it also lies outside the interval.',
+          },
+          {
+            text: '$\\tan x = 1$ gives $x = \\frac{\\pi}{3}$',
+            mistake: 'arithmetic-error',
+            why: '$\\tan\\frac{\\pi}{3} = \\sqrt3$; $\\tan x = 1$ at $x = \\frac{\\pi}{4}$.',
+          },
+          { text: '$\\sin x = \\cos x$ means $\\tan x = 1$, so $x = \\frac{\\pi}{4}$' },
+        ],
+        correct: 4,
+        explanation: 'Dividing by $\\cos x$ (nonzero on $\\left[0, \\frac{\\pi}{2}\\right)$) gives $\\tan x = 1$, so $x = \\frac{\\pi}{4}$.',
+        result: { text: 'They cross at $x = \\frac{\\pi}{4}$; subintervals $\\left[0, \\frac{\\pi}{4}\\right]$ and $\\left[\\frac{\\pi}{4}, \\frac{\\pi}{2}\\right]$.' },
+      },
+      {
+        prompt: 'Which curve is on top on each subinterval?',
+        options: [
+          {
+            text: '$\\cos x$ on top on all of $\\left(0, \\frac{\\pi}{2}\\right)$',
+            mistake: 'top-bottom-not-split',
+            why: 'At $x = \\frac{\\pi}{3}$, $\\sin x = \\frac{\\sqrt3}{2}$ is above $\\cos x = \\frac12$.',
+          },
+          {
+            text: '$\\cos x$ on $\\left(0, \\frac{\\pi}{4}\\right)$ (at $\\frac{\\pi}{6}$: $\\frac{\\sqrt3}{2} > \\frac12$); $\\sin x$ on $\\left(\\frac{\\pi}{4}, \\frac{\\pi}{2}\\right)$ (at $\\frac{\\pi}{3}$: $\\frac{\\sqrt3}{2} > \\frac12$)',
+          },
+          {
+            text: '$\\sin x$ on top on all of $\\left(0, \\frac{\\pi}{2}\\right)$',
+            mistake: 'top-bottom-not-split',
+            why: 'At $x = \\frac{\\pi}{6}$, $\\cos x = \\frac{\\sqrt3}{2}$ is above $\\sin x = \\frac12$.',
+          },
+          {
+            text: '$\\sin x$ on $\\left(0, \\frac{\\pi}{4}\\right)$ and $\\cos x$ on $\\left(\\frac{\\pi}{4}, \\frac{\\pi}{2}\\right)$',
+            mistake: 'top-bottom-swapped',
+            why: 'The test points show the reverse order on each piece.',
+          },
+          {
+            text: 'They are equal at $x = \\frac{\\pi}{4}$, so either may be taken as the top on both pieces',
+            mistake: 'top-bottom-swapped',
+            why: 'Equality at the crossing says nothing about the order on either side; test a point inside each piece.',
+          },
+        ],
+        correct: 1,
+        explanation: 'Test one point inside each subinterval.',
+        result: { text: '$T = \\cos x$, $B = \\sin x$ on $\\left[0, \\frac{\\pi}{4}\\right]$; $T = \\sin x$, $B = \\cos x$ on $\\left[\\frac{\\pi}{4}, \\frac{\\pi}{2}\\right]$.' },
+      },
+      {
+        prompt: 'Set up the area.',
+        options: [
+          {
+            latex: '\\int_0^{\\pi/2} (\\cos x - \\sin x)\\,dx',
+            expr: 'integral(cos(x) - sin(x), x, 0, pi/2)',
+            mistake: 'top-bottom-not-split',
+            why: 'A single integral subtracts the piece on $\\left(\\frac{\\pi}{4}, \\frac{\\pi}{2}\\right)$ and cancels to $0$.',
+          },
+          {
+            latex: '\\int_0^{\\pi/4} (\\sin x - \\cos x)\\,dx + \\int_{\\pi/4}^{\\pi/2} (\\cos x - \\sin x)\\,dx',
+            expr: 'integral(sin(x) - cos(x), x, 0, pi/4) + integral(cos(x) - sin(x), x, pi/4, pi/2)',
+            mistake: 'top-bottom-swapped',
+            why: 'Both pieces are bottom − top.',
+          },
+          {
+            latex: '\\int_0^{\\pi/4} (\\cos x - \\sin x)\\,dx + \\int_{\\pi/4}^{\\pi/2} (\\cos x - \\sin x)\\,dx',
+            expr: 'integral(cos(x) - sin(x), x, 0, pi/4) + integral(cos(x) - sin(x), x, pi/4, pi/2)',
+            mistake: 'top-bottom-not-split',
+            why: 'The split is right, but cosine was kept on top after $\\frac{\\pi}{4}$.',
+          },
+          {
+            latex: '\\int_0^{\\pi/4} (\\cos x - \\sin x)\\,dx',
+            expr: 'integral(cos(x) - sin(x), x, 0, pi/4)',
+            mistake: 'interval-not-respected',
+            why: 'The region continues past the crossing to $x = \\frac{\\pi}{2}$.',
+          },
+          {
+            latex: '\\int_0^{\\pi/4} (\\cos x - \\sin x)\\,dx + \\int_{\\pi/4}^{\\pi/2} (\\sin x - \\cos x)\\,dx',
+            expr: 'integral(cos(x) - sin(x), x, 0, pi/4) + integral(sin(x) - cos(x), x, pi/4, pi/2)',
+          },
+        ],
+        correct: 4,
+        explanation: 'Each piece is top − bottom on its own subinterval.',
+        result: { latex: 'A = \\int_0^{\\pi/4} (\\cos x - \\sin x)\\,dx + \\int_{\\pi/4}^{\\pi/2} (\\sin x - \\cos x)\\,dx' },
+        check: { kind: 'value', expected: '2*sqrt(2) - 2' },
+      },
+      {
+        prompt: 'Evaluate both pieces and add.',
+        options: [
+          {
+            latex: '0',
+            expr: '0',
+            mistake: 'trig-antiderivative-sign',
+            why: 'Used $\\int \\sin x\\,dx = \\cos x$: the pieces become $\\left[\\sin x - \\cos x\\right]$ and $\\left[\\cos x - \\sin x\\right]$, giving $1 + (-1)$.',
+          },
+          {
+            latex: '2 - 2\\sqrt{2}',
+            expr: '2 - 2*sqrt(2)',
+            mistake: 'ftc-order-swapped',
+            why: 'Each piece was computed as $F(\\text{lower}) - F(\\text{upper})$.',
+          },
+          { latex: '2\\sqrt{2} - 2', expr: '2*sqrt(2) - 2' },
+          {
+            latex: '4\\sqrt{2} - 2',
+            expr: '4*sqrt(2) - 2',
+            mistake: 'arithmetic-error',
+            why: 'Used $\\sin\\frac{\\pi}{4} = \\cos\\frac{\\pi}{4} = \\sqrt2$; each equals $\\frac{\\sqrt2}{2}$.',
+          },
+          {
+            latex: '\\sqrt{2} - 1',
+            expr: 'sqrt(2) - 1',
+            mistake: 'interval-not-respected',
+            why: 'That is only the piece over $\\left[0, \\frac{\\pi}{4}\\right]$; the piece over $\\left[\\frac{\\pi}{4}, \\frac{\\pi}{2}\\right]$ adds another $\\sqrt2 - 1$.',
+          },
+        ],
+        correct: 2,
+        explanation: '$\\left[\\sin x + \\cos x\\right]_0^{\\pi/4} = \\sqrt2 - 1$ and $\\left[-\\cos x - \\sin x\\right]_{\\pi/4}^{\\pi/2} = -1 + \\sqrt2$; the sum is $2\\sqrt2 - 2$.',
+        result: { latex: '= (\\sqrt{2} - 1) + (\\sqrt{2} - 1) = 2\\sqrt{2} - 2' },
+        check: { kind: 'value', expected: '2*sqrt(2) - 2' },
+      },
+    ],
+    final: {
+      latex: 'A = 2\\sqrt{2} - 2',
+      expr: '2*sqrt(2) - 2',
+      check: { kind: 'value', expected: 'integral(cos(x) - sin(x), x, 0, pi/4) + integral(sin(x) - cos(x), x, pi/4, pi/2)' },
+      recap: 'The curves cross at $\\frac{\\pi}{4}$, so split there and take top − bottom on each side; without the split the two pieces cancel to $0$.',
+    },
+  },
+
+  // ───────────── ar-s-09: Level II #3, x + 3 over 2|x| ─────────────
+  {
+    id: 'ar-s-09',
+    topic: 'area',
+    title: 'A line over an absolute value',
+    difficulty: 2,
+    statement: { text: 'Find the area of the region bounded above by $y = x + 3$ and below by $y = 2|x|$.' },
+    steps: [
+      {
+        prompt: 'Find the $x$-coordinates where the curves meet.',
+        options: [
+          {
+            latex: 'x = 3',
+            expr: '3',
+            mistake: 'abs-value-region-wrong',
+            why: 'Treating $2|x|$ as $2x$ finds only $x = 3$; for $x < 0$ solve $x + 3 = -2x$.',
+          },
+          {
+            latex: 'x = -3,\\quad x = 3',
+            expr: '[-3, 3]',
+            mistake: 'algebra-error',
+            why: '$x + 3 = -2x$ gives $3x = -3$, so $x = -1$; $-3$ is where the line meets the $x$-axis.',
+          },
+          { latex: 'x = -1,\\quad x = 3', expr: '[-1, 3]' },
+          {
+            latex: 'x = 2,\\quad x = 6',
+            expr: '[2, 6]',
+            mistake: 'bounds-wrong-variable',
+            why: '$2$ and $6$ are the $y$-coordinates of $(-1, 2)$ and $(3, 6)$.',
+          },
+          {
+            latex: 'x = -1,\\quad x = 1',
+            expr: '[-1, 1]',
+            mistake: 'sign-error',
+            why: 'For $x \\ge 0$, $x + 3 = 2x$ gives $x = 3$; moving $x$ across with the wrong sign gives $3x = 3$.',
+          },
+        ],
+        correct: 2,
+        explanation: 'For $x \\ge 0$: $x + 3 = 2x \\Rightarrow x = 3$; for $x < 0$: $x + 3 = -2x \\Rightarrow x = -1$.',
+        result: { text: 'The curves meet at $(-1, 2)$ and $(3, 6)$.' },
+        check: { kind: 'value', expected: '[-1, 3]' },
+      },
+      {
+        prompt: 'Where must the region be split, and what are the pieces?',
+        options: [
+          {
+            text: 'No split: the top $y = x + 3$ never changes, so one integral of $(x + 3) - 2x$ works',
+            mistake: 'abs-value-region-wrong',
+            why: 'The top stays the same, but the bottom $2|x|$ changes formula at $x = 0$.',
+          },
+          {
+            text: 'At $x = 0$: the bottom is $y = 2x$ on $[-1, 0]$ and $y = -2x$ on $[0, 3]$',
+            mistake: 'abs-value-region-wrong',
+            why: '$|x| = -x$ for $x < 0$ and $|x| = x$ for $x \\ge 0$; these cases are reversed.',
+          },
+          {
+            text: 'At $x = 0$: on $[0, 3]$ the top is $y = 2x$ and the bottom is $y = x + 3$',
+            mistake: 'top-bottom-swapped',
+            why: 'At $x = 1$: $x + 3 = 4 > 2 = 2x$, so the line stays on top.',
+          },
+          { text: 'At $x = 0$: the bottom is $y = -2x$ on $[-1, 0]$ and $y = 2x$ on $[0, 3]$' },
+          {
+            text: 'No split: use $y = -2x$ as the bottom on all of $[-1, 3]$',
+            mistake: 'abs-value-region-wrong',
+            why: '$-2x$ is the bottom only for $x < 0$; for $x \\ge 0$ it is $2x$.',
+          },
+        ],
+        correct: 3,
+        explanation: '$2|x|$ is $-2x$ for $x < 0$ and $2x$ for $x \\ge 0$, so the bottom boundary changes at $x = 0$.',
+        result: { text: 'On $[-1, 0]$: $T = x + 3$, $B = -2x$. On $[0, 3]$: $T = x + 3$, $B = 2x$.' },
+      },
+      {
+        prompt: 'Set up the area.',
+        options: [
+          {
+            latex: '\\int_{-1}^{3} (3 - x)\\,dx',
+            expr: 'integral(3 - x, x, -1, 3)',
+            mistake: 'abs-value-region-wrong',
+            why: 'Using $2x$ as the bottom on $[-1, 0]$ treats $|x|$ as $x$ there.',
+          },
+          { latex: '\\int_{-1}^{0} (3x + 3)\\,dx + \\int_{0}^{3} (3 - x)\\,dx', expr: 'integral(3*x + 3, x, -1, 0) + integral(3 - x, x, 0, 3)' },
+          {
+            latex: '\\int_{-1}^{0} (3 - x)\\,dx + \\int_{0}^{3} (3x + 3)\\,dx',
+            expr: 'integral(3 - x, x, -1, 0) + integral(3*x + 3, x, 0, 3)',
+            mistake: 'abs-value-region-wrong',
+            why: 'The two cases of $|x|$ are reversed.',
+          },
+          {
+            latex: '\\int_{-1}^{0} (-3x - 3)\\,dx + \\int_{0}^{3} (x - 3)\\,dx',
+            expr: 'integral(-3*x - 3, x, -1, 0) + integral(x - 3, x, 0, 3)',
+            mistake: 'top-bottom-swapped',
+            why: 'Both pieces are bottom − top.',
+          },
+          {
+            latex: '\\int_{0}^{3} (3 - x)\\,dx',
+            expr: 'integral(3 - x, x, 0, 3)',
+            mistake: 'missing-intersection',
+            why: 'The left intersection $x = -1$ was dropped, so the piece over $[-1, 0]$ is missing.',
+          },
+        ],
+        correct: 1,
+        explanation: '$(x + 3) - (-2x) = 3x + 3$ on $[-1, 0]$ and $(x + 3) - 2x = 3 - x$ on $[0, 3]$.',
+        result: { latex: 'A = \\int_{-1}^{0} (3x + 3)\\,dx + \\int_{0}^{3} (3 - x)\\,dx' },
+        check: { kind: 'value', expected: '6' },
+      },
+      {
+        prompt: 'Evaluate.',
+        options: [
+          {
+            latex: '9',
+            expr: '9',
+            mistake: 'negative-squared-wrong',
+            why: 'Used $(-1)^2 = -1$ in $\\frac{3x^2}{2}$, so the first piece came out $\\frac92$ instead of $\\frac32$.',
+          },
+          {
+            latex: '3',
+            expr: '3',
+            mistake: 'ftc-order-swapped',
+            why: 'The first piece was computed as $F(-1) - F(0) = -\\frac32$.',
+          },
+          {
+            latex: '\\frac{3}{2}',
+            expr: '3/2',
+            mistake: 'power-rule-int-coefficient',
+            why: 'Used $\\int x\\,dx = x^2$ in the second piece: $9 - 9 = 0$.',
+          },
+          {
+            latex: '\\frac{9}{2}',
+            expr: '9/2',
+            mistake: 'ftc-not-subtracted',
+            why: 'The first piece was taken as $F(0) = 0$; $F(-1) = -\\frac32$ must be subtracted.',
+          },
+          { latex: '6', expr: '6' },
+        ],
+        correct: 4,
+        explanation: '$\\left[\\frac{3x^2}{2} + 3x\\right]_{-1}^{0} = \\frac32$ and $\\left[3x - \\frac{x^2}{2}\\right]_0^3 = \\frac92$, so $A = 6$.',
+        result: { latex: '= \\frac{3}{2} + \\frac{9}{2} = 6' },
+        check: { kind: 'value', expected: '6' },
+      },
+    ],
+    final: {
+      latex: 'A = 6',
+      expr: '6',
+      check: { kind: 'value', expected: 'integral(3*x + 3, x, -1, 0) + integral(3 - x, x, 0, 3)' },
+      recap: 'The top never changes, but $2|x|$ switches from $-2x$ to $2x$ at $x = 0$, so split there; the region is a triangle of area $6$.',
+    },
+  },
+
+  // ───────────── ar-s-10: y = x and y = x³ on [−1, 1] ─────────────
+  {
+    id: 'ar-s-10',
+    topic: 'area',
+    title: 'A line and a cubic',
+    difficulty: 2,
+    statement: { text: 'Let $R$ be the region enclosed by $y = x$ and $y = x^3$ for $-1 \\le x \\le 1$. Find its area.' },
+    steps: [
+      {
+        prompt: 'Where do the curves cross?',
+        options: [
+          {
+            latex: 'x = -1,\\quad x = 1',
+            expr: '[-1, 1]',
+            mistake: 'missing-intersection',
+            why: 'Dividing $x^3 = x$ by $x$ loses $x = 0$, where the curves trade places.',
+          },
+          {
+            latex: 'x = 0,\\quad x = 1',
+            expr: '[0, 1]',
+            mistake: 'missing-intersection',
+            why: '$x^2 = 1$ has two roots; $x = -1$ is missing.',
+          },
+          { latex: 'x = -1,\\quad x = 0,\\quad x = 1', expr: '[-1, 0, 1]' },
+          {
+            latex: 'x = 0',
+            expr: '0',
+            mistake: 'sign-error',
+            why: '$x^3 - x = x(x^2 - 1)$, and $x^2 = 1$ has the real roots $\\pm 1$; it was treated as $x^2 = -1$.',
+          },
+          {
+            latex: 'x = 1',
+            expr: '1',
+            mistake: 'missing-intersection',
+            why: 'Dividing by $x$ and keeping only the positive root of $x^2 = 1$ loses both $x = 0$ and $x = -1$.',
+          },
+        ],
+        correct: 2,
+        explanation: '$x^3 - x = x(x - 1)(x + 1) = 0$ gives $x = -1, 0, 1$.',
+        result: { latex: 'x^3 - x = x(x - 1)(x + 1) = 0 \\Rightarrow x = -1,\\ 0,\\ 1' },
+        check: { kind: 'value', expected: '[-1, 0, 1]' },
+      },
+      {
+        prompt: 'Which curve is on top on each subinterval?',
+        options: [
+          {
+            text: '$y = x$ on top on all of $(-1, 1)$',
+            mistake: 'top-bottom-not-split',
+            why: 'At $x = -\\tfrac12$: $x^3 = -\\tfrac18$ is above $x = -\\tfrac12$.',
+          },
+          {
+            text: '$y = x$ on $(-1, 0)$ and $y = x^3$ on $(0, 1)$',
+            mistake: 'top-bottom-swapped',
+            why: 'Among negatives $-\\tfrac18 > -\\tfrac12$, so the cubic is on top on $(-1, 0)$; the line is on top on $(0, 1)$.',
+          },
+          {
+            text: '$y = x^3$ on top on all of $(-1, 1)$',
+            mistake: 'top-bottom-not-split',
+            why: 'At $x = \\tfrac12$: $x = \\tfrac12$ is above $x^3 = \\tfrac18$.',
+          },
+          {
+            text: 'The two pieces are mirror images, so the area is $0$',
+            mistake: 'signed-area-confusion',
+            why: 'Mirror-image pieces have equal areas that add; only signed integrals cancel.',
+          },
+          {
+            text: '$y = x^3$ on $(-1, 0)$ (at $-\\tfrac12$: $-\\tfrac18 > -\\tfrac12$); $y = x$ on $(0, 1)$ (at $\\tfrac12$: $\\tfrac12 > \\tfrac18$)',
+          },
+        ],
+        correct: 4,
+        explanation: 'Test one point in each subinterval; among negatives, $-\\tfrac18 > -\\tfrac12$.',
+        result: { text: 'On $[-1, 0]$: $T = x^3$, $B = x$. On $[0, 1]$: $T = x$, $B = x^3$.' },
+      },
+      {
+        prompt: 'Set up the area.',
+        options: [
+          { latex: '\\int_{-1}^{0} (x^3 - x)\\,dx + \\int_{0}^{1} (x - x^3)\\,dx', expr: 'integral(x^3 - x, x, -1, 0) + integral(x - x^3, x, 0, 1)' },
+          {
+            latex: '\\int_{-1}^{1} (x - x^3)\\,dx',
+            expr: 'integral(x - x^3, x, -1, 1)',
+            mistake: 'top-bottom-not-split',
+            why: 'Without the split the two pieces cancel: this integral is $0$.',
+          },
+          {
+            latex: '\\int_{-1}^{0} (x - x^3)\\,dx + \\int_{0}^{1} (x^3 - x)\\,dx',
+            expr: 'integral(x - x^3, x, -1, 0) + integral(x^3 - x, x, 0, 1)',
+            mistake: 'top-bottom-swapped',
+            why: 'Both pieces are bottom − top.',
+          },
+          {
+            latex: '\\int_{0}^{1} (x - x^3)\\,dx',
+            expr: 'integral(x - x^3, x, 0, 1)',
+            mistake: 'missing-intersection',
+            why: 'This covers only the piece over $[0, 1]$; the region also has a piece over $[-1, 0]$.',
+          },
+          {
+            latex: '\\int_{-1}^{0} (x^3 - x)\\,dx + \\int_{0}^{1} (x^3 - x)\\,dx',
+            expr: 'integral(x^3 - x, x, -1, 0) + integral(x^3 - x, x, 0, 1)',
+            mistake: 'top-bottom-not-split',
+            why: 'The split is right, but $x^3$ was kept on top on $(0, 1)$.',
+          },
+        ],
+        correct: 0,
+        explanation: 'Each piece is top − bottom on its own subinterval.',
+        result: { latex: 'A = \\int_{-1}^{0} (x^3 - x)\\,dx + \\int_{0}^{1} (x - x^3)\\,dx' },
+        check: { kind: 'value', expected: '1/2' },
+      },
+      {
+        prompt: 'Evaluate.',
+        options: [
+          {
+            latex: '0',
+            expr: '0',
+            mistake: 'ftc-order-swapped',
+            why: 'The first piece was computed as $F(-1) - F(0) = -\\frac14$, cancelling the second piece.',
+          },
+          {
+            latex: '\\frac{1}{4}',
+            expr: '1/4',
+            mistake: 'ftc-not-subtracted',
+            why: 'The first piece was taken as $F(0) = 0$; $F(-1) = -\\frac14$ must be subtracted.',
+          },
+          {
+            latex: '1',
+            expr: '1',
+            mistake: 'negative-squared-wrong',
+            why: 'Used $(-1)^4 = -1$, so $F(-1) = -\\frac14 - \\frac12 = -\\frac34$ and the first piece became $\\frac34$.',
+          },
+          { latex: '\\frac{1}{2}', expr: '1/2' },
+          {
+            latex: '\\frac{1}{3}',
+            expr: '1/3',
+            mistake: 'power-rule-int-coefficient',
+            why: 'Used $\\int x^3\\,dx = \\frac{x^4}{3}$, making each piece $\\frac16$.',
+          },
+        ],
+        correct: 3,
+        explanation: '$\\left[\\frac{x^4}{4} - \\frac{x^2}{2}\\right]_{-1}^{0} = \\frac14$ and $\\left[\\frac{x^2}{2} - \\frac{x^4}{4}\\right]_0^1 = \\frac14$.',
+        result: { latex: '= \\frac{1}{4} + \\frac{1}{4} = \\frac{1}{2}' },
+        check: { kind: 'value', expected: '1/2' },
+      },
+    ],
+    final: {
+      latex: 'A = \\frac{1}{2}',
+      expr: '1/2',
+      check: { kind: 'value', expected: 'integral(x^3 - x, x, -1, 0) + integral(x - x^3, x, 0, 1)' },
+      recap: 'The curves trade places at $x = 0$; without the split, $\\int_{-1}^{1}(x - x^3)\\,dx = 0$ measures signed area, not area.',
+    },
+  },
+
+  // ───────────── ar-s-11: Level II #2, parabola and the y-axis ─────────────
+  {
+    id: 'ar-s-11',
+    topic: 'area',
+    title: 'Parabola and the y-axis',
+    difficulty: 2,
+    variable: 'y',
+    statement: { text: 'Find the area of the region enclosed by the parabola $y^2 = 2x + 6$ and the $y$-axis.' },
+    steps: [
+      {
+        prompt: 'To integrate with respect to $y$, write the parabola as $x = g(y)$.',
+        options: [
+          {
+            latex: 'x = \\frac{y^2}{2} + 3',
+            expr: 'y^2/2 + 3',
+            mistake: 'inverse-function-wrong',
+            why: '$2x = y^2 - 6$, so $x = \\frac{y^2}{2} - 3$; the sign of the constant flipped.',
+          },
+          {
+            latex: 'x = y^2 - 3',
+            expr: 'y^2 - 3',
+            mistake: 'inverse-function-wrong',
+            why: 'Only the $6$ was halved; $y^2$ must be divided by 2 as well.',
+          },
+          { latex: 'x = \\frac{y^2}{2} - 3', expr: 'y^2/2 - 3' },
+          {
+            latex: 'x = \\frac{y^2}{2} - 6',
+            expr: 'y^2/2 - 6',
+            mistake: 'inverse-function-wrong',
+            why: 'Only $y^2$ was halved; the $6$ must be divided by 2 as well.',
+          },
+          {
+            latex: 'x = \\sqrt{2y + 6}',
+            expr: 'sqrt(2*y + 6)',
+            mistake: 'inverse-function-wrong',
+            why: 'Swapping the letters $x$ and $y$ does not solve for $x$.',
+          },
+        ],
+        correct: 2,
+        explanation: '$y^2 = 2x + 6 \\Rightarrow 2x = y^2 - 6 \\Rightarrow x = \\frac{y^2}{2} - 3$.',
+        result: { latex: 'x = \\frac{y^2}{2} - 3' },
+        check: { kind: 'identity', lhs: 'y^2/2 - 3' },
+      },
+      {
+        prompt: 'Where does the parabola meet the $y$-axis?',
+        options: [
+          {
+            latex: 'y = -3,\\quad y = 0',
+            expr: '[-3, 0]',
+            mistake: 'bounds-wrong-variable',
+            why: '$-3$ and $0$ are the $x$-extent of the region (vertex to axis), not $y$-values.',
+          },
+          {
+            latex: 'y = 0,\\quad y = \\sqrt{6}',
+            expr: '[0, sqrt(6)]',
+            mistake: 'missing-intersection',
+            why: '$y^2 = 6$ has two roots; $y = -\\sqrt6$ is missing.',
+          },
+          {
+            latex: 'y = -6,\\quad y = 6',
+            expr: '[-6, 6]',
+            mistake: 'algebra-error',
+            why: 'From $y^2 = 6$, $y = \\pm\\sqrt6$; the square root was not taken.',
+          },
+          { latex: 'y = -\\sqrt{6},\\quad y = \\sqrt{6}', expr: '[-sqrt(6), sqrt(6)]' },
+          {
+            latex: 'y = -\\sqrt{3},\\quad y = \\sqrt{3}',
+            expr: '[-sqrt(3), sqrt(3)]',
+            mistake: 'algebra-error',
+            why: 'On the $y$-axis $x = 0$, so $y^2 = 6$; the $6$ was halved by mistake.',
+          },
+        ],
+        correct: 3,
+        explanation: 'On the $y$-axis $x = 0$: $y^2 = 6$, so $y = \\pm\\sqrt6$.',
+        result: { latex: 'x = 0 \\Rightarrow y^2 = 6 \\Rightarrow y = \\pm\\sqrt{6}' },
+        check: { kind: 'value', expected: '[-sqrt(6), sqrt(6)]' },
+      },
+      {
+        prompt: 'Which boundary is on the right and which on the left?',
+        options: [
+          { text: 'Right: the $y$-axis $x = 0$; left: the parabola $x = \\frac{y^2}{2} - 3$ (at $y = 0$: $0 > -3$)' },
+          {
+            text: 'Right: the parabola $x = \\frac{y^2}{2} - 3$; left: the $y$-axis',
+            mistake: 'top-bottom-swapped',
+            why: 'At $y = 0$ the parabola is at $x = -3$, to the left of the axis.',
+          },
+          {
+            text: 'Top: $y = \\sqrt{2x + 6}$; bottom: $y = -\\sqrt{2x + 6}$',
+            mistake: 'dx-dy-mismatch',
+            why: 'Top and bottom in $x$ belong to a $dx$ setup; a $dy$-integral needs right and left curves in $y$.',
+          },
+          {
+            text: 'Right: $x = 0$ for $y > 0$, but the parabola for $y < 0$',
+            mistake: 'top-bottom-swapped',
+            why: 'The order never changes between $y = -\\sqrt6$ and $y = \\sqrt6$: at $y = -1$, $0 > -2.5$.',
+          },
+          {
+            text: 'Right: $x = 0$; left: $x = \\frac{y^2}{2} + 3$',
+            mistake: 'inverse-function-wrong',
+            why: 'The parabola is $x = \\frac{y^2}{2} - 3$; with $+3$ it would lie to the right of the axis.',
+          },
+        ],
+        correct: 0,
+        explanation: 'At $y = 0$ the axis ($x = 0$) is to the right of the vertex ($x = -3$), and the order holds for all $y$ in between.',
+        result: { text: '$R(y) = 0$, $L(y) = \\frac{y^2}{2} - 3$ for $-\\sqrt6 \\le y \\le \\sqrt6$.' },
+      },
+      {
+        prompt: 'Set up the area integral.',
+        options: [
+          {
+            latex: '\\int_{-\\sqrt{6}}^{\\sqrt{6}} \\left(\\frac{y^2}{2} - 3\\right)dy',
+            expr: 'integral(y^2/2 - 3, y, -sqrt(6), sqrt(6))',
+            mistake: 'top-bottom-swapped',
+            why: 'This is left − right.',
+          },
+          {
+            latex: '\\int_{-3}^{0} \\left(3 - \\frac{y^2}{2}\\right)dy',
+            expr: 'integral(3 - y^2/2, y, -3, 0)',
+            mistake: 'bounds-wrong-variable',
+            why: '$-3$ and $0$ are $x$-values; the $y$-limits are $\\pm\\sqrt6$.',
+          },
+          {
+            latex: '\\int_{0}^{\\sqrt{6}} \\left(3 - \\frac{y^2}{2}\\right)dy',
+            expr: 'integral(3 - y^2/2, y, 0, sqrt(6))',
+            mistake: 'missing-intersection',
+            why: 'The negative root $y = -\\sqrt6$ was dropped, so only the upper half is counted.',
+          },
+          {
+            latex: '\\int_{-3}^{0} \\sqrt{2x + 6}\\,dx',
+            expr: 'integral(sqrt(2*x + 6), x, -3, 0)',
+            mistake: 'inverse-function-wrong',
+            why: 'In $x$, $y = \\pm\\sqrt{2x + 6}$; using only the $+$ branch gives the upper half of the region.',
+          },
+          { latex: '\\int_{-\\sqrt{6}}^{\\sqrt{6}} \\left(3 - \\frac{y^2}{2}\\right)dy', expr: 'integral(3 - y^2/2, y, -sqrt(6), sqrt(6))' },
+        ],
+        correct: 4,
+        explanation: '$R - L = 0 - \\left(\\frac{y^2}{2} - 3\\right) = 3 - \\frac{y^2}{2}$, from $y = -\\sqrt6$ to $y = \\sqrt6$.',
+        result: { latex: 'A = \\int_{-\\sqrt{6}}^{\\sqrt{6}}\\left(3 - \\frac{y^2}{2}\\right)dy' },
+        check: { kind: 'value', expected: '4*sqrt(6)' },
+      },
+      {
+        prompt: 'Evaluate.',
+        options: [
+          {
+            latex: '2\\sqrt{6}',
+            expr: '2*sqrt(6)',
+            mistake: 'ftc-not-subtracted',
+            why: 'Only $F(\\sqrt6) = 2\\sqrt6$ was kept; $F(-\\sqrt6) = -2\\sqrt6$ must be subtracted.',
+          },
+          { latex: '4\\sqrt{6}', expr: '4*sqrt(6)' },
+          {
+            latex: '6\\sqrt{6}',
+            expr: '6*sqrt(6)',
+            mistake: 'negative-squared-wrong',
+            why: 'Used $(-\\sqrt6)^3 = 6\\sqrt6$; an odd power keeps the sign, so it is $-6\\sqrt6$.',
+          },
+          {
+            latex: '0',
+            expr: '0',
+            mistake: 'power-rule-int-coefficient',
+            why: 'Used $\\int \\frac{y^2}{2}\\,dy = \\frac{y^3}{2}$; then $F(\\pm\\sqrt6) = 3(\\pm\\sqrt6) - 3(\\pm\\sqrt6) = 0$.',
+          },
+          {
+            latex: '8\\sqrt{6}',
+            expr: '8*sqrt(6)',
+            mistake: 'coefficient-mishandled',
+            why: 'Doubled for symmetry although the limits already run from $-\\sqrt6$ to $\\sqrt6$.',
+          },
+        ],
+        correct: 1,
+        explanation: '$\\left[3y - \\frac{y^3}{6}\\right]_{-\\sqrt6}^{\\sqrt6} = 2\\sqrt6 - (-2\\sqrt6) = 4\\sqrt6$, using $(\\sqrt6)^3 = 6\\sqrt6$.',
+        result: { latex: '= \\left[3y - \\frac{y^3}{6}\\right]_{-\\sqrt{6}}^{\\sqrt{6}} = 2\\sqrt{6} - (-2\\sqrt{6}) = 4\\sqrt{6}' },
+        check: { kind: 'value', expected: '4*sqrt(6)' },
+      },
+    ],
+    final: {
+      latex: 'A = 4\\sqrt{6}',
+      expr: '4*sqrt(6)',
+      check: { kind: 'definite-integral', integrand: '3 - y^2/2', lower: '-sqrt(6)', upper: 'sqrt(6)' },
+      recap: 'Solve for $x = \\frac{y^2}{2} - 3$ and integrate right − left, $0 - \\left(\\frac{y^2}{2} - 3\\right)$, between the $y$-intercepts $\\pm\\sqrt6$: $A = 4\\sqrt6$.',
+    },
+  },
+
+  // ───────────── ar-s-12: Example 2.1 redone in y ─────────────
+  {
+    id: 'ar-s-12',
+    topic: 'area',
+    title: 'Example 2.1 with horizontal slices',
+    difficulty: 2,
+    variable: 'y',
+    statement: {
+      text: 'Find the area of the region enclosed by $y = x^2$ and $y = 2x$, this time integrating with respect to $y$.',
+    },
+    steps: [
+      {
+        prompt: 'On this region $x \\ge 0$. Write both curves as $x = g(y)$.',
+        options: [
+          {
+            latex: 'x = y^2,\\quad x = 2y',
+            expr: '[y^2, 2*y]',
+            mistake: 'inverse-function-wrong',
+            why: 'Swapping the letters $x$ and $y$ does not solve for $x$: $y = x^2$ gives $x = \\sqrt{y}$, and $y = 2x$ gives $x = \\frac{y}{2}$.',
+          },
+          {
+            latex: 'x = \\sqrt{y},\\quad x = 2y',
+            expr: '[sqrt(y), 2*y]',
+            mistake: 'inverse-function-wrong',
+            why: 'Solving $y = 2x$ for $x$ divides by 2: $x = \\frac{y}{2}$.',
+          },
+          {
+            latex: 'x = -\\sqrt{y},\\quad x = \\frac{y}{2}',
+            expr: '[-sqrt(y), y/2]',
+            mistake: 'inverse-function-wrong',
+            why: 'The region has $x \\ge 0$, so the relevant branch of $y = x^2$ is $x = +\\sqrt{y}$.',
+          },
+          { latex: 'x = \\sqrt{y},\\quad x = \\frac{y}{2}', expr: '[sqrt(y), y/2]' },
+          {
+            latex: 'x = y^2,\\quad x = \\frac{y}{2}',
+            expr: '[y^2, y/2]',
+            mistake: 'inverse-function-wrong',
+            why: '$y = x^2$ solved for $x$ is $x = \\sqrt{y}$, not $y^2$.',
+          },
+        ],
+        correct: 3,
+        explanation: '$y = x^2$ with $x \\ge 0$ gives $x = \\sqrt{y}$; $y = 2x$ gives $x = \\frac{y}{2}$.',
+        result: { latex: 'x = \\sqrt{y}\\ (\\text{parabola}),\\quad x = \\frac{y}{2}\\ (\\text{line})' },
+        check: { kind: 'value', expected: '[sqrt(y), y/2]' },
+      },
+      {
+        prompt: 'Find the $y$-limits and the right and left curves.',
+        options: [
+          {
+            text: '$0 \\le y \\le 4$; right $x = \\frac{y}{2}$, left $x = \\sqrt{y}$',
+            mistake: 'top-bottom-swapped',
+            why: 'At $y = 1$ the parabola ($x = 1$) is to the right of the line ($x = \\tfrac12$).',
+          },
+          {
+            text: '$0 \\le y \\le 2$; right $x = \\sqrt{y}$, left $x = \\frac{y}{2}$',
+            mistake: 'bounds-wrong-variable',
+            why: '$2$ is the $x$-coordinate of $(2, 4)$; the $y$-limits are $0$ and $4$.',
+          },
+          { text: '$0 \\le y \\le 4$; right $x = \\sqrt{y}$, left $x = \\frac{y}{2}$ (at $y = 1$: $1 > \\tfrac12$)' },
+          {
+            text: '$0 \\le y \\le 4$; right $x = \\sqrt{y}$ on $(0, 1)$ but $x = \\frac{y}{2}$ on $(1, 4)$',
+            mistake: 'top-bottom-swapped',
+            why: 'At $y = 3$: $\\sqrt3 \\approx 1.73 > 1.5$, so the parabola stays on the right until $y = 4$.',
+          },
+          {
+            text: '$0 \\le x \\le 2$; top $y = 2x$, bottom $y = x^2$',
+            mistake: 'dx-dy-mismatch',
+            why: 'That is the $dx$ description; for $dy$ we need $y$-limits and right/left curves in $y$.',
+          },
+        ],
+        correct: 2,
+        explanation: 'The intersection points $(0, 0)$ and $(2, 4)$ give $y$ from $0$ to $4$; a test at $y = 1$ puts the parabola on the right.',
+        result: { text: '$0 \\le y \\le 4$, $R(y) = \\sqrt{y}$, $L(y) = \\frac{y}{2}$.' },
+      },
+      {
+        prompt: 'Set up the area integral.',
+        options: [
+          {
+            latex: '\\int_0^4 \\left(\\frac{y}{2} - \\sqrt{y}\\right)dy',
+            expr: 'integral(y/2 - sqrt(y), y, 0, 4)',
+            mistake: 'top-bottom-swapped',
+            why: 'This is left − right.',
+          },
+          {
+            latex: '\\int_0^2 \\left(\\sqrt{y} - \\frac{y}{2}\\right)dy',
+            expr: 'integral(sqrt(y) - y/2, y, 0, 2)',
+            mistake: 'bounds-wrong-variable',
+            why: 'The upper $y$-limit is $4$; $2$ is an $x$-value.',
+          },
+          {
+            latex: '\\int_0^4 \\left(\\sqrt{y} - \\frac{y}{2}\\right)dx',
+            expr: 'integral(sqrt(y) - y/2, x, 0, 4)',
+            mistake: 'dx-dy-mismatch',
+            why: 'The integrand is in $y$, so the differential must be $dy$.',
+          },
+          {
+            latex: '\\int_0^4 \\left(2y - y^2\\right)dy',
+            expr: 'integral(2*y - y^2, y, 0, 4)',
+            mistake: 'inverse-function-wrong',
+            why: 'Swapping letters gives $x = 2y$ and $x = y^2$; solved for $x$ the curves are $x = \\frac{y}{2}$ and $x = \\sqrt{y}$.',
+          },
+          { latex: '\\int_0^4 \\left(\\sqrt{y} - \\frac{y}{2}\\right)dy', expr: 'integral(sqrt(y) - y/2, y, 0, 4)' },
+        ],
+        correct: 4,
+        explanation: 'Right − left from $y = 0$ to $y = 4$.',
+        result: { latex: 'A = \\int_0^4 \\left(\\sqrt{y} - \\frac{y}{2}\\right)dy' },
+        check: { kind: 'value', expected: '4/3' },
+      },
+      {
+        prompt: 'Evaluate.',
+        options: [
+          {
+            latex: '8',
+            expr: '8',
+            mistake: 'power-rule-int-coefficient',
+            why: 'Multiplied by $\\frac32$ instead of dividing: $\\frac32 y^{3/2}$ gives $\\frac32 \\cdot 8 - 4$.',
+          },
+          {
+            latex: '-\\frac{8}{3}',
+            expr: '-8/3',
+            mistake: 'power-rule-int-coefficient',
+            why: 'Took $\\int \\frac{y}{2}\\,dy = \\frac{y^2}{2}$, missing the extra factor $\\frac12$: $\\frac{16}{3} - 8$.',
+          },
+          {
+            latex: '0',
+            expr: '0',
+            mistake: 'arithmetic-error',
+            why: 'Took $4^{3/2} = 6$; in fact $4^{3/2} = (\\sqrt4)^3 = 8$.',
+          },
+          { latex: '\\frac{4}{3}', expr: '4/3' },
+          {
+            latex: '\\frac{16}{3}',
+            expr: '16/3',
+            mistake: 'single-function-area',
+            why: 'Only the $\\sqrt{y}$ term was integrated; the $-\\frac{y^2}{4}$ term from the left curve was dropped.',
+          },
+        ],
+        correct: 3,
+        explanation: '$\\left[\\frac23 y^{3/2} - \\frac{y^2}{4}\\right]_0^4 = \\frac{16}{3} - 4 = \\frac43$, the same as the $dx$ answer.',
+        result: { latex: '= \\left[\\frac{2}{3}y^{3/2} - \\frac{y^2}{4}\\right]_0^4 = \\frac{16}{3} - 4 = \\frac{4}{3}' },
+        check: { kind: 'value', expected: '4/3' },
+      },
+    ],
+    final: {
+      latex: 'A = \\frac{4}{3}',
+      expr: '4/3',
+      check: { kind: 'definite-integral', integrand: 'sqrt(y) - y/2', lower: '0', upper: '4' },
+      recap: 'In $y$ the limits are $y$-values ($0$ to $4$) and the integrand is right − left $= \\sqrt{y} - \\frac{y}{2}$; the result matches the $dx$ answer $\\int_0^2 (2x - x^2)\\,dx = \\frac43$.',
+    },
+  },
+];
