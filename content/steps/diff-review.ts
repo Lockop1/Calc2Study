@@ -22,14 +22,14 @@ export const steps: StepProblem[] = [
           },
           {
             text: 'Differentiate top and bottom separately: $\\frac{\\cos x}{-\\sin x}$',
-            mistake: 'technique-wrong',
+            mistake: 'quotient-of-derivatives',
             why: '$\\left(\\frac{f}{g}\\right)\' \\neq \\frac{f\'}{g\'}$; the quotient rule mixes both functions and both derivatives.',
           },
           { text: 'Quotient rule with $f = \\sin x$ (top) and $g = 1 + \\cos x$ (bottom)' },
           {
             text: 'Quotient rule with $f = 1 + \\cos x$ (top) and $g = \\sin x$ (bottom)',
             mistake: 'quotient-rule-order',
-            why: 'The top function is $\\sin x$; swapping the roles of $f$ and $g$ changes the sign of the numerator.',
+            why: 'Swapping the roles differentiates $\\frac{1+\\cos x}{\\sin x}$ instead: the numerator changes sign and the denominator becomes $\\sin^2 x$.',
           },
           {
             text: 'Chain rule with outer function $\\sin u$ and inner function $u = \\frac{x}{1 + \\cos x}$',
@@ -44,31 +44,12 @@ export const steps: StepProblem[] = [
       {
         prompt: "What are $f'$ and $g'$?",
         options: [
-          {
-            latex: "f' = \\cos x,\\quad g' = \\sin x",
-            expr: '[cos(x), sin(x)]',
-            mistake: 'sign-error-derivative',
-            why: '$(\\cos x)\' = -\\sin x$; the minus sign was dropped.',
-          },
-          {
-            latex: "f' = \\cos x,\\quad g' = 1 - \\sin x",
-            expr: '[cos(x), 1 - sin(x)]',
-            mistake: 'constant-derivative',
-            why: 'The derivative of the constant $1$ is $0$, not $1$.',
-          },
-          {
-            latex: "f' = -\\cos x,\\quad g' = -\\sin x",
-            expr: '[-cos(x), -sin(x)]',
-            mistake: 'trig-derivative-swapped',
-            why: '$(\\sin x)\' = +\\cos x$; only the cosine derivative carries a minus sign.',
-          },
+          { latex: "f' = \\cos x,\\quad g' = \\sin x", expr: '[cos(x), sin(x)]', mistake: 'sign-error-derivative', why: "$(\\cos x)' = -\\sin x$; the minus sign was dropped." },
+          { latex: "f' = \\cos x,\\quad g' = 1 - \\sin x", expr: '[cos(x), 1 - sin(x)]', mistake: 'constant-derivative', why: 'The derivative of the constant $1$ is $0$, not $1$.' },
+          { latex: "f' = -\\cos x,\\quad g' = -\\sin x", expr: '[-cos(x), -sin(x)]', mistake: 'trig-derivative-swapped', why: "$(\\sin x)' = +\\cos x$; only the cosine derivative carries a minus sign." },
           { latex: "f' = \\cos x,\\quad g' = -\\sin x", expr: '[cos(x), -sin(x)]' },
-          {
-            latex: "f' = -\\cos x,\\quad g' = x + \\sin x",
-            expr: '[-cos(x), x + sin(x)]',
-            mistake: 'integrated-instead',
-            why: 'These are antiderivatives of $\\sin x$ and $1 + \\cos x$, not derivatives.',
-          },
+          { latex: "f' = -\\cos x,\\quad g' = \\sin x", expr: '[-cos(x), sin(x)]', mistake: 'trig-derivative-swapped', why: "Both signs were swapped: $(\\sin x)' = +\\cos x$ and $(\\cos x)' = -\\sin x$." },
+          { latex: "f' = -\\cos x,\\quad g' = 1 - \\sin x", expr: '[-cos(x), 1 - sin(x)]', mistake: 'constant-derivative', why: "Two slips: the constant $1$ was differentiated to $1$ instead of $0$, and $(\\sin x)'$ was given a minus sign." },
         ],
         correct: 3,
         explanation: '$(\\sin x)\' = \\cos x$ and $(1 + \\cos x)\' = 0 - \\sin x$.',
@@ -78,34 +59,12 @@ export const steps: StepProblem[] = [
       {
         prompt: "Assemble the quotient rule $\\frac{f'g - fg'}{g^2}$.",
         options: [
-          {
-            latex: '\\frac{\\cos x(1+\\cos x) - \\sin x(-\\sin x)}{(1+\\cos x)^2}',
-            expr: '(cos(x)*(1 + cos(x)) - sin(x)*(-sin(x)))/(1 + cos(x))^2',
-          },
-          {
-            latex: '\\frac{\\sin x(-\\sin x) - \\cos x(1+\\cos x)}{(1+\\cos x)^2}',
-            expr: '(sin(x)*(-sin(x)) - cos(x)*(1 + cos(x)))/(1 + cos(x))^2',
-            mistake: 'quotient-rule-order',
-            why: "The numerator must be $f'g - fg'$ (derivative of the top first).",
-          },
-          {
-            latex: '\\frac{\\cos x(1+\\cos x) + \\sin x(-\\sin x)}{(1+\\cos x)^2}',
-            expr: '(cos(x)*(1 + cos(x)) + sin(x)*(-sin(x)))/(1 + cos(x))^2',
-            mistake: 'quotient-rule-plus',
-            why: "The quotient rule subtracts $fg'$.",
-          },
-          {
-            latex: '\\frac{\\cos x(1+\\cos x) - \\sin x(-\\sin x)}{1+\\cos x}',
-            expr: '(cos(x)*(1 + cos(x)) - sin(x)*(-sin(x)))/(1 + cos(x))',
-            mistake: 'quotient-rule-denominator',
-            why: 'The denominator is $g^2 = (1 + \\cos x)^2$.',
-          },
-          {
-            latex: '\\frac{\\cos x(1+\\cos x) - \\sin x(-\\sin x)}{(-\\sin x)^2}',
-            expr: '(cos(x)*(1 + cos(x)) - sin(x)*(-sin(x)))/(-sin(x))^2',
-            mistake: 'quotient-rule-denominator',
-            why: "The denominator is the square of $g$ itself, not of $g'$.",
-          },
+          { latex: '\\frac{\\cos x(1+\\cos x) - \\sin x(-\\sin x)}{(1+\\cos x)^2}', expr: '(cos(x)*(1 + cos(x)) - sin(x)*(-sin(x)))/(1 + cos(x))^2' },
+          { latex: '\\frac{\\sin x(-\\sin x) - \\cos x(1+\\cos x)}{(1+\\cos x)^2}', expr: '(sin(x)*(-sin(x)) - cos(x)*(1 + cos(x)))/(1 + cos(x))^2', mistake: 'quotient-rule-order', why: "The numerator must be $f'g - fg'$ (derivative of the top first)." },
+          { latex: '\\frac{\\cos x(1+\\cos x) + \\sin x(-\\sin x)}{(1+\\cos x)^2}', expr: '(cos(x)*(1 + cos(x)) + sin(x)*(-sin(x)))/(1 + cos(x))^2', mistake: 'quotient-rule-plus', why: "The quotient rule subtracts $fg'$." },
+          { latex: '\\frac{\\cos x(1+\\cos x) - \\sin x(-\\sin x)}{1+\\cos x}', expr: '(cos(x)*(1 + cos(x)) - sin(x)*(-sin(x)))/(1 + cos(x))', mistake: 'quotient-rule-denominator', why: 'The denominator is $g^2 = (1 + \\cos x)^2$.' },
+          { latex: '\\frac{\\sin x(-\\sin x) - \\cos x(1+\\cos x)}{1+\\cos x}', expr: '(sin(x)*(-sin(x)) - cos(x)*(1 + cos(x)))/(1 + cos(x))', mistake: 'quotient-rule-order', why: "Two slips: the numerator must be $f'g - fg'$, and the denominator must be $g^2$." },
+          { latex: '\\frac{\\cos x(1+\\cos x) + \\sin x(-\\sin x)}{1+\\cos x}', expr: '(cos(x)*(1 + cos(x)) + sin(x)*(-sin(x)))/(1 + cos(x))', mistake: 'quotient-rule-plus', why: "Two slips: the quotient rule subtracts $fg'$, and the denominator must be $g^2$." },
         ],
         correct: 0,
         explanation: "$f'g - fg' = \\cos x(1+\\cos x) - \\sin x(-\\sin x)$, over $g^2 = (1+\\cos x)^2$.",
@@ -149,31 +108,12 @@ export const steps: StepProblem[] = [
       {
         prompt: 'Simplify the whole derivative.',
         options: [
-          {
-            latex: '1',
-            expr: '1',
-            mistake: 'algebra-error',
-            why: '$\\frac{1+\\cos x}{(1+\\cos x)^2}$ keeps one factor of $1 + \\cos x$ in the denominator.',
-          },
+          { latex: '1', expr: '1', mistake: 'algebra-error', why: '$\\frac{1+\\cos x}{(1+\\cos x)^2}$ keeps one factor of $1 + \\cos x$ in the denominator.' },
           { latex: '\\frac{1}{1+\\cos x}', expr: '1/(1 + cos(x))' },
-          {
-            latex: '1 + \\cos x',
-            expr: '1 + cos(x)',
-            mistake: 'algebra-error',
-            why: 'The cancellation was done upside down: the leftover factor $1 + \\cos x$ is in the denominator.',
-          },
-          {
-            latex: '\\frac{1}{(1+\\cos x)^2}',
-            expr: '1/(1 + cos(x))^2',
-            mistake: 'algebra-error',
-            why: 'The numerator is $1 + \\cos x$, not $1$; it cancels one power of the denominator.',
-          },
-          {
-            latex: '-\\frac{1}{1+\\cos x}',
-            expr: '-1/(1 + cos(x))',
-            mistake: 'quotient-rule-order',
-            why: "This is what the swapped numerator $fg' - f'g$ produces.",
-          },
+          { latex: '-1', expr: '-1', mistake: 'quotient-rule-order', why: "Two slips: the swapped numerator $fg' - f'g$ gives $-(1+\\cos x)$, and it was cancelled completely against the denominator." },
+          { latex: '\\frac{1}{(1+\\cos x)^2}', expr: '1/(1 + cos(x))^2', mistake: 'algebra-error', why: 'The numerator is $1 + \\cos x$, not $1$; it cancels one power of the denominator.' },
+          { latex: '-\\frac{1}{(1+\\cos x)^2}', expr: '-1/(1 + cos(x))^2', mistake: 'quotient-rule-order', why: 'Two slips: the swapped numerator gives $-(1+\\cos x)$, and it was then treated as $-1$.' },
+          { latex: '-\\frac{1}{1+\\cos x}', expr: '-1/(1 + cos(x))', mistake: 'quotient-rule-order', why: "This is what the swapped numerator $fg' - f'g$ produces." },
         ],
         correct: 1,
         explanation: '$\\frac{1+\\cos x}{(1+\\cos x)^2} = \\frac{1}{1+\\cos x}$ (where $\\cos x \\neq -1$).',
@@ -218,6 +158,12 @@ export const steps: StepProblem[] = [
             why: 'A root (or power) of a sum cannot be split term by term.',
           },
           {
+            latex: 'f(x) = (x^2+x+1)^{3}',
+            expr: '(x^2 + x + 1)^3',
+            mistake: 'negative-exponent-sign',
+            why: 'Two slips: the cube root became a cube, and the minus sign from the reciprocal was lost: $\\frac{1}{\\sqrt[3]{u}} = u^{-1/3}$.',
+          },
+          {
             latex: 'f(x) = -(x^2+x+1)^{1/3}',
             expr: '-(x^2 + x + 1)^(1/3)',
             mistake: 'negative-exponent-sign',
@@ -232,27 +178,12 @@ export const steps: StepProblem[] = [
       {
         prompt: 'Which rule applies outermost?',
         options: [
-          {
-            text: 'Power rule alone: $-\\frac{1}{3}(x^2+x+1)^{-4/3}$, with no extra factor',
-            mistake: 'chain-rule-missing',
-            why: 'The base is a function of $x$, not $x$ itself; its derivative $2x + 1$ must multiply the result.',
-          },
-          {
-            text: 'Differentiate the inside and keep it under the root: $\\frac{1}{\\sqrt[3]{2x+1}}$',
-            mistake: 'chain-rule-outer-wrong',
-            why: 'The inner derivative multiplies the outer derivative; it does not replace the inner function.',
-          },
-          {
-            text: 'Split into $x^{-2/3} + x^{-1/3} + 1$ and use the power rule on each term',
-            mistake: 'sqrt-of-sum-split',
-            why: 'A power of a sum is not the sum of the powers.',
-          },
-          {
-            text: "Exponential rule $\\frac{d}{dx}a^{u} = a^{u}\\ln a\\cdot u'$, because there is an exponent",
-            mistake: 'exponential-as-power',
-            why: 'The variable is in the base, not in the exponent, so the power rule (with the chain rule) applies.',
-          },
+          { text: 'Power rule: $-\\frac{1}{3}(x^2+x+1)^{-4/3}$', mistake: 'chain-rule-missing', why: 'The base is a function of $x$, not $x$ itself; its derivative $2x + 1$ must multiply the result.' },
+          { text: 'Differentiate the inside first: $\\frac{1}{\\sqrt[3]{2x+1}}$', mistake: 'chain-rule-outer-wrong', why: 'The inner derivative multiplies the outer derivative; it does not replace the inner function.' },
+          { text: 'Split into $x^{-2/3} + x^{-1/3} + 1$ and use the power rule on each term', mistake: 'sqrt-of-sum-split', why: 'A power of a sum is not the sum of the powers.' },
+          { text: "Exponential rule: $\\frac{d}{dx}a^{u} = a^{u}\\ln a\\cdot u'$", mistake: 'power-as-exponential', why: 'The variable is in the base, not in the exponent, so the power rule (with the chain rule) applies.' },
           { text: 'Chain rule: outer function $u^{-1/3}$, inner function $u = x^2+x+1$' },
+          { text: 'Chain rule: outer function $u^{-3}$, inner function $u = \\sqrt[3]{x^2+x+1}$', mistake: 'composition-misread', why: '$(\\sqrt[3]{x^2+x+1})^{-3} = (x^2+x+1)^{-1}$, which is not $f$; the outer function is $u^{-1/3}$ with $u = x^2+x+1$.' },
         ],
         correct: 4,
         explanation: 'After rewriting, $f$ is a power of an inner function, so the chain rule applies, with the power rule outside.',
@@ -295,36 +226,11 @@ export const steps: StepProblem[] = [
       {
         prompt: "Assemble $f'(x)$.",
         options: [
-          {
-            latex: '-\\frac{1}{3}(x^2+x+1)^{-4/3}',
-            expr: '-1/3*(x^2 + x + 1)^(-4/3)',
-            mistake: 'chain-rule-missing',
-            why: 'The inner derivative $2x + 1$ was dropped.',
-          },
-          {
-            latex: '-\\frac{1}{3}(x^2+x+1)^{-2/3}(2x+1)',
-            expr: '-1/3*(x^2 + x + 1)^(-2/3)*(2*x + 1)',
-            mistake: 'power-rule-exponent',
-            why: '$-\\frac13 - 1 = -\\frac43$; the exponent was raised to $-\\frac23$ instead of lowered.',
-          },
-          {
-            latex: '\\frac{1}{3}(x^2+x+1)^{-4/3}(2x+1)',
-            expr: '1/3*(x^2 + x + 1)^(-4/3)*(2*x + 1)',
-            mistake: 'negative-exponent-sign',
-            why: 'The power rule brings down the exponent $-\\frac13$, so the coefficient is negative.',
-          },
-          {
-            latex: '-\\frac{4}{3}(x^2+x+1)^{-4/3}(2x+1)',
-            expr: '-4/3*(x^2 + x + 1)^(-4/3)*(2*x + 1)',
-            mistake: 'power-rule-coefficient',
-            why: 'The coefficient is the old exponent $-\\frac13$, not the new one $-\\frac43$.',
-          },
-          {
-            latex: '-\\frac{1}{3}(x^2+x+1)^{-1/3}(2x+1)',
-            expr: '-1/3*(x^2 + x + 1)^(-1/3)*(2*x + 1)',
-            mistake: 'power-rule-exponent',
-            why: 'The exponent was not lowered: $-\\frac13$ must become $-\\frac43$.',
-          },
+          { latex: '-\\frac{1}{3}(x^2+x+1)^{-4/3}', expr: '-1/3*(x^2 + x + 1)^(-4/3)', mistake: 'chain-rule-missing', why: 'The inner derivative $2x + 1$ was dropped.' },
+          { latex: '-\\frac{1}{3}(x^2+x+1)^{-2/3}(2x+1)', expr: '-1/3*(x^2 + x + 1)^(-2/3)*(2*x + 1)', mistake: 'arithmetic-error', why: 'The exponent was lowered by only $\\frac13$; the power rule subtracts 1: $-\\frac13 - 1 = -\\frac43$.' },
+          { latex: '\\frac{1}{3}(x^2+x+1)^{-4/3}(2x+1)', expr: '1/3*(x^2 + x + 1)^(-4/3)*(2*x + 1)', mistake: 'negative-exponent-sign', why: 'The power rule brings down the exponent $-\\frac13$, so the coefficient is negative.' },
+          { latex: '\\frac{1}{3}(x^2+x+1)^{-4/3}', expr: '1/3*(x^2 + x + 1)^(-4/3)', mistake: 'chain-rule-missing', why: 'Two slips: the inner derivative $2x+1$ was dropped, and the factor $-\\frac13$ became $+\\frac13$.' },
+          { latex: '\\frac{1}{3}(x^2+x+1)^{-2/3}(2x+1)', expr: '1/3*(x^2 + x + 1)^(-2/3)*(2*x + 1)', mistake: 'arithmetic-error', why: 'Two slips: the exponent was lowered by only $\\frac13$, and the factor $-\\frac13$ lost its sign.' },
           { latex: '-\\frac{1}{3}(x^2+x+1)^{-4/3}(2x+1)', expr: '-1/3*(x^2 + x + 1)^(-4/3)*(2*x + 1)' },
         ],
         correct: 5,
@@ -337,10 +243,10 @@ export const steps: StepProblem[] = [
         options: [
           { latex: '-\\frac{2x+1}{3(x^2+x+1)^{4/3}}', expr: '-(2*x + 1)/(3*(x^2 + x + 1)^(4/3))' },
           {
-            latex: '-\\frac{2x+1}{3(x^2+x+1)^{-4/3}}',
-            expr: '-(2*x + 1)/(3*(x^2 + x + 1)^(-4/3))',
-            mistake: 'negative-exponent-sign',
-            why: 'Moving the factor to the denominator flips the sign of its exponent: $u^{-4/3} = \\frac{1}{u^{4/3}}$.',
+            latex: '-\\frac{2x+1}{(x^2+x+1)^{4/3}}',
+            expr: '-(2*x + 1)/(x^2 + x + 1)^(4/3)',
+            mistake: 'coefficient-mishandled',
+            why: 'The factor $\\frac13$ was lost: the denominator must be $3(x^2+x+1)^{4/3}$.',
           },
           {
             latex: '-\\frac{(2x+1)(x^2+x+1)^{4/3}}{3}',
@@ -384,27 +290,12 @@ export const steps: StepProblem[] = [
       {
         prompt: 'Which rule applies outermost?',
         options: [
-          {
-            text: 'Product rule: $\\arccos$ times $\\sqrt{x}$',
-            mistake: 'technique-wrong',
-            why: '$\\arccos$ is applied to $\\sqrt{x}$; this is a composition, not a product.',
-          },
+          { text: 'Product rule: $\\arccos$ times $\\sqrt{x}$', mistake: 'technique-wrong', why: '$\\arccos$ is applied to $\\sqrt{x}$; this is a composition, not a product.' },
           { text: 'Chain rule: outer function $\\arccos u$, inner function $u = \\sqrt{x}$' },
-          {
-            text: 'Differentiate $\\arccos x$ and replace $x$ by $\\sqrt{x}$; nothing else is needed',
-            mistake: 'chain-rule-missing',
-            why: 'The inner function $\\sqrt{x}$ has its own derivative, which must multiply the outer derivative.',
-          },
-          {
-            text: 'Read $\\arccos(\\sqrt{x})$ as $\\frac{1}{\\cos\\sqrt{x}}$ and use the quotient rule',
-            mistake: 'inverse-trig-as-reciprocal',
-            why: '$\\arccos$ is the inverse cosine, not the reciprocal of cosine.',
-          },
-          {
-            text: 'Power rule only, since $\\sqrt{x} = x^{1/2}$ is the only power present',
-            mistake: 'chain-rule-outer-wrong',
-            why: 'The outer function is $\\arccos$; the power rule handles only the inner $\\sqrt{x}$.',
-          },
+          { text: 'Differentiate $\\arccos x$, then replace $x$ by $\\sqrt{x}$', mistake: 'chain-rule-missing', why: 'The inner function $\\sqrt{x}$ has its own derivative, which must multiply the outer derivative.' },
+          { text: 'Read $\\arccos(\\sqrt{x})$ as $\\frac{1}{\\cos\\sqrt{x}}$ and use the quotient rule', mistake: 'inverse-trig-as-reciprocal', why: '$\\arccos$ is the inverse cosine, not the reciprocal of cosine.' },
+          { text: 'Power rule, since $\\sqrt{x} = x^{1/2}$', mistake: 'chain-rule-outer-wrong', why: 'The outer function is $\\arccos$; the power rule handles only the inner $\\sqrt{x}$.' },
+          { text: 'Chain rule: outer function $\\sqrt{u}$, inner function $u = \\arccos x$', mistake: 'composition-misread', why: '$\\sqrt{\\arccos x}$ is a different function; here $\\arccos$ is applied to $\\sqrt{x}$, so $\\arccos$ is the outer function.' },
         ],
         correct: 1,
         explanation: '$\\arccos$ is applied to the inner function $\\sqrt{x}$, so the chain rule comes first.',
@@ -448,31 +339,12 @@ export const steps: StepProblem[] = [
       {
         prompt: "What is the inner derivative $u' = \\frac{d}{dx}\\sqrt{x}$?",
         options: [
-          {
-            latex: "u' = \\frac{1}{\\sqrt{x}}",
-            expr: '1/sqrt(x)',
-            mistake: 'power-rule-coefficient',
-            why: '$(x^{1/2})\' = \\frac12 x^{-1/2}$; the factor $\\frac12$ was dropped.',
-          },
-          {
-            latex: "u' = \\frac{1}{2}\\sqrt{x}",
-            expr: 'sqrt(x)/2',
-            mistake: 'power-rule-exponent',
-            why: 'The exponent $\\frac12$ was not lowered to $-\\frac12$.',
-          },
+          { latex: "u' = \\frac{1}{\\sqrt{x}}", expr: '1/sqrt(x)', mistake: 'power-rule-coefficient', why: "$(x^{1/2})' = \\frac12 x^{-1/2}$; the factor $\\frac12$ was dropped." },
+          { latex: "u' = \\frac{1}{2}\\sqrt{x}", expr: 'sqrt(x)/2', mistake: 'power-rule-exponent', why: 'The exponent $\\frac12$ was not lowered to $-\\frac12$.' },
           { latex: "u' = \\frac{1}{2\\sqrt{x}}", expr: '1/(2*sqrt(x))' },
-          {
-            latex: "u' = \\frac{2}{3}x^{3/2}",
-            expr: '2/3*x^(3/2)',
-            mistake: 'integrated-instead',
-            why: 'This is an antiderivative of $\\sqrt{x}$, not its derivative.',
-          },
-          {
-            latex: "u' = -\\frac{1}{2\\sqrt{x}}",
-            expr: '-1/(2*sqrt(x))',
-            mistake: 'negative-exponent-sign',
-            why: 'The new exponent is $-\\frac12$, but the coefficient is the old exponent $+\\frac12$.',
-          },
+          { latex: "u' = -\\frac{1}{\\sqrt{x}}", expr: '-1/sqrt(x)', mistake: 'power-rule-coefficient', why: 'Two slips: the factor $\\frac12$ was dropped, and the sign of the new exponent was put on the result.' },
+          { latex: "u' = -\\frac{1}{2\\sqrt{x}}", expr: '-1/(2*sqrt(x))', mistake: 'negative-exponent-sign', why: 'The new exponent is $-\\frac12$, but the coefficient is the old exponent $+\\frac12$.' },
+          { latex: "u' = -\\frac{1}{2}\\sqrt{x}", expr: '-sqrt(x)/2', mistake: 'power-rule-exponent', why: 'Two slips: the exponent was not lowered, and a minus sign was attached.' },
         ],
         correct: 2,
         explanation: "$\\sqrt{x} = x^{1/2}$, so $u' = \\frac12 x^{-1/2} = \\frac{1}{2\\sqrt{x}}$.",
@@ -482,31 +354,12 @@ export const steps: StepProblem[] = [
       {
         prompt: "Assemble $f'(x)$ with the chain rule.",
         options: [
-          {
-            latex: '-\\frac{1}{\\sqrt{1-x^2}}\\cdot\\frac{1}{2\\sqrt{x}}',
-            expr: '-1/(sqrt(1 - x^2)*2*sqrt(x))',
-            mistake: 'chain-rule-outer-wrong',
-            why: 'The outer derivative must be evaluated at $u = \\sqrt{x}$: $1 - u^2 = 1 - x$, not $1 - x^2$.',
-          },
-          {
-            latex: '-\\frac{1}{\\sqrt{1-x}}',
-            expr: '-1/sqrt(1 - x)',
-            mistake: 'chain-rule-missing',
-            why: 'The inner derivative $\\frac{1}{2\\sqrt{x}}$ was dropped.',
-          },
-          {
-            latex: '-\\frac{1}{\\sqrt{1-\\sqrt{x}}}\\cdot\\frac{1}{2\\sqrt{x}}',
-            expr: '-1/(sqrt(1 - sqrt(x))*2*sqrt(x))',
-            mistake: 'algebra-error',
-            why: '$u^2 = (\\sqrt{x})^2 = x$; the square was not applied.',
-          },
-          {
-            latex: '\\frac{1}{\\sqrt{1-x}}\\cdot\\frac{1}{2\\sqrt{x}}',
-            expr: '1/(sqrt(1 - x)*2*sqrt(x))',
-            mistake: 'sign-error-derivative',
-            why: 'The minus sign of the $\\arccos$ derivative was lost.',
-          },
+          { latex: '-\\frac{1}{\\sqrt{1-x^2}}\\cdot\\frac{1}{2\\sqrt{x}}', expr: '-1/(sqrt(1 - x^2)*2*sqrt(x))', mistake: 'chain-rule-outer-wrong', why: 'The outer derivative must be evaluated at $u = \\sqrt{x}$: $1 - u^2 = 1 - x$, not $1 - x^2$.' },
+          { latex: '-\\frac{1}{\\sqrt{1-x}}', expr: '-1/sqrt(1 - x)', mistake: 'chain-rule-missing', why: 'The inner derivative $\\frac{1}{2\\sqrt{x}}$ was dropped.' },
+          { latex: '\\frac{1}{\\sqrt{1-x^2}}\\cdot\\frac{1}{2\\sqrt{x}}', expr: '1/(sqrt(1 - x^2)*2*sqrt(x))', mistake: 'chain-rule-outer-wrong', why: 'Two slips: the outer derivative was evaluated at $x$ instead of $\\sqrt{x}$, and its minus sign was lost.' },
+          { latex: '\\frac{1}{\\sqrt{1-x}}\\cdot\\frac{1}{2\\sqrt{x}}', expr: '1/(sqrt(1 - x)*2*sqrt(x))', mistake: 'sign-error-derivative', why: 'The minus sign of the $\\arccos$ derivative was lost.' },
           { latex: '-\\frac{1}{\\sqrt{1-x}}\\cdot\\frac{1}{2\\sqrt{x}}', expr: '-1/(sqrt(1 - x)*2*sqrt(x))' },
+          { latex: '\\frac{1}{\\sqrt{1-x}}', expr: '1/sqrt(1 - x)', mistake: 'chain-rule-missing', why: 'Two slips: the inner derivative $\\frac{1}{2\\sqrt{x}}$ was dropped, and the minus sign of the $\\arccos$ derivative was lost.' },
         ],
         correct: 4,
         explanation: "$f'(x) = -\\frac{1}{\\sqrt{1-u^2}}\\cdot u'$ with $u^2 = (\\sqrt{x})^2 = x$.",
@@ -516,31 +369,12 @@ export const steps: StepProblem[] = [
       {
         prompt: 'Simplify.',
         options: [
-          {
-            latex: '\\frac{1}{2\\sqrt{x-x^2}}',
-            expr: '1/(2*sqrt(x - x^2))',
-            mistake: 'sign-error',
-            why: 'The minus sign from the $\\arccos$ derivative was lost while simplifying.',
-          },
+          { latex: '\\frac{1}{2\\sqrt{x-x^2}}', expr: '1/(2*sqrt(x - x^2))', mistake: 'sign-error', why: 'The minus sign from the $\\arccos$ derivative was lost while simplifying.' },
           { latex: '-\\frac{1}{2\\sqrt{x-x^2}}', expr: '-1/(2*sqrt(x - x^2))' },
-          {
-            latex: '-\\frac{1}{\\sqrt{x-x^2}}',
-            expr: '-1/sqrt(x - x^2)',
-            mistake: 'coefficient-mishandled',
-            why: 'The factor 2 from $\\frac{1}{2\\sqrt{x}}$ was lost.',
-          },
-          {
-            latex: '-\\frac{\\sqrt{x}}{2\\sqrt{1-x}}',
-            expr: '-sqrt(x)/(2*sqrt(1 - x))',
-            mistake: 'algebra-error',
-            why: '$\\frac{1}{2\\sqrt{x}}$ puts $\\sqrt{x}$ in the denominator, not the numerator.',
-          },
-          {
-            latex: '-\\frac{1}{2\\sqrt{x}\\,(1-x)}',
-            expr: '-1/(2*sqrt(x)*(1 - x))',
-            mistake: 'algebra-error',
-            why: '$\\sqrt{1-x}$ was replaced by $1 - x$; the square root must stay.',
-          },
+          { latex: '-\\frac{1}{\\sqrt{x-x^2}}', expr: '-1/sqrt(x - x^2)', mistake: 'coefficient-mishandled', why: 'The factor 2 from $\\frac{1}{2\\sqrt{x}}$ was lost.' },
+          { latex: '-\\frac{\\sqrt{x}}{2\\sqrt{1-x}}', expr: '-sqrt(x)/(2*sqrt(1 - x))', mistake: 'algebra-error', why: '$\\frac{1}{2\\sqrt{x}}$ puts $\\sqrt{x}$ in the denominator, not the numerator.' },
+          { latex: '\\frac{1}{\\sqrt{x-x^2}}', expr: '1/sqrt(x - x^2)', mistake: 'coefficient-mishandled', why: 'Two slips: the factor 2 was lost, and so was the minus sign of the $\\arccos$ derivative.' },
+          { latex: '\\frac{\\sqrt{x}}{2\\sqrt{1-x}}', expr: 'sqrt(x)/(2*sqrt(1 - x))', mistake: 'algebra-error', why: 'Two slips: $\\sqrt{x}$ belongs in the denominator, and the minus sign was lost.' },
         ],
         correct: 1,
         explanation: '$\\sqrt{x}\\,\\sqrt{1-x} = \\sqrt{x(1-x)} = \\sqrt{x - x^2}$ for $0 < x < 1$.',
@@ -568,7 +402,7 @@ export const steps: StepProblem[] = [
         options: [
           {
             text: 'Chain rule: outer function $\\tan^{-1}u$, inner function $u = x^2$',
-            mistake: 'algebra-error',
+            mistake: 'composition-misread',
             why: 'The square is applied to $\\tan^{-1}x$, not to $x$: $(\\tan^{-1}x)^2 \\neq \\tan^{-1}(x^2)$.',
           },
           {
@@ -577,7 +411,7 @@ export const steps: StepProblem[] = [
             why: 'The $-1$ means the inverse tangent, not the reciprocal of $\\tan x$.',
           },
           {
-            text: 'Power rule only: the answer is $2\\tan^{-1}x$',
+            text: 'Power rule: the answer is $2\\tan^{-1}x$',
             mistake: 'chain-rule-missing',
             why: 'The base $\\tan^{-1}x$ is a function of $x$, so its derivative must multiply the result.',
           },
@@ -629,31 +463,12 @@ export const steps: StepProblem[] = [
       {
         prompt: 'What is the inner derivative $\\frac{d}{dx}\\tan^{-1}x$?',
         options: [
-          {
-            latex: '\\frac{1}{\\sqrt{1-x^2}}',
-            expr: '1/sqrt(1 - x^2)',
-            mistake: 'inverse-trig-confused',
-            why: '$\\frac{1}{\\sqrt{1-x^2}}$ is the derivative of $\\sin^{-1}x$.',
-          },
-          {
-            latex: '-\\frac{1}{1+x^2}',
-            expr: '-1/(1 + x^2)',
-            mistake: 'sign-error-derivative',
-            why: '$\\tan^{-1}x$ is increasing, so its derivative is positive.',
-          },
+          { latex: '\\frac{1}{\\sqrt{1-x^2}}', expr: '1/sqrt(1 - x^2)', mistake: 'inverse-trig-confused', why: '$\\frac{1}{\\sqrt{1-x^2}}$ is the derivative of $\\sin^{-1}x$.' },
+          { latex: '-\\frac{1}{1+x^2}', expr: '-1/(1 + x^2)', mistake: 'sign-error-derivative', why: '$\\tan^{-1}x$ is increasing, so its derivative is positive.' },
           { latex: '\\frac{1}{1+x^2}', expr: '1/(1 + x^2)' },
-          {
-            latex: '\\sec^2 x',
-            expr: 'sec(x)^2',
-            mistake: 'inverse-trig-confused',
-            why: '$\\sec^2 x$ is the derivative of $\\tan x$, not of $\\tan^{-1}x$.',
-          },
-          {
-            latex: '-\\csc^2 x',
-            expr: '-csc(x)^2',
-            mistake: 'inverse-trig-as-reciprocal',
-            why: '$\\tan^{-1}x$ was read as $\\cot x$; the $-1$ means the inverse tangent.',
-          },
+          { latex: '-\\frac{1}{\\sqrt{1-x^2}}', expr: '-1/sqrt(1 - x^2)', mistake: 'inverse-trig-confused', why: '$-\\frac{1}{\\sqrt{1-x^2}}$ is the derivative of $\\cos^{-1}x$, not of $\\tan^{-1}x$.' },
+          { latex: '-\\csc^2 x', expr: '-csc(x)^2', mistake: 'inverse-trig-as-reciprocal', why: '$\\tan^{-1}x$ was read as $\\cot x$; the $-1$ means the inverse tangent.' },
+          { latex: '\\csc^2 x', expr: 'csc(x)^2', mistake: 'inverse-trig-as-reciprocal', why: "Two slips: $\\tan^{-1}x$ was read as $\\cot x$, and the minus sign of $(\\cot x)'$ was lost." },
         ],
         correct: 2,
         explanation: '$\\frac{d}{dx}\\tan^{-1}x = \\frac{1}{1+x^2}$.',
