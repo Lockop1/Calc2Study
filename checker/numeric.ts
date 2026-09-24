@@ -39,10 +39,10 @@ export function approxEqual(a: number, b: number, rel = 1e-6, abs = 1e-8): boole
  * (e.g. 1/√x on [0, 1]). Abscissae where f is not finite contribute 0 (they only occur within
  * rounding distance of the endpoints for well-posed integrands).
  */
-export function tanhSinh(f: (x: number) => number, a: number, b: number, tol = 1e-10): number {
+export function tanhSinhBasic(f: (x: number) => number, a: number, b: number, tol = 1e-10): number {
   if (!isFiniteNumber(a) || !isFiniteNumber(b)) return NaN;
   if (a === b) return 0;
-  if (a > b) return -tanhSinh(f, b, a, tol);
+  if (a > b) return -tanhSinhBasic(f, b, a, tol);
   const d = (b - a) / 2;
   const safe = (x: number): number => {
     const v = f(x);
@@ -53,7 +53,7 @@ export function tanhSinh(f: (x: number) => number, a: number, b: number, tol = 1
     const u = (Math.PI / 2) * Math.sinh(t);
     const ch = Math.cosh(u);
     const w = ((Math.PI / 2) * Math.cosh(t)) / (ch * ch); // weight
-    // distance from the endpoint: d·(1 − tanh u) = d·(1/(e^{2u}+1))·2 computed stably
+    // distance from the endpoint: d·(1 − tanh u) computed stably
     const e2 = Math.exp(-2 * Math.abs(u));
     const dist = (d * 2 * e2) / (1 + e2);
     if (!(dist > 0)) return 0;
@@ -68,10 +68,8 @@ export function tanhSinh(f: (x: number) => number, a: number, b: number, tol = 1
   let result = NaN;
   for (let level = 0; level < 9; level++) {
     if (level > 0) h /= 2;
-    // add new abscissae (odd multiples of h at this level; at level 0 all multiples)
     const step = level === 0 ? 1 : 2;
-    let k = level === 0 ? 1 : 1;
-    for (; ; k += step) {
+    for (let k = 1; ; k += step) {
       const t = k * h;
       if (t > 6.5) break;
       const v = term(t);
@@ -83,6 +81,25 @@ export function tanhSinh(f: (x: number) => number, a: number, b: number, tol = 1
     prev = result;
   }
   return result;
+}
+
+/**
+ * Adaptive tanh-sinh: subdivides until the two halves agree with the whole. Interior kinks
+ * (|x|, piecewise integrands) end up at subinterval endpoints, where tanh-sinh is robust, so
+ * ∫|x| and similar integrals are accurate to ~1e-10 instead of ~1e-5.
+ */
+export function tanhSinh(f: (x: number) => number, a: number, b: number, tol = 1e-10, depth = 14): number {
+  if (!isFiniteNumber(a) || !isFiniteNumber(b)) return NaN;
+  if (a === b) return 0;
+  if (a > b) return -tanhSinh(f, b, a, tol, depth);
+  const whole = tanhSinhBasic(f, a, b, tol);
+  const m = (a + b) / 2;
+  const left = tanhSinhBasic(f, a, m, tol);
+  const right = tanhSinhBasic(f, m, b, tol);
+  const split = left + right;
+  if (!isFiniteNumber(whole) || !isFiniteNumber(split)) return NaN;
+  if (depth <= 0 || Math.abs(whole - split) <= tol * Math.max(1, Math.abs(split))) return split;
+  return tanhSinh(f, a, m, tol / 2, depth - 1) + tanhSinh(f, m, b, tol / 2, depth - 1);
 }
 
 /**

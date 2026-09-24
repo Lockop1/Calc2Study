@@ -101,7 +101,9 @@ export function freeVariables(expr: string): string[] {
   node.traverse((n, path, parent) => {
     if (n.type === 'FunctionNode') {
       const fnName = (n as unknown as { fn: { name: string } }).fn.name;
-      if (fnName === 'integral' || fnName === 'indefinite') {
+      // Only a definite integral binds its variable; indefinite(f, x) evaluates f at the
+      // current x, so x stays free (and must be sampled).
+      if (fnName === 'integral') {
         const args = (n as unknown as { args: MathNode[] }).args;
         if (args[1]?.type === 'SymbolNode') bound.add((args[1] as unknown as { name: string }).name);
       }
@@ -118,6 +120,17 @@ export function freeVariables(expr: string): string[] {
 }
 
 const compileCache = new Map<string, { evaluate(scope: Map<string, unknown>): unknown }>();
+const constCache = new Map<string, number | number[]>();
+const freeVarCache = new Map<string, string[]>();
+
+function cachedFreeVariables(expr: string): string[] {
+  let v = freeVarCache.get(expr);
+  if (!v) {
+    v = freeVariables(expr);
+    freeVarCache.set(expr, v);
+  }
+  return v;
+}
 
 /**
  * Evaluate an expression at a scope. Returns NaN for anything that is not a finite real number
@@ -125,6 +138,12 @@ const compileCache = new Map<string, { evaluate(scope: Map<string, unknown>): un
  * array of numbers is returned (used for vector answers like `[4 - y^2, 0]`).
  */
 export function evaluate(expr: string, scope: Record<string, number>): number | number[] {
+  // Constant expressions (no free variables, e.g. definite integrals) are evaluated once.
+  const isConst = cachedFreeVariables(expr).length === 0;
+  if (isConst) {
+    const hit = constCache.get(expr);
+    if (hit !== undefined) return Array.isArray(hit) ? hit.slice() : hit;
+  }
   let compiled = compileCache.get(expr);
   if (!compiled) {
     compiled = parseExpr(expr).compile();
@@ -138,7 +157,9 @@ export function evaluate(expr: string, scope: Record<string, number>): number | 
   } catch {
     return NaN;
   }
-  return normalize(val);
+  const out = normalize(val);
+  if (isConst) constCache.set(expr, Array.isArray(out) ? out.slice() : out);
+  return out;
 }
 
 function normalize(val: unknown): number | number[] {
