@@ -809,7 +809,12 @@ class Parser {
     if (t.kind === 'cmd' && (FRACS.has(t.text) || t.text === 'sqrt')) {
       factors.push(this.parseCommand(t));
     } else {
-      for (; isSimpleAtom(t); t = this.peek()) factors.push(this.parseAtom());
+      for (; isSimpleAtom(t); t = this.peek()) {
+        // `\cos x\, e^{\sin x}` reads as cos(x)·e^{sin x}: an exponential (e^…) after at least one
+        // atom ends the bare argument, just like a function name would.
+        if (factors.length > 0 && t.kind === 'letter' && t.text === 'e' && isOp(this.rawPeek(1), '^')) break;
+        factors.push(this.parseAtom());
+      }
     }
     if (factors.length > 0) return factors.reduce((left, right) => ({ kind: 'mul', left, right }));
     if (t.kind === 'func') return this.parseFunction(); // \ln \ln x, \sin \cos x

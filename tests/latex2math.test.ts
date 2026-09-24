@@ -476,3 +476,16 @@ describe('tryLatexToMath', () => {
     expect(result.error.message).toContain('\\beth');
   });
 });
+
+describe('bare arguments stop before an exponential', () => {
+  it('\\cos x\\, e^{\\sin x} reads as cos(x)·e^{sin x}', () => {
+    const scope = { x: 0.7 };
+    const got = evaluate(latexToMath('\\cos x\\, e^{\\sin x}'), scope) as number;
+    const want = Math.cos(0.7) * Math.exp(Math.sin(0.7));
+    expect(Math.abs(got - want) < 1e-12).toBe(true);
+  });
+  it('\\sin e^{x} still takes the exponential as its argument', () => {
+    const got = evaluate(latexToMath('\\sin e^{x}'), { x: 0.3 }) as number;
+    expect(Math.abs(got - Math.sin(Math.exp(0.3))) < 1e-12).toBe(true);
+  });
+});
