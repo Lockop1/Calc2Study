@@ -83,7 +83,7 @@ export const flash: FlashItem[] = [
     id: 'ip-f-003',
     topic: 'ibp',
     kind: 'formula',
-    prompt: { text: 'LIATE ranks function types for choosing $u$ (first = best choice for $u$). Which list is in LIATE order?' },
+    prompt: { text: 'The lecture ranks function types for choosing $u$ in integration by parts (first = best choice for $u$). Which ranking is it?' },
     options: [
       { text: 'Logarithmic, inverse trigonometric, algebraic, trigonometric, exponential' },
       {
@@ -100,6 +100,11 @@ export const flash: FlashItem[] = [
         text: 'Exponential, trigonometric, algebraic, inverse trigonometric, logarithmic',
         mistake: 'liate-misordered',
         why: 'This is LIATE reversed; it ranks the good choices for dv, not for u.',
+      },
+      {
+        text: 'Inverse trigonometric, logarithmic, algebraic, trigonometric, exponential',
+        mistake: 'liate-misordered',
+        why: 'The lecture ranks logarithmic first and inverse trig second (L before I).',
       },
       {
         text: 'Algebraic, logarithmic, inverse trigonometric, trigonometric, exponential',
@@ -134,7 +139,7 @@ export const flash: FlashItem[] = [
       {
         text: '$+,\\ -,\\ -,\\ -$',
         mistake: 'ibp-tabular-sign',
-        why: 'The minus in −3∫x²eˣ dx was not distributed: −3(x²eˣ − 2∫xeˣ dx) gives +6∫xeˣ dx.',
+        why: 'After the first minus, the later signs were not alternated: −3(x²eˣ − 2∫xeˣ dx) gives +6∫xeˣ dx.',
       },
       {
         text: '$+,\\ -,\\ +,\\ +$',
@@ -231,7 +236,7 @@ export const flash: FlashItem[] = [
       },
       {
         latex: 'xf(x)\\Big|_a^b - \\int_a^b f(x)\\,dx',
-        mistake: 'ibp-v-wrong',
+        mistake: 'ibp-v-dv-confused',
         why: 'v = ∫f(x) dx = F(x); f itself was used as v.',
       },
       {
@@ -353,7 +358,7 @@ export const flash: FlashItem[] = [
       {
         latex: 'u = \\frac{1}{x},\\ dv = x\\,dx',
         expr: '[1/x, x*dx]',
-        mistake: 'ibp-du-wrong',
+        mistake: 'ibp-u-du-confused',
         why: '1/x is the derivative of ln(x); it belongs in du, while u is ln(x) itself.',
       },
     ],
@@ -388,10 +393,10 @@ export const flash: FlashItem[] = [
         why: 'The factor x is in neither u nor dv; u dv must contain the whole integrand.',
       },
       {
-        latex: 'u = x,\\ dv = \\frac{1}{2}e^{2x}\\,dx',
-        expr: '[x, exp(2*x)/2*dx]',
-        mistake: 'ibp-v-wrong',
-        why: '½e^{2x} is v, the antiderivative; dv is the factor e^{2x} dx exactly as it appears in the integrand.',
+        latex: 'u = 1,\\ dv = xe^{2x}\\,dx',
+        expr: '[1, x*exp(2*x)*dx]',
+        mistake: 'ibp-wrong-u-dv',
+        why: 'With u = 1, du = 0 and v = ∫xe^{2x} dx is the original problem; nothing is gained.',
       },
     ],
     correct: 0,
@@ -425,10 +430,10 @@ export const flash: FlashItem[] = [
         why: 'The factor x is in neither u nor dv; u dv must contain the whole integrand.',
       },
       {
-        latex: 'u = x,\\ dv = \\frac{1}{3}\\sin(3x)\\,dx',
-        expr: '[x, sin(3*x)/3*dx]',
-        mistake: 'ibp-v-wrong',
-        why: '⅓ sin(3x) is v, the antiderivative; dv is cos(3x) dx as written in the integrand.',
+        latex: 'u = 1,\\ dv = x\\cos(3x)\\,dx',
+        expr: '[1, x*cos(3*x)*dx]',
+        mistake: 'ibp-wrong-u-dv',
+        why: 'With u = 1, du = 0 and v = ∫x cos(3x) dx is the original problem; nothing is gained.',
       },
     ],
     correct: 0,
@@ -450,15 +455,15 @@ export const flash: FlashItem[] = [
         why: 'Finding v = ∫tan⁻¹(x) dx is the original problem, and du = 0; nothing is gained.',
       },
       {
-        latex: 'u = \\tan^{-1}(x),\\ dv = x\\,dx',
-        expr: '[atan(x), x*dx]',
-        mistake: 'ibp-v-wrong',
-        why: 'There is no factor x in the integrand; x is v = ∫dx, while dv is just dx.',
+        latex: 'u = \\frac{1}{1+x^2},\\ dv = x\\,dx',
+        expr: '[1/(1+x^2), x*dx]',
+        mistake: 'ibp-u-du-confused',
+        why: 'These are du/dx and v written in the places of u and dv; u is tan⁻¹(x) and dv is dx.',
       },
       {
         latex: 'u = \\frac{1}{1+x^2},\\ dv = dx',
         expr: '[1/(1+x^2), dx]',
-        mistake: 'ibp-du-wrong',
+        mistake: 'ibp-u-du-confused',
         why: '1/(1+x²) is the derivative of tan⁻¹(x); it shows up in du, but u is tan⁻¹(x) itself.',
       },
       {
@@ -538,7 +543,7 @@ export const flash: FlashItem[] = [
       {
         latex: 'u = -3\\sin(3x),\\ dv = e^{2x}\\,dx',
         expr: '[-3*sin(3*x), exp(2*x)*dx]',
-        mistake: 'ibp-du-wrong',
+        mistake: 'ibp-u-du-confused',
         why: '−3 sin(3x) is the derivative of cos(3x), which belongs in du; u is cos(3x) itself.',
       },
     ],
@@ -559,7 +564,7 @@ export const flash: FlashItem[] = [
       {
         latex: 'u = e^{2x},\\ dv = \\sin(3x)\\,dx',
         expr: '[exp(2*x), sin(3*x)*dx]',
-        mistake: 'ibp-wrong-u-dv',
+        mistake: 'ibp-cyclic-roles-swapped',
         why: 'Switching the roles undoes the first step: substituting back gives I = I, which cannot be solved.',
       },
       {
@@ -577,7 +582,7 @@ export const flash: FlashItem[] = [
       {
         latex: 'u = 3\\cos(3x),\\ dv = e^{2x}\\,dx',
         expr: '[3*cos(3*x), exp(2*x)*dx]',
-        mistake: 'ibp-du-wrong',
+        mistake: 'ibp-u-du-confused',
         why: '3cos(3x) is the derivative of sin(3x), which belongs in du; u is sin(3x) itself.',
       },
     ],
@@ -612,10 +617,10 @@ export const flash: FlashItem[] = [
         why: 'The factor x is in neither u nor dv; u dv must contain the whole integrand.',
       },
       {
-        latex: 'u = x,\\ dv = \\tan(x)\\,dx',
-        expr: '[x, tan(x)*dx]',
-        mistake: 'ibp-v-wrong',
-        why: 'tan(x) is v = ∫sec²(x) dx; dv is sec²(x) dx itself.',
+        latex: 'u = 1,\\ dv = x\\sec^2(x)\\,dx',
+        expr: '[1, x*sec(x)^2*dx]',
+        mistake: 'ibp-wrong-u-dv',
+        why: 'With u = 1, du = 0 and v = ∫x sec²(x) dx is the original problem; nothing is gained.',
       },
     ],
     correct: 0,
@@ -651,7 +656,7 @@ export const flash: FlashItem[] = [
       {
         latex: 'u = \\frac{1}{x},\\ dv = \\frac{1}{x^2}\\,dx',
         expr: '[1/x, dx/x^2]',
-        mistake: 'ibp-du-wrong',
+        mistake: 'ibp-u-du-confused',
         why: '1/x is the derivative of ln(x); it belongs in du, while u is ln(x) itself.',
       },
     ],
@@ -688,7 +693,7 @@ export const flash: FlashItem[] = [
       {
         latex: 'u = 2x,\\ dv = \\sin(2x)\\,dx',
         expr: '[2*x, sin(2*x)*dx]',
-        mistake: 'ibp-du-wrong',
+        mistake: 'ibp-u-du-confused',
         why: '2x is the derivative of x² (it shows up in du); u must be x² itself.',
       },
     ],
@@ -723,10 +728,10 @@ export const flash: FlashItem[] = [
         why: 'The factor x is in neither u nor dv; u dv must contain the whole integrand.',
       },
       {
-        latex: 'u = x,\\ dv = \\frac{3^{x}}{\\ln 3}\\,dx',
-        expr: '[x, 3^x/log(3)*dx]',
-        mistake: 'ibp-v-wrong',
-        why: '3ˣ/ln 3 is v, the antiderivative; dv is the factor 3ˣ dx as it appears in the integrand.',
+        latex: 'u = 1,\\ dv = x\\cdot 3^{x}\\,dx',
+        expr: '[1, x*3^x*dx]',
+        mistake: 'ibp-wrong-u-dv',
+        why: 'With u = 1, du = 0 and v = ∫x·3ˣ dx is the original problem; nothing is gained.',
       },
     ],
     correct: 0,
@@ -1238,7 +1243,7 @@ export const flash: FlashItem[] = [
         why: '∫eˣcos(x) dx is just as hard as the original; it needs a second integration by parts.',
       },
       {
-        text: 'Use the tabular method, differentiating $\\sin(x)$ until it becomes $0$',
+        text: 'Integrate by parts repeatedly, differentiating $\\sin(x)$ until it becomes $0$',
         mistake: 'technique-wrong',
         why: 'Derivatives of sin(x) cycle through ±sin and ±cos and never reach 0; instead the integral must be solved for.',
       },
@@ -1954,7 +1959,7 @@ export const flash: FlashItem[] = [
         latex: 'x^3e^{x} - 3x^2e^{x} + 6xe^{x} + C',
         expr: 'x^3*exp(x) - 3*x^2*exp(x) + 6*x*exp(x)',
         mistake: 'ibp-stopped-early',
-        why: 'The table stopped one row early: the constant 6 still pairs with eˣ to give the term −6eˣ.',
+        why: 'The repeated integration by parts stopped one step early: the constant 6 still pairs with eˣ to give the term −6eˣ.',
       },
       {
         latex: '-x^3e^{x} + 3x^2e^{x} - 6xe^{x} + 6e^{x} + C',
@@ -1964,7 +1969,7 @@ export const flash: FlashItem[] = [
       },
     ],
     correct: 0,
-    explanation: 'Tabular: the derivatives $x^3, 3x^2, 6x, 6$ times repeated antiderivatives of $e^x$, with alternating signs $+,-,+,-$.',
+    explanation: 'Repeated integration by parts: the derivatives $x^3, 3x^2, 6x, 6$ times repeated antiderivatives of $e^x$, with alternating signs $+,-,+,-$.',
     check: { kind: 'antiderivative', integrand: 'x^3*exp(x)' },
     difficulty: 2,
   },
@@ -1996,7 +2001,7 @@ export const flash: FlashItem[] = [
       {
         latex: 'x(\\ln(x))^2 - x\\ln(x) + x + C',
         expr: 'x*log(x)^2 - x*log(x) + x',
-        mistake: 'chain-rule-missing',
+        mistake: 'power-rule-coefficient',
         why: 'd((ln x)²) = 2 ln(x) · (1/x) dx; the factor 2 was dropped, so the new integral was ∫ln(x) dx instead of 2∫ln(x) dx.',
       },
       {
@@ -2022,7 +2027,7 @@ export const flash: FlashItem[] = [
         latex: '-x^2e^{-x} + 2xe^{-x} - 2e^{-x} + C',
         expr: '-x^2*exp(-x) + 2*x*exp(-x) - 2*exp(-x)',
         mistake: 'ibp-tabular-sign',
-        why: 'The diagonal products were all added; they alternate +, −, +, and with v = −e^{−x} every term ends up negative.',
+        why: 'All the terms were added; the signs alternate +, −, +, and with v = −e^{−x} every term ends up negative.',
       },
       {
         latex: 'x^2e^{-x} - 2xe^{-x} + 2e^{-x} + C',
@@ -2074,7 +2079,7 @@ export const flash: FlashItem[] = [
         latex: '-\\frac{x^2}{2}\\cos(2x) - \\frac{x}{2}\\sin(2x) + \\frac{1}{4}\\cos(2x) + C',
         expr: '-x^2/2*cos(2*x) - x/2*sin(2*x) + cos(2*x)/4',
         mistake: 'ibp-tabular-sign',
-        why: 'All diagonal products were added; the middle product must be subtracted, which makes it +(x/2)sin(2x).',
+        why: 'All the terms were added; the second integration by parts subtracts the middle term, which makes it +(x/2)sin(2x).',
       },
       {
         latex: '-\\frac{x^2}{2}\\cos(2x) + \\frac{x}{2}\\sin(2x) + C',
@@ -2354,7 +2359,7 @@ export const flash: FlashItem[] = [
       },
     ],
     correct: 0,
-    explanation: '$\\left[\\frac{x\\,3^x}{\\ln 3} - \\frac{3^x}{(\\ln 3)^2}\\right]_0^1 = \\frac{3}{\\ln 3} - \\frac{3}{(\\ln 3)^2} + \\frac{1}{(\\ln 3)^2}$.',
+    explanation: '$\\left[\\frac{x\\,3^x}{\\ln 3} - \\frac{3^x}{(\\ln 3)^2}\\right]_0^1 = \\frac{3}{\\ln 3} - \\frac{3}{(\\ln 3)^2} + \\frac{1}{(\\ln 3)^2} = \\frac{3}{\\ln 3} - \\frac{2}{(\\ln 3)^2}$.',
     check: { kind: 'definite-integral', integrand: 'x*3^x', lower: '0', upper: '1' },
     difficulty: 2,
   },
@@ -2386,7 +2391,7 @@ export const flash: FlashItem[] = [
       {
         latex: '\\frac{\\sqrt{3}\\pi}{3} - \\frac{\\pi}{4} + \\frac{1}{2}\\ln 2',
         expr: 'sqrt(3)*pi/3 - pi/4 + log(2)/2',
-        mistake: 'arithmetic-error',
+        mistake: 'inverse-trig-value-wrong',
         why: 'tan⁻¹(1/√3) = π/6, not π/3.',
       },
       {
@@ -2412,13 +2417,13 @@ export const flash: FlashItem[] = [
         latex: '\\frac{26e^{3} - 11}{27}',
         expr: '(26*exp(3) - 11)/27',
         mistake: 'ibp-tabular-sign',
-        why: 'All + signs were used; the middle product 2x · e^{3x}/9 must be subtracted.',
+        why: 'All + signs were used; the middle term 2x · e^{3x}/9 must be subtracted.',
       },
       {
         latex: '\\frac{10e^{3} - 7}{27}',
         expr: '(10*exp(3) - 7)/27',
         mistake: 'ibp-tabular-sign',
-        why: 'The last product was subtracted; the signs alternate +, −, +, so it is +2e^{3x}/27.',
+        why: 'The last term was subtracted; the signs alternate +, −, +, so it is +2e^{3x}/27.',
       },
       {
         latex: '\\frac{14e^{3}}{27}',
@@ -2590,16 +2595,16 @@ export const generators: FlashGenerator[] = [
             why: 'd(ln x) was taken as dx instead of dx/x, so the power of x in ∫v du never dropped.',
           },
           {
-            latex: `${n}${xPow(m)}\\ln(x) - \\frac{${n}}{${m}}${xPow(m)} + C`,
+            latex: `${n}${xPow(m)}\\ln(x) - ${m === 1 ? `${n}` : `\\frac{${n}}{${m}}`}${xPow(m)} + C`,
             expr: `${n}*x^${m}*log(x) - ${n}/${m}*x^${m}`,
             mistake: 'ibp-v-wrong',
             why: `dv = x^${n} dx was differentiated (v = ${n}x^${m}) instead of integrated (v = x^${k}/${k}).`,
           },
           {
-            latex: `\\frac{${xPow(k)}}{${k}}\\ln(x) + C`,
-            expr: `x^${k}/${k}*log(x)`,
-            mistake: 'ibp-formula-wrong',
-            why: `Only uv was kept; the term −∫x^${n}/${k} dx was dropped.`,
+            latex: `${xPow(k)}\\ln(x) - \\frac{${xPow(k)}}{${k}} + C`,
+            expr: `x^${k}*log(x) - x^${k}/${k}`,
+            mistake: 'power-rule-int-coefficient',
+            why: `v = ∫x^${n} dx = x^${k}/${k}; with v = x^${k} (no division by ${k}) the result is x^${k} ln x − ∫x^${n} dx.`,
           },
         ],
         correct: 0,
@@ -2625,7 +2630,6 @@ export const generators: FlashGenerator[] = [
       // Signed LaTeX helpers. For k > 0: (x/k)e^{kx}; for k < 0 the leading term is −(x/|k|)e^{kx}.
       const lead = k > 0 ? `\\frac{x}{${a}}${ex}` : `-\\frac{x}{${a}}${ex}`;
       const kx = k > 0 ? `${a}x${ex}` : `-${a}x${ex}`;
-      const prodLead = k > 0 ? `\\frac{x^2}{${2 * a}}${ex}` : `-\\frac{x^2}{${2 * a}}${ex}`;
       // (1/k)e^{kx} with its sign when subtracted: − (1/k)e^{kx}
       const minusOneOverK = k > 0 ? `- \\frac{1}{${a}}${ex}` : `+ \\frac{1}{${a}}${ex}`;
       // Signed 1/k for prose and explanations: "1/3" or "−1/3" (never "1/-3").
@@ -2654,7 +2658,7 @@ export const generators: FlashGenerator[] = [
           {
             latex: `${kx} - ${a * a}${ex} + C`,
             expr: `${k}*x*${E} - ${a * a}*${E}`,
-            mistake: 'ibp-v-wrong',
+            mistake: 'differentiated-instead',
             why: `v was found by multiplying by ${k} (the derivative rule) instead of dividing by ${k}.`,
           },
           {
@@ -2664,10 +2668,10 @@ export const generators: FlashGenerator[] = [
             why: `v = (${kText})e^{${k}x} carries its factor ${kText} into ∫v du, which gives (1/${k * k})e^{${k}x}.`,
           },
           {
-            latex: `${prodLead} + C`,
-            expr: `x^2/(${2 * k})*${E}`,
-            mistake: 'product-rule-integral',
-            why: 'x and the exponential were integrated separately and multiplied; there is no product rule for integrals.',
+            latex: `x${ex} ${minusOneOverK} + C`,
+            expr: `x*${E} - ${E}/(${k})`,
+            mistake: 'ibp-v-wrong',
+            why: `v = ∫e^{${k}x} dx is (${kText})e^{${k}x}; with v = e^{${k}x} the boundary term became x·e^{${k}x}.`,
           },
         ],
         correct: 0,
