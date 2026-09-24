@@ -479,6 +479,11 @@ export const MISTAKES = {
     description: 'Picked shells when washers are substantially easier (or vice versa), e.g. requiring inverse functions or extra integrals.',
     group: 'volumes',
   },
+  'bounds-from-axis': {
+    label: 'Integral started at the axis of rotation instead of the region',
+    description: 'A limit of integration was taken at the axis (e.g. x = −2) although the region begins elsewhere.',
+    group: 'volumes',
+  },
   'volume-two-integrals-missed': {
     label: 'Boundary change ignored (needs a split)',
     description: 'A single integral was written although the outer/inner boundary (or shell height) changes formula mid-interval.',

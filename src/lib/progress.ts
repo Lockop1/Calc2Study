@@ -6,7 +6,9 @@
  *
  *   weight = (1 + misses) · (1 + 2·e^(−ageDays/2)) / (1 + correctSince)
  *
- * where ageDays is the time since the last miss. Units never missed have weight 0.
+ * where ageDays is the time since the last miss. Units never missed have weight 0, and so do units
+ * answered correctly RETIRE_AFTER times in a row since their last miss (retired: out of the deck and
+ * the badge). Their entry is kept, so a new miss reinstates them with their history.
  */
 import type { TopicContent, TopicId } from '@content/types';
 import { getContent } from './content-source';
@@ -15,6 +17,9 @@ import { isGeneratorInstanceId, isUnitId, resolveUnit, unitTopic } from './units
 import { isRecord, ownValue } from './util';
 
 export const DAY_MS = 86_400_000;
+
+/** A missed unit retires from Review after this many correct answers in a row since its last miss. */
+export const RETIRE_AFTER = 3;
 
 export interface UnitProgress {
   misses: number;
@@ -48,8 +53,12 @@ export function recordAnswer(progress: Progress, id: string, correct: boolean, n
   return { version: 1, units: { ...progress.units, [id]: next } };
 }
 
+export function isRetired(entry: UnitProgress): boolean {
+  return entry.correctSince >= RETIRE_AFTER;
+}
+
 export function reviewWeight(entry: UnitProgress | undefined, now: number): number {
-  if (!entry || !(entry.misses > 0)) return 0;
+  if (!entry || !(entry.misses > 0) || isRetired(entry)) return 0;
   const ageDays = entry.lastMissedAt === null ? Infinity : Math.max(0, (now - entry.lastMissedAt) / DAY_MS);
   const recency = 1 + 2 * Math.exp(-ageDays / 2);
   return ((1 + entry.misses) * recency) / (1 + Math.max(0, entry.correctSince));
@@ -110,6 +119,7 @@ interface WeightedId {
   weight: number;
 }
 
+/** Missed, non-retired (weight > 0), still-existing units of the selected topics. */
 function reviewCandidates({ topics, progress, now = Date.now(), content = getContent(), onlyIds }: DueOptions): WeightedId[] {
   const wanted = new Set(topics);
   const allowed = onlyIds ? new Set(onlyIds) : null;

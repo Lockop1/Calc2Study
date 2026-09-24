@@ -23,7 +23,12 @@ const seenIds = new Set<string>();
 
 for (const topic of CONTENT) {
   describe(`topic ${topic.topic}`, () => {
-    describe('flash', () => {
+    // vitest fails a describe block that registers no tests; topics may legitimately have no
+    // generators (or, while being authored, no items). The volume test enforces minimum counts.
+    it('is aggregated', () => {
+      expect(topic.topic).toBeTruthy();
+    });
+    describe.runIf(topic.flash.length > 0)('flash', () => {
       for (const item of topic.flash) {
         it(`${item.id}`, () => {
           expect(item.topic).toBe(topic.topic);
@@ -33,7 +38,7 @@ for (const topic of CONTENT) {
         });
       }
     });
-    describe('generators', () => {
+    describe.runIf(topic.generators.length > 0)('generators', () => {
       for (const gen of topic.generators) {
         it(`${gen.id}`, () => {
           expect(gen.topic).toBe(topic.topic);
@@ -56,7 +61,7 @@ for (const topic of CONTENT) {
         });
       }
     });
-    describe('steps', () => {
+    describe.runIf(topic.steps.length > 0)('steps', () => {
       for (const problem of topic.steps) {
         it(`${problem.id}`, () => {
           expect(problem.topic).toBe(topic.topic);

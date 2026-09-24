@@ -1,6 +1,7 @@
 /** Settings: round size, reset progress (two-tap confirm), storage status, version, offline note. */
 import { useState } from 'react';
 import { TopBar } from '../components/TopBar';
+import { RETIRE_AFTER } from '../lib/progress';
 import { ROUND_SIZES, type RoundSize } from '../lib/settings';
 import { APP_VERSION } from '../lib/version';
 
@@ -42,7 +43,8 @@ export function SettingsScreen({ roundSize, missedCount, storageOk, onRoundSize,
           <p className="small">
             {missedCount === 0
               ? 'No missed questions are being tracked.'
-              : `${missedCount} missed ${missedCount === 1 ? 'question is' : 'questions are'} in your Review deck.`}
+              : `${missedCount} missed ${missedCount === 1 ? 'question is' : 'questions are'} in your Review deck.`}{' '}
+            {`A question leaves Review after ${RETIRE_AFTER} correct answers in a row.`}
           </p>
           {confirming ? (
             <div className="confirm-row">

@@ -3,6 +3,7 @@ import {
   buildReviewRound,
   DAY_MS,
   dueUnitIds,
+  RETIRE_AFTER,
   emptyProgress,
   pruneProgress,
   recordAnswer,
@@ -72,7 +73,7 @@ describe('reviewWeight', () => {
     const recent = reviewWeight(entry({ misses: 1, lastMissedAt: NOW - DAY_MS / 24 }), NOW);
     const old = reviewWeight(entry({ misses: 1, lastMissedAt: NOW - 10 * DAY_MS }), NOW);
     const repeated = reviewWeight(entry({ misses: 3, lastMissedAt: NOW - 10 * DAY_MS }), NOW);
-    const fixedSince = reviewWeight(entry({ misses: 1, lastMissedAt: NOW - DAY_MS / 24, correctSince: 3 }), NOW);
+    const fixedSince = reviewWeight(entry({ misses: 1, lastMissedAt: NOW - DAY_MS / 24, correctSince: 2 }), NOW);
     expect(recent).toBeGreaterThan(old);
     expect(repeated).toBeGreaterThan(old);
     expect(recent).toBeGreaterThan(fixedSince);
@@ -168,6 +169,49 @@ describe('buildReviewRound', () => {
       mulberry32(1),
     );
     expect([...out].sort()).toEqual(['a', 'b']);
+  });
+});
+
+describe('retirement (RETIRE_AFTER correct answers in a row)', () => {
+  const content = makeContent({ 'diff-review': { flash: 3 } });
+  const due = (p: Progress, now: number) => dueUnitIds({ topics: ['diff-review'], progress: p, now, content });
+  const review = (p: Progress, now: number, onlyIds?: string[]) =>
+    buildReviewRound({ topics: ['diff-review'], size: 10, progress: p, rng: mulberry32(1), now, content, onlyIds });
+
+  it('retires a unit after 3 correct answers in a row, then a new miss reinstates it with its history', () => {
+    expect(RETIRE_AFTER).toBe(3);
+    let p = recordAnswer(emptyProgress(), 'dr-f-001', false, NOW);
+    p = recordAnswer(p, 'dr-f-002', false, NOW);
+    for (let i = 1; i < RETIRE_AFTER; i++) {
+      p = recordAnswer(p, 'dr-f-001', true, NOW + i);
+      expect(due(p, NOW + i)).toEqual(['dr-f-001', 'dr-f-002']); // still due before the 3rd
+    }
+    p = recordAnswer(p, 'dr-f-001', true, NOW + RETIRE_AFTER);
+    const later = NOW + RETIRE_AFTER + 1;
+    // retired: weight 0, out of the badge count and every review round (also "review misses")
+    expect(reviewWeight(p.units['dr-f-001'], later)).toBe(0);
+    expect(due(p, later)).toEqual(['dr-f-002']);
+    expect(review(p, later)).toEqual(['dr-f-002']);
+    expect(review(p, later, ['dr-f-001'])).toEqual([]);
+    // …but the entry and its history are kept
+    expect(p.units['dr-f-001']).toMatchObject({ misses: 1, lastMissedAt: NOW, correctSince: RETIRE_AFTER });
+
+    // a new miss reinstates it: misses accumulate, correctSince resets
+    p = recordAnswer(p, 'dr-f-001', false, later);
+    expect(p.units['dr-f-001']).toMatchObject({ misses: 2, lastMissedAt: later, correctSince: 0 });
+    expect(due(p, later)).toEqual(['dr-f-001', 'dr-f-002']);
+    expect(reviewWeight(p.units['dr-f-001'], later)).toBeCloseTo(3 * 3, 10); // (1+2)(1+2e^0)/(1+0)
+  });
+
+  it('needs the correct answers in a row: a miss in between starts the count over', () => {
+    let p = recordAnswer(emptyProgress(), 'dr-f-003', false, NOW);
+    p = recordAnswer(p, 'dr-f-003', true, NOW + 1);
+    p = recordAnswer(p, 'dr-f-003', true, NOW + 2);
+    p = recordAnswer(p, 'dr-f-003', false, NOW + 3);
+    p = recordAnswer(p, 'dr-f-003', true, NOW + 4);
+    p = recordAnswer(p, 'dr-f-003', true, NOW + 5);
+    expect(p.units['dr-f-003'].correctSince).toBe(2);
+    expect(due(p, NOW + 6)).toEqual(['dr-f-003']);
   });
 });
 
