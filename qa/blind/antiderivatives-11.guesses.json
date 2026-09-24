@@ -1,174 +1,45 @@
 {
-  "1": {
-    "guess": null,
-    "reason": ""
-  },
-  "2": {
-    "guess": null,
-    "reason": ""
-  },
-  "3": {
-    "guess": null,
-    "reason": ""
-  },
-  "4": {
-    "guess": null,
-    "reason": ""
-  },
-  "5": {
-    "guess": null,
-    "reason": ""
-  },
-  "6": {
-    "guess": null,
-    "reason": ""
-  },
-  "7": {
-    "guess": null,
-    "reason": ""
-  },
-  "8": {
-    "guess": null,
-    "reason": ""
-  },
-  "9": {
-    "guess": null,
-    "reason": ""
-  },
-  "10": {
-    "guess": null,
-    "reason": ""
-  },
-  "11": {
-    "guess": null,
-    "reason": ""
-  },
-  "12": {
-    "guess": null,
-    "reason": ""
-  },
-  "13": {
-    "guess": null,
-    "reason": ""
-  },
-  "14": {
-    "guess": null,
-    "reason": ""
-  },
-  "15": {
-    "guess": null,
-    "reason": ""
-  },
-  "16": {
-    "guess": null,
-    "reason": ""
-  },
-  "17": {
-    "guess": null,
-    "reason": ""
-  },
-  "18": {
-    "guess": null,
-    "reason": ""
-  },
-  "19": {
-    "guess": null,
-    "reason": ""
-  },
-  "20": {
-    "guess": null,
-    "reason": ""
-  },
-  "21": {
-    "guess": null,
-    "reason": ""
-  },
-  "22": {
-    "guess": null,
-    "reason": ""
-  },
-  "23": {
-    "guess": null,
-    "reason": ""
-  },
-  "24": {
-    "guess": null,
-    "reason": ""
-  },
-  "25": {
-    "guess": null,
-    "reason": ""
-  },
-  "26": {
-    "guess": null,
-    "reason": ""
-  },
-  "27": {
-    "guess": null,
-    "reason": ""
-  },
-  "28": {
-    "guess": null,
-    "reason": ""
-  },
-  "29": {
-    "guess": null,
-    "reason": ""
-  },
-  "30": {
-    "guess": null,
-    "reason": ""
-  },
-  "31": {
-    "guess": null,
-    "reason": ""
-  },
-  "32": {
-    "guess": null,
-    "reason": ""
-  },
-  "33": {
-    "guess": null,
-    "reason": ""
-  },
-  "34": {
-    "guess": null,
-    "reason": ""
-  },
-  "35": {
-    "guess": null,
-    "reason": ""
-  },
-  "36": {
-    "guess": null,
-    "reason": ""
-  },
-  "37": {
-    "guess": null,
-    "reason": ""
-  },
-  "38": {
-    "guess": null,
-    "reason": ""
-  },
-  "39": {
-    "guess": null,
-    "reason": ""
-  },
-  "40": {
-    "guess": null,
-    "reason": ""
-  },
-  "41": {
-    "guess": null,
-    "reason": ""
-  },
-  "42": {
-    "guess": null,
-    "reason": ""
-  },
-  "43": {
-    "guess": null,
-    "reason": ""
-  }
+  "1": { "guess": 1, "reason": "SURFACE: hub of the pattern (others are sign flip / missing 1/7 / times 7 variants of -1/7 cos 7x); assumed the natural integrand sin(7x), but -sin 7x, 7 sin 7x, 49 sin 7x are equally consistent with the list" },
+  "2": { "guess": 1, "reason": "MATH: recognized lecture L-II #2, int_1^sqrt2 x 2^(x^2-1) dx, u=x^2-1 on [0,1] gives (1/2)(2-1)/ln2; (also the hub: others are x/÷2, x/÷ln2 variants)" },
+  "3": { "guess": 2, "reason": "MATH: options reveal the integrand x^2/(x^3+1); u=x^3+1 has du=3x^2dx present" },
+  "4": { "guess": 5, "reason": "MATH: recognized lecture L-I #2, int_1^18 sqrt(3/z)dz = 2 sqrt3 (sqrt18 - 1) = 6sqrt6 - 2sqrt3" },
+  "5": { "guess": 1, "reason": "MATH: integrand evidently 3^(2x); antiderivative 3^(2x)/(2 ln 3)" },
+  "6": { "guess": 3, "reason": "MATH (inferred u): x-bounds 1 and e point to u = ln x; ln1=0, ln e=1" },
+  "7": { "guess": 4, "reason": "MATH: integrand evidently (ln x)^2/x (2lnx/x is its 'differentiated' twin); u=ln x gives u^3/3" },
+  "8": { "guess": 5, "reason": "MATH: integrand evidently x sec^2(x^2); u=x^2, du=2x dx gives (1/2)tan(x^2)" },
+  "9": { "guess": 1, "reason": "MATH: integrand evidently x^(-3) (derivative -3/x^4 present); x^(-2)/(-2)" },
+  "10": { "guess": 2, "reason": "MATH: u = 6e^x + 6 (lecture L-I #11), du = 6e^x dx" },
+  "11": { "guess": 2, "reason": "MATH: integrand evidently x/(x^2+1); u=x^2+1 gives (1/2)ln(x^2+1)" },
+  "12": { "guess": 1, "reason": "MATH: lecture L-II #8, sin(arctan t)/(1+t^2); u=arctan t gives -cos(u)" },
+  "13": { "guess": 3, "reason": "MATH: int_0^1 x^2(x^3+1)^4 dx with u=x^3+1: bounds 1..2, x^2dx=du/3" },
+  "14": { "guess": 4, "reason": "MATH: lecture example int_0^{2pi} sin x cos x dx = [sin^2 x/2] = 0 (2pi^2 = unconverted bounds)" },
+  "15": { "guess": 2, "reason": "MATH: lecture L-II #9, u=x^3+3x^2+1 (du=3(x^2+2x)dx), u from 1 to 5: (1/3)ln5" },
+  "16": { "guess": 3, "reason": "MATH: lecture int_4^16 e^(-sqrt x)/sqrt(2x) dx, u=sqrt x: dx/sqrt x = 2du, 1/sqrt2 * 2 = sqrt2, bounds 2..4" },
+  "17": { "guess": 4, "reason": "MATH: options reveal e^(-sqrt x)/sqrt(2x); u = sqrt x has derivative 1/(2 sqrt x) present" },
+  "18": { "guess": 2, "reason": "SURFACE: majority family (3 of 5 options are ln-type), guessed integrand sec^2x/tan x; could equally be sec^2x/tan^3x giving -1/(2tan^2x)" },
+  "19": { "guess": 5, "reason": "MATH: lecture L-II #11, u=x+4 on [-8,-6] gives -4, -2" },
+  "20": { "guess": 4, "reason": "SURFACE: could not reconstruct; -12 is the only value whose negation (12) is also listed, and -4 = -12/3" },
+  "21": { "guess": 4, "reason": "SURFACE: could not reconstruct; -1/2 and 1/2 look like the two halves of an odd/symmetric integrand, 0 is their signed total, 1 the geometric area" },
+  "22": { "guess": 4, "reason": "MATH: lecture L-I #11, -4 e^x dx = -4 du/6 = -(2/3)du" },
+  "23": { "guess": 3, "reason": "MATH: lecture L-II #11, [4u - 16 ln|u|]_{-4}^{-2} = 8 + 16 ln 2 (integrand positive, ~19)" },
+  "24": { "guess": 3, "reason": "MATH: u = 2 + sqrt x (or sqrt x), du = dx/(2 sqrt x)" },
+  "25": { "guess": 2, "reason": "MATH: lecture L-II #4, u=2+sqrt x: dx/sqrt x = 2du, bounds 2..2+sqrt2" },
+  "26": { "guess": 2, "reason": "MATH: lecture L-I #8, int_1^e ln x/x dx = [(ln x)^2/2] = 1/2" },
+  "27": { "guess": 4, "reason": "MATH: int_0^{pi/3} sin x cos^2 x dx = (1 - 1/8)/3 = 7/24 (-pi^3/81 is the unconverted-bounds twin)" },
+  "28": { "guess": 4, "reason": "MATH: lecture L-I #4, int_{-1}^1 x sqrt(9-x^2) dx: odd integrand / u-bounds 8..8, so 0" },
+  "29": { "guess": 4, "reason": "MATH: these are antiderivative candidates of sin 2x; d/dx sin^2 x = 2 sin x cos x = sin 2x" },
+  "30": { "guess": 3, "reason": "MATH: lecture L-II #3, u = e^t + 1, e^(2t)dt = e^t * e^t dt = (u-1)du" },
+  "31": { "guess": 5, "reason": "MATH: t cos(t^2) sin(t^2), u = sin(t^2): t cos(t^2)dt = du/2, bounds 0..1" },
+  "32": { "guess": 4, "reason": "MATH: power rule x^(n+1)/(n+1)" },
+  "33": { "guess": 1, "reason": "MATH: integrand evidently 1/sqrt(1-4x^2); (1/2) arcsin(2x)" },
+  "34": { "guess": 1, "reason": "MATH: lecture L-I #12, 1/sqrt(1-16x^2) gives (1/4) arcsin(4x)" },
+  "35": { "guess": 4, "reason": "MATH: lecture FTC example int_1^4 x^(-1/2) dx = [2 sqrt x] = 2" },
+  "36": { "guess": 1, "reason": "MATH: u = 4 - x^2 gives du = -2x dx" },
+  "37": { "guess": 4, "reason": "MATH: u = 9 + x^4 gives du = 4x^3 dx" },
+  "38": { "guess": 6, "reason": "MATH: lecture L-II #14, u = tan(3x^3), du = 9x^2 sec^2(3x^3)dx, -5/9 * u^4/4" },
+  "39": { "guess": 4, "reason": "MATH: u = 4x (for 1/sqrt(1-16x^2)) gives du = 4dx" },
+  "40": { "guess": 6, "reason": "MATH: lecture L-I #7, int_1^3 (2-x)^6 dx = [-(2-x)^7/7] = 2/7" },
+  "41": { "guess": 4, "reason": "MATH: x^2 dx = du/3 with u = x^3+1" },
+  "42": { "guess": 3, "reason": "MATH: only integrand with the derivative sec^2 x of the inner tan x" },
+  "43": { "guess": 4, "reason": "MATH: 4(u-4)/u = 4 - 16/u integrates to 4u - 16 ln|u| (u negative so |u| needed)" }
 }

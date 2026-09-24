@@ -1,4 +1,4 @@
-import type { FlashGenerator, FlashItem } from '../types';
+import type { FlashGenerator, FlashItem, Option } from '../types';
 
 /** Flash Drill items for topic "trig-integrals". Authored by content-author; verified by math-verifier. */
 export const flash: FlashItem[] = [
@@ -514,8 +514,899 @@ export const flash: FlashItem[] = [
     check: { kind: 'antiderivative', integrand: 'sec(x)^3' },
     difficulty: 2,
   },
-  // @@END-FLASH@@
+  {
+    id: 'ti-f-029',
+    topic: 'trig-integrals',
+    kind: 'antiderivative',
+    prompt: { latex: '\\sin x\\sec^5 x' },
+    options: [
+      { latex: '-\\frac{1}{4}\\sec^4 x + C', expr: '-sec(x)^4/4', mistake: 'u-cos-sign-missing', why: 'With u = cos x, du = −sin x dx turns the integral into −∫u⁻⁵du = +¼u⁻⁴; losing the minus flips the answer.' },
+      { latex: '\\frac{1}{5}\\sec^5 x + C', expr: 'sec(x)^5/5', mistake: 'exponent-arithmetic', why: 'sin x sec⁵x = sec³x·(sec x tan x): one secant goes into du, so the integrand is u³, not u⁴.' },
+      { latex: '\\frac{1}{6}\\sec^6 x + C', expr: 'sec(x)^6/6', mistake: 'power-rule-int-exponent', why: '∫u⁻⁵du = u⁻⁴/(−4); lowering the exponent to u⁻⁶ instead of raising it gives sec⁶x.' },
+      { latex: '\\frac{1}{4}\\sec^4 x + C', expr: 'sec(x)^4/4' },
+      { latex: '\\frac{1}{4}\\tan^4 x + C', expr: 'tan(x)^4/4', mistake: 'pythagorean-wrong', why: 'With u = tan x the leftover sec²x is u² + 1; replacing it by u² gives ¼tan⁴x and loses the ½tan²x term.' },
+      { latex: '-\\frac{1}{6}\\cos^6 x + C', expr: '-cos(x)^6/6', mistake: 'algebra-error', why: 'sec⁵x = 1/cos⁵x, not cos⁵x; this integrates sin x cos⁵x instead.' },
+    ],
+    correct: 3,
+    explanation: '$\\sin x\\sec^5 x = \\frac{\\sin x}{\\cos^5 x}$; $u = \\cos x$: $-\\int u^{-5}\\,du = \\frac{1}{4}u^{-4} = \\frac{1}{4}\\sec^4 x + C$.',
+    check: { kind: 'antiderivative', integrand: 'sin(x)*sec(x)^5' },
+    difficulty: 2,
+  },
+  {
+    id: 'ti-f-030',
+    topic: 'trig-integrals',
+    kind: 'antiderivative',
+    prompt: { latex: '\\sin x\\cos x' },
+    options: [
+      { latex: '\\frac{1}{2}\\cos^2 x + C', expr: 'cos(x)^2/2', mistake: 'u-cos-sign-missing', why: 'With u = cos x, du = −sin x dx, so the result is −½cos²x; the minus was dropped.' },
+      { latex: '-\\frac{1}{2}\\cos 2x + C', expr: '-cos(2*x)/2', mistake: 'inner-constant-factor-missing', why: 'sin x cos x = ½ sin 2x and ∫sin 2x dx = −½cos 2x; the second 1/2 (from the inner 2x) was dropped.' },
+      { latex: '\\frac{1}{2}\\sin^2 x + C', expr: 'sin(x)^2/2' },
+      { latex: '-\\sin x\\cos x + C', expr: '-sin(x)*cos(x)', mistake: 'product-rule-integral', why: 'Each factor was integrated separately (−cos x and sin x) and the results multiplied; there is no product rule for integrals.' },
+      { latex: '\\frac{1}{4}\\sin 2x + C', expr: 'sin(2*x)/4', mistake: 'trig-antiderivative-swapped', why: 'After writing ½ sin 2x, sine was "integrated" to sine; ∫sin 2x dx = −½cos 2x.' },
+    ],
+    correct: 2,
+    explanation: 'With $u = \\sin x$, $du = \\cos x\\,dx$: $\\int u\\,du = \\frac{1}{2}\\sin^2 x + C$ (same family as $-\\frac12\\cos^2 x + C$ and $-\\frac14\\cos 2x + C$).',
+    check: { kind: 'antiderivative', integrand: 'sin(x)*cos(x)' },
+    difficulty: 1,
+  },
+  {
+    id: 'ti-f-031',
+    topic: 'trig-integrals',
+    kind: 'antiderivative',
+    prompt: { latex: '\\sin^5 x\\cos^2 x' },
+    options: [
+      { latex: '\\frac{1}{3}\\cos^3 x - \\frac{2}{5}\\cos^5 x + \\frac{1}{7}\\cos^7 x + C', expr: 'cos(x)^3/3 - 2*cos(x)^5/5 + cos(x)^7/7', mistake: 'u-cos-sign-missing', why: 'du = −sin x dx puts a minus in front of the whole u-integral; it was dropped.' },
+      { latex: '-\\frac{1}{3}\\cos^3 x + \\frac{1}{5}\\cos^5 x + C', expr: '-cos(x)^3/3 + cos(x)^5/5', mistake: 'exponent-arithmetic', why: 'After saving sin x, sin⁴x = (1 − cos²x)²; using (1 − cos²x) once is the sin³x case.' },
+      { latex: '-\\frac{1}{3}\\cos^3 x - \\frac{2}{5}\\cos^5 x - \\frac{1}{7}\\cos^7 x + C', expr: '-cos(x)^3/3 - 2*cos(x)^5/5 - cos(x)^7/7', mistake: 'pythagorean-wrong', why: 'sin²x = 1 − cos²x; (1 + cos²x)² makes every term the same sign.' },
+      { latex: '-\\frac{1}{3}\\cos^3 x + \\frac{1}{7}\\cos^7 x + C', expr: '-cos(x)^3/3 + cos(x)^7/7', mistake: 'algebra-error', why: '(1 − u²)² was expanded as 1 − u⁴; the middle term −2u² is missing.' },
+      { latex: '-\\frac{1}{3}\\sin^3 x + \\frac{2}{5}\\sin^5 x - \\frac{1}{7}\\sin^7 x + C', expr: '-sin(x)^3/3 + 2*sin(x)^5/5 - sin(x)^7/7', mistake: 'back-substitution-wrong', why: 'u was cos x; the powers of u must become powers of cos x.' },
+      { latex: '-\\frac{1}{3}\\cos^3 x + \\frac{2}{5}\\cos^5 x - \\frac{1}{7}\\cos^7 x + C', expr: '-cos(x)^3/3 + 2*cos(x)^5/5 - cos(x)^7/7' },
+    ],
+    correct: 5,
+    explanation: '$u = \\cos x$: $-\\int (1 - u^2)^2u^2\\,du = -\\int (u^2 - 2u^4 + u^6)\\,du = -\\frac{u^3}{3} + \\frac{2u^5}{5} - \\frac{u^7}{7} + C$.',
+    check: { kind: 'antiderivative', integrand: 'sin(x)^5*cos(x)^2' },
+    difficulty: 2,
+  },
+  {
+    id: 'ti-f-032',
+    topic: 'trig-integrals',
+    kind: 'antiderivative',
+    prompt: { latex: '\\cos^3\\frac{t}{2}\\sin^2\\frac{t}{2}' },
+    options: [
+      { latex: '\\frac{1}{3}\\sin^3\\frac{t}{2} - \\frac{1}{5}\\sin^5\\frac{t}{2} + C', expr: 'sin(t/2)^3/3 - sin(t/2)^5/5', mistake: 'inner-constant-factor-missing', why: 'With u = sin(t/2), du = ½cos(t/2)dt, so cos(t/2)dt = 2du; the factor 2 was dropped.' },
+      { latex: '\\frac{1}{6}\\sin^3\\frac{t}{2} - \\frac{1}{10}\\sin^5\\frac{t}{2} + C', expr: 'sin(t/2)^3/6 - sin(t/2)^5/10', mistake: 'inner-constant-factor-missing', why: 'Used cos(t/2)dt = ½du instead of 2du (multiplied by the inner 1/2 instead of dividing).' },
+      { latex: '\\frac{2}{3}\\sin^3\\frac{t}{2} + \\frac{2}{5}\\sin^5\\frac{t}{2} + C', expr: '2*sin(t/2)^3/3 + 2*sin(t/2)^5/5', mistake: 'pythagorean-wrong', why: 'cos²(t/2) = 1 − sin²(t/2), not 1 + sin²(t/2).' },
+      { latex: '\\frac{2}{3}\\cos^3\\frac{t}{2} - \\frac{2}{5}\\cos^5\\frac{t}{2} + C', expr: '2*cos(t/2)^3/3 - 2*cos(t/2)^5/5', mistake: 'back-substitution-wrong', why: 'u was sin(t/2); the answer must be in powers of sin(t/2).' },
+      { latex: '\\frac{2}{3}\\sin^3\\frac{t}{2} - \\frac{2}{5}\\sin^5\\frac{t}{2} + C', expr: '2*sin(t/2)^3/3 - 2*sin(t/2)^5/5' },
+      { latex: '-\\frac{2}{3}\\sin^3\\frac{t}{2} + \\frac{2}{5}\\sin^5\\frac{t}{2} + C', expr: '-2*sin(t/2)^3/3 + 2*sin(t/2)^5/5', mistake: 'sign-error', why: 'du = ½cos(t/2)dt has no minus sign; the minus belongs to u = cos(t/2).' },
+    ],
+    correct: 4,
+    explanation: 'Save $\\cos\\frac{t}{2}$; $u = \\sin\\frac{t}{2}$, $\\cos\\frac{t}{2}\\,dt = 2\\,du$: $2\\int u^2(1 - u^2)\\,du = \\frac{2}{3}u^3 - \\frac{2}{5}u^5 + C$.',
+    variable: 't',
+    check: { kind: 'antiderivative', integrand: 'cos(t/2)^3*sin(t/2)^2' },
+    difficulty: 2,
+  },
+  {
+    id: 'ti-f-033',
+    topic: 'trig-integrals',
+    kind: 'antiderivative',
+    prompt: { latex: '\\sin^2 x\\sin 2x' },
+    options: [
+      { latex: '\\frac{1}{4}\\sin^4 x + C', expr: 'sin(x)^4/4', mistake: 'double-angle-wrong', why: 'sin 2x = 2 sin x cos x; without the 2 the result is halved.' },
+      { latex: '2\\sin^4 x + C', expr: '2*sin(x)^4', mistake: 'power-rule-int-coefficient', why: '∫2u³ du = u⁴/2; the division by 4 was skipped.' },
+      { latex: '\\cos^2 x - \\frac{1}{2}\\cos^4 x + C', expr: 'cos(x)^2 - cos(x)^4/2', mistake: 'u-cos-sign-missing', why: 'Saving sin x with u = cos x gives −cos²x + ½cos⁴x (a correct form); the minus from du = −sin x dx was dropped.' },
+      { latex: '-\\frac{1}{2}\\sin^2 x\\cos 2x + C', expr: '-sin(x)^2*cos(2*x)/2', mistake: 'product-rule-integral', why: 'sin²x was treated as a constant while integrating sin 2x; both factors vary with x.' },
+      { latex: '\\frac{1}{2}\\sin^4 x + C', expr: 'sin(x)^4/2' },
+      { latex: '\\frac{2}{3}\\sin^3 x + C', expr: '2*sin(x)^3/3', mistake: 'exponent-arithmetic', why: 'sin²x·2 sin x cos x = 2 sin³x cos x, i.e. 2u³du; one factor of sin x was lost, giving 2u²du.' },
+    ],
+    correct: 4,
+    explanation: '$\\sin 2x = 2\\sin x\\cos x$: $\\int 2\\sin^3 x\\cos x\\,dx$, $u = \\sin x$: $\\int 2u^3\\,du = \\frac{1}{2}\\sin^4 x + C$.',
+    check: { kind: 'antiderivative', integrand: 'sin(x)^2*sin(2*x)' },
+    difficulty: 2,
+  },
+  {
+    id: 'ti-f-034',
+    topic: 'trig-integrals',
+    kind: 'antiderivative',
+    prompt: { latex: '\\sin x\\cos\\frac{x}{2}' },
+    options: [
+      { latex: '\\frac{4}{3}\\cos^3\\frac{x}{2} + C', expr: '4*cos(x/2)^3/3', mistake: 'u-cos-sign-missing', why: 'u = cos(x/2) gives du = −½ sin(x/2)dx; the minus sign was dropped.' },
+      { latex: '-\\frac{2}{3}\\cos^3\\frac{x}{2} + C', expr: '-2*cos(x/2)^3/3', mistake: 'double-angle-wrong', why: 'sin x = 2 sin(x/2)cos(x/2); dropping the 2 halves the answer.' },
+      { latex: '-\\frac{1}{3}\\cos^3\\frac{x}{2} + C', expr: '-cos(x/2)^3/3', mistake: 'inner-constant-factor-missing', why: 'du = −½ sin(x/2)dx means sin(x/2)dx = −2du; using −½du loses a factor of 4.' },
+      { latex: '-\\frac{4}{3}\\cos^3\\frac{x}{2} + C', expr: '-4*cos(x/2)^3/3' },
+      { latex: '-\\frac{4}{3}\\sin^3\\frac{x}{2} + C', expr: '-4*sin(x/2)^3/3', mistake: 'back-substitution-wrong', why: 'u was cos(x/2), so u³ must become cos³(x/2).' },
+    ],
+    correct: 3,
+    explanation: '$\\sin x = 2\\sin\\frac{x}{2}\\cos\\frac{x}{2}$, so the integrand is $2\\cos^2\\frac{x}{2}\\sin\\frac{x}{2}$; with $u = \\cos\\frac{x}{2}$, $\\sin\\frac{x}{2}\\,dx = -2\\,du$: $-4\\int u^2\\,du = -\\frac{4}{3}u^3 + C$.',
+    check: { kind: 'antiderivative', integrand: 'sin(x)*cos(x/2)' },
+    difficulty: 2,
+  },
+  {
+    id: 'ti-f-035',
+    topic: 'trig-integrals',
+    kind: 'antiderivative',
+    prompt: { latex: '\\tan^5 x\\sec^3 x' },
+    options: [
+      { latex: '\\frac{1}{5}\\sec^5 x - \\frac{1}{3}\\sec^3 x + C', expr: 'sec(x)^5/5 - sec(x)^3/3', mistake: 'exponent-arithmetic', why: 'After saving sec x tan x, tan⁴x = (sec²x − 1)²; using sec²x − 1 once is the tan³x case.' },
+      { latex: '\\frac{1}{7}\\sec^7 x + \\frac{2}{5}\\sec^5 x + \\frac{1}{3}\\sec^3 x + C', expr: 'sec(x)^7/7 + 2*sec(x)^5/5 + sec(x)^3/3', mistake: 'tan-sec-identity-direction', why: 'tan²x = sec²x − 1; (u² + 1)² makes the middle term positive.' },
+      { latex: '\\frac{1}{7}\\sec^7 x - \\frac{1}{3}\\sec^3 x + C', expr: 'sec(x)^7/7 - sec(x)^3/3', mistake: 'algebra-error', why: '(u² − 1)² was expanded as u⁴ − 1; the middle term −2u² is missing.' },
+      { latex: '\\frac{1}{7}\\sec^7 x - \\frac{2}{5}\\sec^5 x + \\frac{1}{3}\\sec^3 x + C', expr: 'sec(x)^7/7 - 2*sec(x)^5/5 + sec(x)^3/3' },
+      { latex: '\\frac{1}{7}\\tan^7 x - \\frac{2}{5}\\tan^5 x + \\frac{1}{3}\\tan^3 x + C', expr: 'tan(x)^7/7 - 2*tan(x)^5/5 + tan(x)^3/3', mistake: 'back-substitution-wrong', why: 'u was sec x, so every power of u must become a power of sec x.' },
+      { latex: '\\frac{1}{8}\\sec^8 x - \\frac{1}{3}\\sec^6 x + \\frac{1}{4}\\sec^4 x + C', expr: 'sec(x)^8/8 - sec(x)^6/3 + sec(x)^4/4', mistake: 'exponent-arithmetic', why: 'One secant goes into du = sec x tan x dx, leaving sec²x; keeping sec³x raised every power by one.' },
+    ],
+    correct: 3,
+    explanation: 'Save $\\sec x\\tan x$, $u = \\sec x$: $\\int (u^2 - 1)^2u^2\\,du = \\int (u^6 - 2u^4 + u^2)\\,du = \\frac{u^7}{7} - \\frac{2u^5}{5} + \\frac{u^3}{3} + C$.',
+    domain: [0.2, 1.1],
+    check: { kind: 'antiderivative', integrand: 'tan(x)^5*sec(x)^3' },
+    difficulty: 2,
+  },
+  {
+    id: 'ti-f-036',
+    topic: 'trig-integrals',
+    kind: 'antiderivative',
+    prompt: { text: 'Save one $\\sec^2 x$ and use $u = \\tan x$.', latex: '\\tan^3 x\\sec^6 x' },
+    options: [
+      { latex: '\\frac{1}{8}\\tan^8 x + \\frac{1}{4}\\tan^4 x + C', expr: 'tan(x)^8/8 + tan(x)^4/4', mistake: 'algebra-error', why: '(u² + 1)² was expanded as u⁴ + 1; the middle term 2u² is missing.' },
+      { latex: '\\frac{1}{8}\\tan^8 x - \\frac{1}{3}\\tan^6 x + \\frac{1}{4}\\tan^4 x + C', expr: 'tan(x)^8/8 - tan(x)^6/3 + tan(x)^4/4', mistake: 'tan-sec-identity-direction', why: 'sec²x = tan²x + 1; using tan²x − 1 flips the middle term.' },
+      { latex: '\\frac{1}{8}\\sec^8 x + \\frac{1}{3}\\sec^6 x + \\frac{1}{4}\\sec^4 x + C', expr: 'sec(x)^8/8 + sec(x)^6/3 + sec(x)^4/4', mistake: 'back-substitution-wrong', why: 'u was tan x, so the powers of u must become powers of tan x.' },
+      { latex: '\\frac{1}{8}\\tan^8 x + \\frac{1}{3}\\tan^6 x + \\frac{1}{4}\\tan^4 x + C', expr: 'tan(x)^8/8 + tan(x)^6/3 + tan(x)^4/4' },
+      { latex: '\\frac{1}{10}\\tan^{10} x + \\frac{3}{8}\\tan^8 x + \\frac{1}{2}\\tan^6 x + \\frac{1}{4}\\tan^4 x + C', expr: 'tan(x)^10/10 + 3*tan(x)^8/8 + tan(x)^6/2 + tan(x)^4/4', mistake: 'exponent-arithmetic', why: 'All of sec⁶x was converted to (u² + 1)³ although one sec²x had already been saved for du.' },
+    ],
+    correct: 3,
+    explanation: '$\\int \\tan^3 x(\\tan^2 x + 1)^2\\sec^2 x\\,dx = \\int (u^7 + 2u^5 + u^3)\\,du$ (equivalently $\\frac18\\sec^8 x - \\frac16\\sec^6 x + C$ via $u = \\sec x$).',
+    domain: [0.2, 1.1],
+    check: { kind: 'antiderivative', integrand: 'tan(x)^3*sec(x)^6' },
+    difficulty: 2,
+  },
+  {
+    id: 'ti-f-037',
+    topic: 'trig-integrals',
+    kind: 'antiderivative',
+    prompt: { latex: '\\sqrt{\\cos\\theta}\\sin^3\\theta' },
+    options: [
+      { latex: '\\frac{2}{3}\\cos^{3/2}\\theta - \\frac{2}{7}\\cos^{7/2}\\theta + C', expr: '2*cos(theta)^(3/2)/3 - 2*cos(theta)^(7/2)/7', mistake: 'u-cos-sign-missing', why: 'u = cos θ gives du = −sin θ dθ; the minus sign was dropped.' },
+      { latex: '-\\frac{2}{3}\\cos^{3/2}\\theta - \\frac{2}{7}\\cos^{7/2}\\theta + C', expr: '-2*cos(theta)^(3/2)/3 - 2*cos(theta)^(7/2)/7', mistake: 'pythagorean-wrong', why: 'sin²θ = 1 − cos²θ, not 1 + cos²θ.' },
+      { latex: '-\\frac{3}{2}\\cos^{3/2}\\theta + \\frac{7}{2}\\cos^{7/2}\\theta + C', expr: '-3*cos(theta)^(3/2)/2 + 7*cos(theta)^(7/2)/2', mistake: 'power-rule-int-coefficient', why: 'The power rule divides by the new exponent: ∫u^{1/2}du = (2/3)u^{3/2}, not (3/2)u^{3/2}.' },
+      { latex: '-\\frac{2}{3}\\cos^{3/2}\\theta + \\frac{2}{7}\\cos^{7/2}\\theta + C', expr: '-2*cos(theta)^(3/2)/3 + 2*cos(theta)^(7/2)/7' },
+      { latex: '-\\frac{2}{3}\\cos^{3/2}\\theta + \\frac{1}{3}\\cos^3\\theta + C', expr: '-2*cos(theta)^(3/2)/3 + cos(theta)^3/3', mistake: 'algebra-error', why: '√u was multiplied into only the first term: u^{1/2}(1 − u²) = u^{1/2} − u^{5/2}, not u^{1/2} − u².' },
+      { latex: '-\\frac{2}{3}\\sin^{3/2}\\theta + \\frac{2}{7}\\sin^{7/2}\\theta + C', expr: '-2*sin(theta)^(3/2)/3 + 2*sin(theta)^(7/2)/7', mistake: 'back-substitution-wrong', why: 'u was cos θ, so u^{3/2} must become cos^{3/2}θ.' },
+    ],
+    correct: 3,
+    explanation: 'Save $\\sin\\theta$; $u = \\cos\\theta$: $-\\int u^{1/2}(1 - u^2)\\,du = -\\frac{2}{3}u^{3/2} + \\frac{2}{7}u^{7/2} + C$.',
+    variable: 'theta',
+    check: { kind: 'antiderivative', integrand: 'sqrt(cos(theta))*sin(theta)^3' },
+    difficulty: 2,
+  },
+  {
+    id: 'ti-f-038',
+    topic: 'trig-integrals',
+    kind: 'antiderivative',
+    prompt: { latex: 't\\sin^2 t' },
+    options: [
+      { latex: '\\frac{t^2}{4} - \\frac{1}{4}t\\sin 2t + \\frac{1}{8}\\cos 2t + C', expr: 't^2/4 - t*sin(2*t)/4 + cos(2*t)/8', mistake: 'ibp-sign-error', why: '∫t cos 2t dt = ½t sin 2t − ∫½ sin 2t dt; adding the ∫v du term instead flips the cosine term.' },
+      { latex: '\\frac{t^2}{4} + \\frac{1}{4}t\\sin 2t + \\frac{1}{8}\\cos 2t + C', expr: 't^2/4 + t*sin(2*t)/4 + cos(2*t)/8', mistake: 'half-angle-wrong', why: 'That integrates t cos²t: sin²t = (1 − cos 2t)/2, not (1 + cos 2t)/2.' },
+      { latex: '\\frac{t^2}{4} - \\frac{1}{2}t\\sin 2t - \\frac{1}{4}\\cos 2t + C', expr: 't^2/4 - t*sin(2*t)/2 - cos(2*t)/4', mistake: 'ibp-v-wrong', why: 'v = ∫cos 2t dt = ½ sin 2t; the 1/2 from the inner 2t was dropped.' },
+      { latex: '\\frac{t^2}{4} - \\frac{1}{4}t\\sin 2t + C', expr: 't^2/4 - t*sin(2*t)/4', mistake: 'ibp-formula-wrong', why: 'Only the uv part of uv − ∫v du was kept; the −∫v du term was never integrated.' },
+      { latex: '\\frac{t^2}{4} - \\frac{1}{4}t\\sin 2t - \\frac{1}{8}\\cos 2t + C', expr: 't^2/4 - t*sin(2*t)/4 - cos(2*t)/8' },
+      { latex: '\\frac{t^3}{4} - \\frac{t^2\\sin 2t}{8} + C', expr: 't^3/4 - t^2*sin(2*t)/8', mistake: 'product-rule-integral', why: 't and sin²t were integrated separately (t²/2 and t/2 − sin 2t/4) and multiplied; there is no product rule for integrals.' },
+    ],
+    correct: 4,
+    explanation: '$\\int t\\frac{1 - \\cos 2t}{2}\\,dt = \\frac{t^2}{4} - \\frac{1}{2}\\int t\\cos 2t\\,dt$, and IBP gives $\\int t\\cos 2t\\,dt = \\frac{1}{2}t\\sin 2t + \\frac{1}{4}\\cos 2t$.',
+    variable: 't',
+    check: { kind: 'antiderivative', integrand: 't*sin(t)^2' },
+    difficulty: 2,
+  },
+
+  // ───────────── definite integrals ─────────────
+  {
+    id: 'ti-f-039',
+    topic: 'trig-integrals',
+    kind: 'evaluate',
+    prompt: { latex: '\\int_0^{\\pi} \\sin^2 x\\,dx' },
+    options: [
+      { latex: '\\pi', expr: 'pi', mistake: 'half-angle-wrong', why: 'The 1/2 in sin²x = (1 − cos 2x)/2 was dropped, doubling the value.' },
+      { latex: '0', expr: '0', mistake: 'u-choice-wrong', why: 'sin²x was integrated as sin³x/3 (power rule without du = cos x dx), which is 0 at both limits.' },
+      { latex: '-\\frac{\\pi}{2}', expr: '-pi/2', mistake: 'ftc-order-swapped', why: 'Computed F(0) − F(π) instead of F(π) − F(0); a positive integrand cannot give a negative integral.' },
+      { latex: '4', expr: '4', mistake: 'product-rule-integral', why: 'Treated ∫sin x·sin x dx as (∫₀^π sin x dx)² = 2²; integrals do not factor over products.' },
+      { latex: '\\frac{\\pi}{2}', expr: 'pi/2' },
+    ],
+    correct: 4,
+    explanation: '$\\int_0^{\\pi} \\frac{1 - \\cos 2x}{2}\\,dx = \\left[\\frac{x}{2} - \\frac{\\sin 2x}{4}\\right]_0^{\\pi} = \\frac{\\pi}{2}$.',
+    check: { kind: 'definite-integral', integrand: 'sin(x)^2', lower: '0', upper: 'pi' },
+    difficulty: 1,
+  },
+  {
+    id: 'ti-f-040',
+    topic: 'trig-integrals',
+    kind: 'evaluate',
+    prompt: { latex: '\\int_0^{\\pi/4} \\tan^4 t\\,dt' },
+    options: [
+      { latex: '\\frac{\\pi}{4} + \\frac{4}{3}', expr: 'pi/4 + 4/3', mistake: 'tan-sec-identity-direction', why: 'Using tan²t = sec²t + 1 (twice) gives ⅓tan³t + tan t + t; the identity is tan²t = sec²t − 1.' },
+      { latex: '\\frac{1}{5}', expr: '1/5', mistake: 'u-choice-wrong', why: 'tan⁴t was integrated as tan⁵t/5, but du = sec²t dt is not in the integrand.' },
+      { latex: '\\frac{\\pi}{4} - \\frac{2}{3}', expr: 'pi/4 - 2/3' },
+      { latex: '-\\frac{2}{3}', expr: '-2/3', mistake: 'algebra-error', why: 'The +∫1 dt piece (worth π/4) was dropped from ∫tan²t dt = tan t − t.' },
+      { latex: '\\frac{2}{3} - \\frac{\\pi}{4}', expr: '2/3 - pi/4', mistake: 'ftc-order-swapped', why: 'Computed F(0) − F(π/4); a positive integrand cannot give a negative integral.' },
+      { latex: '-\\frac{2}{3} - \\frac{\\pi}{4}', expr: '-2/3 - pi/4', mistake: 'tan-sec-identity-direction', why: 'In the second step ∫tan²t dt was taken as tan t + t (from sec²t + 1) instead of tan t − t.' },
+    ],
+    correct: 2,
+    explanation: '$\\tan^4 t = \\tan^2 t\\sec^2 t - \\sec^2 t + 1$, so the integral is $\\left[\\frac{1}{3}\\tan^3 t - \\tan t + t\\right]_0^{\\pi/4} = \\frac{1}{3} - 1 + \\frac{\\pi}{4}$.',
+    variable: 't',
+    check: { kind: 'definite-integral', integrand: 'tan(t)^4', lower: '0', upper: 'pi/4' },
+    difficulty: 2,
+  },
+  {
+    id: 'ti-f-041',
+    topic: 'trig-integrals',
+    kind: 'evaluate',
+    prompt: { latex: '\\int_0^{\\pi/4} \\tan^3 t\\,dt' },
+    options: [
+      { latex: '\\frac{1}{2} + \\frac{1}{2}\\ln 2', expr: '1/2 + log(2)/2', mistake: 'tan-antiderivative-wrong', why: '∫tan t dt = −ln|cos t|; with the sign flipped the log term is added instead of subtracted.' },
+      { latex: '\\frac{1}{4}', expr: '1/4', mistake: 'u-choice-wrong', why: 'tan³t was integrated as tan⁴t/4, but du = sec²t dt is not in the integrand.' },
+      { latex: '1 - \\frac{1}{2}\\ln 2', expr: '1 - log(2)/2', mistake: 'ftc-not-subtracted', why: 'With the form ½sec²t + ln|cos t|, F(0) = ½ is not zero and was never subtracted.' },
+      { latex: '\\frac{1}{2}\\ln 2 - \\frac{1}{2}', expr: 'log(2)/2 - 1/2', mistake: 'ftc-order-swapped', why: 'Computed F(0) − F(π/4); a positive integrand cannot give a negative integral.' },
+      { latex: '\\frac{1}{2} - \\ln 2', expr: '1/2 - log(2)', mistake: 'arithmetic-error', why: 'ln(cos π/4) = ln(1/√2) = −½ ln 2, not −ln 2.' },
+      { latex: '\\frac{1}{2} - \\frac{1}{2}\\ln 2', expr: '1/2 - log(2)/2' },
+    ],
+    correct: 5,
+    explanation: '$\\int \\tan^3 t\\,dt = \\frac{1}{2}\\tan^2 t + \\ln|\\cos t|$; at $\\frac{\\pi}{4}$: $\\frac{1}{2} + \\ln\\frac{1}{\\sqrt{2}} = \\frac{1}{2} - \\frac{1}{2}\\ln 2$, and at 0 it is 0.',
+    variable: 't',
+    check: { kind: 'definite-integral', integrand: 'tan(t)^3', lower: '0', upper: 'pi/4' },
+    difficulty: 2,
+  },
+  {
+    id: 'ti-f-042',
+    topic: 'trig-integrals',
+    kind: 'evaluate',
+    prompt: { latex: '\\int_0^{\\pi} \\cos^4(2t)\\,dt' },
+    options: [
+      { latex: '\\frac{3\\pi}{4}', expr: '3*pi/4', mistake: 'coefficient-mishandled', why: 'Squaring (1 + cos 4t)/2 gives a factor 1/4, not 1/2.' },
+      { latex: '\\frac{\\pi}{4}', expr: 'pi/4', mistake: 'half-angle-wrong', why: 'cos²(4t) was not reduced again; it becomes (1 + cos 8t)/2 and contributes 1/8 to the constant term.' },
+      { latex: '\\frac{\\pi}{2}', expr: 'pi/2', mistake: 'exponent-arithmetic', why: 'cos⁴(2t) was replaced by (1 + cos 4t)/2, the identity for cos²(2t).' },
+      { latex: '\\frac{3\\pi}{8}', expr: '3*pi/8' },
+      { latex: '0', expr: '0', mistake: 'u-choice-wrong', why: 'cos⁴(2t) was integrated with the power rule as if its inner derivative were present; that bogus antiderivative is equal at 0 and π.' },
+      { latex: '\\frac{3\\pi}{16}', expr: '3*pi/16', mistake: 'inner-constant-factor-missing', why: 'The constant term 3/8 was divided by the inner 2; a 1/k factor applies only when integrating cos(kt).' },
+    ],
+    correct: 3,
+    explanation: '$\\cos^4(2t) = \\frac{3}{8} + \\frac{1}{2}\\cos 4t + \\frac{1}{8}\\cos 8t$; the cosine terms integrate to 0 over $[0, \\pi]$, leaving $\\frac{3}{8}\\pi$.',
+    variable: 't',
+    check: { kind: 'definite-integral', integrand: 'cos(2*t)^4', lower: '0', upper: 'pi' },
+    difficulty: 1,
+  },
+  {
+    id: 'ti-f-043',
+    topic: 'trig-integrals',
+    kind: 'evaluate',
+    prompt: { latex: '\\int_0^{\\pi/2} (2 - \\sin\\theta)^2\\,d\\theta' },
+    options: [
+      { latex: '\\frac{9\\pi}{4} + 4', expr: '9*pi/4 + 4', mistake: 'trig-antiderivative-sign', why: '∫sin θ dθ = −cos θ; using +cos θ flips the sign of the middle term.' },
+      { latex: '\\frac{9\\pi}{4}', expr: '9*pi/4', mistake: 'algebra-error', why: '(2 − sin θ)² was expanded as 4 + sin²θ; the cross term −4 sin θ is missing.' },
+      { latex: '\\frac{9\\pi}{4} - 2', expr: '9*pi/4 - 2', mistake: 'algebra-error', why: 'The cross term is −2·2·sin θ = −4 sin θ, not −2 sin θ.' },
+      { latex: '\\frac{9\\pi}{4} - 4', expr: '9*pi/4 - 4' },
+      { latex: '\\frac{5\\pi}{2} - 4', expr: '5*pi/2 - 4', mistake: 'half-angle-wrong', why: '∫₀^{π/2} sin²θ dθ = π/4; dropping the 1/2 in (1 − cos 2θ)/2 gives π/2.' },
+      { latex: '2\\pi - \\frac{11}{3}', expr: '2*pi - 11/3', mistake: 'u-choice-wrong', why: 'sin²θ was integrated as sin³θ/3 (worth 1/3) instead of with the half-angle identity (worth π/4).' },
+    ],
+    correct: 3,
+    explanation: '$\\int_0^{\\pi/2} (4 - 4\\sin\\theta + \\sin^2\\theta)\\,d\\theta = 2\\pi - 4 + \\frac{\\pi}{4} = \\frac{9\\pi}{4} - 4$.',
+    variable: 'theta',
+    check: { kind: 'definite-integral', integrand: '(2 - sin(theta))^2', lower: '0', upper: 'pi/2' },
+    difficulty: 2,
+  },
+  {
+    id: 'ti-f-044',
+    topic: 'trig-integrals',
+    kind: 'evaluate',
+    prompt: { latex: '\\int_0^{\\pi/4} \\sec^6\\theta\\tan^6\\theta\\,d\\theta' },
+    options: [
+      { latex: '\\frac{1}{11} - \\frac{2}{9} + \\frac{1}{7}', expr: '1/11 - 2/9 + 1/7', mistake: 'tan-sec-identity-direction', why: 'sec²θ = tan²θ + 1; using u² − 1 makes the middle term negative.' },
+      { latex: '\\frac{1}{11} + \\frac{1}{7}', expr: '1/11 + 1/7', mistake: 'algebra-error', why: '(u² + 1)² was expanded as u⁴ + 1; the middle term 2u² is missing.' },
+      { latex: '\\frac{1}{11} + \\frac{2}{9} + \\frac{1}{7}', expr: '1/11 + 2/9 + 1/7' },
+      { latex: '\\frac{1}{10} + \\frac{2}{8} + \\frac{1}{6}', expr: '1/10 + 2/8 + 1/6', mistake: 'power-rule-int-coefficient', why: '∫uⁿ du = uⁿ⁺¹/(n + 1); these divide by n instead of n + 1.' },
+      { latex: '\\frac{1}{13} + \\frac{3}{11} + \\frac{3}{9} + \\frac{1}{7}', expr: '1/13 + 3/11 + 3/9 + 1/7', mistake: 'exponent-arithmetic', why: 'All of sec⁶θ was converted to (u² + 1)³ although one sec²θ had been saved for du.' },
+    ],
+    correct: 2,
+    explanation: 'Save $\\sec^2\\theta$, $u = \\tan\\theta$ ($0 \\to 1$): $\\int_0^1 u^6(u^2 + 1)^2\\,du = \\int_0^1 (u^{10} + 2u^8 + u^6)\\,du = \\frac{1}{11} + \\frac{2}{9} + \\frac{1}{7}$.',
+    variable: 'theta',
+    check: { kind: 'definite-integral', integrand: 'sec(theta)^6*tan(theta)^6', lower: '0', upper: 'pi/4' },
+    difficulty: 2,
+  },
+  {
+    id: 'ti-f-045',
+    topic: 'trig-integrals',
+    kind: 'evaluate',
+    prompt: { latex: '\\int_0^{\\pi/2} \\sin^3 x\\,dx' },
+    options: [
+      { latex: '-\\frac{2}{3}', expr: '-2/3', mistake: 'u-cos-sign-missing', why: 'Without the minus from du = −sin x dx the antiderivative becomes cos x − ⅓cos³x, giving −2/3.' },
+      { latex: '\\frac{2}{3}', expr: '2/3' },
+      { latex: '\\frac{4}{3}', expr: '4/3', mistake: 'pythagorean-wrong', why: 'sin²x = 1 − cos²x; using 1 + cos²x gives −cos x − ⅓cos³x and 4/3.' },
+      { latex: '\\frac{1}{4}', expr: '1/4', mistake: 'u-choice-wrong', why: 'sin³x was integrated as sin⁴x/4; that function’s derivative is sin³x cos x.' },
+      { latex: '0', expr: '0', mistake: 'ftc-not-subtracted', why: 'Only F(π/2) = 0 was used; F(0) = −1 + ⅓ = −2/3 must still be subtracted.' },
+    ],
+    correct: 1,
+    explanation: '$\\int \\sin^3 x\\,dx = -\\cos x + \\frac{1}{3}\\cos^3 x$; $F(\\frac{\\pi}{2}) - F(0) = 0 - \\left(-1 + \\frac{1}{3}\\right) = \\frac{2}{3}$.',
+    check: { kind: 'definite-integral', integrand: 'sin(x)^3', lower: '0', upper: 'pi/2' },
+    difficulty: 1,
+  },
+  {
+    id: 'ti-f-046',
+    topic: 'trig-integrals',
+    kind: 'evaluate',
+    prompt: { latex: '\\int_0^{\\pi/4} \\sec^4 x\\,dx' },
+    options: [
+      { latex: '-\\frac{2}{3}', expr: '-2/3', mistake: 'tan-sec-identity-direction', why: 'sec²x = tan²x + 1; using tan²x − 1 gives ⅓tan³x − tan x = −2/3.' },
+      { latex: '\\frac{2}{3}', expr: '2/3', mistake: 'pythagorean-wrong', why: 'sec²x was rewritten as 1 − tan²x, giving tan x − ⅓tan³x = 2/3.' },
+      { latex: '2', expr: '2', mistake: 'power-rule-int-coefficient', why: '∫u² du = u³/3; without the 1/3 the bracket is tan x + tan³x = 2.' },
+      { latex: '\\frac{4}{3}', expr: '4/3' },
+      { latex: '\\frac{5\\sqrt{2} - 4}{3}', expr: '(5*sqrt(2) - 4)/3', mistake: 'back-substitution-wrong', why: 'u = tan x was replaced by sec x, and sec x + ⅓sec³x was evaluated instead.' },
+      { latex: '\\frac{4\\sqrt{2} - 1}{5}', expr: '(4*sqrt(2) - 1)/5', mistake: 'u-choice-wrong', why: 'sec⁴x was integrated as sec⁵x/5, ignoring that d(sec x) = sec x tan x dx.' },
+    ],
+    correct: 3,
+    explanation: '$\\int \\sec^4 x\\,dx = \\tan x + \\frac{1}{3}\\tan^3 x$; at $\\frac{\\pi}{4}$ this is $1 + \\frac{1}{3}$, and at 0 it is 0.',
+    check: { kind: 'definite-integral', integrand: 'sec(x)^4', lower: '0', upper: 'pi/4' },
+    difficulty: 1,
+  },
+  {
+    id: 'ti-f-047',
+    topic: 'trig-integrals',
+    kind: 'evaluate',
+    prompt: { latex: '\\int_0^{\\pi/3} \\tan x\\sec^3 x\\,dx' },
+    options: [
+      { latex: '\\frac{8}{3}', expr: '8/3', mistake: 'ftc-not-subtracted', why: 'Only F(π/3) = ⅓·2³ was computed; F(0) = ⅓sec³0 = 1/3 must be subtracted.' },
+      { latex: '\\frac{15}{4}', expr: '15/4', mistake: 'exponent-arithmetic', why: 'Saving sec x tan x leaves sec²x = u²; integrating u³ instead gives (2⁴ − 1)/4.' },
+      { latex: '\\sqrt{3}', expr: 'sqrt(3)', mistake: 'back-substitution-wrong', why: 'u = sec x was replaced by tan x: ⅓tan³(π/3) = ⅓(√3)³ = √3.' },
+      { latex: '-\\frac{7}{3}', expr: '-7/3', mistake: 'du-derivative-wrong', why: 'd(sec x) = +sec x tan x dx; a minus sign there flips the result.' },
+      { latex: '7', expr: '7', mistake: 'power-rule-int-coefficient', why: '∫u² du = u³/3; without the 1/3 the result is 2³ − 1³ = 7.' },
+      { latex: '\\frac{7}{3}', expr: '7/3' },
+    ],
+    correct: 5,
+    explanation: '$u = \\sec x$ runs from 1 to 2: $\\int_1^2 u^2\\,du = \\frac{8 - 1}{3} = \\frac{7}{3}$.',
+    check: { kind: 'definite-integral', integrand: 'tan(x)*sec(x)^3', lower: '0', upper: 'pi/3' },
+    difficulty: 1,
+  },
+  {
+    id: 'ti-f-048',
+    topic: 'trig-integrals',
+    kind: 'evaluate',
+    prompt: { latex: '\\int_0^{\\pi/2} \\sin^2 x\\cos^3 x\\,dx' },
+    options: [
+      { latex: '\\frac{8}{15}', expr: '8/15', mistake: 'pythagorean-wrong', why: 'cos²x = 1 − sin²x; using 1 + sin²x gives ⅓ + ⅕.' },
+      { latex: '-\\frac{2}{15}', expr: '-2/15', mistake: 'sign-error', why: 'u = sin x has du = +cos x dx; the minus sign belongs to the u = cos x case.' },
+      { latex: '\\frac{2}{15}', expr: '2/15' },
+      { latex: '\\frac{\\pi^3}{24} - \\frac{\\pi^5}{160}', expr: 'pi^3/24 - pi^5/160', mistake: 'bounds-not-converted', why: 'The x-limits 0 and π/2 were kept for the u-integral; with u = sin x they become 0 and 1.' },
+      { latex: '0', expr: '0', mistake: 'power-rule-int-coefficient', why: 'Without dividing by 3 and 5 the bracket is [u³ − u⁵] from 0 to 1, which is 0.' },
+    ],
+    correct: 2,
+    explanation: 'Save $\\cos x$, $u = \\sin x$ ($0 \\to 1$): $\\int_0^1 u^2(1 - u^2)\\,du = \\frac{1}{3} - \\frac{1}{5} = \\frac{2}{15}$.',
+    check: { kind: 'definite-integral', integrand: 'sin(x)^2*cos(x)^3', lower: '0', upper: 'pi/2' },
+    difficulty: 1,
+  },
+
+  // ───────────── technique: which factor to save / which strategy ─────────────
+  {
+    id: 'ti-f-049',
+    topic: 'trig-integrals',
+    kind: 'technique',
+    prompt: { text: 'Which factor do you save, and which $u$ do you use?', latex: '\\int \\sin^5 x\\cos^2 x\\,dx' },
+    options: [
+      { text: 'Save one $\\cos x$ and let $u = \\sin x$', mistake: 'trig-wrong-factor-saved', why: 'The cosine power is even: after saving cos x, a single cos x remains, which needs a square root in terms of sin x.' },
+      { text: 'Save one $\\sin x$, write $\\sin^4 x = 1 - \\cos^4 x$, and let $u = \\cos x$', mistake: 'algebra-error', why: 'sin⁴x = (1 − cos²x)², which expands to 1 − 2cos²x + cos⁴x, not 1 − cos⁴x.' },
+      { text: 'Save one $\\sin x$ and let $u = \\sin x$', mistake: 'trig-wrong-factor-saved', why: 'u = sin x needs du = cos x dx; the saved sin x dx does not match it.' },
+      { text: 'Use the half-angle identities for $\\sin^2 x$ and $\\cos^2 x$', mistake: 'technique-wrong', why: 'Half-angle identities are for the case where both powers are even; an odd power of sine allows a direct substitution.' },
+      { text: 'Save one $\\sin x$, write $\\sin^4 x = (1 - \\cos^2 x)^2$, and let $u = \\cos x$' },
+      { text: 'Integration by parts with $u = \\sin^4 x$, $dv = \\sin x\\cos^2 x\\,dx$', mistake: 'technique-wrong', why: 'Parts only trades this for another trig product; the odd power of sine already gives a u-substitution.' },
+    ],
+    correct: 4,
+    explanation: 'The sine power 5 is odd: save $\\sin x\\,dx$ (it becomes $-du$), and the even power $\\sin^4 x = (1 - u^2)^2$.',
+    check: { kind: 'none', reason: 'technique recognition; options are method descriptions' },
+    difficulty: 1,
+  },
+  {
+    id: 'ti-f-050',
+    topic: 'trig-integrals',
+    kind: 'technique',
+    prompt: { text: 'What is the right first move?', latex: '\\int \\sin^4(3x)\\cos^3(3x)\\,dx' },
+    options: [
+      { text: 'Save one $\\sin 3x$ and let $u = \\cos 3x$', mistake: 'trig-wrong-factor-saved', why: 'The sine power is even: after saving sin 3x, sin³(3x) needs a square root in terms of cos 3x.' },
+      { text: 'Save one $\\cos 3x$ and let $u = \\sin 3x$, so $du = \\cos 3x\\,dx$', mistake: 'inner-constant-factor-missing', why: 'd/dx sin 3x = 3cos 3x, so du = 3cos 3x dx; the inner 3 must be accounted for.' },
+      { text: 'Use the half-angle identities on both factors', mistake: 'technique-wrong', why: 'The cosine power is odd, so a substitution works directly; half-angle identities are for both powers even.' },
+      { text: 'Save one $\\cos 3x$ and let $u = \\sin 3x$, so $du = 3\\cos 3x\\,dx$' },
+      { text: 'Save one $\\cos 3x$ and let $u = \\cos 3x$', mistake: 'trig-wrong-factor-saved', why: 'u = cos 3x needs du = −3 sin 3x dx; the saved cos 3x dx does not match it.' },
+    ],
+    correct: 3,
+    explanation: 'The cosine power 3 is odd: save $\\cos 3x\\,dx = \\frac{1}{3}du$ with $u = \\sin 3x$, and $\\cos^2 3x = 1 - u^2$.',
+    check: { kind: 'none', reason: 'technique recognition; options are method descriptions' },
+    difficulty: 1,
+  },
+  {
+    id: 'ti-f-051',
+    topic: 'trig-integrals',
+    kind: 'technique',
+    prompt: { text: 'What is the right first move?', latex: '\\int \\sin^4 x\\,dx' },
+    options: [
+      { text: 'Save one $\\sin x$ and let $u = \\cos x$', mistake: 'even-powers-no-identity', why: 'Saving sin x leaves sin³x, an odd power that cannot be written in cos x without a square root.' },
+      { text: 'Let $u = \\sin x$ and integrate $u^4$', mistake: 'u-choice-wrong', why: 'u = sin x needs du = cos x dx, which is not in the integrand.' },
+      { text: 'Write $\\sin^4 x = (1 - \\cos^2 x)^2$ and let $u = \\cos x$', mistake: 'even-powers-no-identity', why: 'No sin x dx is left over to form du = −sin x dx; with only even powers no factor can be saved.' },
+      { text: 'Write $\\sin^4 x = \\left(\\frac{1 - \\cos 2x}{2}\\right)^2$ and expand' },
+      { text: 'Write $\\sin^4 x = \\left(\\frac{1 + \\cos 2x}{2}\\right)^2$ and expand', mistake: 'half-angle-wrong', why: 'sin²x = (1 − cos 2x)/2; the plus sign belongs to cos²x.' },
+    ],
+    correct: 3,
+    explanation: 'Sine power 4, cosine power 0: both even, so reduce with $\\sin^2 x = \\frac{1 - \\cos 2x}{2}$, expand, and reduce $\\cos^2 2x$ again.',
+    check: { kind: 'none', reason: 'technique recognition; options are method descriptions' },
+    difficulty: 1,
+  },
+  {
+    id: 'ti-f-052',
+    topic: 'trig-integrals',
+    kind: 'technique',
+    prompt: { text: 'What is the right first move?', latex: '\\int \\tan^4 x\\sec^6 x\\,dx' },
+    options: [
+      { text: 'Save $\\sec x\\tan x$ and let $u = \\sec x$', mistake: 'trig-wrong-factor-saved', why: 'tan⁴x is even: after saving one tan x, tan³x needs a square root in terms of sec x.' },
+      { text: 'Save $\\sec^2 x$ and let $u = \\sec x$', mistake: 'trig-wrong-factor-saved', why: 'u = sec x needs du = sec x tan x dx, not sec²x dx.' },
+      { text: 'Integration by parts with $dv = \\sec^2 x\\,dx$', mistake: 'technique-wrong', why: 'Parts is the plan for an odd power of secant alone; an even secant power allows a direct substitution.' },
+      { text: 'Save $\\sec^2 x$, write $\\sec^4 x = (\\tan^2 x - 1)^2$, and let $u = \\tan x$', mistake: 'tan-sec-identity-direction', why: 'sec²x = tan²x + 1, so sec⁴x = (tan²x + 1)².' },
+      { text: 'Save $\\sec^2 x$, write $\\sec^4 x = (\\tan^2 x + 1)^2$, and let $u = \\tan x$' },
+      { text: 'Use the half-angle identities', mistake: 'technique-wrong', why: 'Half-angle identities reduce even powers of sine and cosine; they do not help with tangent and secant.' },
+    ],
+    correct: 4,
+    explanation: 'The secant power 6 is even: save $\\sec^2 x\\,dx = du$ and write the rest as $(u^2 + 1)^2$ with $u = \\tan x$.',
+    check: { kind: 'none', reason: 'technique recognition; options are method descriptions' },
+    difficulty: 1,
+  },
+  {
+    id: 'ti-f-053',
+    topic: 'trig-integrals',
+    kind: 'technique',
+    prompt: { text: 'What is the right first move?', latex: '\\int \\tan^3 x\\sec^5 x\\,dx' },
+    options: [
+      { text: 'Save $\\sec^2 x$ and let $u = \\tan x$', mistake: 'trig-wrong-factor-saved', why: 'sec⁵x is odd: after saving sec²x, sec³x cannot be written in tan x without a square root.' },
+      { text: 'Save $\\sec x\\tan x$, write $\\tan^2 x = \\sec^2 x + 1$, and let $u = \\sec x$', mistake: 'tan-sec-identity-direction', why: 'tan²x = sec²x − 1, not sec²x + 1.' },
+      { text: 'Integration by parts with $u = \\sec^3 x$, $dv = \\sec^2 x\\,dx$', mistake: 'technique-wrong', why: 'That is the plan for odd secant powers with no tangent; an odd tangent power allows u = sec x directly.' },
+      { text: 'Save $\\sec x\\tan x$ and let $u = \\tan x$', mistake: 'trig-wrong-factor-saved', why: 'u = tan x needs du = sec²x dx; the saved sec x tan x dx does not match.' },
+      { text: 'Save $\\sec x\\tan x$, write $\\tan^2 x = \\sec^2 x - 1$, and let $u = \\sec x$' },
+    ],
+    correct: 4,
+    explanation: 'The tangent power 3 is odd (with secant present): save $\\sec x\\tan x\\,dx = du$, $u = \\sec x$, and $\\tan^2 x = u^2 - 1$.',
+    check: { kind: 'none', reason: 'technique recognition; options are method descriptions' },
+    difficulty: 1,
+  },
+  {
+    id: 'ti-f-054',
+    topic: 'trig-integrals',
+    kind: 'technique',
+    prompt: { text: 'What is the right first move?', latex: '\\int \\sec^5 x\\,dx' },
+    options: [
+      { text: 'Save $\\sec^2 x$ and let $u = \\tan x$', mistake: 'sec-odd-power-strategy', why: 'The leftover sec³x is an odd power; it cannot be written in tan x without a square root.' },
+      { text: 'Save $\\sec x\\tan x$ and let $u = \\sec x$', mistake: 'sec-odd-power-strategy', why: 'There is no tangent factor in the integrand to save.' },
+      { text: 'Integration by parts with $u = \\sec^3 x$, $dv = \\sec^2 x\\,dx$' },
+      { text: 'Substitute $u = \\sec x$ and integrate $u^5$', mistake: 'sec-odd-power-strategy', why: 'du = sec x tan x dx is not in the integrand; an odd power of secant alone needs integration by parts.' },
+      { text: 'Integration by parts with $u = \\sec^2 x$, $dv = \\sec^3 x\\,dx$', mistake: 'ibp-wrong-u-dv', why: 'dv = sec³x dx has no quick antiderivative; dv = sec²x dx integrates to tan x.' },
+      { text: 'Use the half-angle identities', mistake: 'technique-wrong', why: 'Half-angle identities reduce even powers of sine and cosine, not odd powers of secant.' },
+    ],
+    correct: 2,
+    explanation: 'Odd secant power, no tangent: parts with $dv = \\sec^2 x\\,dx$ ($v = \\tan x$), then $\\tan^2 x = \\sec^2 x - 1$ and combine like terms.',
+    check: { kind: 'none', reason: 'technique recognition; options are method descriptions' },
+    difficulty: 2,
+  },
+  {
+    id: 'ti-f-055',
+    topic: 'trig-integrals',
+    kind: 'technique',
+    prompt: { text: 'What is the right first move?', latex: '\\int \\tan^4 x\\,dx' },
+    options: [
+      { text: 'Let $u = \\tan x$ and integrate $u^4$', mistake: 'u-choice-wrong', why: 'u = tan x needs du = sec²x dx, which is not in the integrand yet.' },
+      { text: 'Save $\\sec^2 x$ and let $u = \\tan x$', mistake: 'trig-wrong-factor-saved', why: 'There is no sec²x factor to save until a tan²x is rewritten.' },
+      { text: 'Write $\\tan^4 x = \\tan^2 x(\\sec^2 x + 1)$ and split into two integrals', mistake: 'tan-sec-identity-direction', why: 'tan²x = sec²x − 1, not sec²x + 1.' },
+      { text: 'Save $\\sec x\\tan x$ and let $u = \\sec x$', mistake: 'trig-wrong-factor-saved', why: 'There is no secant factor in the integrand to save.' },
+      { text: 'Write $\\tan^4 x = \\tan^2 x(\\sec^2 x - 1)$ and split into two integrals' },
+      { text: 'Integration by parts with $u = \\tan^3 x$, $dv = \\tan x\\,dx$', mistake: 'technique-wrong', why: 'v = −ln|cos x| makes the new integral harder, not easier.' },
+    ],
+    correct: 4,
+    explanation: 'Only tangent: replace one $\\tan^2 x$ by $\\sec^2 x - 1$ to get $\\int \\tan^2 x\\sec^2 x\\,dx - \\int \\tan^2 x\\,dx$.',
+    check: { kind: 'none', reason: 'technique recognition; options are method descriptions' },
+    difficulty: 1,
+  },
+  {
+    id: 'ti-f-056',
+    topic: 'trig-integrals',
+    kind: 'technique',
+    prompt: { text: 'What is the right first move?', latex: '\\int \\tan^2 x\\sec^3 x\\,dx' },
+    options: [
+      { text: 'Save $\\sec^2 x$ and let $u = \\tan x$', mistake: 'trig-wrong-factor-saved', why: 'sec³x is odd: after saving sec²x, the leftover sec x needs a square root in terms of tan x.' },
+      { text: 'Save $\\sec x\\tan x$ and let $u = \\sec x$', mistake: 'trig-wrong-factor-saved', why: 'tan²x is even: after saving one tan x, the leftover tan x needs a square root in terms of sec x.' },
+      { text: 'Replace $\\tan^2 x$ by $\\sec^2 x - 1$ to get $\\int \\sec^5 x\\,dx - \\int \\sec^3 x\\,dx$' },
+      { text: 'Replace $\\tan^2 x$ by $\\sec^2 x + 1$ to get $\\int \\sec^5 x\\,dx + \\int \\sec^3 x\\,dx$', mistake: 'tan-sec-identity-direction', why: 'tan²x = sec²x − 1, so the second integral is subtracted.' },
+      { text: 'Substitute $u = \\sec x$ and integrate $u^2\\cdot u^3$', mistake: 'u-choice-wrong', why: 'du = sec x tan x dx is not available here, and tan²x is not u² when u = sec x.' },
+      { text: 'Use the half-angle identities', mistake: 'technique-wrong', why: 'Half-angle identities reduce even powers of sine and cosine, not tangent and secant.' },
+    ],
+    correct: 2,
+    explanation: 'Even tangent power with odd secant power: $\\tan^2 x = \\sec^2 x - 1$ leaves only odd powers of secant, each done by parts.',
+    check: { kind: 'none', reason: 'technique recognition; options are method descriptions' },
+    difficulty: 2,
+  },
+
+  // ───────────── concept: what the substitution produces ─────────────
+  {
+    id: 'ti-f-057',
+    topic: 'trig-integrals',
+    kind: 'concept',
+    prompt: { text: 'After a substitution, the integral is equivalent to', latex: '\\int \\tan^3 x\\sec^3 x\\,dx' },
+    options: [
+      { latex: '\\int u^2(u^2 + 1)\\,du', expr: 'indefinite(u^2*(u^2 + 1), u)', mistake: 'tan-sec-identity-direction', why: 'With u = sec x the leftover tan²x is sec²x − 1 = u² − 1, not u² + 1.' },
+      { latex: '\\int u^2(1 - u^2)\\,du', expr: 'indefinite(u^2*(1 - u^2), u)', mistake: 'pythagorean-wrong', why: 'tan²x was written as 1 − sec²x, copying the sin²x = 1 − cos²x pattern.' },
+      { latex: '\\int u^3(u^2 - 1)\\,du', expr: 'indefinite(u^3*(u^2 - 1), u)', mistake: 'exponent-arithmetic', why: 'Saving sec x tan x uses up one secant, leaving sec²x = u²; sec³x was kept.' },
+      { latex: '\\int u^2(u^2 - 1)\\,du', expr: 'indefinite(u^2*(u^2 - 1), u)' },
+      { latex: '\\int u^4\\,du', expr: 'indefinite(u^4, u)', mistake: 'pythagorean-wrong', why: 'tan²x was replaced by sec²x, dropping the −1 from tan²x = sec²x − 1.' },
+      { latex: '\\int u(u^2 - 1)\\,du', expr: 'indefinite(u*(u^2 - 1), u)', mistake: 'exponent-arithmetic', why: 'Two secants were removed: tan³x sec³x = tan²x sec²x·(sec x tan x) leaves sec²x = u².' },
+    ],
+    correct: 3,
+    explanation: 'Save $\\sec x\\tan x\\,dx = du$ ($u = \\sec x$): $\\tan^2 x\\sec^2 x = (u^2 - 1)u^2$.',
+    variable: 'u',
+    domain: { u: [1.1, 2] },
+    check: { kind: 'identity', lhs: 'indefinite(u^2*(u^2 - 1), u)' },
+    difficulty: 1,
+  },
+  {
+    id: 'ti-f-058',
+    topic: 'trig-integrals',
+    kind: 'concept',
+    prompt: { text: 'After a substitution, the integral is equivalent to', latex: '\\int \\tan^2 x\\sec^4 x\\,dx' },
+    options: [
+      { latex: '\\int u^2(u^2 - 1)\\,du', expr: 'indefinite(u^2*(u^2 - 1), u)', mistake: 'tan-sec-identity-direction', why: 'With u = tan x the leftover sec²x is tan²x + 1 = u² + 1, not u² − 1.' },
+      { latex: '\\int u^2(u^2 + 1)\\,du', expr: 'indefinite(u^2*(u^2 + 1), u)' },
+      { latex: '\\int u^2(1 - u^2)\\,du', expr: 'indefinite(u^2*(1 - u^2), u)', mistake: 'pythagorean-wrong', why: 'sec²x was written as 1 − tan²x; the secant identity adds 1.' },
+      { latex: '\\int u^4\\,du', expr: 'indefinite(u^4, u)', mistake: 'pythagorean-wrong', why: 'The leftover sec²x was replaced by tan²x, dropping the +1.' },
+      { latex: '\\int u^2(u^2 + 1)^2\\,du', expr: 'indefinite(u^2*(u^2 + 1)^2, u)', mistake: 'exponent-arithmetic', why: 'All of sec⁴x was converted to (u² + 1)² although one sec²x had been saved for du.' },
+    ],
+    correct: 1,
+    explanation: 'Save $\\sec^2 x\\,dx = du$ ($u = \\tan x$): $\\tan^2 x\\sec^2 x = u^2(u^2 + 1)$.',
+    variable: 'u',
+    domain: { u: [0.3, 1.2] },
+    check: { kind: 'identity', lhs: 'indefinite(u^2*(u^2 + 1), u)' },
+    difficulty: 1,
+  },
+  {
+    id: 'ti-f-059',
+    topic: 'trig-integrals',
+    kind: 'concept',
+    prompt: { text: 'After a substitution, the integral is equivalent to', latex: '\\int \\tan x\\sec^5 x\\,dx' },
+    options: [
+      { latex: '\\int u^5\\,du', expr: 'indefinite(u^5, u)', mistake: 'exponent-arithmetic', why: 'Saving sec x tan x uses up one secant: sec⁵x leaves sec⁴x = u⁴.' },
+      { latex: '-\\int u^4\\,du', expr: '-indefinite(u^4, u)', mistake: 'du-derivative-wrong', why: 'd(sec x) = +sec x tan x dx; there is no minus sign.' },
+      { latex: '\\int u(u^2 + 1)^2\\,du', expr: 'indefinite(u*(u^2 + 1)^2, u)', mistake: 'trig-wrong-factor-saved', why: 'Saving sec²x (u = tan x) leaves sec³x, an odd power; writing it as (u² + 1)² describes tan x sec⁶x instead.' },
+      { latex: '\\int u^6\\,du', expr: 'indefinite(u^6, u)', mistake: 'exponent-arithmetic', why: 'tan x was counted as one more secant (1 + 5 = 6); it is part of du.' },
+      { latex: '\\int u^4\\,du', expr: 'indefinite(u^4, u)' },
+    ],
+    correct: 4,
+    explanation: '$\\tan x\\sec^5 x\\,dx = \\sec^4 x\\cdot\\sec x\\tan x\\,dx = u^4\\,du$ with $u = \\sec x$.',
+    variable: 'u',
+    domain: { u: [1.1, 2] },
+    check: { kind: 'identity', lhs: 'indefinite(u^4, u)' },
+    difficulty: 1,
+  },
+  {
+    id: 'ti-f-060',
+    topic: 'trig-integrals',
+    kind: 'concept',
+    prompt: { text: 'Save one $\\cos x$ and let $u = \\sin x$. The integral becomes', latex: '\\int \\sin^2 x\\cos^5 x\\,dx' },
+    options: [
+      { latex: '\\int u^2(1 - u^2)\\,du', expr: 'indefinite(u^2*(1 - u^2), u)', mistake: 'exponent-arithmetic', why: 'After saving cos x, cos⁴x = (1 − sin²x)² remains; the square was dropped.' },
+      { latex: '\\int u^2(1 + u^2)^2\\,du', expr: 'indefinite(u^2*(1 + u^2)^2, u)', mistake: 'pythagorean-wrong', why: 'cos²x = 1 − sin²x, not 1 + sin²x.' },
+      { latex: '-\\int u^2(1 - u^2)^2\\,du', expr: '-indefinite(u^2*(1 - u^2)^2, u)', mistake: 'sign-error', why: 'u = sin x gives du = +cos x dx; the minus sign belongs to u = cos x.' },
+      { latex: '\\int u^2(1 - u^2)^2\\,du', expr: 'indefinite(u^2*(1 - u^2)^2, u)' },
+      { latex: '\\int u^2(1 - u^4)\\,du', expr: 'indefinite(u^2*(1 - u^4), u)', mistake: 'algebra-error', why: 'cos⁴x = (1 − sin²x)², which is not 1 − sin⁴x.' },
+    ],
+    correct: 3,
+    explanation: '$\\sin^2 x\\cos^4 x\\cdot\\cos x\\,dx = u^2(1 - u^2)^2\\,du$.',
+    variable: 'u',
+    domain: { u: [0.3, 0.95] },
+    check: { kind: 'identity', lhs: 'indefinite(u^2*(1 - u^2)^2, u)' },
+    difficulty: 1,
+  },
+  {
+    id: 'ti-f-061',
+    topic: 'trig-integrals',
+    kind: 'concept',
+    prompt: { text: 'Save one $\\cos x$ and let $u = \\sin x$. The integral becomes', latex: '\\int \\sin^3 x\\cos^3 x\\,dx' },
+    options: [
+      { latex: '\\int u^3(1 + u^2)\\,du', expr: 'indefinite(u^3*(1 + u^2), u)', mistake: 'pythagorean-wrong', why: 'cos²x = 1 − sin²x, not 1 + sin²x.' },
+      { latex: '\\int u^3(1 - u^2)\\,du', expr: 'indefinite(u^3*(1 - u^2), u)' },
+      { latex: '-\\int u^3(1 - u^2)\\,du', expr: '-indefinite(u^3*(1 - u^2), u)', mistake: 'sign-error', why: 'u = sin x gives du = +cos x dx; the minus sign belongs to u = cos x.' },
+      { latex: '\\int u^3(1 - u^2)^2\\,du', expr: 'indefinite(u^3*(1 - u^2)^2, u)', mistake: 'exponent-arithmetic', why: 'After saving cos x only cos²x = 1 − u² remains; the square belongs to cos⁵x.' },
+      { latex: '\\int u^2(1 - u^2)\\,du', expr: 'indefinite(u^2*(1 - u^2), u)', mistake: 'trig-wrong-factor-saved', why: 'A sin x was removed as if it had been saved, but the saved factor is cos x; sin³x stays u³.' },
+    ],
+    correct: 1,
+    explanation: '$\\sin^3 x\\cos^2 x\\cdot\\cos x\\,dx = u^3(1 - u^2)\\,du$ (saving $\\sin x$ with $u = \\cos x$ also works here).',
+    variable: 'u',
+    domain: { u: [0.3, 0.95] },
+    check: { kind: 'identity', lhs: 'indefinite(u^3*(1 - u^2), u)' },
+    difficulty: 1,
+  },
+  {
+    id: 'ti-f-062',
+    topic: 'trig-integrals',
+    kind: 'concept',
+    prompt: {
+      text: 'Writing $\\tan^3 x = \\tan x\\,\\tan^2 x$ and converting $\\tan^2 x$, the integral splits as',
+      latex: '\\int \\tan^3 x\\,dx',
+    },
+    options: [
+      { latex: '\\int \\tan x\\sec^2 x\\,dx + \\int \\tan x\\,dx', expr: 'indefinite(tan(x)*sec(x)^2, x) + indefinite(tan(x), x)', mistake: 'tan-sec-identity-direction', why: 'tan²x = sec²x − 1, so the ∫tan x dx piece is subtracted.' },
+      { latex: '\\int \\tan x\\sec^2 x\\,dx - \\int 1\\,dx', expr: 'indefinite(tan(x)*sec(x)^2, x) - indefinite(1, x)', mistake: 'algebra-error', why: 'tan x multiplies both terms: tan x(sec²x − 1) = tan x sec²x − tan x.' },
+      { latex: '\\int \\sec^2 x\\,dx - \\int \\tan x\\,dx', expr: 'indefinite(sec(x)^2, x) - indefinite(tan(x), x)', mistake: 'exponent-arithmetic', why: 'The factor tan x was dropped from the first piece.' },
+      { latex: '\\int \\tan x\\sec^2 x\\,dx - \\int \\tan x\\,dx', expr: 'indefinite(tan(x)*sec(x)^2, x) - indefinite(tan(x), x)' },
+      { latex: '\\int \\tan^2 x\\sec^2 x\\,dx - \\int \\tan^2 x\\,dx', expr: 'indefinite(tan(x)^2*sec(x)^2, x) - indefinite(tan(x)^2, x)', mistake: 'exponent-arithmetic', why: 'That split belongs to tan⁴x = tan²x·tan²x; here only one factor tan x stays outside.' },
+    ],
+    correct: 3,
+    explanation: '$\\tan x(\\sec^2 x - 1) = \\tan x\\sec^2 x - \\tan x$; the first piece is $\\frac12\\tan^2 x$ ($u = \\tan x$), the second $-\\ln|\\cos x|$.',
+    check: { kind: 'identity', lhs: 'indefinite(tan(x)^3, x)' },
+    difficulty: 1,
+  },
+  {
+    id: 'ti-f-063',
+    topic: 'trig-integrals',
+    kind: 'concept',
+    prompt: {
+      text: 'In $\\int \\sin^3(2x)\\,dx$ you save one $\\sin 2x$ and let $u = \\cos 2x$. Then $\\sin 2x\\,dx$ equals',
+    },
+    options: [
+      { latex: '-du', expr: '-du', mistake: 'inner-constant-factor-missing', why: 'du = −2 sin 2x dx; the inner 2 must be divided out, giving −½du.' },
+      { latex: '\\frac{1}{2}\\,du', expr: 'du/2', mistake: 'u-cos-sign-missing', why: 'd(cos 2x) = −2 sin 2x dx; the minus sign was dropped.' },
+      { latex: '-2\\,du', expr: '-2*du', mistake: 'inner-constant-factor-missing', why: 'Multiplied by the inner 2 instead of dividing by it.' },
+      { latex: '-\\frac{1}{2}\\sin 2x\\,du', expr: '-sin(2*x)*du/2', mistake: 'leftover-x-in-u-integral', why: 'The saved sin 2x is absorbed into du; it must not stay behind as a factor.' },
+      { latex: '-\\frac{1}{2}\\,du', expr: '-du/2' },
+    ],
+    correct: 4,
+    explanation: '$u = \\cos 2x \\Rightarrow du = -2\\sin 2x\\,dx$, so $\\sin 2x\\,dx = -\\frac{1}{2}\\,du$.',
+    check: { kind: 'value', expected: '-du/2' },
+    difficulty: 1,
+  },
+  {
+    id: 'ti-f-064',
+    topic: 'trig-integrals',
+    kind: 'concept',
+    prompt: {
+      text: 'For $\\int \\sin x\\cos x\\,dx$, Ana uses $u = \\sin x$ and gets $\\frac{1}{2}\\sin^2 x + C$; Ben uses $u = \\cos x$ and gets $-\\frac{1}{2}\\cos^2 x + C$. Which statement is true?',
+    },
+    options: [
+      { text: 'Only Ana is right: Ben’s answer should be $+\\frac{1}{2}\\cos^2 x + C$ because the two must match', mistake: 'u-cos-sign-missing', why: 'Ben’s minus is correct (du = −sin x dx); +½cos²x has derivative −sin x cos x.' },
+      { text: 'Only Ben is right: with an odd power of sine you must save $\\sin x$ and use $u = \\cos x$', mistake: 'technique-wrong', why: 'Both powers are odd (1 and 1), so either factor can be saved; both substitutions are valid.' },
+      { text: 'Each is correct: $-\\frac{1}{2}\\cos^2 x = \\frac{1}{2}\\sin^2 x - \\frac{1}{2}$, so they differ by a constant' },
+      { text: 'Neither is right: the only correct form is $-\\frac{1}{4}\\cos 2x + C$ from the double-angle identity', mistake: 'plus-c-misuse', why: '−¼cos 2x + C is a third member of the same family; antiderivatives are unique only up to a constant.' },
+      { text: 'They cannot agree, since $\\frac{1}{2}\\sin^2 x$ and $-\\frac{1}{2}\\cos^2 x$ are different functions', mistake: 'plus-c-misuse', why: 'Two antiderivatives may differ by a constant; here the difference is exactly 1/2.' },
+    ],
+    correct: 2,
+    explanation: 'Differentiate either answer to get $\\sin x\\cos x$; since $\\sin^2 x + \\cos^2 x = 1$, the two differ by the constant $\\frac{1}{2}$.',
+    check: { kind: 'none', reason: 'conceptual: equivalence of antiderivatives up to a constant' },
+    difficulty: 2,
+  },
+  {
+    id: 'ti-f-065',
+    topic: 'trig-integrals',
+    kind: 'concept',
+    prompt: {
+      text: 'For $\\int \\sec^3 x\\,dx$, parts with $u = \\sec x$, $dv = \\sec^2 x\\,dx$ gives $\\sec x\\tan x - \\int \\sec x\\tan^2 x\\,dx$. What is the best next move?',
+    },
+    options: [
+      { text: 'Substitute $u = \\sec x$ in $\\int \\sec x\\tan^2 x\\,dx$', mistake: 'u-choice-wrong', why: 'du = sec x tan x dx would leave a single tan x, which needs a square root in terms of sec x.' },
+      { text: 'Write $\\tan^2 x = \\sec^2 x - 1$; $\\int \\sec^3 x\\,dx$ reappears, so move it to the left side and solve' },
+      { text: 'Integrate by parts again with $u = \\tan^2 x$, $dv = \\sec x\\,dx$', mistake: 'ibp-wrong-u-dv', why: 'v = ln|sec x + tan x| makes the new integral harder; the identity closes the loop instead.' },
+      { text: 'Write $\\tan^2 x = \\sec^2 x + 1$; $\\int \\sec^3 x\\,dx$ reappears, so move it to the left side and solve', mistake: 'tan-sec-identity-direction', why: 'tan²x = sec²x − 1; the plus sign flips the ∫sec x dx term.' },
+      { text: 'Write $\\tan^2 x = 1 - \\sec^2 x$; $\\int \\sec^3 x\\,dx$ reappears, so move it to the left side and solve', mistake: 'pythagorean-wrong', why: 'tan²x = sec²x − 1; the sine-cosine pattern 1 − cos² does not carry over.' },
+    ],
+    correct: 1,
+    explanation: '$\\int \\sec x\\tan^2 x\\,dx = \\int \\sec^3 x\\,dx - \\int \\sec x\\,dx$, so $2\\int \\sec^3 x\\,dx = \\sec x\\tan x + \\ln|\\sec x + \\tan x|$.',
+    check: { kind: 'none', reason: 'strategy question; options are method descriptions' },
+    difficulty: 2,
+  },
 ];
 
-/** Parameterized generators (optional). */
-export const generators: FlashGenerator[] = [];
+// ───────────── parameterized generators ─────────────
+function mulberry(seed: number): () => number {
+  let a = seed >>> 0;
+  return () => {
+    a = (a + 0x6d2b79f5) >>> 0;
+    let t = a;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+/** Places `correct` at a seed-dependent position among the distractors. */
+function placeCorrect<T>(correct: T, distractors: T[], pos: number): { options: T[]; correct: number } {
+  const options = [...distractors];
+  const at = Math.max(0, Math.min(pos, options.length));
+  options.splice(at, 0, correct);
+  return { options, correct: at };
+}
+
+/** (sine power, cosine power) pairs with exactly one odd power, or both even. (5,2) is a static item. */
+const SIN_COS_PAIRS: [number, number][] = [
+  [3, 2], [3, 4], [5, 4], [7, 2], [3, 0], [5, 0], [2, 3], [4, 3], [2, 5], [4, 5],
+  [0, 3], [0, 5], [2, 2], [4, 2], [2, 4], [4, 4], [0, 4], [4, 0], [6, 2], [2, 6],
+];
+
+function powTex(fn: 'sin' | 'cos', n: number): string {
+  if (n === 0) return '';
+  return n === 1 ? `\\${fn} x` : `\\${fn}^{${n}} x`;
+}
+
+/** "an odd power" phrase for the factor left after saving one factor of fn (power n ≥ 1). */
+function leftoverTex(fn: 'sin' | 'cos', n: number): string {
+  return n - 1 === 1 ? `$\\${fn} x$` : `$\\${fn}^{${n - 1}} x$`;
+}
+
+export const generators: FlashGenerator[] = [
+  {
+    id: 'ti-g-half-angle-kx',
+    topic: 'trig-integrals',
+    kind: 'antiderivative',
+    describe: '∫sin²(kx) dx or ∫cos²(kx) dx for k = 2..6 (half-angle identity plus the 1/k factor)',
+    generate(seed) {
+      const rng = mulberry(seed);
+      const k = 2 + Math.floor(rng() * 5); // 2..6
+      const isSin = rng() < 0.5;
+      const pos = Math.floor(rng() * 6);
+      const fn = isSin ? 'sin' : 'cos';
+      const s = isSin ? '-' : '+';
+      const f = isSin ? '+' : '-';
+      const k2 = 2 * k;
+      const k4 = 4 * k;
+      const { options, correct } = placeCorrect(
+        { latex: `\\frac{x}{2} ${s} \\frac{\\sin ${k2}x}{${k4}} + C`, expr: `x/2 ${s} sin(${k2}*x)/${k4}` },
+        [
+          {
+            latex: `\\frac{x}{2} ${f} \\frac{\\sin ${k2}x}{${k4}} + C`,
+            expr: `x/2 ${f} sin(${k2}*x)/${k4}`,
+            mistake: 'half-angle-wrong',
+            why: isSin
+              ? 'sin²θ = (1 − cos 2θ)/2; the plus sign belongs to cos²θ.'
+              : 'cos²θ = (1 + cos 2θ)/2; the minus sign belongs to sin²θ.',
+          },
+          {
+            latex: `\\frac{x}{2} ${s} \\frac{\\sin ${k2}x}{4} + C`,
+            expr: `x/2 ${s} sin(${k2}*x)/4`,
+            mistake: 'inner-constant-factor-missing',
+            why: `The pattern for ∫${fn}²x dx was reused without the inner ${k}: ∫cos(${k2}x)dx = sin(${k2}x)/${k2}.`,
+          },
+          {
+            latex: `x ${s} \\frac{\\sin ${k2}x}{${k2}} + C`,
+            expr: `x ${s} sin(${k2}*x)/${k2}`,
+            mistake: 'half-angle-wrong',
+            why: 'The 1/2 in the half-angle identity was dropped, doubling every term.',
+          },
+          {
+            latex: `\\frac{x}{2} ${s} \\frac{\\sin ${k}x}{${k2}} + C`,
+            expr: `x/2 ${s} sin(${k}*x)/${k2}`,
+            mistake: 'half-angle-wrong',
+            why: `The angle must double from ${k}x to ${k2}x; this used cos(${k}x) in the identity.`,
+          },
+          {
+            latex: `\\frac{x}{2} ${s} \\frac{${k}\\sin ${k2}x}{4} + C`,
+            expr: `x/2 ${s} ${k}*sin(${k2}*x)/4`,
+            mistake: 'inner-constant-factor-missing',
+            why: `Multiplied by the inner ${k} instead of dividing by it.`,
+          },
+        ],
+        pos,
+      );
+      return {
+        id: `ti-g-half-angle-kx:${seed}`,
+        topic: 'trig-integrals',
+        kind: 'antiderivative',
+        prompt: { latex: `\\${fn}^2(${k}x)` },
+        options,
+        correct,
+        explanation: `$\\${fn}^2(${k}x) = \\frac{1 ${s} \\cos ${k2}x}{2}$ and $\\int \\cos ${k2}x\\,dx = \\frac{\\sin ${k2}x}{${k2}}$, so the answer is $\\frac{x}{2} ${s} \\frac{\\sin ${k2}x}{${k4}} + C$.`,
+        check: { kind: 'antiderivative', integrand: `${fn}(${k}*x)^2` },
+        difficulty: 1,
+      };
+    },
+  },
+  {
+    id: 'ti-g-sincos-strategy',
+    topic: 'trig-integrals',
+    kind: 'technique',
+    describe: 'First move for ∫sinᵐx cosⁿx dx (odd sine, odd cosine, or both even)',
+    generate(seed) {
+      const rng = mulberry(seed);
+      const [m, n] = SIN_COS_PAIRS[Math.floor(rng() * SIN_COS_PAIRS.length)];
+      const sineOdd = m % 2 === 1;
+      const cosOdd = n % 2 === 1;
+      const integrand = [powTex('sin', m), powTex('cos', n)].filter(Boolean).join('');
+      const saveSin = {
+        text: 'Save one $\\sin x$, rewrite the rest with $\\sin^2 x = 1 - \\cos^2 x$, and let $u = \\cos x$',
+      };
+      const saveCos = {
+        text: 'Save one $\\cos x$, rewrite the rest with $\\cos^2 x = 1 - \\sin^2 x$, and let $u = \\sin x$',
+      };
+      const halfAngle = { text: 'Use the half-angle identities to reduce the powers, then expand' };
+      const sinSin = {
+        text: 'Save one $\\sin x$ and let $u = \\sin x$',
+        mistake: 'trig-wrong-factor-saved' as const,
+        why: 'u = sin x needs du = cos x dx; a saved sin x dx does not match it.',
+      };
+      const cosCos = {
+        text: 'Save one $\\cos x$ and let $u = \\cos x$',
+        mistake: 'trig-wrong-factor-saved' as const,
+        why: 'u = cos x needs du = −sin x dx; a saved cos x dx does not match it.',
+      };
+      const parts = { text: 'Integration by parts with $dv = \\sin x\\,dx$' };
+      let options: Option[];
+      let correct: number;
+      let explanation: string;
+      if (sineOdd) {
+        options = [
+          saveSin,
+          {
+            ...saveCos,
+            mistake: 'trig-wrong-factor-saved' as const,
+            why:
+              n === 0
+                ? 'There is no cosine factor to save.'
+                : `The cosine power is even: after saving $\\cos x$, ${leftoverTex('cos', n)} is an odd power that needs a square root in terms of $\\sin x$.`,
+          },
+          { ...halfAngle, mistake: 'technique-wrong' as const, why: 'Half-angle identities are for both powers even; an odd power of sine allows a direct substitution.' },
+          sinSin,
+          cosCos,
+          { ...parts, mistake: 'technique-wrong' as const, why: 'Parts only trades this for another trig product; the odd power of sine already gives a u-substitution.' },
+        ];
+        correct = 0;
+        explanation = `The sine power ${m} is odd: save $\\sin x\\,dx$ (it becomes $-du$ with $u = \\cos x$); the even power left over is a polynomial in $\\cos x$.`;
+      } else if (cosOdd) {
+        options = [
+          {
+            ...saveSin,
+            mistake: 'trig-wrong-factor-saved' as const,
+            why:
+              m === 0
+                ? 'There is no sine factor to save.'
+                : `The sine power is even: after saving $\\sin x$, ${leftoverTex('sin', m)} is an odd power that needs a square root in terms of $\\cos x$.`,
+          },
+          saveCos,
+          { ...halfAngle, mistake: 'technique-wrong' as const, why: 'Half-angle identities are for both powers even; an odd power of cosine allows a direct substitution.' },
+          sinSin,
+          cosCos,
+          { ...parts, mistake: 'technique-wrong' as const, why: 'Parts only trades this for another trig product; the odd power of cosine already gives a u-substitution.' },
+        ];
+        correct = 1;
+        explanation = `The cosine power ${n} is odd: save $\\cos x\\,dx$ (it becomes $du$ with $u = \\sin x$); the even power left over is a polynomial in $\\sin x$.`;
+      } else {
+        options = [
+          {
+            ...saveSin,
+            mistake: 'even-powers-no-identity' as const,
+            why:
+              m === 0
+                ? 'There is no sine factor to save; with both powers even no factor can be saved for a substitution.'
+                : `Saving $\\sin x$ leaves ${leftoverTex('sin', m)}, an odd power that needs a square root in terms of $\\cos x$.`,
+          },
+          {
+            ...saveCos,
+            mistake: 'even-powers-no-identity' as const,
+            why:
+              n === 0
+                ? 'There is no cosine factor to save; with both powers even no factor can be saved for a substitution.'
+                : `Saving $\\cos x$ leaves ${leftoverTex('cos', n)}, an odd power that needs a square root in terms of $\\sin x$.`,
+          },
+          halfAngle,
+          sinSin,
+          cosCos,
+          { ...parts, mistake: 'technique-wrong' as const, why: 'With both powers even the decision guide reduces the powers with half-angle identities; parts only produces another product.' },
+        ];
+        correct = 2;
+        explanation = `Both powers (${m} and ${n}) are even, so no factor can be saved; reduce with $\\sin^2 x = \\frac{1 - \\cos 2x}{2}$ and $\\cos^2 x = \\frac{1 + \\cos 2x}{2}$.`;
+      }
+      return {
+        id: `ti-g-sincos-strategy:${seed}`,
+        topic: 'trig-integrals',
+        kind: 'technique',
+        prompt: { text: 'Following the decision guide, what is the first move?', latex: `\\int ${integrand}\\,dx` },
+        options,
+        correct,
+        explanation,
+        check: { kind: 'none', reason: 'technique recognition; options are method descriptions' },
+        difficulty: 1,
+      };
+    },
+  },
+];
