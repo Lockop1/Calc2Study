@@ -59,7 +59,7 @@ export const steps: StepProblem[] = [
           },
           {
             text: 'At $x = 5$: $x^2 = 25 > 20 = 4x$, so $y = x^2$ is on top',
-            mistake: 'top-bottom-swapped',
+            mistake: 'test-point-outside-interval',
             why: '$x = 5$ lies outside $(0, 4)$; the test point must be between the intersections.',
           },
           { text: 'At $x = 1$: $4x = 4 > 1 = x^2$, so $y = 4x$ is on top on $(0, 4)$' },
@@ -135,10 +135,10 @@ export const steps: StepProblem[] = [
             why: 'Used $\\int x^2\\,dx = x^3$ without dividing by 3: $32 - 64$.',
           },
           {
-            latex: '-\\frac{32}{3}',
-            expr: '-32/3',
-            mistake: 'ftc-order-swapped',
-            why: 'Computed $F(0) - F(4)$; subtract the lower-limit value from the upper one.',
+            latex: '\\frac{80}{3}',
+            expr: '80/3',
+            mistake: 'power-rule-int-exponent',
+            why: 'Divided by 3 but kept the exponent: $\\int x^2\\,dx$ written as $\\frac{x^2}{3}$, giving $32 - \\frac{16}{3}$.',
           },
         ],
         correct: 0,
@@ -208,7 +208,7 @@ export const steps: StepProblem[] = [
             why: 'At $x = \\tfrac12$ the line ($-2.5$) is above the parabola ($-3.75$), so the order changes at $x = 0$.',
           },
           {
-            text: 'On $(-1, 0)$ the parabola is on top (at $x = -\\tfrac12$: $-1.75 > -3.5$); on $(0, 1)$ the line is on top (at $x = \\tfrac12$: $-2.5 > -3.75$)',
+            text: 'On $(-1, 0)$ the parabola is on top; on $(0, 1)$ the line is on top',
           },
           {
             text: 'The line is on top on all of $(-1, 1)$',
@@ -363,7 +363,7 @@ export const steps: StepProblem[] = [
           },
           {
             text: '$y$, but it needs two integrals split at $y = 0$, the vertex of the parabola',
-            mistake: 'technique-wrong',
+            mistake: 'split-at-wrong-point',
             why: 'The left curve is the parabola for every $y$ in the region; the vertex is not a place where a boundary changes.',
           },
           { text: '$y$: every horizontal segment runs from the parabola (left) to the line (right)' },
@@ -405,10 +405,10 @@ export const steps: StepProblem[] = [
           },
           { latex: 'x = \\frac{y^2}{2} - 3,\\quad x = y + 1', expr: '[y^2/2 - 3, y + 1]' },
           {
-            latex: 'x = \\frac{y^2}{2} - 3,\\quad x = y - 1',
-            expr: '[y^2/2 - 3, y - 1]',
+            latex: 'x = y^2 - 3,\\quad x = y - 1',
+            expr: '[y^2 - 3, y - 1]',
             mistake: 'inverse-function-wrong',
-            why: 'Solving $y = x - 1$ for $x$ gives $x = y + 1$.',
+            why: 'Two slips: $y^2$ was not halved ($x = \\frac{y^2}{2} - 3$), and $y = x - 1$ solved for $x$ is $x = y + 1$.',
           },
         ],
         correct: 3,
@@ -439,10 +439,10 @@ export const steps: StepProblem[] = [
             why: 'These are where the parabola meets the $y$-axis; the curves meet each other where $\\frac{y^2}{2} - 3 = y + 1$.',
           },
           {
-            latex: 'y = 0,\\quad y = 4',
-            expr: '[0, 4]',
-            mistake: 'missing-intersection',
-            why: '$y = 0$ is the vertex of the parabola, not an intersection; the lower intersection is at $y = -2$.',
+            latex: 'y = -3,\\quad y = 3',
+            expr: '[-3, 3]',
+            mistake: 'bounds-wrong-variable',
+            why: 'Two slips: flipping the signs gives the points at $y = -4$ and $y = 2$, and $-3$ and $3$ are their $x$-values, not $y$-values.',
           },
         ],
         correct: 0,
@@ -460,7 +460,7 @@ export const steps: StepProblem[] = [
           },
           {
             text: '$R(y) = y + 1$ on $(0, 4)$, but $R(y) = \\frac{y^2}{2} - 3$ on $(-2, 0)$',
-            mistake: 'top-bottom-swapped',
+            mistake: 'split-at-wrong-point',
             why: 'At $y = -1$ the line ($x = 0$) is still right of the parabola ($x = -2.5$); the order never changes between the intersections.',
           },
           {
@@ -474,7 +474,7 @@ export const steps: StepProblem[] = [
             why: 'The $y$-axis is not a boundary of this region; the left boundary is the parabola.',
           },
           {
-            text: 'Test $y = 0$: the line gives $x = 1$, the parabola $x = -3$; so $R(y) = y + 1$ and $L(y) = \\frac{y^2}{2} - 3$',
+            text: '$R(y) = y + 1$ and $L(y) = \\frac{y^2}{2} - 3$',
           },
         ],
         correct: 4,
@@ -611,12 +611,12 @@ export const steps: StepProblem[] = [
           },
           {
             text: 'At $x = 3$: $x^2 = 9 > 5 = x + 2$, so the parabola is on top',
-            mistake: 'top-bottom-swapped',
+            mistake: 'test-point-outside-interval',
             why: '$x = 3$ lies outside $(-1, 2)$; choose a test point between the intersections.',
           },
           {
             text: 'The line on $(-1, 0)$ and the parabola on $(0, 2)$',
-            mistake: 'top-bottom-swapped',
+            mistake: 'split-at-wrong-point',
             why: 'The curves do not cross at $x = 0$; at $x = 1$ the line ($3$) is still above the parabola ($1$).',
           },
           {
@@ -725,10 +725,10 @@ export const steps: StepProblem[] = [
           },
           { latex: 'x = 0,\\quad x = 1', expr: '[0, 1]' },
           {
-            latex: 'x = 1',
-            expr: '1',
-            mistake: 'missing-intersection',
-            why: 'Dividing $2x^2 = 2x$ by $2x$ loses $x = 0$.',
+            latex: 'x = -2,\\quad x = 0',
+            expr: '[-2, 0]',
+            mistake: 'algebra-error',
+            why: 'Two slips: the $-x^2$ on the right was dropped (giving $x^2 - 2x = 0$), and the nonzero root was sign-flipped to $-2$.',
           },
           {
             latex: 'x = -1,\\quad x = 0',
@@ -758,7 +758,7 @@ export const steps: StepProblem[] = [
           },
           {
             text: 'At $x = 2$: $x^2 = 4 > 0 = 2x - x^2$, so $y = x^2$ is on top',
-            mistake: 'top-bottom-swapped',
+            mistake: 'test-point-outside-interval',
             why: '$x = 2$ is outside $(0, 1)$.',
           },
           {
@@ -834,10 +834,10 @@ export const steps: StepProblem[] = [
             why: 'The antiderivative was written $x^2 + \\frac{2x^3}{3}$; the minus sign was lost.',
           },
           {
-            latex: '-\\frac{1}{3}',
-            expr: '-1/3',
-            mistake: 'ftc-order-swapped',
-            why: 'Computed $F(0) - F(1)$.',
+            latex: '\\frac{2}{3}',
+            expr: '2/3',
+            mistake: 'coefficient-mishandled',
+            why: 'Integrated $2x - x^2$ instead of $2x - 2x^2$, dropping the factor 2 on $x^2$: $1 - \\frac13$.',
           },
         ],
         correct: 2,
@@ -870,16 +870,16 @@ export const steps: StepProblem[] = [
             mistake: 'top-bottom-swapped',
             why: 'For $0 < x < 1$, squaring makes numbers smaller and square roots make them bigger.',
           },
-          { text: 'At $x = \\tfrac14$: $\\sqrt{x} = \\tfrac12 > \\tfrac1{16} = x^2$, so $y = \\sqrt{x}$ is on top' },
+          { text: 'At $x = \\tfrac14$: $\\tfrac12 > \\tfrac1{16}$, so $y = \\sqrt{x}$ is on top' },
           {
             text: 'At $x = 2$: $x^2 = 4 > \\sqrt2$, so $y = x^2$ is on top',
-            mistake: 'top-bottom-swapped',
+            mistake: 'test-point-outside-interval',
             why: '$x = 2$ lies outside $(0, 1)$.',
           },
           {
-            text: '$y = \\sqrt{x}$ on $(0, \\tfrac12)$ and $y = x^2$ on $(\\tfrac12, 1)$',
-            mistake: 'top-bottom-swapped',
-            why: 'The curves cross only at $0$ and $1$; at $x = \\tfrac34$, $\\sqrt{x} \\approx 0.87 > 0.56 \\approx x^2$.',
+            text: 'At $x = \\tfrac14$: $x^2 = \\tfrac12 > \\tfrac1{16} = \\sqrt{x}$, so $y = x^2$ is on top',
+            mistake: 'arithmetic-error',
+            why: 'The two computations were mixed up: $\\left(\\tfrac14\\right)^2 = \\tfrac1{16}$ and $\\sqrt{\\tfrac14} = \\tfrac12$.',
           },
           {
             text: '$y = \\sqrt{x}$ is on top, with the $x$-axis as the bottom',
@@ -976,10 +976,10 @@ export const steps: StepProblem[] = [
             why: 'Added instead of subtracting: $\\frac23 + \\frac13$.',
           },
           {
-            latex: '-\\frac{1}{3}',
-            expr: '-1/3',
-            mistake: 'ftc-order-swapped',
-            why: 'Computed $F(0) - F(1)$.',
+            latex: '\\frac{1}{6}',
+            expr: '1/6',
+            mistake: 'power-rule-int-coefficient',
+            why: 'Divided by the old exponent: $\\int x^2\\,dx$ written as $\\frac{x^3}{2}$, giving $\\frac23 - \\frac12$.',
           },
           {
             latex: '\\frac{2}{3}',
@@ -1057,10 +1057,10 @@ export const steps: StepProblem[] = [
             why: 'The vertical length is $e^x - x$.',
           },
           {
-            latex: '\\int_0^1 e^{x}\\,dx',
-            expr: 'integral(exp(x), x, 0, 1)',
-            mistake: 'single-function-area',
-            why: 'This ignores the lower boundary $y = x$.',
+            latex: '\\int_1^{e} (x - e^{x})\\,dx',
+            expr: 'integral(x - exp(x), x, 1, e)',
+            mistake: 'bounds-wrong-variable',
+            why: 'Two slips: $1$ and $e$ are $y$-values of $e^x$ at the sides (the $x$-limits are $0$ and $1$), and $x - e^x$ is bottom − top.',
           },
           { latex: '\\int_0^1 (e^{x} - x)\\,dx', expr: 'integral(exp(x) - x, x, 0, 1)' },
           {
@@ -1092,10 +1092,10 @@ export const steps: StepProblem[] = [
             why: '$e^x$ is not a power of $x$; its antiderivative is $e^x$ itself.',
           },
           {
-            latex: 'e^{x} - 1',
-            expr: 'exp(x) - 1',
-            mistake: 'differentiated-instead',
-            why: 'This is the derivative of $e^x - x$.',
+            latex: '\\frac{e^{x+1}}{x+1} - x^2',
+            expr: 'exp(x + 1)/(x + 1) - x^2',
+            mistake: 'exp-antiderivative-wrong',
+            why: 'Two slips: $e^x$ was integrated like a power of $x$, and $\\int x\\,dx$ was written without dividing by 2.',
           },
           {
             latex: 'e^{x} + \\frac{x^2}{2}',
@@ -1119,10 +1119,10 @@ export const steps: StepProblem[] = [
             why: '$F(0) = e^0 - 0 = 1$, not $0$; it must be subtracted.',
           },
           {
-            latex: '\\frac{3}{2} - e',
-            expr: '3/2 - e',
+            latex: '\\frac{1}{2} - e',
+            expr: '1/2 - e',
             mistake: 'ftc-order-swapped',
-            why: 'Computed $F(0) - F(1)$.',
+            why: 'Two slips: computed $F(0) - F(1)$, and took $F(0) = e^0$ as $0$.',
           },
           {
             latex: 'e - 2',
@@ -1180,7 +1180,7 @@ export const steps: StepProblem[] = [
           },
           {
             text: '$\\tan x = 1$ gives $x = \\frac{\\pi}{3}$',
-            mistake: 'arithmetic-error',
+            mistake: 'inverse-trig-value-wrong',
             why: '$\\tan\\frac{\\pi}{3} = \\sqrt3$; $\\tan x = 1$ at $x = \\frac{\\pi}{4}$.',
           },
           { text: '$\\sin x = \\cos x$ means $\\tan x = 1$, so $x = \\frac{\\pi}{4}$' },
@@ -1198,7 +1198,7 @@ export const steps: StepProblem[] = [
             why: 'At $x = \\frac{\\pi}{3}$, $\\sin x = \\frac{\\sqrt3}{2}$ is above $\\cos x = \\frac12$.',
           },
           {
-            text: '$\\cos x$ on $\\left(0, \\frac{\\pi}{4}\\right)$ (at $\\frac{\\pi}{6}$: $\\frac{\\sqrt3}{2} > \\frac12$); $\\sin x$ on $\\left(\\frac{\\pi}{4}, \\frac{\\pi}{2}\\right)$ (at $\\frac{\\pi}{3}$: $\\frac{\\sqrt3}{2} > \\frac12$)',
+            text: '$\\cos x$ on top on $\\left(0, \\frac{\\pi}{4}\\right)$; $\\sin x$ on top on $\\left(\\frac{\\pi}{4}, \\frac{\\pi}{2}\\right)$',
           },
           {
             text: '$\\sin x$ on top on all of $\\left(0, \\frac{\\pi}{2}\\right)$',
@@ -1217,7 +1217,7 @@ export const steps: StepProblem[] = [
           },
         ],
         correct: 1,
-        explanation: 'Test one point inside each subinterval.',
+        explanation: 'At $\\frac{\\pi}{6}$: $\\cos x = \\frac{\\sqrt3}{2} > \\frac12 = \\sin x$; at $\\frac{\\pi}{3}$: $\\sin x = \\frac{\\sqrt3}{2} > \\frac12 = \\cos x$.',
         result: { text: '$T = \\cos x$, $B = \\sin x$ on $\\left[0, \\frac{\\pi}{4}\\right]$; $T = \\sin x$, $B = \\cos x$ on $\\left[\\frac{\\pi}{4}, \\frac{\\pi}{2}\\right]$.' },
       },
       {
@@ -1267,10 +1267,10 @@ export const steps: StepProblem[] = [
             why: 'Used $\\int \\sin x\\,dx = \\cos x$: the pieces become $\\left[\\sin x - \\cos x\\right]$ and $\\left[\\cos x - \\sin x\\right]$, giving $1 + (-1)$.',
           },
           {
-            latex: '2 - 2\\sqrt{2}',
-            expr: '2 - 2*sqrt(2)',
-            mistake: 'ftc-order-swapped',
-            why: 'Each piece was computed as $F(\\text{lower}) - F(\\text{upper})$.',
+            latex: '2\\sqrt{2} - 1',
+            expr: '2*sqrt(2) - 1',
+            mistake: 'ftc-not-subtracted',
+            why: 'Dropped $F(0) = \\sin 0 + \\cos 0 = 1$ in the first piece: $\\sqrt2 + (\\sqrt2 - 1)$.',
           },
           { latex: '2\\sqrt{2} - 2', expr: '2*sqrt(2) - 2' },
           {
@@ -1479,10 +1479,10 @@ export const steps: StepProblem[] = [
             why: '$x^3 - x = x(x^2 - 1)$, and $x^2 = 1$ has the real roots $\\pm 1$; it was treated as $x^2 = -1$.',
           },
           {
-            latex: 'x = 1',
-            expr: '1',
-            mistake: 'missing-intersection',
-            why: 'Dividing by $x$ and keeping only the positive root of $x^2 = 1$ loses both $x = 0$ and $x = -1$.',
+            latex: 'x = -\\frac{1}{\\sqrt{3}},\\quad x = \\frac{1}{\\sqrt{3}}',
+            expr: '[-1/sqrt(3), 1/sqrt(3)]',
+            mistake: 'differentiated-instead',
+            why: 'Setting the slopes equal ($3x^2 = 1$) finds where the gap is widest, not where the curves meet; solve $x^3 = x$.',
           },
         ],
         correct: 2,
@@ -1514,7 +1514,7 @@ export const steps: StepProblem[] = [
             why: 'Mirror-image pieces have equal areas that add; only signed integrals cancel.',
           },
           {
-            text: '$y = x^3$ on $(-1, 0)$ (at $-\\tfrac12$: $-\\tfrac18 > -\\tfrac12$); $y = x$ on $(0, 1)$ (at $\\tfrac12$: $\\tfrac12 > \\tfrac18$)',
+            text: '$y = x^3$ on top on $(-1, 0)$; $y = x$ on top on $(0, 1)$',
           },
         ],
         correct: 4,
@@ -1611,10 +1611,10 @@ export const steps: StepProblem[] = [
         prompt: 'To integrate with respect to $y$, write the parabola as $x = g(y)$.',
         options: [
           {
-            latex: 'x = \\frac{y^2}{2} + 3',
-            expr: 'y^2/2 + 3',
+            latex: 'x = y^2 + 3',
+            expr: 'y^2 + 3',
             mistake: 'inverse-function-wrong',
-            why: '$2x = y^2 - 6$, so $x = \\frac{y^2}{2} - 3$; the sign of the constant flipped.',
+            why: 'Two slips: $y^2$ was not halved, and the sign of the constant flipped; $x = \\frac{y^2}{2} - 3$.',
           },
           {
             latex: 'x = y^2 - 3',
@@ -1630,10 +1630,10 @@ export const steps: StepProblem[] = [
             why: 'Only $y^2$ was halved; the $6$ must be divided by 2 as well.',
           },
           {
-            latex: 'x = \\sqrt{2y + 6}',
-            expr: 'sqrt(2*y + 6)',
+            latex: 'x = y^2 - 6',
+            expr: 'y^2 - 6',
             mistake: 'inverse-function-wrong',
-            why: 'Swapping the letters $x$ and $y$ does not solve for $x$.',
+            why: 'Neither term was halved: $2x = y^2 - 6$ gives $x = \\frac{y^2}{2} - 3$.',
           },
         ],
         correct: 2,
@@ -1657,10 +1657,10 @@ export const steps: StepProblem[] = [
             why: '$y^2 = 6$ has two roots; $y = -\\sqrt6$ is missing.',
           },
           {
-            latex: 'y = -6,\\quad y = 6',
-            expr: '[-6, 6]',
+            latex: 'y = 0,\\quad y = 6',
+            expr: '[0, 6]',
             mistake: 'algebra-error',
-            why: 'From $y^2 = 6$, $y = \\pm\\sqrt6$; the square root was not taken.',
+            why: 'Two slips: the square root of $y^2 = 6$ was not taken, and the negative root was dropped; $y = \\pm\\sqrt6$.',
           },
           { latex: 'y = -\\sqrt{6},\\quad y = \\sqrt{6}', expr: '[-sqrt(6), sqrt(6)]' },
           {
@@ -1678,7 +1678,7 @@ export const steps: StepProblem[] = [
       {
         prompt: 'Which boundary is on the right and which on the left?',
         options: [
-          { text: 'Right: the $y$-axis $x = 0$; left: the parabola $x = \\frac{y^2}{2} - 3$ (at $y = 0$: $0 > -3$)' },
+          { text: 'Right: the $y$-axis $x = 0$; left: the parabola $x = \\frac{y^2}{2} - 3$' },
           {
             text: 'Right: the parabola $x = \\frac{y^2}{2} - 3$; left: the $y$-axis',
             mistake: 'top-bottom-swapped',
@@ -1691,7 +1691,7 @@ export const steps: StepProblem[] = [
           },
           {
             text: 'Right: $x = 0$ for $y > 0$, but the parabola for $y < 0$',
-            mistake: 'top-bottom-swapped',
+            mistake: 'split-at-wrong-point',
             why: 'The order never changes between $y = -\\sqrt6$ and $y = \\sqrt6$: at $y = -1$, $0 > -2.5$.',
           },
           {
@@ -1808,10 +1808,10 @@ export const steps: StepProblem[] = [
             why: 'Solving $y = 2x$ for $x$ divides by 2: $x = \\frac{y}{2}$.',
           },
           {
-            latex: 'x = -\\sqrt{y},\\quad x = \\frac{y}{2}',
-            expr: '[-sqrt(y), y/2]',
+            latex: 'x = -\\sqrt{y},\\quad x = 2y',
+            expr: '[-sqrt(y), 2*y]',
             mistake: 'inverse-function-wrong',
-            why: 'The region has $x \\ge 0$, so the relevant branch of $y = x^2$ is $x = +\\sqrt{y}$.',
+            why: 'Two slips: the region has $x \\ge 0$, so the branch is $x = +\\sqrt{y}$, and $y = 2x$ gives $x = \\frac{y}{2}$.',
           },
           { latex: 'x = \\sqrt{y},\\quad x = \\frac{y}{2}', expr: '[sqrt(y), y/2]' },
           {
@@ -1839,11 +1839,11 @@ export const steps: StepProblem[] = [
             mistake: 'bounds-wrong-variable',
             why: '$2$ is the $x$-coordinate of $(2, 4)$; the $y$-limits are $0$ and $4$.',
           },
-          { text: '$0 \\le y \\le 4$; right $x = \\sqrt{y}$, left $x = \\frac{y}{2}$ (at $y = 1$: $1 > \\tfrac12$)' },
+          { text: '$0 \\le y \\le 4$; right $x = \\sqrt{y}$, left $x = \\frac{y}{2}$' },
           {
-            text: '$0 \\le y \\le 4$; right $x = \\sqrt{y}$ on $(0, 1)$ but $x = \\frac{y}{2}$ on $(1, 4)$',
+            text: '$0 \\le y \\le 2$; right $x = \\frac{y}{2}$, left $x = \\sqrt{y}$',
             mistake: 'top-bottom-swapped',
-            why: 'At $y = 3$: $\\sqrt3 \\approx 1.73 > 1.5$, so the parabola stays on the right until $y = 4$.',
+            why: 'Two slips: at $y = 1$ the parabola ($x = 1$) is right of the line ($x = \\tfrac12$), and $2$ is an $x$-value; the $y$-limits are $0$ and $4$.',
           },
           {
             text: '$0 \\le x \\le 2$; top $y = 2x$, bottom $y = x^2$',

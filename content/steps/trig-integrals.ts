@@ -12,8 +12,8 @@ export const steps: StepProblem[] = [
       {
         prompt: 'Which strategy fits this integral?',
         options: [
-          { text: 'The cosine power is even: save one $\\cos x$ and let $u = \\sin x$', mistake: 'trig-wrong-factor-saved', why: 'Saving cos x leaves a single cos x, which needs a square root in terms of sin x.' },
-          { text: 'The sine power is odd: save one $\\sin x$ and let $u = \\cos x$' },
+          { text: 'Save one $\\cos x$ and let $u = \\sin x$', mistake: 'trig-wrong-factor-saved', why: 'Saving cos x leaves a single cos x, which needs a square root in terms of sin x.' },
+          { text: 'Save one $\\sin x$ and let $u = \\cos x$' },
           { text: 'Save one $\\sin x$ and let $u = \\sin x$', mistake: 'trig-wrong-factor-saved', why: 'u = sin x needs du = cos x dx; the saved sin x dx does not match it.' },
           { text: 'Use the half-angle identities for $\\sin^2 x$ and $\\cos^2 x$', mistake: 'technique-wrong', why: 'Half-angle identities are for both powers even; an odd sine power gives a direct substitution.' },
           { text: 'Integration by parts with $u = \\sin^2 x$, $dv = \\sin x\\cos^2 x\\,dx$', mistake: 'technique-wrong', why: 'Parts only trades this for another trig product; the odd power of sine already allows u = cos x.' },
@@ -87,7 +87,7 @@ export const steps: StepProblem[] = [
         options: [
           { text: 'Save one $\\sin x$ and let $u = \\cos x$', mistake: 'even-powers-no-identity', why: 'Saving sin x leaves a single sin x, which needs a square root in terms of cos x.' },
           { text: 'Save one $\\cos x$ and let $u = \\sin x$', mistake: 'even-powers-no-identity', why: 'Saving cos x leaves a single cos x, which needs a square root in terms of sin x.' },
-          { text: 'Both powers are even: use the half-angle identities' },
+          { text: 'Use the half-angle identities for $\\sin^2 x$ and $\\cos^2 x$' },
           { text: 'Write $\\sin^2 x = 1 - \\cos^2 x$ and let $u = \\cos x$', mistake: 'even-powers-no-identity', why: 'No sin x dx is left over to form du = −sin x dx.' },
           { text: 'Integration by parts with $u = \\sin^2 x$, $dv = \\cos^2 x\\,dx$', mistake: 'technique-wrong', why: 'Parts leaves another product of even powers; the half-angle identities reduce the powers directly.' },
         ],
@@ -112,7 +112,7 @@ export const steps: StepProblem[] = [
       {
         prompt: 'Reduce $\\cos^2 2x$ with the half-angle identity again. The integrand becomes',
         options: [
-          { latex: '\\frac{1}{8}(1 + \\cos 4x)', expr: '(1 + cos(4*x))/8', mistake: 'half-angle-wrong', why: 'cos²2x = (1 + cos 4x)/2; using (1 − cos 4x)/2, the sine identity, flips the sign.' },
+          { latex: '\\frac{1}{4} + \\frac{1}{8}\\cos 4x', expr: '1/4 + cos(4*x)/8', mistake: 'half-angle-wrong', why: 'Two slips: cos²2x was reduced with the sine identity (1 − cos 4x)/2, and the constant ¼·½ was never subtracted.' },
           { latex: '\\frac{1}{8}(1 - \\cos 4x)', expr: '(1 - cos(4*x))/8' },
           { latex: '\\frac{1}{8}(1 - \\cos 2x)', expr: '(1 - cos(2*x))/8', mistake: 'half-angle-wrong', why: 'Reducing cos²(2x) doubles the angle to 4x.' },
           { latex: '-\\frac{1}{4}\\cos 4x', expr: '-cos(4*x)/4', mistake: 'half-angle-wrong', why: 'cos²(2x) = (1 + cos 4x)/2; without the 1/2 the constant terms cancel.' },
@@ -158,7 +158,7 @@ export const steps: StepProblem[] = [
           { text: 'Save $\\sec x\\tan x$ and let $u = \\sec x$', mistake: 'trig-wrong-factor-saved', why: 'There is no tangent factor in the integrand to save.' },
           { text: 'Integration by parts with $u = \\sec^2 x$, $dv = \\sec^2 x\\,dx$', mistake: 'technique-wrong', why: 'Parts is the plan for odd powers of secant; an even power allows a direct substitution.' },
           { text: 'Substitute $u = \\sec x$ and integrate $u^4$', mistake: 'u-choice-wrong', why: 'u = sec x needs du = sec x tan x dx, which is not in the integrand.' },
-          { text: 'Even power of secant: save $\\sec^2 x$ and let $u = \\tan x$' },
+          { text: 'Save $\\sec^2 x$ and let $u = \\tan x$' },
           { text: 'Save $\\sec^2 x$ and let $u = \\sec x$', mistake: 'trig-wrong-factor-saved', why: 'The saved sec²x dx is du for u = tan x, not for u = sec x.' },
         ],
         correct: 3,
@@ -170,7 +170,7 @@ export const steps: StepProblem[] = [
         options: [
           { latex: '\\int (\\tan^2 x - 1)\\sec^2 x\\,dx', expr: 'indefinite((tan(x)^2 - 1)*sec(x)^2, x)', mistake: 'tan-sec-identity-direction', why: 'sec²x = tan²x + 1; writing tan²x − 1 reverses the identity.' },
           { latex: '\\int (\\tan^2 x + 1)\\sec^2 x\\,dx', expr: 'indefinite((tan(x)^2 + 1)*sec(x)^2, x)' },
-          { latex: '\\int (1 - \\tan^2 x)\\sec^2 x\\,dx', expr: 'indefinite((1 - tan(x)^2)*sec(x)^2, x)', mistake: 'pythagorean-wrong', why: 'This copies the cos²x = 1 − sin²x pattern; the secant identity adds 1.' },
+          { latex: '\\int (\\tan^2 x - 1)\\sec x\\,dx', expr: 'indefinite((tan(x)^2 - 1)*sec(x), x)', mistake: 'tan-sec-identity-direction', why: 'Two slips: sec²x = tan²x + 1 (not tan²x − 1), and the saved factor is sec²x, not sec x.' },
           { latex: '\\int \\tan^2 x\\sec^2 x\\,dx', expr: 'indefinite(tan(x)^2*sec(x)^2, x)', mistake: 'pythagorean-wrong', why: 'The +1 in sec²x = tan²x + 1 was dropped.' },
           { latex: '\\int (\\tan^2 x + 1)\\sec x\\,dx', expr: 'indefinite((tan(x)^2 + 1)*sec(x), x)', mistake: 'exponent-arithmetic', why: 'sec⁴x = sec²x·sec²x; after converting one sec²x, the saved factor is sec²x, not sec x.' },
         ],
@@ -183,7 +183,7 @@ export const steps: StepProblem[] = [
         prompt: 'Substitute $u = \\tan x$, $du = \\sec^2 x\\,dx$. The integral becomes',
         options: [
           { latex: '\\int (u^2 + 1)^2\\,du', expr: 'indefinite((u^2 + 1)^2, u)', mistake: 'exponent-arithmetic', why: 'The saved sec²x dx is du; converting it to u² + 1 as well counts it twice.' },
-          { latex: '\\int (u^2 + 1)u^2\\,du', expr: 'indefinite((u^2 + 1)*u^2, u)', mistake: 'du-derivative-wrong', why: 'With u = tan x, du = sec²x dx absorbs the saved factor; nothing is left over to become u².' },
+          { latex: '\\int (u^2 + 1)u^2\\,du', expr: 'indefinite((u^2 + 1)*u^2, u)', mistake: 'exponent-arithmetic', why: 'The saved sec²x was counted twice: it became du and was also rewritten as tan²x = u².' },
           { latex: '\\int u^4\\,du', expr: 'indefinite(u^4, u)', mistake: 'u-choice-wrong', why: 'This treats sec x as u; with u = tan x, sec⁴x dx = (u² + 1)du.' },
           { latex: '\\int (u^2 + 1)\\sec^2 x\\,du', expr: 'indefinite((u^2 + 1)*sec(x)^2, u)', mistake: 'leftover-x-in-u-integral', why: 'sec²x dx became du; the sec²x must not stay in the u-integral.' },
           { latex: '\\int (u^2 + 1)\\,du', expr: 'indefinite(u^2 + 1, u)' },
@@ -200,7 +200,7 @@ export const steps: StepProblem[] = [
         options: [
           { latex: '\\frac{1}{3}\\sec^3 x + \\sec x + C', expr: 'sec(x)^3/3 + sec(x)', mistake: 'back-substitution-wrong', why: 'u was tan x, so u³/3 + u must become tangents, not secants.' },
           { latex: '\\tan x + \\tan^3 x + C', expr: 'tan(x) + tan(x)^3', mistake: 'power-rule-int-coefficient', why: '∫u² du = u³/3; the 1/3 was dropped.' },
-          { latex: '\\frac{1}{3}\\tan^3 x + C', expr: 'tan(x)^3/3', mistake: 'algebra-error', why: '∫1 du = u; the +tan x term was dropped.' },
+          { latex: '\\frac{1}{3}\\tan^3 x + C', expr: 'tan(x)^3/3', mistake: 'constant-not-integrated', why: '∫1 du = u = tan x; the 1 was treated as a constant absorbed into C instead of being integrated.' },
           { latex: '\\tan x + \\frac{1}{3}\\tan^3 x + C', expr: 'tan(x) + tan(x)^3/3' },
           { latex: '\\frac{u^3}{3} + u + C', expr: 'u^3/3 + u', mistake: 'not-back-substituted', why: 'The answer must be written in x: replace u by tan x.' },
         ],
@@ -228,7 +228,7 @@ export const steps: StepProblem[] = [
         prompt: 'Which strategy fits this integral?',
         options: [
           { text: 'Save $\\sec^2 x$ and let $u = \\tan x$', mistake: 'trig-wrong-factor-saved', why: 'sec³x is odd: saving sec²x leaves sec x, which needs a square root in terms of tan x.' },
-          { text: 'Odd power of tangent: save $\\sec x\\tan x$ and let $u = \\sec x$' },
+          { text: 'Save $\\sec x\\tan x$ and let $u = \\sec x$' },
           { text: 'Integration by parts with $dv = \\sec^2 x\\,dx$', mistake: 'technique-wrong', why: 'Parts is the plan for odd powers of secant with no tangent; an odd tangent power allows u = sec x.' },
           { text: 'Save $\\sec x\\tan x$ and let $u = \\tan x$', mistake: 'trig-wrong-factor-saved', why: 'u = tan x needs du = sec²x dx; the saved sec x tan x dx does not match.' },
           { text: 'Use the half-angle identities', mistake: 'technique-wrong', why: 'Half-angle identities reduce even powers of sine and cosine, not tangent and secant.' },
@@ -244,7 +244,7 @@ export const steps: StepProblem[] = [
           { latex: '\\int (1 - \\sec^2 x)\\sec^2 x\\,\\sec x\\tan x\\,dx', expr: 'indefinite((1 - sec(x)^2)*sec(x)^2*sec(x)*tan(x), x)', mistake: 'pythagorean-wrong', why: 'This copies the sin²x = 1 − cos²x pattern; tan²x = sec²x − 1.' },
           { latex: '\\int (\\sec^2 x - 1)\\sec^3 x\\,\\sec x\\tan x\\,dx', expr: 'indefinite((sec(x)^2 - 1)*sec(x)^3*sec(x)*tan(x), x)', mistake: 'exponent-arithmetic', why: 'The saved sec x tan x uses up one secant, leaving sec²x; sec³x was kept.' },
           { latex: '\\int (\\sec^2 x - 1)\\sec^2 x\\,\\sec x\\tan x\\,dx', expr: 'indefinite((sec(x)^2 - 1)*sec(x)^2*sec(x)*tan(x), x)' },
-          { latex: '\\int (\\sec^2 x - 1)\\sec x\\,\\sec x\\tan x\\,dx', expr: 'indefinite((sec(x)^2 - 1)*sec(x)*sec(x)*tan(x), x)', mistake: 'exponent-arithmetic', why: 'Only one secant goes into the saved factor, so sec²x (not sec x) remains.' },
+          { latex: '\\int (\\sec^2 x + 1)\\sec^3 x\\,\\sec x\\tan x\\,dx', expr: 'indefinite((sec(x)^2 + 1)*sec(x)^3*sec(x)*tan(x), x)', mistake: 'tan-sec-identity-direction', why: 'Two slips: tan²x = sec²x − 1 (not + 1), and the saved sec x tan x uses up one secant, leaving sec²x rather than sec³x.' },
         ],
         correct: 3,
         explanation: '$\\tan^3 x\\sec^3 x = \\tan^2 x\\sec^2 x\\,(\\sec x\\tan x) = (\\sec^2 x - 1)\\sec^2 x\\,(\\sec x\\tan x)$.',
@@ -304,7 +304,7 @@ export const steps: StepProblem[] = [
           { text: 'Substitute $u = \\sec x$, $du = \\sec x\\tan x\\,dx$', mistake: 'sec-odd-power-strategy', why: 'There is no tan x in the integrand to complete du.' },
           { text: 'Integration by parts with $u = \\sec^2 x$, $dv = \\sec x\\,dx$', mistake: 'ibp-wrong-u-dv', why: 'v = ln|sec x + tan x| makes the new integral harder; take dv = sec²x dx.' },
           { text: 'Save $\\sec x\\tan x$ and let $u = \\sec x$', mistake: 'trig-wrong-factor-saved', why: 'There is no tangent factor in the integrand to save.' },
-          { text: 'Odd power of secant, no tangent: integration by parts with $u = \\sec x$, $dv = \\sec^2 x\\,dx$' },
+          { text: 'Integration by parts with $u = \\sec x$, $dv = \\sec^2 x\\,dx$' },
         ],
         correct: 4,
         explanation: 'An odd power of secant alone needs parts: $dv = \\sec^2 x\\,dx$ has the simple antiderivative $v = \\tan x$.',
@@ -329,7 +329,7 @@ export const steps: StepProblem[] = [
           { latex: '\\sec x\\tan x - \\int \\sec^3 x\\,dx - \\int \\sec x\\,dx', expr: 'sec(x)*tan(x) - indefinite(sec(x)^3, x) - indefinite(sec(x), x)', mistake: 'tan-sec-identity-direction', why: 'tan²x = sec²x − 1; using sec²x + 1 flips the sign of the ∫sec x dx term.' },
           { latex: '\\sec x\\tan x + \\int \\sec^3 x\\,dx - \\int \\sec x\\,dx', expr: 'sec(x)*tan(x) + indefinite(sec(x)^3, x) - indefinite(sec(x), x)', mistake: 'pythagorean-wrong', why: 'tan²x was written as 1 − sec²x, which flips both terms.' },
           { latex: '\\sec x\\tan x - \\int \\sec^3 x\\,dx + \\int 1\\,dx', expr: 'sec(x)*tan(x) - indefinite(sec(x)^3, x) + indefinite(1, x)', mistake: 'algebra-error', why: 'sec x(sec²x − 1) = sec³x − sec x; the second term keeps its factor sec x.' },
-          { latex: '\\sec x\\tan x - \\int \\sec^2 x\\,dx + \\int \\sec x\\,dx', expr: 'sec(x)*tan(x) - indefinite(sec(x)^2, x) + indefinite(sec(x), x)', mistake: 'exponent-arithmetic', why: 'sec x·sec²x = sec³x, not sec²x.' },
+          { latex: '\\sec x\\tan x - \\int \\sec^2 x\\,dx - \\int \\sec x\\,dx', expr: 'sec(x)*tan(x) - indefinite(sec(x)^2, x) - indefinite(sec(x), x)', mistake: 'exponent-arithmetic', why: 'Two slips: sec x·sec²x = sec³x (not sec²x), and after the outer minus the ∫sec x dx term must be positive.' },
           { latex: '\\sec x\\tan x - \\int \\sec^3 x\\,dx + \\int \\sec x\\,dx', expr: 'sec(x)*tan(x) - indefinite(sec(x)^3, x) + indefinite(sec(x), x)' },
         ],
         correct: 4,
@@ -385,7 +385,7 @@ export const steps: StepProblem[] = [
           { text: 'Let $u = \\tan x$ and integrate $u^4$', mistake: 'u-choice-wrong', why: 'u = tan x needs du = sec²x dx, which is not in the integrand yet.' },
           { text: 'Write $\\tan^4 x = \\tan^2 x(\\sec^2 x + 1)$ and split', mistake: 'tan-sec-identity-direction', why: 'tan²x = sec²x − 1, not sec²x + 1.' },
           { text: 'Save $\\sec x\\tan x$ and let $u = \\sec x$', mistake: 'trig-wrong-factor-saved', why: 'There is no secant factor in the integrand to save.' },
-          { text: 'Only tangent: write $\\tan^4 x = \\tan^2 x(\\sec^2 x - 1)$ and split' },
+          { text: 'Write $\\tan^4 x = \\tan^2 x(\\sec^2 x - 1)$ and split' },
           { text: 'Integration by parts with $u = \\tan^3 x$, $dv = \\tan x\\,dx$', mistake: 'technique-wrong', why: 'v = −ln|cos x| makes the new integral harder, not easier.' },
         ],
         correct: 3,
@@ -397,7 +397,7 @@ export const steps: StepProblem[] = [
         options: [
           { latex: '\\int \\tan^2 x\\sec^2 x\\,dx + \\int \\tan^2 x\\,dx', expr: 'indefinite(tan(x)^2*sec(x)^2, x) + indefinite(tan(x)^2, x)', mistake: 'sign-error', why: 'tan²x(sec²x − 1) = tan²x sec²x − tan²x; the second piece is subtracted.' },
           { latex: '\\int \\tan^2 x\\sec^2 x\\,dx - \\int 1\\,dx', expr: 'indefinite(tan(x)^2*sec(x)^2, x) - indefinite(1, x)', mistake: 'algebra-error', why: 'tan²x multiplies both terms: the second piece is tan²x·1, not 1.' },
-          { latex: '\\int \\sec^2 x\\,dx - \\int \\tan^2 x\\,dx', expr: 'indefinite(sec(x)^2, x) - indefinite(tan(x)^2, x)', mistake: 'exponent-arithmetic', why: 'The factor tan²x was dropped from the first piece.' },
+          { latex: '\\int \\tan^2 x\\sec^2 x\\,dx + \\int 1\\,dx', expr: 'indefinite(tan(x)^2*sec(x)^2, x) + indefinite(1, x)', mistake: 'algebra-error', why: 'Two slips: the second piece is tan²x·1, not 1, and it is subtracted, not added.' },
           { latex: '\\int \\tan^2 x\\sec^2 x\\,dx - \\int \\tan^2 x\\,dx', expr: 'indefinite(tan(x)^2*sec(x)^2, x) - indefinite(tan(x)^2, x)' },
           { latex: '\\int \\tan x\\sec^2 x\\,dx - \\int \\tan x\\,dx', expr: 'indefinite(tan(x)*sec(x)^2, x) - indefinite(tan(x), x)', mistake: 'exponent-arithmetic', why: 'That split belongs to tan³x; for tan⁴x a factor tan²x stays in both pieces.' },
         ],
@@ -423,7 +423,7 @@ export const steps: StepProblem[] = [
       {
         prompt: 'Evaluate the second piece, $\\int \\tan^2 x\\,dx$.',
         options: [
-          { latex: '\\tan x + x + C', expr: 'tan(x) + x', mistake: 'tan-sec-identity-direction', why: 'tan²x = sec²x − 1, not sec²x + 1.' },
+          { latex: '\\sec x\\tan x + x + C', expr: 'sec(x)*tan(x) + x', mistake: 'trig-antiderivative-swapped', why: 'Two slips: ∫sec²x dx = tan x (sec x tan x is the derivative of sec x), and tan²x = sec²x − 1 makes the x-term negative.' },
           { latex: '\\frac{1}{3}\\tan^3 x + C', expr: 'tan(x)^3/3', mistake: 'u-choice-wrong', why: 'Power rule with u = tan x, but du = sec²x dx is not in this integrand.' },
           { latex: '\\sec x\\tan x - x + C', expr: 'sec(x)*tan(x) - x', mistake: 'trig-antiderivative-swapped', why: 'sec x tan x is d/dx(sec x); ∫sec²x dx = tan x.' },
           { latex: 'x - \\tan x + C', expr: 'x - tan(x)', mistake: 'pythagorean-wrong', why: 'tan²x was rewritten as 1 − sec²x; the identity is tan²x = sec²x − 1.' },
@@ -468,7 +468,7 @@ export const steps: StepProblem[] = [
         options: [
           { text: 'Save $\\sec^2 x$ and let $u = \\tan x$', mistake: 'trig-wrong-factor-saved', why: 'sec³x is odd: after saving sec²x, the leftover sec x needs a square root in terms of tan x.' },
           { text: 'Save $\\sec x\\tan x$ and let $u = \\sec x$', mistake: 'trig-wrong-factor-saved', why: 'tan⁴x is even: after saving one tan x, tan³x needs a square root in terms of sec x.' },
-          { text: 'Even tangent, odd secant: write $\\tan^4 x = (\\sec^2 x - 1)^2$ to get only odd powers of secant' },
+          { text: 'Write $\\tan^4 x = (\\sec^2 x - 1)^2$ to get only powers of secant' },
           { text: 'Write $\\tan^4 x = (\\sec^2 x + 1)^2$ to get only powers of secant', mistake: 'tan-sec-identity-direction', why: 'tan²x = sec²x − 1, not sec²x + 1.' },
           { text: 'Use the half-angle identities', mistake: 'technique-wrong', why: 'Half-angle identities reduce even powers of sine and cosine, not tangent and secant.' },
         ],
@@ -479,8 +479,8 @@ export const steps: StepProblem[] = [
       {
         prompt: 'Expand the integrand.',
         options: [
-          { latex: '\\int (\\sec^7 x - \\sec^3 x)\\,dx', expr: 'indefinite(sec(x)^7 - sec(x)^3, x)', mistake: 'algebra-error', why: '(a − 1)² = a² − 2a + 1; the middle term −2sec⁵x is missing.' },
-          { latex: '\\int (\\sec^7 x + 2\\sec^5 x + \\sec^3 x)\\,dx', expr: 'indefinite(sec(x)^7 + 2*sec(x)^5 + sec(x)^3, x)', mistake: 'tan-sec-identity-direction', why: 'tan²x = sec²x − 1, so the middle term is negative.' },
+          { latex: '\\int (\\sec^7 x - \\sec^3 x)\\,dx', expr: 'indefinite(sec(x)^7 - sec(x)^3, x)', mistake: 'algebra-error', why: '(sec²x − 1)² was squared term by term as sec⁴x − 1; it expands to sec⁴x − 2sec²x + 1.' },
+          { latex: '\\int (\\sec^7 x + 2\\sec^5 x - \\sec^3 x)\\,dx', expr: 'indefinite(sec(x)^7 + 2*sec(x)^5 - sec(x)^3, x)', mistake: 'tan-sec-identity-direction', why: 'Two slips: tan²x = sec²x − 1 makes the middle term negative, and a squared bracket ends in +1, so the last term is +sec³x.' },
           { latex: '\\int (\\sec^6 x - 2\\sec^4 x + \\sec^2 x)\\,dx', expr: 'indefinite(sec(x)^6 - 2*sec(x)^4 + sec(x)^2, x)', mistake: 'exponent-arithmetic', why: 'The bracket must be multiplied by sec³x; this multiplied by sec²x.' },
           { latex: '\\int (\\sec^7 x - 2\\sec^5 x - \\sec^3 x)\\,dx', expr: 'indefinite(sec(x)^7 - 2*sec(x)^5 - sec(x)^3, x)', mistake: 'sign-error', why: '(sec²x − 1)² ends in +1, so the last term is +sec³x.' },
           { latex: '\\int (\\sec^7 x - 2\\sec^5 x + \\sec^3 x)\\,dx', expr: 'indefinite(sec(x)^7 - 2*sec(x)^5 + sec(x)^3, x)' },
@@ -495,7 +495,7 @@ export const steps: StepProblem[] = [
         options: [
           { text: 'Substitute $u = \\sec x$ and integrate $u^5$', mistake: 'sec-odd-power-strategy', why: 'du = sec x tan x dx is not in the integrand; an odd power of secant alone needs parts.' },
           { text: 'Save $\\sec^2 x$ and let $u = \\tan x$', mistake: 'sec-odd-power-strategy', why: 'The leftover sec³x is odd and cannot be written in tan x without a square root.' },
-          { text: 'Integration by parts with $u = \\sec^3 x$, $dv = \\sec^2 x\\,dx$, then $\\tan^2 x = \\sec^2 x - 1$' },
+          { text: 'Integration by parts with $u = \\sec^3 x$, $dv = \\sec^2 x\\,dx$' },
           { text: 'Integration by parts with $u = \\sec^2 x$, $dv = \\sec^3 x\\,dx$', mistake: 'ibp-wrong-u-dv', why: 'dv = sec³x dx has no quick antiderivative; dv = sec²x dx integrates to tan x.' },
           { text: 'Save $\\sec x\\tan x$ and let $u = \\sec x$', mistake: 'sec-odd-power-strategy', why: 'After the rewrite there is no tangent factor left to save.' },
         ],
@@ -506,7 +506,7 @@ export const steps: StepProblem[] = [
       {
         prompt: 'The last piece is the standard result $\\int \\sec^3 x\\,dx =$',
         options: [
-          { latex: '\\sec x\\tan x + \\ln|\\sec x + \\tan x| + C', expr: 'sec(x)*tan(x) + log(abs(sec(x) + tan(x)))', mistake: 'ibp-cyclic-algebra', why: 'Solving 2∫sec³x dx = … requires dividing by 2.' },
+          { latex: '\\frac{1}{2}\\sec x\\tan x - \\frac{1}{2}\\ln|\\sec x| + C', expr: 'sec(x)*tan(x)/2 - log(abs(sec(x)))/2', mistake: 'sec-antiderivative-wrong', why: 'Two slips: ∫sec x dx = ln|sec x + tan x| (ln|sec x| is ∫tan x dx), and using tan²x = sec²x + 1 flipped the sign of that term.' },
           { latex: '\\frac{1}{2}\\sec x\\tan x - \\frac{1}{2}\\ln|\\sec x + \\tan x| + C', expr: 'sec(x)*tan(x)/2 - log(abs(sec(x) + tan(x)))/2', mistake: 'tan-sec-identity-direction', why: 'Inside the parts step tan²x = sec²x − 1; using sec²x + 1 flips the log term.' },
           { latex: '\\frac{1}{2}\\sec x\\tan x + \\frac{1}{2}\\ln|\\sec x| + C', expr: 'sec(x)*tan(x)/2 + log(abs(sec(x)))/2', mistake: 'sec-antiderivative-wrong', why: 'ln|sec x| is ∫tan x dx; ∫sec x dx = ln|sec x + tan x|.' },
           { latex: '\\frac{1}{4}\\sec^4 x + C', expr: 'sec(x)^4/4', mistake: 'sec-odd-power-strategy', why: 'The power rule on sec x ignores du = sec x tan x dx; odd powers of secant need parts.' },
@@ -537,7 +537,7 @@ export const steps: StepProblem[] = [
         options: [
           { text: 'Save one $\\cos 2t$ and let $u = \\sin 2t$', mistake: 'even-powers-no-identity', why: 'Saving cos 2t leaves cos³(2t), an odd power that needs a square root in terms of sin 2t.' },
           { text: 'Let $u = \\cos 2t$ and integrate $u^4$', mistake: 'u-choice-wrong', why: 'u = cos 2t needs du = −2 sin 2t dt, which is not in the integrand.' },
-          { text: 'Only an even power of cosine: use the half-angle identity' },
+          { text: 'Use $\\cos^2\\theta = \\frac{1 + \\cos 2\\theta}{2}$ and expand' },
           { text: 'Write $\\cos^4(2t) = (1 - \\sin^2 2t)^2$ and let $u = \\sin 2t$', mistake: 'even-powers-no-identity', why: 'No cos 2t dt is left over to form du = 2cos 2t dt.' },
           { text: 'Use $\\cos^2\\theta = \\frac{1 - \\cos 2\\theta}{2}$ and expand', mistake: 'half-angle-wrong', why: 'cos²θ = (1 + cos 2θ)/2; the minus sign belongs to sin²θ.' },
         ],
@@ -565,7 +565,7 @@ export const steps: StepProblem[] = [
         options: [
           { latex: '\\frac{1}{4} + \\frac{1}{4}\\cos^2 4t', expr: '1/4 + cos(4*t)^2/4', mistake: 'algebra-error', why: '(1 + a)² = 1 + 2a + a²; the middle term 2cos 4t is missing.' },
           { latex: '\\frac{3}{8} + \\frac{1}{2}\\cos 4t - \\frac{1}{8}\\cos 8t', expr: '3/8 + cos(4*t)/2 - cos(8*t)/8', mistake: 'half-angle-wrong', why: 'cos²4t = (1 + cos 8t)/2; the sine identity was used.' },
-          { latex: '\\frac{3}{8} + \\frac{5}{8}\\cos 4t', expr: '3/8 + 5*cos(4*t)/8', mistake: 'half-angle-wrong', why: 'Reducing cos²(4t) must double the angle to 8t, not keep 4t.' },
+          { latex: '\\frac{1}{4} + \\frac{1}{2}\\cos 4t - \\frac{1}{8}\\cos 8t', expr: '1/4 + cos(4*t)/2 - cos(8*t)/8', mistake: 'half-angle-wrong', why: 'Two slips: cos²4t was reduced with the sine identity (1 − cos 8t)/2, and its constant 1/8 was dropped.' },
           { latex: '\\frac{1}{4} + \\frac{1}{2}\\cos 4t + \\frac{1}{8}\\cos 8t', expr: '1/4 + cos(4*t)/2 + cos(8*t)/8', mistake: 'algebra-error', why: '¼cos²4t = ⅛ + ⅛cos 8t; the constant ⅛ was dropped.' },
           { latex: '\\frac{3}{8} + \\frac{1}{2}\\cos 4t + \\frac{1}{8}\\cos 8t', expr: '3/8 + cos(4*t)/2 + cos(8*t)/8' },
         ],
@@ -578,10 +578,10 @@ export const steps: StepProblem[] = [
       {
         prompt: 'Integrate from $0$ to $\\pi$.',
         options: [
-          { latex: '-\\frac{3\\pi}{8}', expr: '-3*pi/8', mistake: 'ftc-order-swapped', why: 'Computed F(0) − F(π); a positive integrand cannot give a negative integral.' },
-          { latex: '\\frac{3\\pi}{16}', expr: '3*pi/16', mistake: 'inner-constant-factor-missing', why: 'The constant term integrates to 3t/8; a 1/k factor only comes from integrating cos(kt).' },
-          { latex: '\\frac{3}{8}', expr: '3/8', mistake: 'power-rule-int-exponent', why: '∫(3/8)dt = 3t/8, which is 3π/8 at t = π; the constant was not integrated.' },
-          { latex: '\\frac{3\\pi}{4}', expr: '3*pi/4', mistake: 'inner-constant-factor-missing', why: 'The constant term was multiplied by the inner 2; only the cosine terms pick up factors, and they vanish here.' },
+          { latex: '-\\frac{3\\pi}{16}', expr: '-3*pi/16', mistake: 'ftc-order-swapped', why: 'Two slips: F(0) − F(π) was computed, and the constant 3/8 was divided by the inner 2.' },
+          { latex: '\\frac{3\\pi}{16}', expr: '3*pi/16', mistake: 'coefficient-mishandled', why: 'The constant term integrates to 3t/8; a 1/k factor only comes from integrating cos(kt).' },
+          { latex: '\\frac{3}{8}', expr: '3/8', mistake: 'constant-not-integrated', why: 'The average value 3/8 was not multiplied by the interval length π: ∫₀^π (3/8)dt = 3π/8.' },
+          { latex: '\\frac{3\\pi}{4}', expr: '3*pi/4', mistake: 'coefficient-mishandled', why: 'The constant term was multiplied by the inner 2; only the cosine terms pick up factors, and they vanish here.' },
           { latex: '\\frac{3\\pi}{8}', expr: '3*pi/8' },
         ],
         correct: 4,
@@ -610,10 +610,10 @@ export const steps: StepProblem[] = [
         prompt: 'Which strategy fits this integral?',
         options: [
           { text: 'Save one $\\cos 2t$ and let $u = \\sin 2t$', mistake: 'trig-wrong-factor-saved', why: 'The cosine power is even: after saving cos 2t, a single cos 2t remains and needs a square root.' },
-          { text: 'The sine power is odd: save one $\\sin 2t$ and let $u = \\cos 2t$' },
+          { text: 'Save one $\\sin 2t$ and let $u = \\cos 2t$' },
           { text: 'Save one $\\sin 2t$ and let $u = \\sin 2t$', mistake: 'trig-wrong-factor-saved', why: 'u = sin 2t needs du = 2cos 2t dt; the saved sin 2t dt does not match.' },
           { text: 'Use the half-angle identities', mistake: 'technique-wrong', why: 'Half-angle identities are for both powers even; the odd sine power gives a direct substitution.' },
-          { text: 'Save one $\\sin 2t$ and let $u = \\cos t$', mistake: 'u-choice-wrong', why: 'u must use the same angle: d(cos t) = −sin t dt does not match sin 2t dt.' },
+          { text: 'Save one $\\sin 2t$ and let $u = \\cos t$', mistake: 'angle-mismatch', why: 'u must use the same angle: d(cos t) = −sin t dt does not match sin 2t dt.' },
         ],
         correct: 1,
         explanation: 'The sine power 5 is odd: save $\\sin 2t\\,dt$ and write $\\sin^4 2t$ in terms of $\\cos 2t$.',
@@ -637,10 +637,10 @@ export const steps: StepProblem[] = [
       {
         prompt: 'With $u = \\cos 2t$, what is $du$?',
         options: [
-          { latex: 'du = -\\sin 2t\\,dt', expr: '-sin(2*t)*dt', mistake: 'inner-constant-factor-missing', why: 'The chain rule brings down the inner 2: du = −2 sin 2t dt.' },
+          { latex: 'du = -\\sin 2t\\,dt', expr: '-sin(2*t)*dt', mistake: 'chain-rule-missing', why: 'The chain rule brings down the inner 2: du = −2 sin 2t dt.' },
           { latex: 'du = 2\\sin 2t\\,dt', expr: '2*sin(2*t)*dt', mistake: 'u-cos-sign-missing', why: 'd/dt cos 2t = −2 sin 2t; the minus sign was dropped.' },
-          { latex: 'du = -2\\cos 2t\\,dt', expr: '-2*cos(2*t)*dt', mistake: 'du-derivative-wrong', why: 'Cosine differentiates to −sine, not to cosine.' },
-          { latex: 'du = -\\frac{1}{2}\\sin 2t\\,dt', expr: '-sin(2*t)*dt/2', mistake: 'inner-constant-factor-missing', why: 'The chain rule multiplies by the inner 2; it does not divide.' },
+          { latex: 'du = -\\cos 2t\\,dt', expr: '-cos(2*t)*dt', mistake: 'du-derivative-wrong', why: 'Two slips: cos 2t differentiates to −2 sin 2t (a sine, not a cosine), and the chain-rule factor 2 is missing.' },
+          { latex: 'du = -\\frac{1}{2}\\sin 2t\\,dt', expr: '-sin(2*t)*dt/2', mistake: 'du-constant-wrong', why: 'The chain rule multiplies by the inner 2; it does not divide.' },
           { latex: 'du = -2\\sin 2t\\,dt', expr: '-2*sin(2*t)*dt' },
         ],
         correct: 4,
@@ -669,9 +669,9 @@ export const steps: StepProblem[] = [
         prompt: 'Integrate and substitute back.',
         options: [
           { latex: '\\frac{1}{6}\\cos^3 2t - \\frac{1}{5}\\cos^5 2t + \\frac{1}{14}\\cos^7 2t + C', expr: 'cos(2*t)^3/6 - cos(2*t)^5/5 + cos(2*t)^7/14', mistake: 'sign-error', why: 'The −½ in front multiplies every term, so the u³ term is negative.' },
-          { latex: '-\\frac{1}{6}\\cos^3 t + \\frac{1}{5}\\cos^5 t - \\frac{1}{14}\\cos^7 t + C', expr: '-cos(t)^3/6 + cos(t)^5/5 - cos(t)^7/14', mistake: 'back-substitution-wrong', why: 'u = cos 2t; the angle must stay 2t.' },
+          { latex: '-\\frac{1}{3}\\cos^3 t + \\frac{2}{5}\\cos^5 t - \\frac{1}{7}\\cos^7 t + C', expr: '-cos(t)^3/3 + 2*cos(t)^5/5 - cos(t)^7/7', mistake: 'back-substitution-wrong', why: 'Two slips: the angle 2t became t when substituting back, and the 1/2 in front of the integral was dropped.' },
           { latex: '-\\frac{1}{3}\\cos^3 2t + \\frac{2}{5}\\cos^5 2t - \\frac{1}{7}\\cos^7 2t + C', expr: '-cos(2*t)^3/3 + 2*cos(2*t)^5/5 - cos(2*t)^7/7', mistake: 'coefficient-mishandled', why: 'The 1/2 in front of the integral was dropped while integrating.' },
-          { latex: '-\\frac{1}{6}\\cos^3 2t + \\frac{1}{14}\\cos^7 2t + C', expr: '-cos(2*t)^3/6 + cos(2*t)^7/14', mistake: 'algebra-error', why: '(1 − u²)² = 1 − 2u² + u⁴; the −2u⁴ term was lost.' },
+          { latex: '-\\frac{1}{6}\\cos^3 2t + \\frac{1}{14}\\cos^7 2t + C', expr: '-cos(2*t)^3/6 + cos(2*t)^7/14', mistake: 'algebra-error', why: '(1 − u²)² was squared term by term as 1 − u⁴, giving −½(u³/3 − u⁷/7).' },
           { latex: '-\\frac{1}{6}\\cos^3 2t + \\frac{1}{5}\\cos^5 2t - \\frac{1}{14}\\cos^7 2t + C', expr: '-cos(2*t)^3/6 + cos(2*t)^5/5 - cos(2*t)^7/14' },
         ],
         correct: 4,
@@ -703,7 +703,7 @@ export const steps: StepProblem[] = [
           { latex: '\\cos 10t = 2\\cos^2 5t + 1', expr: '2*cos(5*t)^2 + 1', mistake: 'double-angle-wrong', why: 'cos 2θ = 2cos²θ − 1; the constant is subtracted.' },
           { latex: '\\cos 10t = 2\\sin 5t\\cos 5t', expr: '2*sin(5*t)*cos(5*t)', mistake: 'double-angle-wrong', why: '2 sin θ cos θ is sin 2θ, i.e. sin 10t.' },
           { latex: '\\cos 10t = 2\\cos^2 5t - 1', expr: '2*cos(5*t)^2 - 1' },
-          { latex: '\\cos 10t = 2\\cos 5t', expr: '2*cos(5*t)', mistake: 'double-angle-wrong', why: 'Cosine is not linear: cos 10t ≠ 2cos 5t.' },
+          { latex: '\\cos 10t = 1 - 2\\cos 5t', expr: '1 - 2*cos(5*t)', mistake: 'double-angle-wrong', why: 'Two slips: the sign is reversed (cos 2θ = 2cos²θ − 1), and the square on cos 5t was dropped.' },
         ],
         correct: 3,
         explanation: '$\\cos 2\\theta = 2\\cos^2\\theta - 1$ with $\\theta = 5t$; the integrand becomes $2\\cos^3 5t - \\cos 5t$.',
@@ -713,11 +713,11 @@ export const steps: StepProblem[] = [
       {
         prompt: 'How do you integrate $2\\cos^3 5t$?',
         options: [
-          { text: 'Save one $\\sin 5t$ and let $u = \\cos 5t$', mistake: 'trig-wrong-factor-saved', why: 'There is no sine factor to save.' },
+          { text: 'Save one $\\sin 5t$ and let $u = \\cos 5t$, with $du = -5\\sin 5t\\,dt$', mistake: 'trig-wrong-factor-saved', why: 'There is no sine factor in the integrand to save.' },
           { text: 'Let $u = \\cos 5t$ and integrate $u^3$', mistake: 'u-choice-wrong', why: 'u = cos 5t needs du = −5 sin 5t dt, which is not in the integrand.' },
           { text: 'Use $\\cos^2 5t = \\frac{1 + \\cos 10t}{2}$', mistake: 'technique-wrong', why: 'That recreates the product cos 5t cos 10t we started from; the odd power allows a substitution.' },
-          { text: 'Save one $\\cos 5t$ and let $u = \\sin 5t$, with $du = \\cos 5t\\,dt$', mistake: 'inner-constant-factor-missing', why: 'd/dt sin 5t = 5cos 5t, so du = 5cos 5t dt.' },
-          { text: 'Odd power of cosine: save one $\\cos 5t$ and let $u = \\sin 5t$, with $du = 5\\cos 5t\\,dt$' },
+          { text: 'Save one $\\cos 5t$ and let $u = \\sin 5t$, with $du = \\cos 5t\\,dt$', mistake: 'du-constant-wrong', why: 'd/dt sin 5t = 5cos 5t, so du = 5cos 5t dt.' },
+          { text: 'Save one $\\cos 5t$ and let $u = \\sin 5t$, with $du = 5\\cos 5t\\,dt$' },
         ],
         correct: 4,
         explanation: 'The cosine power 3 is odd: $\\cos^2 5t = 1 - u^2$ and $\\cos 5t\\,dt = \\frac{1}{5}\\,du$.',

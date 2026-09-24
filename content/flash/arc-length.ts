@@ -231,23 +231,23 @@ export const flash: FlashItem[] = [
     options: [
       { text: 'Here $2x \\in [\\frac{\\pi}{4}, \\frac{\\pi}{3}]$, so $\\sin 2x > 0$ and therefore $|\\csc 2x| = \\csc 2x$.' },
       {
-        text: 'Because $\\sqrt{u^2} = u$ for every real number $u$, so the root and the square cancel.',
+        text: 'Because $\\sqrt{u^2} = u$, so here the root and the square simply cancel each other.',
         mistake: 'sqrt-square-abs',
         why: '√(u²) = |u|, not u; the sign of csc 2x on the interval still has to be checked.',
       },
       {
-        text: 'On $[\\frac{\\pi}{8}, \\frac{\\pi}{6}]$, $x$ is positive, so every expression in $x$ is positive there.',
-        mistake: 'theta-interval-sign',
-        why: 'What matters is the sign of csc 2x itself, not of x; plenty of functions are negative for positive x.',
+        text: 'On $[\\frac{\\pi}{8}, \\frac{\\pi}{6}]$, $x$ is positive, so $\\csc 2x$ is positive there as well.',
+        mistake: 'abs-sign-on-interval',
+        why: 'The sign of csc 2x is the sign of sin 2x; knowing that x > 0 says nothing about it.',
       },
       {
-        text: 'Since $\\csc^2(2x) = 1 + \\cot^2(2x) \\ge 1$, its square root is $\\csc 2x$ on any interval.',
+        text: 'Since $\\csc^2(2x) = 1 + \\cot^2(2x) \\ge 1$ here, its square root must be $\\csc 2x$.',
         mistake: 'sqrt-square-abs',
         why: 'That only shows the radicand is at least 1; the root is still |csc 2x|, which equals −csc 2x where sin 2x < 0.',
       },
       {
         text: 'On $[\\frac{\\pi}{8}, \\frac{\\pi}{6}]$, $\\cos 2x > 0$, so $|\\csc 2x| = \\csc 2x$ there.',
-        mistake: 'theta-interval-sign',
+        mistake: 'abs-sign-on-interval',
         why: 'csc 2x = 1/sin 2x, so its sign is the sign of sin 2x; the sign of cos 2x is irrelevant.',
       },
     ],
@@ -264,24 +264,24 @@ export const flash: FlashItem[] = [
     options: [
       { text: 'Either one gives the same length; choose the one with the simpler derivative and integrand.' },
       {
-        text: 'Always $y = f(x)$: an arc-length integral must be taken with respect to $x$.',
+        text: 'Use $y = f(x)$ unless the curve fails the vertical-line test, then switch to $x = g(y)$.',
         mistake: 'arclength-variable-mismatch',
-        why: 'Theorem 5.2 integrates with respect to y; both variables are allowed.',
+        why: 'Passing the vertical-line test only says y = f(x) is possible; the choice depends on which derivative and integrand are simpler.',
       },
       {
-        text: 'The one whose interval of integration is shorter, since that gives the smaller, correct length.',
+        text: 'Use whichever variable has the shorter interval of integration, since both give the same length.',
         mistake: 'method-choice-poor',
-        why: 'Both integrals give the same length of the same curve; only the difficulty of the integral changes.',
+        why: 'The lengths agree, but the width of the interval says nothing about how hard the integral is; compare the derivatives.',
       },
       {
-        text: 'Either one, but they give different lengths, so the $x$-version is the official answer.',
+        text: 'Use the form in which the curve was given, since rewriting it would change the length.',
         mistake: 'arclength-variable-mismatch',
-        why: 'Both describe the same curve, so the two integrals are equal; neither is more official.',
+        why: 'Rewriting y = f(x) as x = g(y) describes the same curve, so the length does not change.',
       },
       {
-        text: 'Always $x = g(y)$, because integrals in $y$ never contain a square root.',
-        mistake: 'technique-wrong',
-        why: 'The dy formula has the same √(1 + (g′)²) structure; choose by which derivative is simpler.',
+        text: 'Use $y = f(x)$ when $f$ is increasing and $x = g(y)$ when $f$ is decreasing.',
+        mistake: 'method-choice-poor',
+        why: 'Whether f increases or decreases does not decide the variable; the simpler derivative and integrand do.',
       },
     ],
     correct: 0,
@@ -887,7 +887,7 @@ export const flash: FlashItem[] = [
       {
         latex: '\\int_0^{\\pi/3} (-\\sec x)\\,dx',
         expr: 'integral(-sec(x), x, 0, pi/3)',
-        mistake: 'theta-interval-sign',
+        mistake: 'abs-sign-on-interval',
         why: '√(sec²x) = |sec x|, and sec x > 0 on [0, π/3]; a length cannot come out negative.',
       },
       {
@@ -1017,7 +1017,7 @@ export const flash: FlashItem[] = [
         latex: '\\int_1^2 \\left(\\frac{x^3}{6} + \\frac{1}{2x}\\right)dx',
         expr: 'integral(x^3/6 + 1/(2*x), x, 1, 2)',
         mistake: 'arclength-f-instead-of-fprime',
-        why: 'The perfect square is built from f′ = x²/2 − 1/(2x²) with its middle sign flipped, not from f itself.',
+        why: 'This integrates f(x) itself; the simplified root is x²/2 + 1/(2x²), which comes from f′, not from f.',
       },
       {
         latex: '\\int_1^2 \\left(\\frac{x^2}{2} + \\frac{1}{2x}\\right)dx',
@@ -1135,14 +1135,14 @@ export const flash: FlashItem[] = [
       {
         latex: '\\left(1 + \\frac{\\sqrt{y}}{2} - \\frac{1}{2\\sqrt{y}}\\right)^2',
         expr: '(1 + sqrt(y)/2 - 1/(2*sqrt(y)))^2',
-        mistake: 'algebra-error',
+        mistake: 'radicand-as-binomial-square',
         why: '1 + (g′)² is not (1 + g′)²; squaring 1 + g′ creates an extra cross term 2g′.',
       },
       {
-        latex: '\\left(\\frac{3\\sqrt{y}}{2} + \\frac{1}{2\\sqrt{y}}\\right)^2',
-        expr: '(3*sqrt(y)/2 + 1/(2*sqrt(y)))^2',
-        mistake: 'coefficient-mishandled',
-        why: 'The ⅓ in front of y^{3/2} was dropped, so g′ started with (3/2)√y instead of ⅓·(3/2)√y = ½√y.',
+        latex: '\\left(\\frac{y}{2} + \\frac{1}{2y}\\right)^2',
+        expr: '(y/2 + 1/(2*y))^2',
+        mistake: 'formula-wrong-power',
+        why: 'The two terms must square to y/4 and 1/(4y), so they are √y/2 and 1/(2√y); y/2 squares to y²/4.',
       },
       {
         latex: '\\left(\\frac{1}{3}y^{3/2} + y^{1/2}\\right)^2',
@@ -1174,7 +1174,7 @@ export const flash: FlashItem[] = [
       {
         latex: '\\left(1 + \\frac{x}{2} - \\frac{1}{2x}\\right)^2',
         expr: '(1 + x/2 - 1/(2*x))^2',
-        mistake: 'algebra-error',
+        mistake: 'radicand-as-binomial-square',
         why: '1 + (f′)² is not (1 + f′)²; squaring 1 + f′ creates an extra cross term 2f′.',
       },
       {
@@ -1217,7 +1217,7 @@ export const flash: FlashItem[] = [
       {
         latex: '\\left(1 + \\frac{x^2}{2} - \\frac{1}{2x^2}\\right)^2',
         expr: '(1 + x^2/2 - 1/(2*x^2))^2',
-        mistake: 'algebra-error',
+        mistake: 'radicand-as-binomial-square',
         why: '1 + (f′)² is not (1 + f′)²; squaring 1 + f′ creates an extra cross term 2f′.',
       },
       {
@@ -1613,7 +1613,7 @@ export const flash: FlashItem[] = [
     prompt: { text: 'Arc length of $y = \\sqrt{1 - x^2}$ for $0 \\le x \\le \\frac{1}{2}$:', latex: '\\int_0^{1/2} \\sqrt{1 + \\frac{x^2}{1 - x^2}}\\,dx' },
     options: [
       { latex: '\\frac{\\pi}{6}', expr: 'pi/6' },
-      { latex: '\\frac{\\pi}{3}', expr: 'pi/3', mistake: 'inverse-trig-confused', why: 'arcsin(½) = π/6; π/3 is arccos(½).' },
+      { latex: '\\frac{\\pi}{3}', expr: 'pi/3', mistake: 'inverse-trig-value-wrong', why: 'arcsin(½) = π/6; π/3 is arccos(½).' },
       { latex: '1 - \\frac{\\sqrt{3}}{2}', expr: '1 - sqrt(3)/2', mistake: 'arclength-missing-one', why: 'Dropping the 1 leaves ∫x/√(1 − x²)dx = 1 − √3/2, only the vertical change.' },
       { latex: '\\frac{3 - \\sqrt{3}}{2}', expr: '(3 - sqrt(3))/2', mistake: 'sqrt-of-sum-split', why: 'Splitting the root as 1 + x/√(1 − x²) adds ½ to 1 − √3/2.' },
       { latex: '\\arctan\\frac{1}{2}', expr: 'arctan(1/2)', mistake: 'inverse-trig-confused', why: '1/√(1 − x²) integrates to arcsin x; arctan x goes with 1/(1 + x²).' },

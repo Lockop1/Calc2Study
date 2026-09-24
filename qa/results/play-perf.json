@@ -1,0 +1,91 @@
+{
+  "name": "perf",
+  "startedAt": "2026-09-24T16:15:53.481Z",
+  "checks": [
+    {
+      "name": "[CPU ×1] tap → feedback p95 < 200ms (40 samples)",
+      "ok": true,
+      "detail": "DOM p50 12.7 p95 20.5; next frame p50 32 p95 33.8 max 50 ms"
+    },
+    {
+      "name": "[CPU ×1] Next → next question p95 < 200ms (38 samples)",
+      "ok": true,
+      "detail": "DOM p50 16 p95 27.2; next frame p50 31.7 p95 41.8 max 122.5 ms"
+    },
+    {
+      "name": "[CPU ×4] tap → feedback p95 < 200ms (40 samples)",
+      "ok": true,
+      "detail": "DOM p50 60 p95 97.8; next frame p50 82 p95 146.5 max 152.1 ms"
+    },
+    {
+      "name": "[CPU ×4] Next → next question p95 < 200ms (38 samples)",
+      "ok": true,
+      "detail": "DOM p50 82.8 p95 147.6; next frame p50 98.9 p95 172.3 max 221 ms"
+    },
+    {
+      "name": "one tap on Next advances",
+      "ok": true,
+      "detail": "76/76 ok"
+    }
+  ],
+  "metrics": {
+    "cpu×1": {
+      "tapToFeedbackDom": {
+        "n": 40,
+        "p50": 12.7,
+        "p95": 20.5,
+        "max": 39.2
+      },
+      "tapToFeedbackNextFrame": {
+        "n": 40,
+        "p50": 32,
+        "p95": 33.8,
+        "max": 50
+      },
+      "nextToQuestionDom": {
+        "n": 38,
+        "p50": 16,
+        "p95": 27.2,
+        "max": 28.5
+      },
+      "nextToQuestionNextFrame": {
+        "n": 38,
+        "p50": 31.7,
+        "p95": 41.8,
+        "max": 122.5
+      }
+    },
+    "cpu×4": {
+      "tapToFeedbackDom": {
+        "n": 40,
+        "p50": 60,
+        "p95": 97.8,
+        "max": 120.9
+      },
+      "tapToFeedbackNextFrame": {
+        "n": 40,
+        "p50": 82,
+        "p95": 146.5,
+        "max": 152.1
+      },
+      "nextToQuestionDom": {
+        "n": 38,
+        "p50": 82.8,
+        "p95": 147.6,
+        "max": 195.8
+      },
+      "nextToQuestionNextFrame": {
+        "n": 38,
+        "p50": 98.9,
+        "p95": 172.3,
+        "max": 221
+      }
+    },
+    "coldStart": {
+      "goToHomeMs": 325,
+      "domContentLoaded": 243,
+      "load": 243
+    }
+  },
+  "seconds": 106
+}
