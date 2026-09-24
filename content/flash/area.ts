@@ -119,7 +119,7 @@ export const flash: FlashItem[] = [
       },
       {
         text: 'The area of the whole region between the two curves',
-        mistake: 'formula-swapped',
+        mistake: 'integrand-vs-integral',
         why: 'The area is the integral of these lengths; the integrand itself is the length of one segment (integrating lengths produces areas).',
       },
     ],
@@ -180,7 +180,7 @@ export const flash: FlashItem[] = [
         why: 'The single integral really equals $0$; only splitting at $x = 0$, where the top curve changes, gives $\\tfrac12$.',
       },
       {
-        text: 'It is a signed total: $x - x^3 < 0$ on $(-1, 0)$, so that piece cancels the piece on $(0, 1)$; split at $x = 0$',
+        text: 'It is a signed total: $x - x^3 < 0$ on $(-1, 0)$, so that piece cancels the piece on $(0, 1)$',
       },
       {
         text: 'Swapping the order to $\\int_{-1}^{1}(x^3 - x)\\,dx$ gives the area',
@@ -218,7 +218,7 @@ export const flash: FlashItem[] = [
       },
       {
         text: 'The integral must be split at $x = 0$, where $y = x^2$ touches the $x$-axis',
-        mistake: 'signed-area-confusion',
+        mistake: 'split-at-wrong-point',
         why: 'Splits happen where the two curves cross each other, not where one curve meets the $x$-axis.',
       },
       {
@@ -227,7 +227,7 @@ export const flash: FlashItem[] = [
         why: 'The integral as written really is $-\\tfrac92$; the error is in the setup (bottom − top), not in the arithmetic.',
       },
       {
-        text: 'The integrand is bottom − top: at $x = 0$ the line ($2$) is above the parabola ($0$), so the area is $\\tfrac92$',
+        text: 'The integrand is bottom − top; with $y = x + 2$ on top, the area is $\\tfrac92$',
       },
     ],
     correct: 4,
@@ -247,7 +247,7 @@ export const flash: FlashItem[] = [
         why: 'The shape alone does not decide: for $y = x^2$ and $y = 2x$ the $dx$ setup is one short integral.',
       },
       {
-        text: 'When every horizontal segment runs between the same two curves, but vertical segments would need different formulas in different parts',
+        text: 'When the left and right boundaries stay the same but the top or bottom boundary changes',
       },
       {
         text: 'Only when the problem says to integrate with respect to $y$',
@@ -294,7 +294,7 @@ export const flash: FlashItem[] = [
         why: 'Dividing by $x$ discards the solution $x = 0$ (for example, $x^2 = 2x$ loses the origin).',
       },
       {
-        text: 'Solve $f(x) = g(x)$; the smallest and largest solutions are the limits, and any solutions between them are split points',
+        text: 'Solve $f(x) = g(x)$; the smallest and largest solutions are the limits, and solutions between them are possible split points',
       },
       {
         text: 'Solve $f(x) = g(x)$; the smallest and largest solutions are the limits, and one integral always covers everything between them',
@@ -316,11 +316,11 @@ export const flash: FlashItem[] = [
     },
     options: [
       {
-        text: 'Evaluate both functions at one point strictly between $a$ and $c$; the larger value marks the top curve on all of $(a, c)$',
+        text: 'Evaluate both functions at one point between $a$ and $c$; the larger value marks the top curve there',
       },
       {
         text: 'Evaluate both functions at $x = a$; the larger value marks the top curve',
-        mistake: 'top-bottom-swapped',
+        mistake: 'test-point-outside-interval',
         why: 'At an intersection point both functions are equal, so this test decides nothing; use a point strictly inside $(a, c)$.',
       },
       {
@@ -353,9 +353,9 @@ export const flash: FlashItem[] = [
     },
     options: [
       {
-        latex: '-\\int_a^b \\left(f(x) - g(x)\\right)dx',
-        mistake: 'signed-area-confusion',
-        why: 'The extra minus sign is only for a single curve below the axis; $f(x) - g(x)$ is already a positive length.',
+        latex: '-\\int_a^b f(x)\\,dx',
+        mistake: 'single-function-area',
+        why: 'This is the area between the upper curve $y = f(x)$ and the $x$-axis, not the gap between the two curves.',
       },
       {
         latex: '\\int_a^b \\left(g(x) - f(x)\\right)dx',
@@ -400,10 +400,10 @@ export const flash: FlashItem[] = [
         why: '$4$ is the $y$-coordinate of the intersection point $(2, 4)$; the $x$-limits are $0$ and $2$.',
       },
       {
-        latex: '\\int_0^2 2x\\,dx',
-        expr: 'integral(2*x, x, 0, 2)',
-        mistake: 'single-function-area',
-        why: 'This is the area under the line only; the parabola is the lower boundary and must be subtracted.',
+        latex: '\\int_0^4 (x^2 - 2x)\\,dx',
+        expr: 'integral(x^2 - 2*x, x, 0, 4)',
+        mistake: 'bounds-wrong-variable',
+        why: 'Two slips: $4$ is the $y$-coordinate of $(2, 4)$, not an $x$-limit, and $x^2 - 2x$ is bottom − top.',
       },
       { latex: '\\int_0^2 (2x - x^2)\\,dx', expr: 'integral(2*x - x^2, x, 0, 2)' },
       {
@@ -530,10 +530,10 @@ export const flash: FlashItem[] = [
       },
       { latex: '\\int_0^1 \\left(\\sqrt{x} - x^3\\right)dx', expr: 'integral(sqrt(x) - x^3, x, 0, 1)' },
       {
-        latex: '\\int_0^1 \\sqrt{x}\\,dx',
-        expr: 'integral(sqrt(x), x, 0, 1)',
-        mistake: 'single-function-area',
-        why: 'This is the area under $y = \\sqrt{x}$ only; the lower curve $y = x^3$ is ignored.',
+        latex: '\\int_0^1 \\left(\\sqrt{y} - \\sqrt[3]{y}\\right)dy',
+        expr: 'integral(sqrt(y) - nthRoot(y, 3), y, 0, 1)',
+        mistake: 'inverse-function-wrong',
+        why: 'Two slips: $y = \\sqrt{x}$ was inverted as $x = \\sqrt{y}$ instead of $x = y^2$, and the integrand is left − right.',
       },
       {
         latex: '\\int_0^1 \\left(y^2 - \\sqrt[3]{y}\\right)dy',
@@ -878,10 +878,10 @@ export const flash: FlashItem[] = [
         why: 'Solving $y = \\sqrt{x}$ for $x$ gives $x = y^2$, not $x = \\sqrt{y}$.',
       },
       {
-        latex: '\\int_0^2 \\sqrt{x}\\,dx',
-        expr: 'integral(sqrt(x), x, 0, 2)',
-        mistake: 'top-bottom-not-split',
-        why: '$y = \\sqrt{x}$ is the top boundary only for $0 \\le x \\le 1$; after that the top is $y = 2 - x$.',
+        latex: '\\int_0^2 (y^2 + y - 2)\\,dy',
+        expr: 'integral(y^2 + y - 2, y, 0, 2)',
+        mistake: 'bounds-wrong-variable',
+        why: 'Two slips: $0$ to $2$ is the $x$-extent of the region, not its $y$-range, and $y^2 + y - 2$ is left − right.',
       },
       {
         latex: '\\int_0^2 (2 - y - y^2)\\,dy',
@@ -928,10 +928,10 @@ export const flash: FlashItem[] = [
         why: '$y^2 - y - 2 = (y - 2)(y + 1)$, so the curves meet at $y = -1$ and $y = 2$.',
       },
       {
-        latex: '\\int_{0}^{2} (y + 2 - y^2)\\,dy',
-        expr: 'integral(y + 2 - y^2, y, 0, 2)',
-        mistake: 'missing-intersection',
-        why: 'The region also extends below the $x$-axis, down to the intersection at $y = -1$.',
+        latex: '\\int_{-2}^{1} (y^2 - y - 2)\\,dy',
+        expr: 'integral(y^2 - y - 2, y, -2, 1)',
+        mistake: 'sign-error',
+        why: 'Two slips: the roots of $y^2 - y - 2$ were flipped to $-2$ and $1$, and $y^2 - y - 2$ is left − right.',
       },
       {
         latex: '\\int_{0}^{4} \\left(\\sqrt{x} - x + 2\\right)dx',
@@ -965,10 +965,10 @@ export const flash: FlashItem[] = [
       },
       { latex: '\\int_{-2}^{2} (4 - x^2)\\,dx', expr: 'integral(4 - x^2, x, -2, 2)' },
       {
-        latex: '\\int_{0}^{4} (4 - x^2)\\,dx',
-        expr: 'integral(4 - x^2, x, 0, 4)',
-        mistake: 'bounds-wrong-variable',
-        why: '$0$ to $4$ is the $y$-range of the region; the $x$-limits are $x = \\pm 2$.',
+        latex: '\\int_{0}^{2} (x^2 - 4)\\,dx',
+        expr: 'integral(x^2 - 4, x, 0, 2)',
+        mistake: 'top-bottom-swapped',
+        why: 'Two slips: $x^2 - 4$ is bottom − top, and $x = -2$ was dropped, so only half of the region is covered.',
       },
       {
         latex: '\\int_{0}^{4} \\sqrt{y}\\,dy',
@@ -993,7 +993,7 @@ export const flash: FlashItem[] = [
     topic: 'area',
     kind: 'concept',
     prompt: {
-      text: 'The curves $y = \\sin x$ and $y = \\frac{2x}{\\pi}$ meet at $x = 0$ and $x = \\frac{\\pi}{2}$. Which integral gives the area of the region they enclose between these points?',
+      text: 'On $\\left[0, \\frac{\\pi}{2}\\right]$ the curves $y = \\sin x$ and $y = \\frac{2x}{\\pi}$ meet only at $x = 0$ and $x = \\frac{\\pi}{2}$. Which integral gives the area of the region between them on this interval?',
     },
     options: [
       {
@@ -1003,10 +1003,10 @@ export const flash: FlashItem[] = [
         why: 'At $x = \\tfrac{\\pi}{4}$, $\\sin x \\approx 0.71$ is above $\\frac{2x}{\\pi} = 0.5$, so the sine curve is on top.',
       },
       {
-        latex: '\\int_0^{\\pi/2} \\sin x\\,dx',
-        expr: 'integral(sin(x), x, 0, pi/2)',
-        mistake: 'single-function-area',
-        why: 'This is the area under the sine curve alone; the line is the lower boundary and must be subtracted.',
+        latex: '\\int_0^{1} \\left(\\frac{2x}{\\pi} - \\sin x\\right)dx',
+        expr: 'integral(2*x/pi - sin(x), x, 0, 1)',
+        mistake: 'bounds-wrong-variable',
+        why: 'Two slips: $1$ is the $y$-coordinate of $(\\tfrac{\\pi}{2}, 1)$, not an $x$-limit, and $\\frac{2x}{\\pi} - \\sin x$ is bottom − top.',
       },
       {
         latex: '\\int_0^{1} \\left(\\sin x - \\frac{2x}{\\pi}\\right)dx',
@@ -1039,10 +1039,10 @@ export const flash: FlashItem[] = [
     },
     options: [
       {
-        latex: '\\int_{-1}^{2} (x^2 - x - 2)\\,dx',
-        expr: 'integral(x^2 - x - 2, x, -1, 2)',
-        mistake: 'top-bottom-swapped',
-        why: 'Lying below the axis does not flip top and bottom: at $x = 0$ the line ($-2$) is above the parabola ($-4$).',
+        latex: '\\int_{-2}^{2} (x^2 - x - 2)\\,dx',
+        expr: 'integral(x^2 - x - 2, x, -2, 2)',
+        mistake: 'missing-intersection',
+        why: 'Two slips: $\\pm 2$ are where the parabola meets the $x$-axis, not where the curves meet, and $x^2 - x - 2$ is bottom − top.',
       },
       { latex: '\\int_{-1}^{2} (x + 2 - x^2)\\,dx', expr: 'integral(x + 2 - x^2, x, -1, 2)' },
       {
@@ -1130,10 +1130,10 @@ export const flash: FlashItem[] = [
         why: 'For $1 \\le x \\le 3$ the bottom boundary is the $x$-axis, not the line $y = x - 3$ (which is below the axis there).',
       },
       {
-        latex: '\\int_1^5 \\sqrt{x - 1}\\,dx',
-        expr: 'integral(sqrt(x - 1), x, 1, 5)',
-        mistake: 'single-function-area',
-        why: 'This is the whole area under the square-root curve; the triangle between the line and the axis for $3 \\le x \\le 5$ is not part of the region.',
+        latex: '\\int_1^3 \\left(\\sqrt{x - 1} - x + 3\\right)dx + \\int_3^5 \\sqrt{x - 1}\\,dx',
+        expr: 'integral(sqrt(x - 1) - x + 3, x, 1, 3) + integral(sqrt(x - 1), x, 3, 5)',
+        mistake: 'top-bottom-swapped',
+        why: 'The bottom boundaries were assigned to the wrong pieces: the $x$-axis is the bottom on $[1, 3]$ and the line $y = x - 3$ on $[3, 5]$.',
       },
       {
         latex: '\\int_1^3 \\sqrt{x - 1}\\,dx + \\int_3^5 \\left(\\sqrt{x - 1} - x + 3\\right)dx',
@@ -1283,10 +1283,10 @@ export const flash: FlashItem[] = [
       },
       { latex: '\\frac{5}{12}', expr: '5/12' },
       {
-        latex: '\\frac{1}{12}',
-        expr: '1/12',
-        mistake: 'arithmetic-error',
-        why: 'Subtracted numerators and multiplied denominators; $\\frac23 - \\frac14 = \\frac{8 - 3}{12} = \\frac{5}{12}$.',
+        latex: '\\frac{7}{4}',
+        expr: '7/4',
+        mistake: 'power-rule-int-exponent',
+        why: 'Divided by $\\frac12$ without raising the exponent: $\\int x^{1/2}\\,dx$ written as $2x^{1/2}$, giving $2 - \\frac14$.',
       },
       {
         latex: '\\frac{3}{4}',
@@ -1322,10 +1322,10 @@ export const flash: FlashItem[] = [
         why: 'Only $F(\\ln 2) = 2\\ln 2 - 2$ was kept; $F(0) = 0 - e^0 = -1$ is not zero and must be subtracted.',
       },
       {
-        latex: '2\\ln 2 - 3',
-        expr: '2*log(2) - 3',
-        mistake: 'sign-error',
-        why: 'Subtracted $F(0)$ as if it were $+1$; in fact $F(0) = 0 - e^0 = -1$.',
+        latex: '\\ln 2',
+        expr: 'log(2)',
+        mistake: 'ftc-not-subtracted',
+        why: 'Two slips: $e^{\\ln 2}$ was evaluated as $\\ln 2$ (it is $2$), and $F(0) = -1$ was never subtracted.',
       },
       {
         latex: '2\\ln 2 + 1',
@@ -1403,10 +1403,10 @@ export const flash: FlashItem[] = [
     },
     options: [
       {
-        latex: '\\sqrt{2}',
-        expr: 'sqrt(2)',
-        mistake: 'ftc-not-subtracted',
-        why: 'Stopped at $F\\left(\\frac{\\pi}{4}\\right) = \\sqrt2$; $F(0) = \\sin 0 + \\cos 0 = 1$ must be subtracted.',
+        latex: '2\\sqrt{2}',
+        expr: '2*sqrt(2)',
+        mistake: 'arithmetic-error',
+        why: 'Two slips: $\\sin\\frac{\\pi}{4}$ and $\\cos\\frac{\\pi}{4}$ were each taken as $\\sqrt2$, and $F(0) = 1$ was not subtracted.',
       },
       { latex: '\\sqrt{2} - 1', expr: 'sqrt(2) - 1' },
       {
@@ -1444,15 +1444,15 @@ export const flash: FlashItem[] = [
     topic: 'area',
     kind: 'evaluate',
     prompt: {
-      text: 'This integral is the area between $y = \\sin x$ and $y = \\frac{2x}{\\pi}$. Evaluate it.',
+      text: 'This integral is the area between $y = \\sin x$ and $y = \\frac{2x}{\\pi}$ for $0 \\le x \\le \\frac{\\pi}{2}$. Evaluate it.',
       latex: '\\int_0^{\\pi/2} \\left(\\sin x - \\frac{2x}{\\pi}\\right)dx',
     },
     options: [
       {
-        latex: '-\\frac{\\pi}{4}',
-        expr: '-pi/4',
-        mistake: 'ftc-not-subtracted',
-        why: 'Only $F\\left(\\frac{\\pi}{2}\\right) = -\\frac{\\pi}{4}$ was kept; $F(0) = -\\cos 0 = -1$ must be subtracted.',
+        latex: '1',
+        expr: '1',
+        mistake: 'single-function-area',
+        why: 'Only $\\int \\sin x\\,dx$ was evaluated ($[-\\cos x]_0^{\\pi/2} = 1$); the $-\\frac{x^2}{\\pi}$ term from the line was dropped.',
       },
       {
         latex: '-1 - \\frac{\\pi}{4}',
@@ -1583,13 +1583,13 @@ export const flash: FlashItem[] = [
       },
       {
         text: 'In $x$: two integrals, since the top curve changes at the vertex $x = 1$',
-        mistake: 'top-bottom-swapped',
+        mistake: 'split-at-wrong-point',
         why: 'The line stays above the parabola on all of $(0, 3)$ (at $x = 2$: $2 > 0$); the vertex is not a crossing.',
       },
       {
-        text: 'In $x$: one integral, from $y = x$ up to $y = x^2 - 2x$, for $0 \\le x \\le 3$',
+        text: 'In $x$: one integral, from $y = x$ up to $y = x^2 - 2x$, for $0 \\le x \\le 2$',
         mistake: 'top-bottom-swapped',
-        why: 'At $x = 1$ the line ($1$) is above the parabola ($-1$), so segments run from the parabola up to the line.',
+        why: 'Two slips: at $x = 1$ the line ($1$) is above the parabola ($-1$), and $x = 2$ is where the parabola meets the $x$-axis, not the line.',
       },
       {
         text: 'In $x$: one integral, from $y = x^2 - 2x$ up to $y = x$, for $0 \\le x \\le 2$',
@@ -1598,7 +1598,7 @@ export const flash: FlashItem[] = [
       },
       {
         text: 'In $x$: two integrals, since the parabola crosses the $x$-axis at $x = 2$ and the integrand changes sign there',
-        mistake: 'signed-area-confusion',
+        mistake: 'split-at-wrong-point',
         why: 'The integrand $x - (x^2 - 2x) = 3x - x^2$ stays positive on $(0, 3)$; only crossings of the two curves matter.',
       },
     ],
@@ -1626,9 +1626,9 @@ export const flash: FlashItem[] = [
         why: '$1$ and $5$ are $x$-values; the region\'s $y$-values run from $0$ to $2$.',
       },
       {
-        text: 'In $y$: from $x = \\sqrt{y - 1}$ to $x = y + 3$, for $0 \\le y \\le 2$',
-        mistake: 'inverse-function-wrong',
-        why: 'Solving $y = \\sqrt{x - 1}$ for $x$ gives $x = y^2 + 1$.',
+        text: 'In $y$: from $x = y + 3$ to $x = y^2 + 1$, for $1 \\le y \\le 5$',
+        mistake: 'top-bottom-swapped',
+        why: 'Two slips: the line is the right boundary, not the left, and $1$ to $5$ is the $x$-extent of the region, not its $y$-range.',
       },
       {
         text: 'In $x$: from $y = x - 3$ up to $y = \\sqrt{x - 1}$, for $3 \\le x \\le 5$',
@@ -1663,7 +1663,7 @@ export const flash: FlashItem[] = [
       { text: 'Split at $x = 2$: integrate $0 - (x^2 - 2x)$ on $[0, 2]$ and $(x^2 - 2x) - 0$ on $[2, 3]$' },
       {
         text: 'Split at $x = 1$, the vertex: integrate $0 - (x^2 - 2x)$ on $[0, 1]$ and $(x^2 - 2x) - 0$ on $[1, 3]$',
-        mistake: 'missing-intersection',
+        mistake: 'split-at-wrong-point',
         why: 'Top and bottom trade places where the curve crosses the axis, at $x = 2$, not at the vertex.',
       },
       {
@@ -1706,16 +1706,21 @@ export const flash: FlashItem[] = [
         why: 'For $|x| < 1$ the higher power is the smaller one, so $x^2$ is on top.',
       },
       {
-        text: 'One integral, $\\int_{-1}^{1} (x^2 - x^4)\\,dx$, because $x^2 \\ge x^4$ on $[-1, 1]$; at $x = 0$ they only touch',
+        text: 'One integral, $\\int_{-1}^{1} (x^2 - x^4)\\,dx$, because $x^2 \\ge x^4$ on $[-1, 1]$',
       },
       {
         text: 'No integral is needed: the region is symmetric about the $y$-axis, so its area is $0$',
         mistake: 'signed-area-confusion',
         why: 'Symmetric pieces have equal areas that add; $x^2 - x^4$ is even and nonnegative, so nothing cancels.',
       },
+      {
+        text: 'Two integrals, $\\int_{-1}^{0}$ and $\\int_{0}^{1}$ of $(x^4 - x^2)$, because the curves meet at $x = 0$',
+        mistake: 'top-bottom-swapped',
+        why: 'Two slips: $x^4$ is below $x^2$ on $(-1, 1)$, and touching at $x = 0$ does not require a split.',
+      },
     ],
     correct: 3,
-    explanation: '$x^2 - x^4 = x^2(1 - x^2) \\ge 0$ on $[-1, 1]$, so the top curve never changes and one integral gives $\\tfrac{4}{15}$.',
+    explanation: '$x^2 - x^4 = x^2(1 - x^2) \\ge 0$ on $[-1, 1]$ (at $x = 0$ the curves only touch), so one integral gives $\\tfrac{4}{15}$.',
     check: { kind: 'none', reason: 'technique choice; text options' },
     difficulty: 2,
   },
@@ -1747,10 +1752,10 @@ export const flash: FlashItem[] = [
       },
       { latex: 'x = -2,\\quad x = 3', expr: '[-2, 3]' },
       {
-        latex: 'x = 3',
-        expr: '3',
-        mistake: 'missing-intersection',
-        why: 'Guessing $x = 3$ by inspection finds only one root; the quadratic has a second root, $x = -2$.',
+        latex: 'x = 2',
+        expr: '2',
+        mistake: 'sign-error',
+        why: 'Two slips: the roots were sign-flipped to $-3$ and $2$, and only $x = 2$ was kept.',
       },
     ],
     correct: 3,
@@ -1823,7 +1828,7 @@ export const flash: FlashItem[] = [
       { text: '$y = x^3 - 3x$ on $(-2, 0)$ and $y = x$ on $(0, 2)$' },
       {
         text: '$y = x^3 - 3x$ on $(-\\sqrt3, 0)$ and $y = x$ on $(0, \\sqrt3)$, since the cubic changes sign at $\\pm\\sqrt3$',
-        mistake: 'signed-area-confusion',
+        mistake: 'split-at-wrong-point',
         why: 'The zeros $\\pm\\sqrt3$ of the cubic do not matter; only the crossings of the two curves, $x = -2, 0, 2$, split the region.',
       },
     ],
@@ -1910,9 +1915,9 @@ export const generators: FlashGenerator[] = [
           why: `Took $\\int ${k}x\\,dx = ${k}x^2$ without dividing by 2: $${k3} - \\frac{${k3}}{3}$.`,
         },
         {
-          ...fracOption(-k3, 2),
+          ...fracOption(0, 1),
           mistake: 'power-rule-int-coefficient' as const,
-          why: `Took $\\int x^2\\,dx = x^3$ without dividing by 3: $\\frac{${k3}}{2} - ${k3}$.`,
+          why: `Divided by the old exponent: $\\int x^2\\,dx$ written as $\\frac{x^3}{2}$, so $\\frac{${k3}}{2} - \\frac{${k3}}{2} = 0$.`,
         },
         {
           ...fracOption(5 * k3, 6),
@@ -1925,9 +1930,9 @@ export const generators: FlashGenerator[] = [
           why: `Divided by 3 but kept the exponent: $\\int x^2\\,dx$ written as $\\frac{x^2}{3}$, giving $\\frac{${k3}}{2} - \\frac{${k2}}{3}$.`,
         },
         {
-          ...fracOption(-k3, 6),
-          mistake: 'ftc-order-swapped' as const,
-          why: `Computed $F(0) - F(${k})$ instead of $F(${k}) - F(0)$.`,
+          ...fracOption(k3, 2),
+          mistake: 'single-function-area' as const,
+          why: `Only $\\int_0^{${k}} ${k}x\\,dx = \\frac{${k3}}{2}$ was computed; the $-\\frac{x^3}{3}$ term from the parabola was dropped.`,
         },
       ];
       const all = [correct, ...distractors];
