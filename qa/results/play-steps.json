@@ -1,0 +1,308 @@
+{
+  "name": "steps",
+  "startedAt": "2026-09-24T16:05:36.338Z",
+  "checks": [
+    {
+      "name": "Step-Through starts",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "round has ≥10 steps (size 10 = minimum steps)",
+      "ok": true,
+      "detail": "1/14"
+    },
+    {
+      "name": "layout Step-Through question: html & body scrollWidth ≤ 390",
+      "ok": true,
+      "detail": "html 390, body 390"
+    },
+    {
+      "name": "layout Step-Through question: option buttons ≥44px (min)",
+      "ok": true,
+      "detail": "min 52px over 5 options"
+    },
+    {
+      "name": "layout Step-Through question: first option top ≥ 422",
+      "ok": true,
+      "detail": "first option top 479.9px"
+    },
+    {
+      "name": "layout Step-Through feedback (wrong): html & body scrollWidth ≤ 390",
+      "ok": true,
+      "detail": "html 390, body 390"
+    },
+    {
+      "name": "layout Step-Through final answer: html & body scrollWidth ≤ 390",
+      "ok": true,
+      "detail": "html 390, body 390"
+    },
+    {
+      "name": "double tap on \"Next problem\" opens step 1 of the next problem, unanswered",
+      "ok": true,
+      "detail": "question Step 1 of 4 feedback=false"
+    },
+    {
+      "name": "step unit found in the content key",
+      "ok": true,
+      "detail": "14/14 ok"
+    },
+    {
+      "name": "topbar counter counts steps across the round",
+      "ok": true,
+      "detail": "14/14 ok"
+    },
+    {
+      "name": "\"Work so far\" has one line per finished step",
+      "ok": true,
+      "detail": "14/14 ok"
+    },
+    {
+      "name": "Step-Through: ≥5 options per question",
+      "ok": true,
+      "detail": "14/14 ok"
+    },
+    {
+      "name": "Step-Through: no empty options",
+      "ok": true,
+      "detail": "14/14 ok"
+    },
+    {
+      "name": "Step-Through: option sources distinct",
+      "ok": true,
+      "detail": "14/14 ok"
+    },
+    {
+      "name": "Step-Through: no .katex-error",
+      "ok": true,
+      "detail": "14/14 ok"
+    },
+    {
+      "name": "Step-Through: no undefined/NaN/[object Object] text",
+      "ok": true,
+      "detail": "14/14 ok"
+    },
+    {
+      "name": "Step-Through: no horizontal page scroll (html & body ≤ 390)",
+      "ok": true,
+      "detail": "14/14 ok"
+    },
+    {
+      "name": "Step-Through: no content clipped sideways (overflow-x:hidden containers)",
+      "ok": true,
+      "detail": "14/14 ok"
+    },
+    {
+      "name": "Step-Through: no option spills out of its button",
+      "ok": true,
+      "detail": "14/14 ok"
+    },
+    {
+      "name": "Step-Through: option buttons ≥44px tall",
+      "ok": true,
+      "detail": "14/14 ok"
+    },
+    {
+      "name": "Step-Through: first option in the lower half (top ≥ 422)",
+      "ok": true,
+      "detail": "14/14 ok"
+    },
+    {
+      "name": "Step-Through: current step prompt visible in the stage",
+      "ok": true,
+      "detail": "14/14 ok"
+    },
+    {
+      "name": "Step-Through: page not scrolled, top bar visible",
+      "ok": true,
+      "detail": "14/14 ok"
+    },
+    {
+      "name": "Step-Through: feedback panel appears after one tap",
+      "ok": true,
+      "detail": "14/14 ok"
+    },
+    {
+      "name": "Step-Through: all options disabled after answering",
+      "ok": true,
+      "detail": "14/14 ok"
+    },
+    {
+      "name": "Step-Through: exactly one option marked correct",
+      "ok": true,
+      "detail": "14/14 ok"
+    },
+    {
+      "name": "Step-Through: wrong answer → chosen option red, correct option green",
+      "ok": false,
+      "detail": "1/7 ok; failures e.g.: wrong rgb(217, 217, 224) / rgb(217, 217, 224) || wrong rgb(217, 217, 224) / rgb(217, 217, 224) || wrong rgb(217, 217, 224) / rgb(217, 217, 224) || wrong rgb(217, 217, 224) / rgb(217, 217, 224) || wrong rgb(217, 217, 224) / rgb(217, 217, 224) || wrong rgb(217, 217, 224) / rgb(217, 217, 224)"
+    },
+    {
+      "name": "Step-Through: wrong answer → \"Not quite\" + mistake label + why",
+      "ok": true,
+      "detail": "7/7 ok"
+    },
+    {
+      "name": "Step-Through: explanation shown",
+      "ok": true,
+      "detail": "14/14 ok"
+    },
+    {
+      "name": "Step-Through: Next button fully on screen and ≥44px",
+      "ok": true,
+      "detail": "14/14 ok"
+    },
+    {
+      "name": "Step-Through: no .katex-error after answering",
+      "ok": true,
+      "detail": "14/14 ok"
+    },
+    {
+      "name": "Step-Through: no undefined/NaN/[object Object] in feedback",
+      "ok": true,
+      "detail": "14/14 ok"
+    },
+    {
+      "name": "Step-Through: no horizontal page scroll with feedback",
+      "ok": true,
+      "detail": "14/14 ok"
+    },
+    {
+      "name": "Step-Through: nothing clipped sideways with feedback",
+      "ok": true,
+      "detail": "14/14 ok"
+    },
+    {
+      "name": "Step-Through: page not scrolled after answering (top bar visible)",
+      "ok": true,
+      "detail": "14/14 ok"
+    },
+    {
+      "name": "Step-Through: option marked green is the content's correct option",
+      "ok": true,
+      "detail": "14/14 ok"
+    },
+    {
+      "name": "Step-Through: verdict agrees with the content key",
+      "ok": true,
+      "detail": "14/14 ok"
+    },
+    {
+      "name": "Step-Through: \"Correct step:\" shows the correct option",
+      "ok": true,
+      "detail": "14/14 ok"
+    },
+    {
+      "name": "Step-Through: current step prompt still visible with feedback",
+      "ok": true,
+      "detail": "14/14 ok"
+    },
+    {
+      "name": "one tap on Next advances",
+      "ok": true,
+      "detail": "14/14 ok"
+    },
+    {
+      "name": "after an answer (right or wrong) the problem advances to the next step",
+      "ok": true,
+      "detail": "11/11 ok"
+    },
+    {
+      "name": "the correct step is appended to \"Work so far\"",
+      "ok": true,
+      "detail": "11/11 ok"
+    },
+    {
+      "name": "the newest work line is the previous step's result",
+      "ok": true,
+      "detail": "11/11 ok"
+    },
+    {
+      "name": "Step-Through: right answer → \"Correct\", chosen option green",
+      "ok": false,
+      "detail": "1/7 ok; failures e.g.: Correct correct rgb(217, 217, 224) || Correct correct rgb(217, 217, 224) || Correct correct rgb(217, 217, 224) || Correct correct rgb(217, 217, 224) || Correct correct rgb(217, 217, 224) || Correct correct rgb(217, 217, 224)"
+    },
+    {
+      "name": "Step-Through: right answer → no mistake label / why",
+      "ok": true,
+      "detail": "7/7 ok"
+    },
+    {
+      "name": "after the last step the final answer card appears",
+      "ok": true,
+      "detail": "3/3 ok"
+    },
+    {
+      "name": "final card shows the final answer (matches content)",
+      "ok": true,
+      "detail": "3/3 ok"
+    },
+    {
+      "name": "final card shows a recap",
+      "ok": true,
+      "detail": "3/3 ok"
+    },
+    {
+      "name": "final card lists every step in \"Work so far\"",
+      "ok": true,
+      "detail": "3/3 ok"
+    },
+    {
+      "name": "final card: no .katex-error / page scroll",
+      "ok": true,
+      "detail": "3/3 ok"
+    },
+    {
+      "name": "one tap on the final card button continues",
+      "ok": true,
+      "detail": "2/2 ok"
+    },
+    {
+      "name": "round ends on a Step-Through summary",
+      "ok": false,
+      "detail": "STEP-THROUGH · ROUND COMPLETE"
+    },
+    {
+      "name": "completed ≥2 problems with ≥2 wrong answers",
+      "ok": true,
+      "detail": "3 problems, 7 wrong / 7 right"
+    },
+    {
+      "name": "summary counts steps",
+      "ok": true,
+      "detail": "7 of 14 steps right. Getting there. Review the misses while they are fresh."
+    },
+    {
+      "name": "no console errors / page errors",
+      "ok": false,
+      "detail": "warning: Service Worker registration blocked by Playwright"
+    }
+  ],
+  "metrics": {
+    "roundTotalSteps": 14,
+    "problems": [
+      {
+        "title": "Odd power of secant: parts and solve",
+        "id": "ti-s-05",
+        "steps": 5,
+        "wrong": 3
+      },
+      {
+        "title": "The cone by shells",
+        "id": "vs-s-01",
+        "steps": 4,
+        "wrong": 2
+      },
+      {
+        "title": "Odd power of sine with angle 2t",
+        "id": "ti-s-09",
+        "steps": 5,
+        "wrong": 2
+      }
+    ],
+    "consoleErrors": [
+      "warning: Service Worker registration blocked by Playwright"
+    ]
+  },
+  "seconds": 19
+}

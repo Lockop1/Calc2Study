@@ -1,0 +1,136 @@
+{
+  "name": "review",
+  "startedAt": "2026-09-24T16:05:54.859Z",
+  "checks": [
+    {
+      "name": "only \"Trig sub\" selected",
+      "ok": true,
+      "detail": "1/9"
+    },
+    {
+      "name": "Review with nothing missed stays on Home with a friendly notice",
+      "ok": true,
+      "detail": "Nothing to review for the selected topics. Questions you miss will show up here."
+    },
+    {
+      "name": "all trig-sub questions were in the answer key",
+      "ok": true,
+      "detail": "10/10"
+    },
+    {
+      "name": "3 deliberate misses recorded",
+      "ok": true,
+      "detail": "ts-f-041, ts-f-033, ts-f-036"
+    },
+    {
+      "name": "Home Review badge shows the miss count (3)",
+      "ok": true,
+      "detail": "badge 3"
+    },
+    {
+      "name": "review round 1 starts",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "review round 2 starts",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "review round 3 starts",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "review round 4 starts",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "one tap on Next advances",
+      "ok": true,
+      "detail": "16/16 ok"
+    },
+    {
+      "name": "review round: only missed units",
+      "ok": true,
+      "detail": "11/11 ok"
+    },
+    {
+      "name": "target answered correctly",
+      "ok": true,
+      "detail": "3/3 ok"
+    },
+    {
+      "name": "review rounds 1–3 contain the target unit",
+      "ok": true,
+      "detail": "[{\"round\":1,\"size\":3,\"containsTarget\":true,\"badgeAfter\":3},{\"round\":2,\"size\":3,\"containsTarget\":true,\"badgeAfter\":3},{\"round\":3,\"size\":3,\"containsTarget\":true,\"badgeAfter\":2},{\"round\":4,\"size\":2,\"containsTarget\":false,\"badgeAfter\":2}]"
+    },
+    {
+      "name": "badge stays 3 after 1 and 2 correct answers",
+      "ok": true,
+      "detail": "3 → 3 → 3 → 2 → 2"
+    },
+    {
+      "name": "target retires after 3 correct answers: badge 3 → 2",
+      "ok": true,
+      "detail": "3 → 3 → 3 → 2 → 2"
+    },
+    {
+      "name": "retired unit no longer appears in the next review round",
+      "ok": true,
+      "detail": "{\"round\":4,\"size\":2,\"containsTarget\":false,\"badgeAfter\":2}"
+    },
+    {
+      "name": "no console errors / page errors",
+      "ok": false,
+      "detail": "warning: Service Worker registration blocked by Playwright"
+    }
+  ],
+  "metrics": {
+    "reviewRounds": [
+      {
+        "round": 1,
+        "size": 3,
+        "containsTarget": true,
+        "badgeAfter": 3
+      },
+      {
+        "round": 2,
+        "size": 3,
+        "containsTarget": true,
+        "badgeAfter": 3
+      },
+      {
+        "round": 3,
+        "size": 3,
+        "containsTarget": true,
+        "badgeAfter": 2
+      },
+      {
+        "round": 4,
+        "size": 2,
+        "containsTarget": false,
+        "badgeAfter": 2
+      }
+    ],
+    "badges": [
+      3,
+      3,
+      3,
+      2,
+      2
+    ],
+    "targetProgress": {
+      "misses": 1,
+      "lastMissedAt": 1790265958019,
+      "lastSeenAt": 1790265978969,
+      "correctSince": 3
+    },
+    "consoleErrors": [
+      "warning: Service Worker registration blocked by Playwright"
+    ]
+  },
+  "seconds": 28
+}

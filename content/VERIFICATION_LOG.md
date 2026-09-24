@@ -32,7 +32,7 @@ Process facts that apply to every topic:
 | arc-length | content-author #ae424e8 | math-verifier #a0fd2d3 | 59/59 pass | FAIL (1 DISTRACTOR_ALSO_CORRECT — x↔y relabel keeps the length; 4 FORM_LEAK + systemic; 0 wrong answers) | 33/94 units (35%); 32 hits (chance 5.9), 2 surface-guessable | fix pass by author |
 | ibp | content-author #ad14a0f | math-verifier #a2b391f | 76/76 pass | FAIL (32 FORM_LEAK; 0 wrong answers; sympy/mpmath recheck) | 40/113 units (35%); 39 hits (chance 7.6), 29 surface-guessable | retags + prompt fixes; systemic list logged as residual |
 | trig-sub | content-author #aa4ab8b | math-verifier #af33f51 | 67/67 pass | FAIL (88 FORM_LEAK, 57 by inspection; 0 wrong answers; every antiderivative differentiated back) | 38/106 units (36%); 37 hits (chance ~7), 31 surface-guessable | `\;` render bug fixed by orchestrator; retags; systemic list logged as residual |
-| trig-integrals | content-author #afdca4e | math-verifier #a5139d4 | 78/78 pass | (verification in progress) | | |
+| trig-integrals | content-author #afdca4e | math-verifier #a5139d4 | 78/78 pass | FAIL (36 FORM_LEAK — 9 case-label prefixes, 1 length, 26 centre; 0 wrong answers; sympy recheck; self-referential checks verified by hand) | 39/110 units (35%); 39 hits (chance 7.5), 32 surface-guessable | fix pass by author; systemic list logged as residual |
 
 ## Resolved disagreements
 

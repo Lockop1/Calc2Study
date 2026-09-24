@@ -1,0 +1,127 @@
+{
+  "name": "settings",
+  "startedAt": "2026-09-24T16:06:22.892Z",
+  "checks": [
+    {
+      "name": "Settings opens from the gear",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "layout Settings: html & body scrollWidth ≤ 390",
+      "ok": true,
+      "detail": "html 390, body 390"
+    },
+    {
+      "name": "round size defaults to 10",
+      "ok": true,
+      "detail": "[{\"n\":5,\"pressed\":false},{\"n\":10,\"pressed\":true},{\"n\":20,\"pressed\":false}]"
+    },
+    {
+      "name": "round size 5 selected",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Flash counter shows 1/5",
+      "ok": true,
+      "detail": "1/5"
+    },
+    {
+      "name": "Step-Through round with size 5 has ≥5 steps",
+      "ok": true,
+      "detail": "1/9"
+    },
+    {
+      "name": "round size 20 selected",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Flash counter shows 1/20",
+      "ok": true,
+      "detail": "1/20"
+    },
+    {
+      "name": "Step-Through round with size 20 has ≥20 steps",
+      "ok": true,
+      "detail": "1/23"
+    },
+    {
+      "name": "round size 10 selected",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Flash counter shows 1/10",
+      "ok": true,
+      "detail": "1/10"
+    },
+    {
+      "name": "Step-Through round with size 10 has ≥10 steps",
+      "ok": true,
+      "detail": "1/11"
+    },
+    {
+      "name": "round size persisted to localStorage",
+      "ok": true,
+      "detail": "{\"version\":1,\"roundSize\":10,\"topics\":[\"diff-review\",\"antiderivatives\",\"area\",\"volumes-disks\",\"volumes-shells\",\"arc-length\",\"ibp\",\"trig-integrals\",\"trig-sub\"]}"
+    },
+    {
+      "name": "misses → badge > 0",
+      "ok": true,
+      "detail": "badge 10"
+    },
+    {
+      "name": "Review round size follows the setting (5)",
+      "ok": true,
+      "detail": "1/5 (badge 10)"
+    },
+    {
+      "name": "Settings shows the missed count",
+      "ok": true,
+      "detail": "10 missed questions are in your Review deck. A question leaves Review after 3 correct answers in a row."
+    },
+    {
+      "name": "first tap on \"Reset progress\" asks for confirmation and erases nothing",
+      "ok": true,
+      "detail": "Tap again to erase/Cancel units 10"
+    },
+    {
+      "name": "Cancel returns to the Reset button without erasing",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "second tap erases: \"Progress cleared.\" and no missed questions",
+      "ok": true,
+      "detail": "Questions per Flash Drill and Review round; steps per Step-Through round. | No missed questions are being tracked. A question leaves Review after 3 correct answers in a row. | Progress cleared. | Progress is saved on this device. | Works offline: after the first visit everything runs without a connection. Add it to your Home Screen to use it like an app. | Version 0.1.0"
+    },
+    {
+      "name": "progress removed from localStorage",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "after reset the Home badge is gone",
+      "ok": true,
+      "detail": "badge 0 \"Missed questions show up here\""
+    },
+    {
+      "name": "an accidental double tap on \"Reset progress\" does not erase progress (confirmation holds)",
+      "ok": false,
+      "detail": "badge before 5; after double tap: progress ERASED; status \"Questions per Flash Drill and Review round; steps per Step-Through round. | No missed questions are being tracked. A que\""
+    },
+    {
+      "name": "no console errors / page errors",
+      "ok": false,
+      "detail": "warning: Service Worker registration blocked by Playwright"
+    }
+  ],
+  "metrics": {
+    "consoleErrors": [
+      "warning: Service Worker registration blocked by Playwright"
+    ]
+  },
+  "seconds": 21
+}

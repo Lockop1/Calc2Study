@@ -1,0 +1,110 @@
+{
+  "name": "storage",
+  "startedAt": "2026-09-24T16:06:50.292Z",
+  "checks": [
+    {
+      "name": "[setItem/getItem throw] app loads",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "[setItem/getItem throw] topic toggle works in memory",
+      "ok": true,
+      "detail": "8/9"
+    },
+    {
+      "name": "[setItem/getItem throw] Flash round starts",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "[setItem/getItem throw] full round of 10 played to the summary",
+      "ok": true,
+      "detail": "10 questions, screen summary"
+    },
+    {
+      "name": "[setItem/getItem throw] Review badge counts misses in memory",
+      "ok": true,
+      "detail": "badge 4, misses 4"
+    },
+    {
+      "name": "[setItem/getItem throw] Review round plays",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "[setItem/getItem throw] Review round ends on a summary",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "[setItem/getItem throw] Settings says storage is unavailable",
+      "ok": true,
+      "detail": "Storage is unavailable here (private browsing?). Progress lasts until you close the app."
+    },
+    {
+      "name": "[setItem/getItem throw] no page errors / console errors",
+      "ok": false,
+      "detail": "warning: Service Worker registration blocked by Playwright"
+    },
+    {
+      "name": "[localStorage getter throws] app loads",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "[localStorage getter throws] topic toggle works in memory",
+      "ok": true,
+      "detail": "8/9"
+    },
+    {
+      "name": "[localStorage getter throws] Flash round starts",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "[localStorage getter throws] full round of 10 played to the summary",
+      "ok": true,
+      "detail": "10 questions, screen summary"
+    },
+    {
+      "name": "[localStorage getter throws] Review badge counts misses in memory",
+      "ok": true,
+      "detail": "badge 4, misses 4"
+    },
+    {
+      "name": "[localStorage getter throws] Review round plays",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "[localStorage getter throws] Review round ends on a summary",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "[localStorage getter throws] Settings says storage is unavailable",
+      "ok": true,
+      "detail": "Storage is unavailable here (private browsing?). Progress lasts until you close the app."
+    },
+    {
+      "name": "[localStorage getter throws] no page errors / console errors",
+      "ok": false,
+      "detail": "warning: Service Worker registration blocked by Playwright"
+    },
+    {
+      "name": "one tap on Next advances",
+      "ok": true,
+      "detail": "18/18 ok"
+    }
+  ],
+  "metrics": {
+    "setItem/getItem throw errors": [
+      "warning: Service Worker registration blocked by Playwright"
+    ],
+    "localStorage getter throws errors": [
+      "warning: Service Worker registration blocked by Playwright"
+    ]
+  },
+  "seconds": 27
+}
