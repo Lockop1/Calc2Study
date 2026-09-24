@@ -12,7 +12,7 @@ Legend: ☐ not started · ◐ in progress · ☑ done · ✗ blocked
 | 6 | Flash Drill mode | ☑ | src/screens/DrillScreen.tsx + shared question components |
 | 7 | Step-Through mode | ☑ | src/screens/StepThroughScreen.tsx |
 | 8 | Topic picker, Review mode, progress, settings | ☑ | weighted review deck, retire after 3 correct, storage in try/catch |
-| 9 | PWA/offline + mobile QA | ◐ | PWA verified incl. GitHub-Pages sub-path offline reload (qa/subpath-offline-smoke.mjs); qa-tester report pending |
+| 9 | PWA/offline + mobile QA | ☑ | qa/REPORT.md: 382/384 checks pass at 390×844 incl. offline, storage-unavailable, dark mode; reset double-tap fixed; one minor layout note open |
 
 ## Log
 
@@ -25,3 +25,4 @@ Legend: ☐ not started · ◐ in progress · ☑ done · ✗ blocked
 - Task 5/9 in progress: 9 math-verifiers + qa-tester running.
 - Task 5 done: all nine topics verified (reports in qa/verification/), fixes applied and committed per topic, VERIFICATION_LOG.md finalized.
 - Deploy: user added .github/workflows/deploy.yml (GitHub Pages on push to main); build verified to work under a sub-path.
+- Task 9 done: QA report compiled from the tester's results (container restart interrupted the agent); reset-confirm debounce added; final build verified.

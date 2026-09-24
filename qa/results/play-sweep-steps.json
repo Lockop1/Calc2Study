@@ -1,0 +1,268 @@
+{
+  "name": "sweep-steps",
+  "startedAt": "2026-09-24T16:19:24.852Z",
+  "checks": [
+    {
+      "name": "sweep: displayed step found in the content key",
+      "ok": true,
+      "detail": "403/403 ok"
+    },
+    {
+      "name": "sweep: work lines match the previous steps' results",
+      "ok": true,
+      "detail": "403/403 ok"
+    },
+    {
+      "name": "sweep steps: ≥5 options per question",
+      "ok": true,
+      "detail": "403/403 ok"
+    },
+    {
+      "name": "sweep steps: no empty options",
+      "ok": true,
+      "detail": "403/403 ok"
+    },
+    {
+      "name": "sweep steps: option sources distinct",
+      "ok": true,
+      "detail": "403/403 ok"
+    },
+    {
+      "name": "sweep steps: no .katex-error",
+      "ok": true,
+      "detail": "403/403 ok"
+    },
+    {
+      "name": "sweep steps: no undefined/NaN/[object Object] text",
+      "ok": true,
+      "detail": "403/403 ok"
+    },
+    {
+      "name": "sweep steps: no horizontal page scroll (html & body ≤ 390)",
+      "ok": true,
+      "detail": "403/403 ok"
+    },
+    {
+      "name": "sweep steps: no content clipped sideways (overflow-x:hidden containers)",
+      "ok": true,
+      "detail": "403/403 ok"
+    },
+    {
+      "name": "sweep steps: no option spills out of its button",
+      "ok": true,
+      "detail": "403/403 ok"
+    },
+    {
+      "name": "sweep steps: option buttons ≥44px tall",
+      "ok": true,
+      "detail": "403/403 ok"
+    },
+    {
+      "name": "sweep steps: first option in the lower half (top ≥ 422)",
+      "ok": true,
+      "detail": "403/403 ok"
+    },
+    {
+      "name": "sweep steps: current step prompt visible in the stage",
+      "ok": true,
+      "detail": "403/403 ok"
+    },
+    {
+      "name": "sweep steps: page not scrolled, top bar visible",
+      "ok": true,
+      "detail": "403/403 ok"
+    },
+    {
+      "name": "sweep steps: feedback panel appears after one tap",
+      "ok": true,
+      "detail": "403/403 ok"
+    },
+    {
+      "name": "sweep steps: all options disabled after answering",
+      "ok": true,
+      "detail": "403/403 ok"
+    },
+    {
+      "name": "sweep steps: exactly one option marked correct",
+      "ok": true,
+      "detail": "403/403 ok"
+    },
+    {
+      "name": "sweep steps: wrong answer → chosen option red, correct option green",
+      "ok": true,
+      "detail": "403/403 ok"
+    },
+    {
+      "name": "sweep steps: wrong answer → \"Not quite\" + mistake label + why",
+      "ok": true,
+      "detail": "403/403 ok"
+    },
+    {
+      "name": "sweep steps: explanation shown",
+      "ok": true,
+      "detail": "403/403 ok"
+    },
+    {
+      "name": "sweep steps: Next button fully on screen and ≥44px",
+      "ok": true,
+      "detail": "403/403 ok"
+    },
+    {
+      "name": "sweep steps: no .katex-error after answering",
+      "ok": true,
+      "detail": "403/403 ok"
+    },
+    {
+      "name": "sweep steps: no undefined/NaN/[object Object] in feedback",
+      "ok": true,
+      "detail": "403/403 ok"
+    },
+    {
+      "name": "sweep steps: no horizontal page scroll with feedback",
+      "ok": true,
+      "detail": "403/403 ok"
+    },
+    {
+      "name": "sweep steps: nothing clipped sideways with feedback",
+      "ok": true,
+      "detail": "403/403 ok"
+    },
+    {
+      "name": "sweep steps: page not scrolled after answering (top bar visible)",
+      "ok": true,
+      "detail": "403/403 ok"
+    },
+    {
+      "name": "sweep steps: option marked green is the content's correct option",
+      "ok": true,
+      "detail": "403/403 ok"
+    },
+    {
+      "name": "sweep steps: verdict agrees with the content key",
+      "ok": true,
+      "detail": "403/403 ok"
+    },
+    {
+      "name": "sweep steps: \"Correct step:\" shows the correct option",
+      "ok": true,
+      "detail": "403/403 ok"
+    },
+    {
+      "name": "sweep steps: current step prompt still visible with feedback",
+      "ok": false,
+      "detail": "396/403 ok; failures e.g.: vs-s-04#0: visible 0.47 || ts-s-06#4: visible 0.46 || ip-s-04#3: visible 0.46 || ip-s-04#4: visible 0.46 || ip-s-08#4: visible 0.36 || ip-s-03#3: visible 0.46"
+    },
+    {
+      "name": "sweep: final answer matches content",
+      "ok": true,
+      "detail": "90/90 ok"
+    },
+    {
+      "name": "sweep: final recap present",
+      "ok": true,
+      "detail": "90/90 ok"
+    },
+    {
+      "name": "sweep: final card has no .katex-error / bad text / page scroll",
+      "ok": true,
+      "detail": "90/90 ok"
+    },
+    {
+      "name": "sweep: every step problem played to its final card",
+      "ok": true,
+      "detail": "89/89 problems, 90 final cards, 18 rounds"
+    },
+    {
+      "name": "sweep: every step displayed",
+      "ok": true,
+      "detail": "398 steps"
+    },
+    {
+      "name": "sweep steps: no vertically clipped math/text (overflow-y hidden, >2px)",
+      "ok": true,
+      "detail": "0 units, e.g. "
+    },
+    {
+      "name": "no console errors / page errors",
+      "ok": true,
+      "detail": ""
+    }
+  ],
+  "metrics": {
+    "unitsSwept": 403,
+    "unitsWithSideScrollingOptions": 0,
+    "widestOptions": [
+      {
+        "id": "ts-s-02#0",
+        "scrollX": 0
+      },
+      {
+        "id": "ts-s-02#1",
+        "scrollX": 0
+      },
+      {
+        "id": "ts-s-02#2",
+        "scrollX": 0
+      },
+      {
+        "id": "ts-s-02#3",
+        "scrollX": 0
+      },
+      {
+        "id": "ts-s-02#4",
+        "scrollX": 0
+      },
+      {
+        "id": "ip-s-09#0",
+        "scrollX": 0
+      },
+      {
+        "id": "ip-s-09#1",
+        "scrollX": 0
+      },
+      {
+        "id": "ip-s-09#2",
+        "scrollX": 0
+      }
+    ],
+    "widestPrompts": [
+      {
+        "id": "ad-s-12#0",
+        "scrollX": 72
+      },
+      {
+        "id": "ad-s-12#1",
+        "scrollX": 72
+      },
+      {
+        "id": "ad-s-12#2",
+        "scrollX": 72
+      },
+      {
+        "id": "ad-s-12#3",
+        "scrollX": 72
+      },
+      {
+        "id": "ts-s-02#0",
+        "scrollX": 0
+      },
+      {
+        "id": "ts-s-02#1",
+        "scrollX": 0
+      },
+      {
+        "id": "ts-s-02#2",
+        "scrollX": 0
+      },
+      {
+        "id": "ts-s-02#3",
+        "scrollX": 0
+      }
+    ],
+    "verticallyClipped": [],
+    "minOptionHeight": 52,
+    "minFirstOptionTop": 430,
+    "consoleErrors": []
+  },
+  "seconds": 94
+}

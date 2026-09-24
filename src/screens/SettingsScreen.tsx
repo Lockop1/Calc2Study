@@ -1,5 +1,5 @@
 /** Settings: round size, reset progress (two-tap confirm), storage status, version, offline note. */
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { TopBar } from '../components/TopBar';
 import { RETIRE_AFTER } from '../lib/progress';
 import { ROUND_SIZES, type RoundSize } from '../lib/settings';
@@ -14,8 +14,13 @@ export interface SettingsScreenProps {
   onHome: () => void;
 }
 
+/** A confirm tap within this many ms of arming is treated as an accidental double tap. */
+export const RESET_CONFIRM_GUARD_MS = 600;
+
 export function SettingsScreen({ roundSize, missedCount, storageOk, onRoundSize, onResetProgress, onHome }: SettingsScreenProps) {
   const [confirming, setConfirming] = useState(false);
+  // A rapid double tap on "Reset progress" must not count as the confirmation.
+  const armedAt = useRef(0);
   const [cleared, setCleared] = useState(false);
 
   return (
@@ -51,7 +56,8 @@ export function SettingsScreen({ roundSize, missedCount, storageOk, onRoundSize,
               <button
                 type="button"
                 className="btn btn-danger btn-lg"
-                onClick={() => {
+                onClick={(event) => {
+                  if (event.detail > 0 && performance.now() - armedAt.current < RESET_CONFIRM_GUARD_MS) return;
                   onResetProgress();
                   setConfirming(false);
                   setCleared(true);
@@ -68,6 +74,7 @@ export function SettingsScreen({ roundSize, missedCount, storageOk, onRoundSize,
               type="button"
               className="btn btn-lg btn-block btn-danger-outline"
               onClick={() => {
+                armedAt.current = performance.now();
                 setConfirming(true);
                 setCleared(false);
               }}
