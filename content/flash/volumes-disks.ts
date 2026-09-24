@@ -599,3 +599,370 @@ export const flash: FlashItem[] = [
     check: { kind: 'value', expected: '56*pi/3' },
     difficulty: 2,
   },
+
+  // ───────────── evaluate a set-up volume integral ─────────────
+  {
+    id: 'vd-f-034',
+    topic: 'volumes-disks',
+    kind: 'evaluate',
+    prompt: { text: 'Rotating the quarter-disk under $y = \\sqrt{4 - x^2}$, $0 \\le x \\le 2$, about the x-axis gives a hemisphere. Evaluate its volume integral.', latex: '\\pi\\int_0^2 (4 - x^2)\\,dx' },
+    options: [
+      { latex: '\\frac{16\\pi}{3}', expr: '16*pi/3' },
+      { latex: '\\frac{32\\pi}{3}', expr: '32*pi/3', mistake: 'sign-error', why: 'The antiderivative was written $4x + \\frac{x^3}{3}$; the minus sign on $x^2$ was lost.' },
+      { latex: '6\\pi', expr: '6*pi', mistake: 'power-rule-int-exponent', why: '$x^2$ was integrated as $\\frac{x^2}{2}$ instead of $\\frac{x^3}{3}$, giving $8 - 2 = 6$.' },
+      { latex: '\\frac{4\\pi}{3}', expr: '4*pi/3', mistake: 'power-rule-int-exponent', why: '$\\int 4\\,dx$ was taken as 4 instead of $4x$, giving $4 - \\frac83$.' },
+      { latex: '8\\pi - \\frac{8}{3}', expr: '8*pi - 8/3', mistake: 'coefficient-mishandled', why: '$\\pi$ multiplies the whole bracket: $\\pi\\left(8 - \\frac83\\right)$, not $8\\pi - \\frac83$.' },
+      { latex: '0', expr: '0', mistake: 'power-rule-int-coefficient', why: '$\\int x^2\\,dx = \\frac{x^3}{3}$; without the $\\frac13$ the result is $8 - 8 = 0$.' },
+    ],
+    correct: 0,
+    explanation: '$\\pi\\left[4x - \\frac{x^3}{3}\\right]_0^2 = \\pi\\left(8 - \\frac83\\right) = \\frac{16\\pi}{3}$, half of $\\frac43\\pi \\cdot 2^3$.',
+    check: { kind: 'definite-integral', integrand: 'pi*(4 - x^2)', lower: '0', upper: '2' },
+    difficulty: 1,
+  },
+  {
+    id: 'vd-f-035',
+    topic: 'volumes-disks',
+    kind: 'evaluate',
+    prompt: { text: 'Rotating the region under $y = 3x$ on $[0, 1]$ about the x-axis gives a cone. Evaluate its volume integral.', latex: '\\pi\\int_0^1 (3x)^2\\,dx' },
+    options: [
+      { latex: '3\\pi', expr: '3*pi' },
+      { latex: '\\pi', expr: 'pi', mistake: 'coefficient-mishandled', why: '$(3x)^2 = 9x^2$; squaring only the $x$ gives $3x^2$ and a result of $\\pi$.' },
+      { latex: '9\\pi', expr: '9*pi', mistake: 'power-rule-int-coefficient', why: '$\\int 9x^2\\,dx = 3x^3$; without dividing by 3 the result is $9\\pi$.' },
+      { latex: '\\frac{9\\pi}{2}', expr: '9*pi/2', mistake: 'power-rule-int-coefficient', why: 'Dividing by the old exponent 2 instead of the new exponent 3 gives $\\frac{9x^3}{2}$.' },
+      { latex: '18\\pi', expr: '18*pi', mistake: 'differentiated-instead', why: '$18x$ is the derivative of $9x^2$, not its antiderivative.' },
+    ],
+    correct: 0,
+    explanation: '$\\pi\\int_0^1 9x^2\\,dx = \\pi\\left[3x^3\\right]_0^1 = 3\\pi$, matching $\\frac13\\pi r^2 h$ with $r = 3$, $h = 1$.',
+    check: { kind: 'definite-integral', integrand: 'pi*(3*x)^2', lower: '0', upper: '1' },
+    difficulty: 1,
+  },
+  {
+    id: 'vd-f-036',
+    topic: 'volumes-disks',
+    kind: 'evaluate',
+    prompt: { text: 'This is the washer integral for the region between $y = e^{x}$ and $y = 1$ on $[0, 1]$, rotated about the x-axis. Evaluate it.', latex: '\\pi\\int_0^1 (e^{2x} - 1)\\,dx' },
+    options: [
+      { latex: '\\frac{\\pi(e^2 - 3)}{2}', expr: 'pi*(e^2 - 3)/2' },
+      { latex: '\\pi(e^2 - 2)', expr: 'pi*(e^2 - 2)', mistake: 'exp-antiderivative-wrong', why: '$\\int e^{2x}\\,dx = \\frac{e^{2x}}{2}$; the $\\frac12$ was dropped.' },
+      { latex: '\\pi(2e^2 - 3)', expr: 'pi*(2*e^2 - 3)', mistake: 'inner-constant-factor-missing', why: 'The antiderivative was multiplied by the inner constant 2 instead of divided by it.' },
+      { latex: '\\frac{\\pi(e^2 - 2)}{2}', expr: 'pi*(e^2 - 2)/2', mistake: 'ftc-not-subtracted', why: 'Only $F(1) = \\frac{e^2}{2} - 1$ was used; $F(0) = \\frac12$ must be subtracted.' },
+      { latex: '\\frac{\\pi(e^2 + 1)}{2}', expr: 'pi*(e^2 + 1)/2', mistake: 'sign-error', why: 'The $-1$ in the integrand was integrated as $+x$.' },
+      { latex: '\\frac{\\pi(e^2 - 1)}{2}', expr: 'pi*(e^2 - 1)/2', mistake: 'algebra-error', why: 'Only $e^{2x}$ was integrated; the contribution $\\int_0^1 (-1)\\,dx = -1$ was left out.' },
+    ],
+    correct: 0,
+    explanation: '$\\pi\\left[\\frac{e^{2x}}{2} - x\\right]_0^1 = \\pi\\left(\\frac{e^2}{2} - 1 - \\frac12\\right) = \\frac{\\pi(e^2 - 3)}{2}$.',
+    check: { kind: 'definite-integral', integrand: 'pi*(exp(2*x) - 1)', lower: '0', upper: '1' },
+    difficulty: 2,
+  },
+  {
+    id: 'vd-f-037',
+    topic: 'volumes-disks',
+    kind: 'evaluate',
+    prompt: { text: 'This integral gives the volume when the region under $y = x^2$ on $[0, 1]$ is rotated about $y = -2$. Evaluate it.', latex: '\\pi\\int_0^1 \\left[(x^2 + 2)^2 - 2^2\\right]dx' },
+    options: [
+      { latex: '\\frac{23\\pi}{15}', expr: '23*pi/15' },
+      { latex: '\\frac{\\pi}{5}', expr: 'pi/5', mistake: 'algebra-error', why: '$(x^2 + 2)^2$ was expanded as $x^4 + 4$, dropping the cross term $4x^2$.' },
+      { latex: '\\frac{13\\pi}{15}', expr: '13*pi/15', mistake: 'algebra-error', why: 'The cross term of $(x^2 + 2)^2$ is $2 \\cdot x^2 \\cdot 2 = 4x^2$, not $2x^2$.' },
+      { latex: '5\\pi', expr: '5*pi', mistake: 'power-rule-int-coefficient', why: '$x^4 + 4x^2$ was integrated as $x^5 + 4x^3$ without dividing by the new exponents.' },
+      { latex: '\\frac{53\\pi}{15}', expr: '53*pi/15', mistake: 'radius-not-squared', why: 'The inner radius 2 was subtracted unsquared: $r^2 = 4$, not 2.' },
+      { latex: '\\frac{83\\pi}{15}', expr: '83*pi/15', mistake: 'washer-as-disk', why: 'Dropping the $-2^2$ term removes the hole of radius 2 and computes a solid disk.' },
+    ],
+    correct: 0,
+    explanation: '$(x^2 + 2)^2 - 4 = x^4 + 4x^2$, so $\\pi\\left[\\frac{x^5}{5} + \\frac{4x^3}{3}\\right]_0^1 = \\pi\\left(\\frac15 + \\frac43\\right) = \\frac{23\\pi}{15}$.',
+    check: { kind: 'definite-integral', integrand: 'pi*((x^2 + 2)^2 - 2^2)', lower: '0', upper: '1' },
+    difficulty: 2,
+  },
+  {
+    id: 'vd-f-038',
+    topic: 'volumes-disks',
+    kind: 'evaluate',
+    prompt: { text: 'A solid has as its base the triangle with vertices $(0,0)$, $(4,0)$, $(0,4)$; cross-sections perpendicular to the x-axis are squares. Evaluate its volume integral.', latex: '\\int_0^4 (4 - x)^2\\,dx' },
+    options: [
+      { latex: '\\frac{64}{3}', expr: '64/3' },
+      { latex: '-\\frac{64}{3}', expr: '-64/3', mistake: 'inner-constant-factor-missing', why: 'The inner function $4 - x$ has derivative $-1$, so the antiderivative is $-\\frac{(4 - x)^3}{3}$; without that minus sign the result is negative.' },
+      { latex: '\\frac{128}{3}', expr: '128/3', mistake: 'algebra-error', why: '$(4 - x)^2$ was expanded as $16 - x^2$; the cross term $-8x$ is missing.' },
+      { latex: '64', expr: '64', mistake: 'power-rule-int-coefficient', why: '$-(4 - x)^3$ was used without dividing by 3.' },
+      { latex: '\\frac{160}{3}', expr: '160/3', mistake: 'algebra-error', why: 'The cross term of $(4 - x)^2$ is $-8x$; using $-4x$ gives $64 - 32 + \\frac{64}{3}$.' },
+      { latex: '-\\frac{128}{3}', expr: '-128/3', mistake: 'power-rule-int-coefficient', why: '$\\int 8x\\,dx = 4x^2$; writing $8x^2$ gives $64 - 128 + \\frac{64}{3}$.' },
+    ],
+    correct: 0,
+    explanation: '$\\int_0^4 (4 - x)^2\\,dx = \\left[-\\frac{(4 - x)^3}{3}\\right]_0^4 = 0 + \\frac{64}{3} = \\frac{64}{3}$.',
+    check: { kind: 'definite-integral', integrand: '(4 - x)^2', lower: '0', upper: '4' },
+    difficulty: 1,
+  },
+  {
+    id: 'vd-f-039',
+    topic: 'volumes-disks',
+    kind: 'evaluate',
+    prompt: { text: 'This is the washer integral for the region bounded by $y = \\ln x$, $y = 0$, and $x = e$, rotated about the y-axis. Evaluate it.', latex: '\\pi\\int_0^1 (e^2 - e^{2y})\\,dy' },
+    options: [
+      { latex: '\\frac{\\pi(e^2 + 1)}{2}', expr: 'pi*(e^2 + 1)/2' },
+      { latex: '\\pi', expr: 'pi', mistake: 'exp-antiderivative-wrong', why: '$\\int e^{2y}\\,dy = \\frac{e^{2y}}{2}$; without the $\\frac12$ the result is $e^2 - (e^2 - 1) = 1$.' },
+      { latex: '\\frac{\\pi(e^2 - 1)}{2}', expr: 'pi*(e^2 - 1)/2', mistake: 'sign-error', why: '$F(0) = -\\frac12$ was subtracted as if it were $+\\frac12$.' },
+      { latex: '\\frac{\\pi e^2}{2}', expr: 'pi*e^2/2', mistake: 'ftc-not-subtracted', why: 'Only $F(1) = \\frac{e^2}{2}$ was used; $F(0) = -\\frac12$ must be subtracted.' },
+      { latex: '\\frac{\\pi(3e^2 - 1)}{2}', expr: 'pi*(3*e^2 - 1)/2', mistake: 'sign-error', why: 'The antiderivative of $-e^{2y}$ was written as $+\\frac{e^{2y}}{2}$.' },
+      { latex: '\\pi(2 - e^2)', expr: 'pi*(2 - e^2)', mistake: 'inner-constant-factor-missing', why: 'Multiplying by the inner constant 2 instead of dividing gives $e^2 - 2(e^2 - 1)$.' },
+    ],
+    correct: 0,
+    explanation: '$\\pi\\left[e^2 y - \\frac{e^{2y}}{2}\\right]_0^1 = \\pi\\left(\\frac{e^2}{2} + \\frac12\\right) = \\frac{\\pi(e^2 + 1)}{2}$.',
+    variable: 'y',
+    check: { kind: 'definite-integral', integrand: 'pi*(e^2 - exp(2*y))', lower: '0', upper: '1' },
+    difficulty: 2,
+  },
+  {
+    id: 'vd-f-040',
+    topic: 'volumes-disks',
+    kind: 'evaluate',
+    prompt: { text: 'Rotating the region under $y = \\frac{1}{x}$ on $[1, 3]$ about the x-axis gives this integral. Evaluate it.', latex: '\\pi\\int_1^3 \\left(\\frac{1}{x}\\right)^2dx' },
+    options: [
+      { latex: '\\frac{2\\pi}{3}', expr: '2*pi/3' },
+      { latex: '\\pi\\ln 3', expr: 'pi*log(3)', mistake: 'ln-misapplied', why: '$\\left(\\frac1x\\right)^2 = x^{-2}$ integrates by the power rule to $-\\frac1x$; $\\ln$ is only for $x^{-1}$.' },
+      { latex: '\\frac{26\\pi}{81}', expr: '26*pi/81', mistake: 'power-rule-int-exponent', why: 'The exponent was lowered to $-3$ (giving $-\\frac{x^{-3}}{3}$) instead of raised to $-1$.' },
+      { latex: '\\frac{52\\pi}{27}', expr: '52*pi/27', mistake: 'differentiated-instead', why: '$-2x^{-3}$ is the derivative of $x^{-2}$, not its antiderivative.' },
+      { latex: '-\\frac{\\pi}{3}', expr: '-pi/3', mistake: 'ftc-not-subtracted', why: 'Only $F(3) = -\\frac13$ was used; $F(1) = -1$ must be subtracted.' },
+      { latex: '-\\frac{4\\pi}{3}', expr: '-4*pi/3', mistake: 'sign-error', why: '$-\\frac13 - (-1) = +\\frac23$; subtracting as $-\\frac13 - 1$ gives $-\\frac43$.' },
+    ],
+    correct: 0,
+    explanation: '$\\pi\\left[-\\frac1x\\right]_1^3 = \\pi\\left(-\\frac13 + 1\\right) = \\frac{2\\pi}{3}$.',
+    check: { kind: 'definite-integral', integrand: 'pi*(1/x)^2', lower: '1', upper: '3' },
+    difficulty: 1,
+  },
+  {
+    id: 'vd-f-041',
+    topic: 'volumes-disks',
+    kind: 'evaluate',
+    prompt: { text: 'This integral gives the volume when the region bounded by $y = x^2$, $y = 4$, and the y-axis is rotated about $x = -1$. Evaluate it.', latex: '\\pi\\int_0^4 \\left[\\left(\\sqrt{y} + 1\\right)^2 - 1\\right]dy' },
+    options: [
+      { latex: '\\frac{56\\pi}{3}', expr: '56*pi/3' },
+      { latex: '8\\pi', expr: '8*pi', mistake: 'algebra-error', why: '$(\\sqrt{y} + 1)^2$ was expanded as $y + 1$; the cross term $2\\sqrt{y}$ is missing.' },
+      { latex: '32\\pi', expr: '32*pi', mistake: 'power-rule-int-coefficient', why: '$\\int \\sqrt{y}\\,dy = \\frac23 y^{3/2}$; multiplying by $\\frac32$ instead gives $8 + 24 = 32$.' },
+      { latex: '\\frac{88\\pi}{3}', expr: '88*pi/3', mistake: 'arithmetic-error', why: '$4^{3/2} = 8$, not 16.' },
+      { latex: '\\frac{68\\pi}{3}', expr: '68*pi/3', mistake: 'washer-as-disk', why: 'The $-1$ (the hole, $r^2 = 1$) was dropped, turning the washer into a solid disk.' },
+      { latex: '-\\frac{8\\pi}{3}', expr: '-8*pi/3', mistake: 'sign-error', why: '$(\\sqrt{y} + 1)^2 - 1 = y + 2\\sqrt{y}$; writing $y - 2\\sqrt{y}$ flips the cross term.' },
+    ],
+    correct: 0,
+    explanation: '$(\\sqrt{y} + 1)^2 - 1 = y + 2\\sqrt{y}$, so $\\pi\\left[\\frac{y^2}{2} + \\frac43 y^{3/2}\\right]_0^4 = \\pi\\left(8 + \\frac{32}{3}\\right) = \\frac{56\\pi}{3}$.',
+    variable: 'y',
+    check: { kind: 'definite-integral', integrand: 'pi*((sqrt(y) + 1)^2 - 1)', lower: '0', upper: '4' },
+    difficulty: 2,
+  },
+
+  // ───────────── technique: disk or washer, x or y ─────────────
+  {
+    id: 'vd-f-042',
+    topic: 'volumes-disks',
+    kind: 'technique',
+    prompt: { text: 'The region bounded by $y = e^{x}$, $y = 0$, $x = 0$, and $x = 1$ is rotated about the line $y = -1$. What do the slices perpendicular to the axis look like?' },
+    options: [
+      { text: 'Washers: the region stops at $y = 0$, one unit above the axis, so every slice has a hole of radius 1' },
+      { text: 'Disks: the region touches the x-axis, so each slice is solid', mistake: 'washer-as-disk', why: 'Touching the x-axis does not matter; the axis is $y = -1$, and the strip between $y = -1$ and $y = 0$ is a hole.' },
+      { text: 'Disks of radius $e^{x} + 1$ reaching from the axis up to the curve', mistake: 'washer-as-disk', why: 'The strip between $y = -1$ and $y = 0$ is not part of the region, so it cannot be part of the slice.' },
+      { text: 'Washers with a hole of radius $e^{x}$', mistake: 'radius-is-function-value', why: 'The hole reaches from $y = -1$ to the near edge $y = 0$, so its radius is 1; $e^x$ belongs to the outer edge.' },
+      { text: 'Washers with a hole of radius 1 and outer radius $e^{x} - 1$', mistake: 'axis-shift-sign', why: 'The distance from $y = e^x$ down to $y = -1$ is $e^x + 1$.' },
+    ],
+    correct: 0,
+    explanation: 'Measured from $y = -1$: the outer edge is at distance $e^x + 1$ and the inner edge $y = 0$ at distance 1, so each slice is a washer.',
+    check: { kind: 'none', reason: 'technique recognition; options describe slices' },
+    difficulty: 1,
+  },
+  {
+    id: 'vd-f-043',
+    topic: 'volumes-disks',
+    kind: 'technique',
+    prompt: { text: 'The region between $y = x^2$ and $y = 1$ is rotated about the line $y = 1$. Which description of the slices perpendicular to the axis is correct?' },
+    options: [
+      { text: 'Disks of radius $1 - x^2$: the axis is the top edge of the region' },
+      { text: 'Washers with $R = 1$ and $r = x^2$', mistake: 'axis-shift-missing', why: 'Those radii are measured from the x-axis; from $y = 1$ the parabola is $1 - x^2$ away and the top edge lies on the axis.' },
+      { text: 'Washers with $R = 1 - x^2$ and $r = 1$', mistake: 'radius-is-function-value', why: 'The line $y = 1$ is the axis, so its distance to the axis is 0, not its height 1.' },
+      { text: 'Disks of radius $1 + x^2$', mistake: 'axis-shift-sign', why: 'The parabola lies below $y = 1$, so its distance to the axis is $1 - x^2$.' },
+      { text: 'Disks of radius $x^2$', mistake: 'radius-is-function-value', why: '$x^2$ is the height of the parabola above the x-axis; the radius is its distance to $y = 1$.' },
+      { text: 'Disks of radius $\\sqrt{y}$ stacked along the y-axis', mistake: 'wrong-integration-variable', why: 'Slices perpendicular to the horizontal axis $y = 1$ are vertical, so they are stacked along $x$.' },
+    ],
+    correct: 0,
+    explanation: 'Each vertical slice runs from the parabola up to the axis $y = 1$ itself, so it is a disk of radius $1 - x^2$.',
+    check: { kind: 'none', reason: 'technique recognition; options describe slices' },
+    difficulty: 2,
+  },
+  {
+    id: 'vd-f-044',
+    topic: 'volumes-disks',
+    kind: 'technique',
+    prompt: { text: 'The region between $y = x^2$ and $y = 2x$ is rotated about the y-axis using washers. Which setup is correct?' },
+    options: [
+      { text: 'Integrate in $y$ from 0 to 4 with $R = \\sqrt{y}$ and $r = \\frac{y}{2}$' },
+      { text: 'Integrate in $x$ from 0 to 2 with $R = 2x$ and $r = x^2$', mistake: 'wrong-integration-variable', why: 'Those are the washers for rotation about the x-axis; slices perpendicular to the y-axis are horizontal, in $y$.' },
+      { text: 'Integrate in $y$ from 0 to 2 with $R = \\sqrt{y}$ and $r = \\frac{y}{2}$', mistake: 'bounds-wrong-axis', why: '0 to 2 is the x-range; the heights of the region run from $y = 0$ to $y = 4$.' },
+      { text: 'Integrate in $y$ from 0 to 4 with $R = \\frac{y}{2}$ and $r = \\sqrt{y}$', mistake: 'radii-swapped', why: 'For $0 < y < 4$, $\\sqrt{y} > \\frac{y}{2}$, so the parabola is the far edge and gives $R$.' },
+      { text: 'Integrate in $y$ from 0 to 4 with $R = 2y$ and $r = y^2$', mistake: 'inverse-function-wrong', why: 'The curves must be solved for $x$: $y = 2x$ gives $x = \\frac{y}{2}$ and $y = x^2$ gives $x = \\sqrt{y}$.' },
+      { text: 'Integrate in $y$ from 0 to 4 with $R = \\sqrt{y}$ and $r = 0$', mistake: 'washer-as-disk', why: 'At height $y$ the region starts at $x = \\frac{y}{2}$, not at the axis, so there is a hole.' },
+    ],
+    correct: 0,
+    explanation: 'Horizontal slices at height $y \\in [0, 4]$ run from $x = \\frac{y}{2}$ (line, near) to $x = \\sqrt{y}$ (parabola, far).',
+    check: { kind: 'none', reason: 'technique recognition; options are setups described in words' },
+    difficulty: 2,
+  },
+  {
+    id: 'vd-f-045',
+    topic: 'volumes-disks',
+    kind: 'technique',
+    prompt: { text: 'The first-quadrant region bounded by $y = x^2$, $y = 2 - x$, and the x-axis is rotated about the x-axis. How should the disk integral be set up?' },
+    options: [
+      { text: 'Two integrals in $x$, split at $x = 1$: radius $x^2$ on $[0, 1]$ and radius $2 - x$ on $[1, 2]$' },
+      { text: 'One integral in $x$ over $[0, 2]$ with radius $x^2$', mistake: 'volume-two-integrals-missed', why: 'For $1 < x < 2$ the top of the region is the line $y = 2 - x$, not the parabola.' },
+      { text: 'One integral in $x$ over $[0, 2]$ with $R = 2 - x$ and $r = x^2$', mistake: 'volume-two-integrals-missed', why: 'The region reaches the x-axis, so there is no hole, and its top edge switches from $x^2$ to $2 - x$ at $x = 1$.' },
+      { text: 'Two integrals in $x$, split at $x = 1$: radius $2 - x$ on $[0, 1]$ and radius $x^2$ on $[1, 2]$', mistake: 'top-bottom-swapped', why: 'On $[0, 1]$ the parabola is the top edge ($x^2 \\le 2 - x$); on $[1, 2]$ the line is.' },
+      { text: 'One integral in $y$ over $[0, 1]$ with $R = 2 - y$ and $r = \\sqrt{y}$', mistake: 'wrong-integration-variable', why: 'Horizontal slices are parallel to the x-axis; those washers describe rotation about the y-axis.' },
+      { text: 'One integral in $x$ over $[0, 1]$ with radius $x^2$', mistake: 'missing-intersection', why: 'The region continues to $x = 2$, where the line meets the x-axis.' },
+    ],
+    correct: 0,
+    explanation: 'The top boundary is $y = x^2$ until the curves meet at $x = 1$, then $y = 2 - x$ until $x = 2$, so the disk radius changes formula and the integral splits.',
+    check: { kind: 'none', reason: 'technique recognition; options are setups described in words' },
+    difficulty: 2,
+  },
+  {
+    id: 'vd-f-046',
+    topic: 'volumes-disks',
+    kind: 'concept',
+    prompt: { text: 'The base of a solid is the triangle with vertices $(0,0)$, $(2,0)$, $(0,2)$. Cross-sections perpendicular to the x-axis are equilateral triangles with one side in the base. Which integral gives the volume?' },
+    options: [
+      { latex: '\\frac{\\sqrt{3}}{4}\\int_0^2 (2 - x)^2\\,dx', expr: 'sqrt(3)/4*integral((2 - x)^2, x, 0, 2)' },
+      { latex: '\\frac{1}{2}\\int_0^2 (2 - x)^2\\,dx', expr: 'integral((2 - x)^2, x, 0, 2)/2', mistake: 'cross-section-area-wrong', why: '$\\frac12 s^2$ takes the height of the triangle equal to its side; the height is $\\frac{\\sqrt{3}}{2}s$.' },
+      { latex: '\\frac{\\sqrt{3}}{2}\\int_0^2 (2 - x)^2\\,dx', expr: 'sqrt(3)/2*integral((2 - x)^2, x, 0, 2)', mistake: 'formula-missing-factor', why: 'Area $= \\frac12 \\cdot s \\cdot \\frac{\\sqrt{3}}{2}s$; the $\\frac12$ was dropped.' },
+      { latex: '\\frac{\\sqrt{3}}{4}\\int_0^2 (2 - x)\\,dx', expr: 'sqrt(3)/4*integral(2 - x, x, 0, 2)', mistake: 'formula-wrong-power', why: 'The side length $2 - x$ must be squared in the area formula.' },
+      { latex: '\\int_0^2 (2 - x)^2\\,dx', expr: 'integral((2 - x)^2, x, 0, 2)', mistake: 'cross-section-area-wrong', why: '$s^2$ is the area of a square slice; an equilateral triangle has area $\\frac{\\sqrt{3}}{4}s^2$.' },
+      { latex: '\\frac{\\sqrt{3}}{4}\\int_0^2 \\left(2(2 - x)\\right)^2dx', expr: 'sqrt(3)/4*integral((2*(2 - x))^2, x, 0, 2)', mistake: 'coefficient-mishandled', why: 'The side runs from $y = 0$ to $y = 2 - x$; doubling it (as for a base symmetric about the axis) quadruples the area.' },
+    ],
+    correct: 0,
+    explanation: 'At $x$ the side is the vertical segment from $y = 0$ to $y = 2 - x$, so $A(x) = \\frac{\\sqrt{3}}{4}(2 - x)^2$ for $0 \\le x \\le 2$.',
+    check: { kind: 'value', expected: '2*sqrt(3)/3' },
+    difficulty: 1,
+  },
+];
+
+// ───────────── generator: washer area from one slice ─────────────
+function mulberry(seed: number): () => number {
+  let a = seed >>> 0;
+  return () => {
+    a = (a + 0x6d2b79f5) >>> 0;
+    let t = a;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+/** A vertical slice from y = a to y = b, rotated about the horizontal line y = axis (below or above). */
+interface SliceCase {
+  a: number;
+  b: number;
+  axis: number;
+}
+
+function sliceValues(c: SliceCase) {
+  const below = c.axis < 0;
+  const k = Math.abs(c.axis);
+  const R = below ? c.b + k : c.axis - c.a;
+  const r = below ? c.a + k : c.axis - c.b;
+  return {
+    below,
+    k,
+    R,
+    r,
+    correct: R * R - r * r,
+    noShift: c.b * c.b - c.a * c.a,
+    diffSquared: (R - r) * (R - r),
+    notSquared: R - r,
+    wrongSign: below ? (c.b - k) ** 2 - (c.a - k) ** 2 : (c.b + k) ** 2 - (c.a + k) ** 2,
+    disk: R * R,
+  };
+}
+
+/** Every case whose six option values are positive and pairwise different (so no two options coincide). */
+const SLICE_CASES: SliceCase[] = (() => {
+  const out: SliceCase[] = [];
+  for (let a = 1; a <= 3; a++) {
+    for (let b = a + 2; b <= a + 4; b++) {
+      const axes = [-1, -2, -3, b + 1, b + 2, b + 3];
+      for (const axis of axes) {
+        if (a === 2 && b === 5 && axis === -1) continue; // same as static item vd-f-001
+        const v = sliceValues({ a, b, axis });
+        const vals = [v.correct, v.noShift, v.diffSquared, v.notSquared, v.wrongSign, v.disk];
+        if (vals.some((x) => x <= 0)) continue;
+        if (new Set(vals).size !== vals.length) continue;
+        out.push({ a, b, axis });
+      }
+    }
+  }
+  return out;
+})();
+
+const piLatex = (n: number): string => (n === 1 ? '\\pi' : `${n}\\pi`);
+
+export const generators: FlashGenerator[] = [
+  {
+    id: 'vd-g-washer-slice',
+    topic: 'volumes-disks',
+    kind: 'concept',
+    describe: 'Area of the washer swept by one vertical slice (from y = a to y = b) about a horizontal line below or above it',
+    generate(seed) {
+      const rng = mulberry(seed);
+      const c = SLICE_CASES[Math.floor(rng() * SLICE_CASES.length)];
+      const v = sliceValues(c);
+      const { a, b } = c;
+      const axisTex = v.below ? `y = -${v.k}` : `y = ${v.k}`;
+      const correctOpt = { latex: piLatex(v.correct), expr: `${v.correct}*pi` };
+      const distractors = [
+        {
+          latex: piLatex(v.noShift),
+          expr: `${v.noShift}*pi`,
+          mistake: 'axis-shift-missing' as const,
+          why: `This is $\\pi(${b}^2 - ${a}^2)$: the radii were measured from the x-axis instead of from the axis $${axisTex}$.`,
+        },
+        {
+          latex: piLatex(v.diffSquared),
+          expr: `${v.diffSquared}*pi`,
+          mistake: 'washer-difference-squared' as const,
+          why: `This is $\\pi(${v.R} - ${v.r})^2$: the difference of the radii was squared instead of subtracting the squares.`,
+        },
+        {
+          latex: piLatex(v.notSquared),
+          expr: `${v.notSquared}*pi`,
+          mistake: 'radius-not-squared' as const,
+          why: `This is $\\pi(${v.R} - ${v.r})$: the radii were subtracted but never squared.`,
+        },
+        {
+          latex: piLatex(v.wrongSign),
+          expr: `${v.wrongSign}*pi`,
+          mistake: 'axis-shift-sign' as const,
+          why: v.below
+            ? `This is $\\pi((${b} - ${v.k})^2 - (${a} - ${v.k})^2)$: subtracting ${v.k} measures distance to $y = ${v.k}$, not to $y = -${v.k}$.`
+            : `This is $\\pi((${b} + ${v.k})^2 - (${a} + ${v.k})^2)$: adding ${v.k} measures distance to $y = -${v.k}$, not to $y = ${v.k}$.`,
+        },
+        {
+          latex: piLatex(v.disk),
+          expr: `${v.disk}*pi`,
+          mistake: 'washer-as-disk' as const,
+          why: `This is $\\pi \\cdot ${v.R}^2$: the gap between the axis and the slice (a hole of radius ${v.r}) was ignored.`,
+        },
+      ];
+      const pos = Math.floor(rng() * 6);
+      const options = [...distractors.slice(0, pos), correctOpt, ...distractors.slice(pos)];
+      const explanation = v.below
+        ? `Distances to $${axisTex}$: $R = ${b} + ${v.k} = ${v.R}$ and $r = ${a} + ${v.k} = ${v.r}$, so $A = \\pi(${v.R}^2 - ${v.r}^2) = ${piLatex(v.correct)}$.`
+        : `Distances to $${axisTex}$: the bottom $y = ${a}$ is farther, $R = ${v.k} - ${a} = ${v.R}$, and the top gives $r = ${v.k} - ${b} = ${v.r}$, so $A = \\pi(${v.R}^2 - ${v.r}^2) = ${piLatex(v.correct)}$.`;
+      return {
+        id: `vd-g-washer-slice:${seed}`,
+        topic: 'volumes-disks',
+        kind: 'concept',
+        prompt: {
+          text: `A vertical slice of a region runs from $y = ${a}$ up to $y = ${b}$. The region is rotated about the line $${axisTex}$. What is the area of the washer this slice sweeps out?`,
+        },
+        options,
+        correct: pos,
+        explanation,
+        check: { kind: 'value', expected: `pi*(${v.R}^2 - ${v.r}^2)` },
+        difficulty: 1,
+      };
+    },
+  },
+];

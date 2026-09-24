@@ -484,6 +484,21 @@ export const MISTAKES = {
     description: 'A limit of integration was taken at the axis (e.g. x = −2) although the region begins elsewhere.',
     group: 'volumes',
   },
+  'disk-as-washer': {
+    label: 'Invented a hole that is not there',
+    description: 'Used a washer with a nonzero inner radius although the region touches the axis of rotation.',
+    group: 'volumes',
+  },
+  'phantom-axis-shift': {
+    label: 'Treated part of the function as an axis shift',
+    description: 'Dropped or moved a constant term of the boundary curve as if it were a shift of the axis of rotation.',
+    group: 'volumes',
+  },
+  'boundary-pieces-swapped': {
+    label: 'Boundary curves assigned to the wrong sub-intervals',
+    description: 'When the region needs a split, the curves for the two pieces were interchanged.',
+    group: 'volumes',
+  },
   'volume-two-integrals-missed': {
     label: 'Boundary change ignored (needs a split)',
     description: 'A single integral was written although the outer/inner boundary (or shell height) changes formula mid-interval.',
