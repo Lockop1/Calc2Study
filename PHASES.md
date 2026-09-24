@@ -30,3 +30,4 @@ Legend: ☐ not started · ◐ in progress · ☑ done · ✗ blocked
 - Task 9 done: QA report compiled from the tester's results (container restart interrupted the agent); reset-confirm debounce added; final build verified.
 - Session 2, Task 10 (Cards): `Card` type added to content/types.ts, deck stub + `tests/cards.test.ts` written by the orchestrator; content-author writing the 50-card deck; ui-builder building CardsScreen; verifier to follow.
 - Task 10 done: deck verified (qa/verification/cards.md), Cards UI built and smoke-tested (qa/cards-smoke.mjs), suite 27 files / 962 tests, build green.
+- Cards polish: 200 ms edge-on flip animation (face and colour swap while the card is edge-on; instant under reduced motion), answer side tinted with an accent border and an “Answer” tag in both themes; verified in Chromium at 390×844 (qa/screenshots/cards-flip-*.png).
