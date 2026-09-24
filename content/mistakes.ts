@@ -178,6 +178,26 @@ export const MISTAKES = {
     description: 'Treated an inverse trig function as the reciprocal trig function.',
     group: 'differentiation',
   },
+  'quotient-of-derivatives': {
+    label: 'Differentiated numerator and denominator separately',
+    description: 'Wrote (f/g)′ = f′/g′ instead of using the quotient rule.',
+    group: 'differentiation',
+  },
+  'composition-misread': {
+    label: 'Misread the composition',
+    description: 'Read (f(x))² as f(x²), or f(g(x)) with the wrong inner/outer function.',
+    group: 'differentiation',
+  },
+  'power-as-exponential': {
+    label: 'Treated a power like an exponential',
+    description: 'd/dx(x^π) written as x^π·ln x (or similar): a constant exponent means the power rule.',
+    group: 'differentiation',
+  },
+  'inner-function-not-derivative': {
+    label: 'Multiplied by the inner function instead of its derivative',
+    description: 'Chain rule applied as f′(u)·u instead of f′(u)·u′.',
+    group: 'differentiation',
+  },
   'coefficient-mishandled': {
     label: 'Constant multiple dropped or duplicated',
     description: 'A constant factor was lost, doubled, or moved to the wrong place.',
