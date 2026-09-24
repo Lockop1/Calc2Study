@@ -695,6 +695,21 @@ export const MISTAKES = {
     description: 'Replaced tan²x by sec²x + 1, or sec²x by tan²x − 1.',
     group: 'trig-integrals',
   },
+  'antiderivative-not-unique': {
+    label: 'Believed only one form of the antiderivative is right',
+    description: 'Rejected a correct antiderivative because it differs from another correct one by a constant or an identity.',
+    group: 'integration-basics',
+  },
+  'constant-not-integrated': {
+    label: 'Constant term not integrated',
+    description: 'Wrote ∫c dt as c instead of c·t.',
+    group: 'integration-basics',
+  },
+  'angle-mismatch': {
+    label: 'Substitution angle does not match the factor',
+    description: 'e.g. used u = cos t although the saved factor is sin 2t (angle 2t, not t).',
+    group: 'trig-integrals',
+  },
   'product-to-sum-wrong': {
     label: 'Product-to-sum / angle-addition identity wrong',
     description: 'Wrong coefficients or signs when rewriting sin(mx)cos(nx) or cos(mx)cos(nx).',
