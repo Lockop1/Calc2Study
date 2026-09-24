@@ -1,4 +1,4 @@
-/** Home: title, topic picker (multi-select, persisted), the three modes, and the Settings gear. */
+/** Home: title, topic picker (multi-select, persisted), the three modes, Cards, and the Settings gear. */
 import { TOPICS } from '@content/topics';
 import type { TopicId } from '@content/types';
 import { ChevronIcon, GearIcon } from '../components/Icons';
@@ -24,6 +24,8 @@ export interface HomeScreenProps {
   onSelectAll: () => void;
   onSelectNone: () => void;
   onStart: (mode: Mode) => void;
+  /** Cards mode (flashcards); it has its own section filter, so the topic picker does not dim it. */
+  onCards: () => void;
   onSettings: () => void;
 }
 
@@ -36,6 +38,7 @@ export function HomeScreen({
   onSelectAll,
   onSelectNone,
   onStart,
+  onCards,
   onSettings,
 }: HomeScreenProps) {
   const chosen = new Set(selected);
@@ -143,6 +146,19 @@ export function HomeScreen({
             <ChevronIcon />
           </button>
         ))}
+        <button
+          type="button"
+          className="mode-btn"
+          onClick={(event) => {
+            if (!tooSoon(event)) onCards();
+          }}
+        >
+          <span className="mode-text">
+            <span className="mode-title">Cards</span>
+            <span className="mode-sub">Flip the whiteboard formulas</span>
+          </span>
+          <ChevronIcon />
+        </button>
       </section>
     </main>
   );

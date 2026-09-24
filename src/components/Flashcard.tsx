@@ -1,0 +1,60 @@
+/**
+ * One flashcard. The front shows the prompt framed by the card kind (d/dx[…], ∫ … dx, LHS = ?, or
+ * the board's question); the back repeats the prompt small, then the answer in display math and the
+ * optional "also written as" form. Tapping anywhere on the card flips it (the keyboard path is the
+ * "Show answer" button in the dock). Long formulas scroll inside their own `.math-scroll` box.
+ */
+import type { Card } from '@content/types';
+import { frameCardFront, type CardFront } from '../lib/cards';
+import { cx } from '../lib/util';
+import { Tex } from './Math';
+import { RichText } from './RichText';
+
+export interface FlashcardProps {
+  card: Card;
+  /** Showing the back. */
+  flipped: boolean;
+  onFlip: (event: { detail: number }) => void;
+}
+
+function Prompt({ front, className }: { front: CardFront; className: string }) {
+  return (
+    <div className={className}>
+      {front.text ? <RichText className="fc-text" text={front.text} /> : null}
+      {front.latex ? <Tex className="fc-math" latex={front.latex} displayMode /> : null}
+    </div>
+  );
+}
+
+export function Flashcard({ card, flipped, onFlip }: FlashcardProps) {
+  const front = frameCardFront(card);
+  return (
+    <section
+      className={cx('flashcard', flipped && 'flashcard--back')}
+      data-side={flipped ? 'back' : 'front'}
+      aria-label={flipped ? 'Card, answer side' : 'Card'}
+      onClick={onFlip}
+    >
+      <p className="fc-category">{card.category}</p>
+      {flipped ? (
+        <div key="back" className="fc-face fc-back">
+          <Prompt front={front} className="fc-recall" />
+          <Tex className="fc-answer" latex={card.back.latex} displayMode />
+          {card.back.also ? (
+            <div className="fc-also">
+              <span className="fc-also-label">also written as</span>
+              <Tex latex={card.back.also} />
+            </div>
+          ) : null}
+        </div>
+      ) : (
+        <div key="front" className="fc-face fc-front">
+          <Prompt front={front} className="fc-prompt" />
+        </div>
+      )}
+      <p className="fc-flip-hint" aria-hidden="true">
+        {flipped ? 'Tap to see the front' : 'Tap to flip'}
+      </p>
+    </section>
+  );
+}

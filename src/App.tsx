@@ -2,6 +2,7 @@
  * App shell: a small screen state machine (no router).
  *   home → flash | steps | review → summary → (review misses | another round | home)
  *   home → settings → home
+ *   home → cards (filters → study → summary) → home
  * Settings and progress are loaded once, kept in state, and saved on every change.
  */
 import type { TopicContent, TopicId } from '@content/types';
@@ -15,6 +16,7 @@ import type { Mode, RoundResult } from './lib/session';
 import { defaultSettings, normalizeTopics, toggleTopic, type RoundSize, type Settings } from './lib/settings';
 import { loadProgress, loadSettings, resetProgress, saveProgress, saveSettings, storageAvailable } from './lib/storage';
 import { flashItemsFor, generatorsFor, problemsFor } from './lib/units';
+import { CardsScreen } from './screens/CardsScreen';
 import { DrillScreen } from './screens/DrillScreen';
 import { HomeScreen, type Availability } from './screens/HomeScreen';
 import { SettingsScreen } from './screens/SettingsScreen';
@@ -27,7 +29,8 @@ export type Screen =
   | { name: 'steps'; key: number; problemIds: string[] }
   | { name: 'review'; key: number; unitIds: string[] }
   | { name: 'summary'; result: RoundResult }
-  | { name: 'settings' };
+  | { name: 'settings' }
+  | { name: 'cards'; key: number };
 
 export interface AppProps {
   /** Content to play (tests inject fixtures); defaults to `getContent()`. */
@@ -167,6 +170,9 @@ export default function App({ content: contentProp, rng = Math.random, now = Dat
         />
       );
       break;
+    case 'cards':
+      body = <CardsScreen key={screen.key} rng={rng} now={now} onHome={() => goHome()} />;
+      break;
     case 'settings':
       body = (
         <SettingsScreen
@@ -204,6 +210,10 @@ export default function App({ content: contentProp, rng = Math.random, now = Dat
             updateSettings({ ...settings, topics: [] });
           }}
           onStart={startRound}
+          onCards={() => {
+            setNotice(null);
+            go({ name: 'cards', key: ++roundCounter.current });
+          }}
           onSettings={() => {
             setNotice(null);
             go({ name: 'settings' });

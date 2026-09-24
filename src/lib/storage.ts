@@ -3,11 +3,13 @@
  * storage is missing, blocked (private mode, disabled cookies), or full, values live in an
  * in-memory fallback for the rest of the session, so the app always works.
  */
+import { clearCardProgress, defaultCardState, sanitizeCardState, type CardState } from './cards';
 import { emptyProgress, pruneProgress, sanitizeProgress, type Progress } from './progress';
 import { defaultSettings, sanitizeSettings, type Settings } from './settings';
 
 export const SETTINGS_KEY = 'calc2study:settings';
 export const PROGRESS_KEY = 'calc2study:progress';
+export const CARDS_KEY = 'calc2study:cards';
 const PROBE_KEY = 'calc2study:probe';
 
 /** Values whose last write could not reach localStorage (newer than whatever is stored there). */
@@ -106,6 +108,26 @@ export function resetProgress(): Progress {
   const empty = emptyProgress();
   if (!removeRaw(PROGRESS_KEY)) memory.set(PROGRESS_KEY, JSON.stringify(empty));
   return empty;
+}
+
+/** Cards mode: per-card results and the filter choices. */
+export function loadCardState(): CardState {
+  const raw = readJson(CARDS_KEY);
+  return raw === undefined ? defaultCardState() : sanitizeCardState(raw);
+}
+
+export function saveCardState(state: CardState): boolean {
+  return writeRaw(CARDS_KEY, JSON.stringify(state));
+}
+
+/**
+ * Erases card results: only `ids` when given (the filtered cards), otherwise every card. The filter
+ * choices are kept. Returns the new state (already saved).
+ */
+export function resetCardState(state: CardState, ids?: readonly string[] | null): CardState {
+  const next = clearCardProgress(state, ids);
+  saveCardState(next);
+  return next;
 }
 
 /** Test helper: forget values held by the in-memory fallback. */
