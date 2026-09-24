@@ -1004,5 +1004,95 @@ export const flash: FlashItem[] = [
   },
 ];
 
-/** Parameterized generators (optional). */
-export const generators: FlashGenerator[] = [];
+// ───────────── generator: shell radius about a shifted vertical axis ─────────────
+/** Deterministic PRNG (mulberry32), as in content/examples/sample.ts. */
+function mulberry(seed: number): () => number {
+  let a = seed >>> 0;
+  return () => {
+    a = (a + 0x6d2b79f5) >>> 0;
+    let t = a;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+/** Curves that are ≥ 0 on [0, b] for every b used below, so the height is f(x) − 0. */
+const AXIS_CURVES: { latex: string; expr: string }[] = [
+  { latex: 'x^2', expr: 'x^2' },
+  { latex: 'x^3', expr: 'x^3' },
+  { latex: '\\sqrt{x}', expr: 'sqrt(x)' },
+  { latex: 'e^{x}', expr: 'exp(x)' },
+  { latex: 'x^2 + 1', expr: 'x^2 + 1' },
+];
+
+/** Parameterized generators. */
+export const generators: FlashGenerator[] = [
+  {
+    id: 'vs-g-axis-radius',
+    topic: 'volumes-shells',
+    kind: 'concept',
+    describe:
+      'Radius and height of the shell for the region under y = f(x), 0 ≤ x ≤ b (b = 1..3), rotated about a vertical line x = −k left of the region or x = m right of it',
+    generate(seed: number): FlashItem {
+      const rng = mulberry(seed);
+      const curve = AXIS_CURVES[Math.floor(rng() * AXIS_CURVES.length)];
+      const f = curve.latex;
+      const b = 1 + Math.floor(rng() * 3); // 1..3
+      const left = rng() < 0.5;
+      type Opt = FlashItem['options'][number];
+      let axis: string;
+      let correctOpt: Opt;
+      let distractors: Opt[];
+      let expected: string;
+      let explanation: string;
+      if (left) {
+        let k = 1 + Math.floor(rng() * 5); // 1..5, k ≠ b so that "k − x" and "b − x" differ
+        if (k === b) k = b + 1;
+        axis = `-${k}`;
+        expected = `[x + ${k}, ${curve.expr}]`;
+        correctOpt = { latex: `r = x + ${k},\\quad h = ${f}`, expr: expected };
+        distractors = [
+          { latex: `r = x - ${k},\\quad h = ${f}`, expr: `[x - ${k}, ${curve.expr}]`, mistake: 'axis-shift-sign', why: `The distance from x to the line x = −${k} is x − (−${k}) = x + ${k}, not x − ${k}.` },
+          { latex: `r = x,\\quad h = ${f}`, expr: `[x, ${curve.expr}]`, mistake: 'axis-shift-missing', why: `x is the distance to the y-axis; the axis of rotation is the line x = −${k}.` },
+          { latex: `r = ${k} - x,\\quad h = ${f}`, expr: `[${k} - x, ${curve.expr}]`, mistake: 'axis-shift-sign', why: `${k} − x measures to the line x = ${k}, not to x = −${k}.` },
+          { latex: `r = ${b} - x,\\quad h = ${f}`, expr: `[${b} - x, ${curve.expr}]`, mistake: 'shell-radius-wrong', why: `${b} − x is the distance to the edge x = ${b} of the region; the radius is measured to the axis x = −${k}.` },
+          { latex: `r = ${f},\\quad h = x + ${k}`, expr: `[${curve.expr}, x + ${k}]`, mistake: 'shell-radius-wrong', why: `Radius and height are swapped: the slice has length $${f}$ and sits $x + ${k}$ from the axis.` },
+        ];
+        explanation = `The slice at $x$ runs from $y = 0$ up to $y = ${f}$, and its distance to the axis $x = -${k}$ is $x - (-${k}) = x + ${k}$.`;
+      } else {
+        const m = b + 1 + Math.floor(rng() * 3); // b+1..b+3, right of the region
+        axis = `${m}`;
+        expected = `[${m} - x, ${curve.expr}]`;
+        correctOpt = { latex: `r = ${m} - x,\\quad h = ${f}`, expr: expected };
+        distractors = [
+          { latex: `r = x - ${m},\\quad h = ${f}`, expr: `[x - ${m}, ${curve.expr}]`, mistake: 'axis-shift-sign', why: `For 0 ≤ x ≤ ${b} this is negative; the slice lies left of x = ${m}, so its distance to the axis is ${m} − x.` },
+          { latex: `r = x,\\quad h = ${f}`, expr: `[x, ${curve.expr}]`, mistake: 'axis-shift-missing', why: `x is the distance to the y-axis; the axis of rotation is the line x = ${m}.` },
+          { latex: `r = x + ${m},\\quad h = ${f}`, expr: `[x + ${m}, ${curve.expr}]`, mistake: 'axis-shift-sign', why: `x + ${m} is the distance to the line x = −${m}, not to x = ${m}.` },
+          { latex: `r = ${b} - x,\\quad h = ${f}`, expr: `[${b} - x, ${curve.expr}]`, mistake: 'shell-radius-wrong', why: `${b} − x is the distance to the edge x = ${b} of the region; the radius is measured to the axis x = ${m}.` },
+          { latex: `r = ${f},\\quad h = ${m} - x`, expr: `[${curve.expr}, ${m} - x]`, mistake: 'shell-radius-wrong', why: `Radius and height are swapped: the slice has length $${f}$ and sits $${m} - x$ from the axis.` },
+        ];
+        explanation = `The slice at $x$ runs from $y = 0$ up to $y = ${f}$, and it lies $${m} - x$ units left of the axis $x = ${m}$.`;
+      }
+      // Rotate so the correct option's position varies with the seed.
+      const all = [correctOpt, ...distractors];
+      const shift = Math.floor(rng() * all.length);
+      const options = [...all.slice(shift), ...all.slice(0, shift)];
+      const correct = (all.length - shift) % all.length;
+      return {
+        id: `vs-g-axis-radius:${seed}`,
+        topic: 'volumes-shells',
+        kind: 'concept',
+        prompt: {
+          text: `The region under $y = ${f}$ for $0 \\le x \\le ${b}$ is rotated about the line $x = ${axis}$. What are the radius and height of the shell at position $x$?`,
+        },
+        options,
+        correct,
+        explanation,
+        check: { kind: 'value', expected },
+        difficulty: 1,
+        tags: ['radius-height', 'axis-shift'],
+      };
+    },
+  },
+];

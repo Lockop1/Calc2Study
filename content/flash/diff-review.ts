@@ -1549,8 +1549,929 @@ export const flash: FlashItem[] = [
     check: { kind: 'derivative', of: 'x^pi + pi^x + pi^2' },
     difficulty: 2,
   },
-  // @@APPEND_FLASH@@
+  // ───────────── Derivative table (formula items) ─────────────
+  {
+    id: 'dr-f-037',
+    topic: 'diff-review',
+    kind: 'formula',
+    prompt: { text: 'What is $\\frac{d}{dx}\\tan x$?' },
+    options: [
+      {
+        latex: '\\sec x\\tan x',
+        expr: 'sec(x)*tan(x)',
+        mistake: 'trig-derivative-swapped',
+        why: '$\\sec x\\tan x$ is the derivative of $\\sec x$.',
+      },
+      {
+        latex: '-\\csc^2 x',
+        expr: '-csc(x)^2',
+        mistake: 'trig-derivative-swapped',
+        why: '$-\\csc^2 x$ is the derivative of $\\cot x$.',
+      },
+      { latex: '\\sec^2 x', expr: 'sec(x)^2' },
+      {
+        latex: '\\sec x',
+        expr: 'sec(x)',
+        mistake: 'trig-derivative-swapped',
+        why: 'The square is missing: $(\\tan x)\' = \\frac{1}{\\cos^2 x} = \\sec^2 x$.',
+      },
+      {
+        latex: '-\\ln|\\cos x|',
+        expr: '-log(abs(cos(x)))',
+        mistake: 'integrated-instead',
+        why: '$-\\ln|\\cos x|$ is the antiderivative of $\\tan x$, not its derivative.',
+      },
+      {
+        latex: '\\frac{1}{1+x^2}',
+        expr: '1/(1 + x^2)',
+        mistake: 'inverse-trig-confused',
+        why: '$\\frac{1}{1+x^2}$ is the derivative of the inverse tangent $\\tan^{-1}x$.',
+      },
+    ],
+    correct: 2,
+    explanation: 'Quotient rule on $\\frac{\\sin x}{\\cos x}$: $\\frac{\\cos^2 x + \\sin^2 x}{\\cos^2 x} = \\sec^2 x$.',
+    check: { kind: 'derivative', of: 'tan(x)' },
+    difficulty: 1,
+  },
+  {
+    id: 'dr-f-038',
+    topic: 'diff-review',
+    kind: 'formula',
+    prompt: { text: 'What is $\\frac{d}{dx}\\sec x$?' },
+    options: [
+      {
+        latex: '\\sec^2 x',
+        expr: 'sec(x)^2',
+        mistake: 'trig-derivative-swapped',
+        why: '$\\sec^2 x$ is the derivative of $\\tan x$.',
+      },
+      {
+        latex: '-\\csc x\\cot x',
+        expr: '-csc(x)*cot(x)',
+        mistake: 'trig-derivative-swapped',
+        why: '$-\\csc x\\cot x$ is the derivative of $\\csc x$.',
+      },
+      {
+        latex: '-\\sec x\\tan x',
+        expr: '-sec(x)*tan(x)',
+        mistake: 'sign-error-derivative',
+        why: '$\\left(\\frac{1}{\\cos x}\\right)\' = \\frac{\\sin x}{\\cos^2 x}$ is positive here; there is no minus sign.',
+      },
+      {
+        latex: '\\ln|\\sec x + \\tan x|',
+        expr: 'log(abs(sec(x) + tan(x)))',
+        mistake: 'integrated-instead',
+        why: '$\\ln|\\sec x + \\tan x|$ is the antiderivative of $\\sec x$, not its derivative.',
+      },
+      {
+        latex: '\\frac{1}{|x|\\sqrt{x^2-1}}',
+        expr: '1/(abs(x)*sqrt(x^2 - 1))',
+        mistake: 'inverse-trig-confused',
+        why: 'This is the derivative of the inverse secant $\\sec^{-1}x$.',
+      },
+      { latex: '\\sec x\\tan x', expr: 'sec(x)*tan(x)' },
+    ],
+    correct: 5,
+    explanation: '$\\sec x = (\\cos x)^{-1}$, so $(\\sec x)\' = -(\\cos x)^{-2}(-\\sin x) = \\sec x\\tan x$.',
+    domain: [1.05, 1.45],
+    check: { kind: 'derivative', of: 'sec(x)' },
+    difficulty: 1,
+  },
+  {
+    id: 'dr-f-039',
+    topic: 'diff-review',
+    kind: 'formula',
+    prompt: { text: 'What is $\\frac{d}{dx}\\csc x$?' },
+    options: [
+      {
+        latex: '\\csc x\\cot x',
+        expr: 'csc(x)*cot(x)',
+        mistake: 'sign-error-derivative',
+        why: '$\\left(\\frac{1}{\\sin x}\\right)\' = -\\frac{\\cos x}{\\sin^2 x}$; the minus sign is part of the formula.',
+      },
+      { latex: '-\\csc x\\cot x', expr: '-csc(x)*cot(x)' },
+      {
+        latex: '-\\csc^2 x',
+        expr: '-csc(x)^2',
+        mistake: 'trig-derivative-swapped',
+        why: '$-\\csc^2 x$ is the derivative of $\\cot x$.',
+      },
+      {
+        latex: '\\sec x\\tan x',
+        expr: 'sec(x)*tan(x)',
+        mistake: 'trig-derivative-swapped',
+        why: '$\\sec x\\tan x$ is the derivative of $\\sec x$.',
+      },
+      {
+        latex: '-\\ln|\\csc x + \\cot x|',
+        expr: '-log(abs(csc(x) + cot(x)))',
+        mistake: 'integrated-instead',
+        why: '$-\\ln|\\csc x + \\cot x|$ is an antiderivative of $\\csc x$, not its derivative.',
+      },
+      {
+        latex: '-\\csc x\\tan x',
+        expr: '-csc(x)*tan(x)',
+        mistake: 'trig-derivative-swapped',
+        why: 'The co-functions pair up: $\\csc$ goes with $\\cot$, so the derivative is $-\\csc x\\cot x$.',
+      },
+    ],
+    correct: 1,
+    explanation: '$\\csc x = (\\sin x)^{-1}$, so $(\\csc x)\' = -(\\sin x)^{-2}\\cos x = -\\csc x\\cot x$.',
+    check: { kind: 'derivative', of: 'csc(x)' },
+    difficulty: 1,
+  },
+  {
+    id: 'dr-f-040',
+    topic: 'diff-review',
+    kind: 'formula',
+    prompt: { text: 'What is $\\frac{d}{dx}\\cot x$?' },
+    options: [
+      {
+        latex: '\\csc^2 x',
+        expr: 'csc(x)^2',
+        mistake: 'sign-error-derivative',
+        why: '$\\left(\\frac{\\cos x}{\\sin x}\\right)\' = \\frac{-\\sin^2 x - \\cos^2 x}{\\sin^2 x}$; the minus sign was dropped.',
+      },
+      {
+        latex: '-\\csc x\\cot x',
+        expr: '-csc(x)*cot(x)',
+        mistake: 'trig-derivative-swapped',
+        why: '$-\\csc x\\cot x$ is the derivative of $\\csc x$.',
+      },
+      {
+        latex: '\\sec^2 x',
+        expr: 'sec(x)^2',
+        mistake: 'trig-derivative-swapped',
+        why: '$\\sec^2 x$ is the derivative of $\\tan x$; the co-function version is $-\\csc^2 x$.',
+      },
+      {
+        latex: '\\ln|\\sin x|',
+        expr: 'log(abs(sin(x)))',
+        mistake: 'integrated-instead',
+        why: '$\\ln|\\sin x|$ is the antiderivative of $\\cot x$, not its derivative.',
+      },
+      { latex: '-\\csc^2 x', expr: '-csc(x)^2' },
+      {
+        latex: '-\\frac{1}{1+x^2}',
+        expr: '-1/(1 + x^2)',
+        mistake: 'inverse-trig-confused',
+        why: '$-\\frac{1}{1+x^2}$ is the derivative of the inverse function $\\cot^{-1}x$.',
+      },
+    ],
+    correct: 4,
+    explanation: 'Quotient rule on $\\frac{\\cos x}{\\sin x}$: $\\frac{-\\sin^2 x - \\cos^2 x}{\\sin^2 x} = -\\csc^2 x$.',
+    check: { kind: 'derivative', of: 'cot(x)' },
+    difficulty: 1,
+  },
+  {
+    id: 'dr-f-041',
+    topic: 'diff-review',
+    kind: 'formula',
+    prompt: { text: 'For a constant base $a > 0$, $a \\neq 1$, what is $\\frac{d}{dx}\\,a^x$?' },
+    options: [
+      {
+        latex: 'a^x',
+        expr: 'a^x',
+        mistake: 'exp-base-log-missing',
+        why: 'Only $e^x$ is its own derivative; for base $a$ the factor $\\ln a$ appears.',
+      },
+      {
+        latex: 'xa^{x-1}',
+        expr: 'x*a^(x - 1)',
+        mistake: 'exponential-as-power',
+        why: 'The power rule is for $x^n$ (variable base); here the variable is in the exponent.',
+      },
+      { latex: 'a^x\\ln a', expr: 'a^x*log(a)' },
+      {
+        latex: '\\frac{a^x}{\\ln a}',
+        expr: 'a^x/log(a)',
+        mistake: 'integrated-instead',
+        why: '$\\frac{a^x}{\\ln a}$ is the antiderivative of $a^x$; the derivative multiplies by $\\ln a$.',
+      },
+      {
+        latex: 'a^x\\ln x',
+        expr: 'a^x*log(x)',
+        mistake: 'exp-base-log-missing',
+        why: 'The factor is the natural log of the base $a$, not of $x$.',
+      },
+      {
+        latex: '\\frac{a^{x+1}}{x+1}',
+        expr: 'a^(x + 1)/(x + 1)',
+        mistake: 'integrated-instead',
+        why: 'Raising the exponent and dividing by it imitates the integral power rule; neither integration nor the power rule applies here.',
+      },
+    ],
+    correct: 2,
+    explanation: '$a^x = e^{x\\ln a}$, so by the chain rule $(a^x)\' = e^{x\\ln a}\\ln a = a^x\\ln a$.',
+    domain: { x: [0.25, 1.25], a: [3, 7] },
+    check: { kind: 'derivative', of: 'a^x' },
+    difficulty: 1,
+  },
+  {
+    id: 'dr-f-042',
+    topic: 'diff-review',
+    kind: 'formula',
+    prompt: { text: 'For a constant base $a > 0$, $a \\neq 1$, what is $\\frac{d}{dx}\\log_a x$?' },
+    options: [
+      {
+        latex: '\\frac{1}{x}',
+        expr: '1/x',
+        mistake: 'log-derivative-wrong',
+        why: '$\\frac1x$ is the derivative of $\\ln x$ only; for base $a$ also divide by $\\ln a$.',
+      },
+      {
+        latex: '\\frac{\\ln a}{x}',
+        expr: 'log(a)/x',
+        mistake: 'log-derivative-wrong',
+        why: '$\\ln a$ belongs in the denominator, since $\\log_a x = \\frac{\\ln x}{\\ln a}$.',
+      },
+      {
+        latex: '\\frac{\\ln x}{\\ln a}',
+        expr: 'log(x)/log(a)',
+        mistake: 'log-derivative-wrong',
+        why: 'This is the change-of-base form of $\\log_a x$ itself; it still has to be differentiated.',
+      },
+      {
+        latex: '\\frac{1}{x\\ln x}',
+        expr: '1/(x*log(x))',
+        mistake: 'log-derivative-wrong',
+        why: 'The constant factor is $\\frac{1}{\\ln a}$ (log of the base), not $\\frac{1}{\\ln x}$.',
+      },
+      {
+        latex: 'a^x\\ln a',
+        expr: 'a^x*log(a)',
+        mistake: 'formula-swapped',
+        why: '$a^x\\ln a$ is the derivative of the inverse function $a^x$, not of $\\log_a x$.',
+      },
+      { latex: '\\frac{1}{x\\ln a}', expr: '1/(x*log(a))' },
+    ],
+    correct: 5,
+    explanation: '$\\log_a x = \\frac{\\ln x}{\\ln a}$ and $\\ln a$ is a constant, so the derivative is $\\frac{1}{x\\ln a}$.',
+    domain: { x: [0.5, 3], a: [2, 5] },
+    check: { kind: 'derivative', of: 'log(x)/log(a)' },
+    difficulty: 1,
+  },
+  {
+    id: 'dr-f-043',
+    topic: 'diff-review',
+    kind: 'formula',
+    prompt: { text: 'For $x < 0$, what is $\\frac{d}{dx}\\ln|x|$?' },
+    options: [
+      {
+        latex: '\\frac{1}{|x|}',
+        expr: '1/abs(x)',
+        mistake: 'chain-rule-missing',
+        why: 'For $x < 0$, $\\ln|x| = \\ln(-x)$; dropping the inner derivative $-1$ leaves $\\frac{1}{-x} = \\frac{1}{|x|}$.',
+      },
+      { latex: '\\frac{1}{x}', expr: '1/x' },
+      {
+        latex: '\\frac{x}{|x|}',
+        expr: 'x/abs(x)',
+        mistake: 'chain-rule-outer-wrong',
+        why: '$\\frac{x}{|x|}$ is the derivative of $|x|$ alone; the outer factor $\\frac{1}{|x|}$ from $\\ln$ was dropped.',
+      },
+      {
+        latex: 'x\\ln|x| - x',
+        expr: 'x*log(abs(x)) - x',
+        mistake: 'integrated-instead',
+        why: '$x\\ln|x| - x$ is an antiderivative of $\\ln|x|$, not its derivative.',
+      },
+      {
+        latex: '-\\frac{1}{x^2}',
+        expr: '-1/x^2',
+        mistake: 'log-derivative-wrong',
+        why: '$-\\frac{1}{x^2}$ is the derivative of $\\frac1x$; the derivative of $\\ln|x|$ is $\\frac1x$.',
+      },
+    ],
+    correct: 1,
+    explanation: 'For $x<0$, $\\ln|x| = \\ln(-x)$, whose derivative is $\\frac{-1}{-x} = \\frac1x$: the same formula as for $x > 0$.',
+    domain: { x: [-3, -0.5] },
+    check: { kind: 'derivative', of: 'log(abs(x))' },
+    difficulty: 2,
+  },
+  {
+    id: 'dr-f-044',
+    topic: 'diff-review',
+    kind: 'formula',
+    prompt: { text: 'What is $\\frac{d}{dx}\\sin^{-1}x$?' },
+    options: [
+      {
+        latex: '-\\frac{1}{\\sqrt{1-x^2}}',
+        expr: '-1/sqrt(1 - x^2)',
+        mistake: 'sign-error-derivative',
+        why: 'The negative version is the derivative of $\\cos^{-1}x$.',
+      },
+      {
+        latex: '\\frac{1}{1+x^2}',
+        expr: '1/(1 + x^2)',
+        mistake: 'inverse-trig-confused',
+        why: '$\\frac{1}{1+x^2}$ is the derivative of $\\tan^{-1}x$.',
+      },
+      {
+        latex: '\\frac{1}{|x|\\sqrt{x^2-1}}',
+        expr: '1/(abs(x)*sqrt(x^2 - 1))',
+        mistake: 'inverse-trig-confused',
+        why: 'This is the derivative of $\\sec^{-1}x$.',
+      },
+      {
+        latex: '-\\csc x\\cot x',
+        expr: '-csc(x)*cot(x)',
+        mistake: 'inverse-trig-as-reciprocal',
+        why: '$\\sin^{-1}x$ was read as $\\frac{1}{\\sin x} = \\csc x$; the $-1$ means the inverse sine (arcsin).',
+      },
+      { latex: '\\frac{1}{\\sqrt{1-x^2}}', expr: '1/sqrt(1 - x^2)' },
+      {
+        latex: '\\frac{1}{\\sqrt{1+x^2}}',
+        expr: '1/sqrt(1 + x^2)',
+        mistake: 'inverse-trig-confused',
+        why: 'The radicand is $1 - x^2$ (from $\\cos\\theta = \\sqrt{1-\\sin^2\\theta}$), not $1 + x^2$.',
+      },
+    ],
+    correct: 4,
+    explanation: 'If $y = \\sin^{-1}x$ then $\\sin y = x$, so $y\' = \\frac{1}{\\cos y} = \\frac{1}{\\sqrt{1-x^2}}$.',
+    domain: [0.1, 0.9],
+    check: { kind: 'derivative', of: 'asin(x)' },
+    difficulty: 1,
+  },
+  {
+    id: 'dr-f-045',
+    topic: 'diff-review',
+    kind: 'formula',
+    prompt: { text: 'What is $\\frac{d}{dx}\\tan^{-1}x$?' },
+    options: [
+      { latex: '\\frac{1}{1+x^2}', expr: '1/(1 + x^2)' },
+      {
+        latex: '\\frac{1}{\\sqrt{1-x^2}}',
+        expr: '1/sqrt(1 - x^2)',
+        mistake: 'inverse-trig-confused',
+        why: '$\\frac{1}{\\sqrt{1-x^2}}$ is the derivative of $\\sin^{-1}x$.',
+      },
+      {
+        latex: '-\\frac{1}{1+x^2}',
+        expr: '-1/(1 + x^2)',
+        mistake: 'sign-error-derivative',
+        why: '$\\tan^{-1}x$ is increasing; the negative version is the derivative of $\\cot^{-1}x$.',
+      },
+      {
+        latex: '-\\csc^2 x',
+        expr: '-csc(x)^2',
+        mistake: 'inverse-trig-as-reciprocal',
+        why: '$\\tan^{-1}x$ was read as $\\frac{1}{\\tan x} = \\cot x$; the $-1$ means the inverse tangent.',
+      },
+      {
+        latex: '\\sec^2 x',
+        expr: 'sec(x)^2',
+        mistake: 'inverse-trig-confused',
+        why: '$\\sec^2 x$ is the derivative of $\\tan x$ itself, not of its inverse.',
+      },
+      {
+        latex: '\\frac{1}{1-x^2}',
+        expr: '1/(1 - x^2)',
+        mistake: 'inverse-trig-confused',
+        why: 'The denominator is $1 + x^2$ (from $1 + \\tan^2\\theta = \\sec^2\\theta$), not $1 - x^2$.',
+      },
+    ],
+    correct: 0,
+    explanation: 'If $y = \\tan^{-1}x$ then $\\tan y = x$, so $y\' = \\frac{1}{\\sec^2 y} = \\frac{1}{1+\\tan^2 y} = \\frac{1}{1+x^2}$.',
+    domain: [0.1, 0.9],
+    check: { kind: 'derivative', of: 'atan(x)' },
+    difficulty: 1,
+  },
+  {
+    id: 'dr-f-046',
+    topic: 'diff-review',
+    kind: 'formula',
+    prompt: { text: 'With the course convention, what is $\\frac{d}{dx}\\sec^{-1}x$ (for $|x| > 1$)?' },
+    options: [
+      {
+        latex: '-\\frac{1}{|x|\\sqrt{x^2-1}}',
+        expr: '-1/(abs(x)*sqrt(x^2 - 1))',
+        mistake: 'sign-error-derivative',
+        why: 'The negative version is the derivative of $\\csc^{-1}x$.',
+      },
+      {
+        latex: '\\frac{1}{\\sqrt{x^2-1}}',
+        expr: '1/sqrt(x^2 - 1)',
+        mistake: 'inverse-trig-confused',
+        why: 'The factor $|x|$ in the denominator is missing.',
+      },
+      {
+        latex: '\\frac{1}{1+x^2}',
+        expr: '1/(1 + x^2)',
+        mistake: 'inverse-trig-confused',
+        why: '$\\frac{1}{1+x^2}$ is the derivative of $\\tan^{-1}x$.',
+      },
+      { latex: '\\frac{1}{|x|\\sqrt{x^2-1}}', expr: '1/(abs(x)*sqrt(x^2 - 1))' },
+      {
+        latex: '-\\sin x',
+        expr: '-sin(x)',
+        mistake: 'inverse-trig-as-reciprocal',
+        why: '$\\sec^{-1}x$ was read as $\\frac{1}{\\sec x} = \\cos x$; the $-1$ means the inverse secant.',
+      },
+      {
+        latex: '\\sec x\\tan x',
+        expr: 'sec(x)*tan(x)',
+        mistake: 'inverse-trig-confused',
+        why: '$\\sec x\\tan x$ is the derivative of $\\sec x$ itself, not of its inverse.',
+      },
+    ],
+    correct: 3,
+    explanation: 'If $y = \\sec^{-1}x$ then $\\sec y = x$, so $y\' = \\frac{1}{\\sec y\\tan y} = \\frac{1}{|x|\\sqrt{x^2-1}}$.',
+    domain: [1.5, 3],
+    check: { kind: 'derivative', of: 'asec(x)' },
+    difficulty: 1,
+  },
+  // ───────────── Differentiation rules (formula items, no numeric check possible) ─────────────
+  {
+    id: 'dr-f-047',
+    topic: 'diff-review',
+    kind: 'formula',
+    prompt: { text: 'Product rule: for differentiable $f$ and $g$, what is $(fg)\'$?' },
+    options: [
+      {
+        latex: "f'g'",
+        mistake: 'product-rule-missing-term',
+        why: 'Multiplying the two derivatives is not the product rule; each term keeps one original factor.',
+      },
+      {
+        latex: "f' + g'",
+        mistake: 'product-rule-missing-term',
+        why: 'Adding the derivatives is the sum rule; for a product each factor must be kept in the other term.',
+      },
+      { latex: "f'g + fg'" },
+      {
+        latex: "f'g - fg'",
+        mistake: 'sign-error',
+        why: 'The product rule adds the two terms; the minus sign belongs to the quotient rule.',
+      },
+      {
+        latex: "\\frac{f'g - fg'}{g^2}",
+        mistake: 'formula-swapped',
+        why: 'This is the quotient rule, for $\\frac{f}{g}$.',
+      },
+      {
+        latex: "f'(g(x))\\,g'(x)",
+        mistake: 'formula-swapped',
+        why: 'This is the chain rule, for the composition $f(g(x))$.',
+      },
+    ],
+    correct: 2,
+    explanation: 'Differentiate one factor at a time and keep the other: $(fg)\' = f\'g + fg\'$.',
+    check: { kind: 'none', reason: 'abstract rule recall; options are formulas in generic f and g' },
+    difficulty: 1,
+  },
+  {
+    id: 'dr-f-048',
+    topic: 'diff-review',
+    kind: 'formula',
+    prompt: { text: 'Quotient rule: for differentiable $f$ and $g$ with $g \\neq 0$, what is $\\left(\\frac{f}{g}\\right)\'$?' },
+    options: [
+      {
+        latex: "\\frac{fg' - f'g}{g^2}",
+        mistake: 'quotient-rule-order',
+        why: 'The numerator starts with the derivative of the top: $f\'g - fg\'$.',
+      },
+      {
+        latex: "\\frac{f'g + fg'}{g^2}",
+        mistake: 'quotient-rule-plus',
+        why: 'The quotient rule subtracts $fg\'$; the plus sign belongs to the product rule.',
+      },
+      {
+        latex: "\\frac{f'g - fg'}{g}",
+        mistake: 'quotient-rule-denominator',
+        why: 'The denominator is $g^2$, not $g$.',
+      },
+      {
+        latex: "\\frac{f'g - fg'}{f^2}",
+        mistake: 'quotient-rule-denominator',
+        why: 'The denominator is the square of the bottom function $g$, not of $f$.',
+      },
+      { latex: "\\frac{f'g - fg'}{g^2}" },
+    ],
+    correct: 4,
+    explanation: '"Low d-high minus high d-low, over low squared": $\\left(\\frac{f}{g}\\right)\' = \\frac{f\'g - fg\'}{g^2}$.',
+    check: { kind: 'none', reason: 'abstract rule recall; options are formulas in generic f and g' },
+    difficulty: 1,
+  },
+  {
+    id: 'dr-f-049',
+    topic: 'diff-review',
+    kind: 'formula',
+    prompt: { text: 'Chain rule: what is $\\frac{d}{dx}\\,f(g(x))$?' },
+    options: [
+      {
+        latex: "f'(g(x))",
+        mistake: 'chain-rule-missing',
+        why: 'The inner derivative $g\'(x)$ is missing.',
+      },
+      {
+        latex: "f'(g'(x))",
+        mistake: 'chain-rule-outer-wrong',
+        why: '$f\'$ is evaluated at $g(x)$ and then multiplied by $g\'(x)$; $g\'(x)$ is not plugged into $f\'$.',
+      },
+      {
+        latex: "f'(x)\\,g'(x)",
+        mistake: 'chain-rule-outer-wrong',
+        why: '$f\'$ must be evaluated at the inner function $g(x)$, not at $x$.',
+      },
+      { latex: "f'(g(x))\\,g'(x)" },
+      {
+        latex: "g'(f(x))\\,f'(x)",
+        mistake: 'formula-swapped',
+        why: 'The roles are reversed: this would be the derivative of $g(f(x))$.',
+      },
+      {
+        latex: "f'(x)\\,g(x) + f(x)\\,g'(x)",
+        mistake: 'formula-swapped',
+        why: 'This is the product rule; $f(g(x))$ is a composition, not a product.',
+      },
+    ],
+    correct: 3,
+    explanation: 'Outer derivative at the inner function, times the inner derivative: $f\'(g(x))\\,g\'(x)$ (in class: $g\'(x)\\cdot f\'(g(x))$).',
+    check: { kind: 'none', reason: 'abstract rule recall; options are formulas in generic f and g' },
+    difficulty: 1,
+  },
+  // ───────────── Concept items ─────────────
+  {
+    id: 'dr-f-050',
+    topic: 'diff-review',
+    kind: 'concept',
+    prompt: { text: 'What is the first (outermost) step when differentiating $\\sqrt{x^2 + \\sin x}$?' },
+    options: [
+      {
+        text: 'Split the root into $\\sqrt{x^2} + \\sqrt{\\sin x}$ and differentiate each term',
+        mistake: 'sqrt-of-sum-split',
+        why: '$\\sqrt{a + b} \\neq \\sqrt{a} + \\sqrt{b}$; the root applies to the whole sum.',
+      },
+      {
+        text: 'Product rule with the factors $x^2$ and $\\sin x$',
+        mistake: 'technique-wrong',
+        why: '$x^2$ and $\\sin x$ are added, not multiplied; the outermost operation is the square root.',
+      },
+      { text: 'Chain rule: outer function $\\sqrt{u}$, inner function $u = x^2 + \\sin x$' },
+      {
+        text: 'Power rule only: $\\frac{1}{2}(x^2 + \\sin x)^{-1/2}$ with no extra factor',
+        mistake: 'chain-rule-missing',
+        why: 'The root is applied to an inner function, so its derivative $2x + \\cos x$ must multiply the result.',
+      },
+      {
+        text: 'Differentiate the inside first and keep it under the root: $\\sqrt{2x + \\cos x}$',
+        mistake: 'chain-rule-outer-wrong',
+        why: 'The inner derivative multiplies the outer derivative $\\frac{1}{2\\sqrt{u}}$; it does not go inside the root.',
+      },
+    ],
+    correct: 2,
+    explanation: 'The last operation performed is the square root of the whole sum, so the chain rule comes first: $\\frac{1}{2\\sqrt{u}}\\cdot u\'$ with $u = x^2 + \\sin x$.',
+    check: { kind: 'none', reason: 'conceptual: identifying the outermost rule' },
+    difficulty: 1,
+  },
+  {
+    id: 'dr-f-051',
+    topic: 'diff-review',
+    kind: 'concept',
+    prompt: { text: 'Which function can be differentiated WITHOUT the chain rule?' },
+    options: [
+      {
+        latex: 'e^{2x}',
+        mistake: 'chain-rule-missing',
+        why: '$e^{2x}$ is $e^u$ with $u = 2x$, so the chain rule contributes the factor $2$.',
+      },
+      {
+        latex: '\\sin(x^2)',
+        mistake: 'chain-rule-missing',
+        why: 'Sine is applied to $x^2$, so the chain rule contributes the factor $2x$.',
+      },
+      {
+        latex: '\\ln(\\cos x)',
+        mistake: 'chain-rule-missing',
+        why: '$\\ln$ is applied to $\\cos x$, so the chain rule contributes the factor $-\\sin x$.',
+      },
+      {
+        latex: '(x^3+1)^5',
+        mistake: 'chain-rule-missing',
+        why: 'The fifth power is applied to $x^3 + 1$, so the chain rule contributes the factor $3x^2$.',
+      },
+      { latex: 'x^2e^{x}' },
+      {
+        latex: '\\sqrt{\\tan x}',
+        mistake: 'chain-rule-missing',
+        why: 'The root is applied to $\\tan x$, so the chain rule contributes the factor $\\sec^2 x$.',
+      },
+    ],
+    correct: 4,
+    explanation: '$x^2e^x$ is a product of two basic functions (product rule only); every other option has a function applied to an inner function.',
+    check: { kind: 'none', reason: 'conceptual: recognizing compositions' },
+    difficulty: 1,
+  },
+  {
+    id: 'dr-f-052',
+    topic: 'diff-review',
+    kind: 'concept',
+    prompt: { text: 'In class we write both $\\sin^{-1}x$ and $\\arcsin x$. Which statement is correct?' },
+    options: [
+      {
+        text: '$\\sin^{-1}x = (\\sin x)^{-1} = \\csc x$, just as $\\sin^2 x = (\\sin x)^2$',
+        mistake: 'inverse-trig-as-reciprocal',
+        why: 'The reciprocal of $\\sin x$ is $\\csc x = (\\sin x)^{-1}$; the superscript $-1$ on the name means the inverse function.',
+      },
+      {
+        text: '$\\sin^{-1}x = \\sin\\left(x^{-1}\\right) = \\sin\\frac{1}{x}$',
+        mistake: 'algebra-error',
+        why: 'The $-1$ is attached to the function name, not to $x$.',
+      },
+      { text: '$\\sin^{-1}x = \\arcsin x$, the angle in $[-\\frac{\\pi}{2}, \\frac{\\pi}{2}]$ whose sine is $x$' },
+      {
+        text: '$\\sin^{-1}x = -\\sin x$, because the exponent $-1$ is a minus sign',
+        mistake: 'sign-error',
+        why: 'A superscript $-1$ is not a factor of $-1$.',
+      },
+      {
+        text: 'Since $\\sin^{-1}x = \\csc x$, its derivative is $-\\csc x\\cot x$',
+        mistake: 'inverse-trig-as-reciprocal',
+        why: 'Reading $\\sin^{-1}$ as a reciprocal gives the wrong derivative; $(\\sin^{-1}x)\' = \\frac{1}{\\sqrt{1-x^2}}$.',
+      },
+    ],
+    correct: 2,
+    explanation: 'A $-1$ on a trig function name means the inverse function: $\\sin^{-1}x = \\arcsin x$ (while $\\sin^2 x$ does mean $(\\sin x)^2$).',
+    check: { kind: 'none', reason: 'conceptual: meaning of inverse-trig notation' },
+    difficulty: 1,
+  },
+  {
+    id: 'dr-f-053',
+    topic: 'diff-review',
+    kind: 'concept',
+    prompt: {
+      text: '$f\'(x)$, $\\frac{df}{dx}$ and $\\frac{d}{dx}f(x)$ all denote the derivative. For $f(x) = \\sqrt{x}$, which statement is correct?',
+    },
+    options: [
+      {
+        latex: '\\frac{df}{dx} = \\frac{\\sqrt{x}}{x}',
+        expr: 'sqrt(x)/x',
+        mistake: 'algebra-error',
+        why: '$\\frac{df}{dx}$ is not the fraction $\\frac{f}{x}$; it is the derivative of $f$.',
+      },
+      {
+        latex: '\\frac{d}{dx}f(x) = \\frac{2}{3}x^{3/2}',
+        expr: '2/3*x^(3/2)',
+        mistake: 'integrated-instead',
+        why: '$\\frac23 x^{3/2}$ is an antiderivative of $\\sqrt{x}$; $\\frac{d}{dx}$ means differentiate.',
+      },
+      {
+        latex: "f'(x) = \\frac{1}{2}x^{1/2}",
+        expr: 'x^(1/2)/2',
+        mistake: 'power-rule-exponent',
+        why: 'The exponent $\\frac12$ must drop to $-\\frac12$.',
+      },
+      { latex: '\\frac{df}{dx} = \\frac{1}{2\\sqrt{x}}', expr: '1/(2*sqrt(x))' },
+      {
+        latex: '\\frac{d}{dx}f(x) = \\frac{1}{\\sqrt{x}}',
+        expr: '1/sqrt(x)',
+        mistake: 'power-rule-coefficient',
+        why: 'The power rule brings down the exponent $\\frac12$ as a factor: $\\frac12 x^{-1/2}$.',
+      },
+    ],
+    correct: 3,
+    explanation: 'All three notations name the same derivative: $\\frac{df}{dx} = \\frac12 x^{-1/2} = \\frac{1}{2\\sqrt{x}}$.',
+    check: { kind: 'derivative', of: 'sqrt(x)' },
+    difficulty: 1,
+  },
+  {
+    id: 'dr-f-054',
+    topic: 'diff-review',
+    kind: 'concept',
+    prompt: { text: 'Complete the chain rule: $\\frac{d}{dx}\\tan(x^3) = \\sec^2(x^3)\\cdot\\,\\square$. What goes in the box?' },
+    // Each option's expr is the completed derivative sec²(x³)·(box), so the check is a real derivative check.
+    options: [
+      {
+        text: '$1$',
+        expr: 'sec(x^3)^2',
+        mistake: 'chain-rule-missing',
+        why: 'Leaving the box as 1 drops the inner derivative $(x^3)\' = 3x^2$.',
+      },
+      {
+        text: '$x^3$',
+        expr: 'x^3*sec(x^3)^2',
+        mistake: 'chain-rule-missing',
+        why: 'The box holds the derivative of the inner function, not the inner function itself.',
+      },
+      { text: '$3x^2$', expr: '3*x^2*sec(x^3)^2' },
+      {
+        text: '$\\frac{x^4}{4}$',
+        expr: 'x^4/4*sec(x^3)^2',
+        mistake: 'integrated-instead',
+        why: '$\\frac{x^4}{4}$ is an antiderivative of $x^3$; the chain rule needs its derivative.',
+      },
+      {
+        text: '$6x$',
+        expr: '6*x*sec(x^3)^2',
+        mistake: 'chain-rule-doubled',
+        why: '$6x$ is the second derivative of $x^3$; the inner function is differentiated only once.',
+      },
+    ],
+    correct: 2,
+    explanation: 'The box is the inner derivative: $(x^3)\' = 3x^2$.',
+    domain: [0.2, 1.0],
+    check: { kind: 'derivative', of: 'tan(x^3)' },
+    difficulty: 1,
+  },
 ];
 
-/** Parameterized generators. */
-export const generators: FlashGenerator[] = [];
+// ───────────── Parameterized generators (safe families only) ─────────────
+
+/** Deterministic PRNG (mulberry32), same as the reference examples. */
+function mulberry(seed: number): () => number {
+  let a = seed >>> 0;
+  return () => {
+    a = (a + 0x6d2b79f5) >>> 0;
+    let t = a;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+type GenOption = FlashItem['options'][number];
+
+/** Inserts the correct option at a seed-dependent position (deterministic). */
+function place(correctOption: GenOption, distractors: GenOption[], seed: number): { options: GenOption[]; correct: number } {
+  const correct = seed % (distractors.length + 1);
+  const options = [...distractors];
+  options.splice(correct, 0, correctOption);
+  return { options, correct };
+}
+
+export const generators: FlashGenerator[] = [
+  {
+    id: 'dr-g-exp-kx',
+    topic: 'diff-review',
+    kind: 'derivative',
+    describe: 'd/dx e^{kx} for k = 2..9',
+    generate(seed) {
+      const rng = mulberry(seed);
+      const k = 2 + Math.floor(rng() * 8); // 2..9
+      const { options, correct } = place(
+        { latex: `${k}e^{${k}x}`, expr: `${k}*exp(${k}*x)` },
+        [
+          { latex: `e^{${k}x}`, expr: `exp(${k}*x)`, mistake: 'chain-rule-missing', why: `The inner derivative $(${k}x)' = ${k}$ was dropped.` },
+          {
+            latex: `\\frac{1}{${k}}e^{${k}x}`,
+            expr: `exp(${k}*x)/${k}`,
+            mistake: 'integrated-instead',
+            why: `Dividing by ${k} gives the antiderivative of $e^{${k}x}$; differentiating multiplies by ${k}.`,
+          },
+          {
+            latex: `${k}xe^{${k}x-1}`,
+            expr: `${k}*x*exp(${k}*x - 1)`,
+            mistake: 'exponential-as-power',
+            why: "The power rule was applied to an exponential; $e^u$ differentiates to $e^u\\cdot u'$.",
+          },
+          { latex: `${k * k}e^{${k}x}`, expr: `${k * k}*exp(${k}*x)`, mistake: 'chain-rule-doubled', why: `The inner derivative ${k} was applied twice.` },
+        ],
+        seed,
+      );
+      return {
+        id: `dr-g-exp-kx:${seed}`,
+        topic: 'diff-review',
+        kind: 'derivative',
+        prompt: { latex: `e^{${k}x}` },
+        options,
+        correct,
+        explanation: `Chain rule: $e^{${k}x}\\cdot(${k}x)' = ${k}e^{${k}x}$.`,
+        check: { kind: 'derivative', of: `exp(${k}*x)` },
+        difficulty: 1,
+      };
+    },
+  },
+  {
+    id: 'dr-g-cos-kx',
+    topic: 'diff-review',
+    kind: 'derivative',
+    describe: 'd/dx cos(kx) for k = 2..9',
+    generate(seed) {
+      const rng = mulberry(seed);
+      const k = 2 + Math.floor(rng() * 8); // 2..9
+      const { options, correct } = place(
+        { latex: `-${k}\\sin(${k}x)`, expr: `-${k}*sin(${k}*x)` },
+        [
+          { latex: `${k}\\sin(${k}x)`, expr: `${k}*sin(${k}*x)`, mistake: 'sign-error-derivative', why: '$(\\cos u)\' = -\\sin u\\cdot u\'$; the minus sign was dropped.' },
+          { latex: `-\\sin(${k}x)`, expr: `-sin(${k}*x)`, mistake: 'chain-rule-missing', why: `The inner derivative ${k} was dropped.` },
+          {
+            latex: `\\frac{1}{${k}}\\sin(${k}x)`,
+            expr: `sin(${k}*x)/${k}`,
+            mistake: 'integrated-instead',
+            why: `This is the antiderivative of $\\cos(${k}x)$, not its derivative.`,
+          },
+          { latex: `-${k}\\cos(${k}x)`, expr: `-${k}*cos(${k}*x)`, mistake: 'trig-derivative-swapped', why: 'Cosine was kept as cosine; its derivative is $-\\sin$.' },
+          { latex: `-${k * k}\\sin(${k}x)`, expr: `-${k * k}*sin(${k}*x)`, mistake: 'chain-rule-doubled', why: `The inner derivative ${k} was applied twice.` },
+        ],
+        seed,
+      );
+      return {
+        id: `dr-g-cos-kx:${seed}`,
+        topic: 'diff-review',
+        kind: 'derivative',
+        prompt: { latex: `\\cos(${k}x)` },
+        options,
+        correct,
+        explanation: `Chain rule: $-\\sin(${k}x)\\cdot ${k} = -${k}\\sin(${k}x)$.`,
+        check: { kind: 'derivative', of: `cos(${k}*x)` },
+        difficulty: 1,
+      };
+    },
+  },
+  {
+    id: 'dr-g-a-pow-kx',
+    topic: 'diff-review',
+    kind: 'derivative',
+    describe: 'd/dx a^{kx} for a in {2, 3, 5, 7}, k = 2..4',
+    generate(seed) {
+      const rng = mulberry(seed);
+      const a = [2, 3, 5, 7][Math.floor(rng() * 4)];
+      const k = 2 + Math.floor(rng() * 3); // 2..4
+      const { options, correct } = place(
+        { latex: `${k}\\cdot ${a}^{${k}x}\\ln ${a}`, expr: `${k}*${a}^(${k}*x)*log(${a})` },
+        [
+          { latex: `${a}^{${k}x}\\ln ${a}`, expr: `${a}^(${k}*x)*log(${a})`, mistake: 'chain-rule-missing', why: `The inner derivative $(${k}x)' = ${k}$ was dropped.` },
+          {
+            latex: `${k}\\cdot ${a}^{${k}x}`,
+            expr: `${k}*${a}^(${k}*x)`,
+            mistake: 'exp-base-log-missing',
+            why: `The factor $\\ln ${a}$ is missing; only base $e$ needs no log factor.`,
+          },
+          {
+            latex: `${k}x\\cdot ${a}^{${k}x-1}`,
+            expr: `${k}*x*${a}^(${k}*x - 1)`,
+            mistake: 'exponential-as-power',
+            why: 'The power rule was applied, but the variable is in the exponent, so the exponential rule applies.',
+          },
+          {
+            latex: `\\frac{${a}^{${k}x}}{${k}\\ln ${a}}`,
+            expr: `${a}^(${k}*x)/(${k}*log(${a}))`,
+            mistake: 'integrated-instead',
+            why: `This is the antiderivative of $${a}^{${k}x}$, not its derivative.`,
+          },
+        ],
+        seed,
+      );
+      return {
+        id: `dr-g-a-pow-kx:${seed}`,
+        topic: 'diff-review',
+        kind: 'derivative',
+        prompt: { latex: `${a}^{${k}x}` },
+        options,
+        correct,
+        explanation: `$\\frac{d}{dx}a^{u} = a^{u}\\ln a\\cdot u'$ with $a = ${a}$, $u = ${k}x$.`,
+        check: { kind: 'derivative', of: `${a}^(${k}*x)` },
+        difficulty: 1,
+      };
+    },
+  },
+  {
+    id: 'dr-g-tan-kx',
+    topic: 'diff-review',
+    kind: 'derivative',
+    describe: 'd/dx tan(kx) for k = 2..9 (sampled where kx is in [0.1, 1.2])',
+    generate(seed) {
+      const rng = mulberry(seed);
+      const k = 2 + Math.floor(rng() * 8); // 2..9
+      const { options, correct } = place(
+        { latex: `${k}\\sec^2(${k}x)`, expr: `${k}*sec(${k}*x)^2` },
+        [
+          { latex: `\\sec^2(${k}x)`, expr: `sec(${k}*x)^2`, mistake: 'chain-rule-missing', why: `The inner derivative ${k} was dropped.` },
+          {
+            latex: `${k}\\sec(${k}x)\\tan(${k}x)`,
+            expr: `${k}*sec(${k}*x)*tan(${k}*x)`,
+            mistake: 'trig-derivative-swapped',
+            why: '$\\sec u\\tan u$ is the derivative of $\\sec u$; $(\\tan u)\' = \\sec^2 u$.',
+          },
+          {
+            latex: `-${k}\\csc^2(${k}x)`,
+            expr: `-${k}*csc(${k}*x)^2`,
+            mistake: 'trig-derivative-swapped',
+            why: '$-\\csc^2 u$ is the derivative of $\\cot u$, not of $\\tan u$.',
+          },
+          {
+            latex: `-\\frac{1}{${k}}\\ln|\\cos(${k}x)|`,
+            expr: `-log(abs(cos(${k}*x)))/${k}`,
+            mistake: 'integrated-instead',
+            why: `This is the antiderivative of $\\tan(${k}x)$, not its derivative.`,
+          },
+          { latex: `${k * k}\\sec^2(${k}x)`, expr: `${k * k}*sec(${k}*x)^2`, mistake: 'chain-rule-doubled', why: `The inner derivative ${k} was applied twice.` },
+        ],
+        seed,
+      );
+      return {
+        id: `dr-g-tan-kx:${seed}`,
+        topic: 'diff-review',
+        kind: 'derivative',
+        prompt: { latex: `\\tan(${k}x)` },
+        options,
+        correct,
+        explanation: `Chain rule: $\\sec^2(${k}x)\\cdot ${k} = ${k}\\sec^2(${k}x)$.`,
+        domain: [0.1 / k, 1.2 / k],
+        check: { kind: 'derivative', of: `tan(${k}*x)` },
+        difficulty: 1,
+      };
+    },
+  },
+];
