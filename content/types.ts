@@ -153,3 +153,69 @@ export interface TopicContent {
   generators: FlashGenerator[];
   steps: StepProblem[];
 }
+
+// ─────────────────────────────── Cards mode (flashcards) ───────────────────────────────
+// Flashcards are not multiple-choice questions: the ≥5-option / mistake-tag rules do not apply.
+// Every other constraint does (offline, verified math, KaTeX-renderable LaTeX).
+
+/** Category label exactly as written on the class whiteboard list. */
+export type CardCategory =
+  | 'Derivatives'
+  | 'Antiderivatives'
+  | 'Identities'
+  | 'Trig Substitution'
+  | 'Area & Volume'
+  | 'Arc Length'
+  | 'Integration by Parts';
+
+/** The nine numbered groups of the whiteboard list; the Cards filter offers these. */
+export type CardSection =
+  | 'derivatives'
+  | 'antiderivatives'
+  | 'pythagorean'
+  | 'double-angle'
+  | 'half-angle'
+  | 'trig-sub'
+  | 'area-volume'
+  | 'arc-length'
+  | 'ibp';
+
+/**
+ * How the front is framed by the UI and verified by the tests:
+ *  - derivative:     front.latex is the bare f(x); UI shows d/dx[f(x)]; check.kind 'derivative'
+ *  - antiderivative: front.latex is the integrand; UI shows ∫ f dx; check.kind 'antiderivative';
+ *                    back.latex ends with "+ C"
+ *  - identity:       front.latex is the left-hand side; UI shows "LHS = ?"; check.kind 'identity'
+ *  - trig-sub:       front.text is the question as written on the board; numeric check where
+ *                    meaningful (radical-after-substitution identity, dx = derivative of the sub,
+ *                    the "why" identity)
+ *  - formula:        front.text/latex shown as-is; check.kind 'none' (verified by math-verifier)
+ */
+export type CardKind = 'derivative' | 'antiderivative' | 'identity' | 'trig-sub' | 'formula';
+
+export interface Card {
+  /** Unique id, `card-<section>-<nn>` (e.g. `card-derivatives-01`). */
+  id: string;
+  category: CardCategory;
+  section: CardSection;
+  kind: CardKind;
+  front: { text?: string; latex?: string };
+  back: {
+    /** The main answer, in the board's notation (KaTeX). */
+    latex: string;
+    /** Optional "also written as" form (KaTeX), shown small under the main answer. */
+    also?: string;
+    /** mathjs expression agreeing with `latex` (required when `check.kind !== 'none'`). */
+    expr?: string;
+    /**
+     * Expression used for the numeric check when it differs from `expr` — e.g. a dx card whose
+     * latex is `a\cos\theta\,d\theta` (expr with the `dtheta` symbol) but whose derivative check
+     * compares `a*cos(theta)`. Defaults to `expr`.
+     */
+    checkExpr?: string;
+  };
+  check: Check;
+  /** Variable for derivative/antiderivative checks (default 'x'; 'theta' for trig-sub dx cards). */
+  variable?: string;
+  domain?: Domain;
+}

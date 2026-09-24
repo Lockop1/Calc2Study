@@ -14,6 +14,8 @@ Legend: ☐ not started · ◐ in progress · ☑ done · ✗ blocked
 | 8 | Topic picker, Review mode, progress, settings | ☑ | weighted review deck, retire after 3 correct, storage in try/catch |
 | 9 | PWA/offline + mobile QA | ☑ | qa/REPORT.md: 382/384 checks pass at 390×844 incl. offline, storage-unavailable, dark mode; reset double-tap fixed; one minor layout note open |
 
+| 10 | Cards mode (flashcards of the whiteboard formulas; exempt from the 5-option rule) | ◐ | schema + test harness (orchestrator); deck (content-author); UI (ui-builder); deck verification (math-verifier) |
+
 ## Log
 
 - Task 1–2 done by the orchestrator: scaffold, agents, schema, taxonomy, topics, sample content, icons.
@@ -26,3 +28,4 @@ Legend: ☐ not started · ◐ in progress · ☑ done · ✗ blocked
 - Task 5 done: all nine topics verified (reports in qa/verification/), fixes applied and committed per topic, VERIFICATION_LOG.md finalized.
 - Deploy: user added .github/workflows/deploy.yml (GitHub Pages on push to main); build verified to work under a sub-path.
 - Task 9 done: QA report compiled from the tester's results (container restart interrupted the agent); reset-confirm debounce added; final build verified.
+- Session 2, Task 10 (Cards): `Card` type added to content/types.ts, deck stub + `tests/cards.test.ts` written by the orchestrator; content-author writing the 50-card deck; ui-builder building CardsScreen; verifier to follow.
