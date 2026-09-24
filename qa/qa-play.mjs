@@ -43,6 +43,8 @@ const TITLE = {
   'Arc length': 'arc-length', 'Integration by parts': 'ibp', 'Trigonometric integrals': 'trig-integrals', 'Trigonometric substitution': 'trig-sub',
 };
 // Content text that legitimately contains the word "undefined" (found by qa/qa-content.ts).
+const SHOT_ONCE = new Set();
+const PENDING_SHOT = [];
 const LEGIT_UNDEFINED = [/is undefined at/, /is undefined for/, /ln u is undefined/, /where ln u is undefined/];
 
 mkdirSync(SHOTS, { recursive: true });
@@ -78,6 +80,9 @@ function aggFlush() {
   current.agg = {};
 }
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+/** Waits for running CSS transitions/animations (option colours 120ms, feedback slide-in). */
+const settle = (page) =>
+  page.evaluate(() => Promise.race([Promise.all(document.getAnimations().map((a) => a.finished.catch(() => null))), new Promise((r) => setTimeout(r, 1500))]));
 const pct = (xs, p) => {
   if (!xs.length) return null;
   const s = [...xs].sort((a, b) => a - b);
@@ -345,6 +350,7 @@ function qaInit() {
       window.__lat.tapToFeedback.push(now - t0);
       requestAnimationFrame(() => requestAnimationFrame(() => window.__lat.tapToFeedbackFrame.push(performance.now() - t0)));
     }
+    if (document.querySelector('.summary')) window.__tapNext = undefined;
     const q = document.querySelector('.screen-q');
     if (window.__tapNext !== undefined && q && q !== window.__oldQ && q.querySelector('.opt:not([disabled])') && !q.querySelector('.feedback')) {
       const t0 = window.__tapNext;
@@ -374,7 +380,7 @@ async function newCtx(browser, opts = {}) {
   const errors = [];
   page.on('pageerror', (e) => errors.push(`pageerror: ${e.message}`));
   page.on('console', (m) => {
-    if (m.type() === 'error' || m.type() === 'warning') errors.push(`${m.type()}: ${m.text()}`);
+    if ((m.type() === 'error' || m.type() === 'warning') && !/Service Worker registration blocked by Playwright/.test(m.text())) errors.push(`${m.type()}: ${m.text()}`);
   });
   const failed = [];
   context.on('requestfailed', (r) => failed.push(`${r.method()} ${r.url()} — ${r.failure()?.errorText ?? ''}`));
@@ -534,7 +540,11 @@ function feedbackChecks(res, label) {
   }
   if (a.isStep) {
     agg(`${label}: "Correct step:" shows the correct option`, unit ? fb.answer === unit.correct : Boolean(fb.answer), `${unit?.id} shown=${(fb.answer ?? '').slice(0, 60)}`);
-    agg(`${label}: current step prompt still visible with feedback`, (a.stepPromptVisible ?? 0) >= 0.5, `visible ${a.stepPromptVisible}`);
+    agg(`${label}: current step prompt still visible with feedback`, (a.stepPromptVisible ?? 0) >= 0.5, `${unit?.id}: visible ${a.stepPromptVisible}`);
+    if ((a.stepPromptVisible ?? 0) < 0.5 && !SHOT_ONCE.has('prompt-hidden')) {
+      SHOT_ONCE.add('prompt-hidden');
+      PENDING_SHOT.push(`qa-steps-prompt-hidden-${String(unit?.id).replace(/\W+/g, '-')}`);
+    }
   } else {
     const green = a.options.find((o) => o.state === 'correct');
     agg(`${label}: green (correct) option visible after answering`, (green?.visible ?? 0) >= 0.5, `visible ${green?.visible} at ${a.counter}`);
@@ -558,6 +568,7 @@ async function answer(page, want = 'any', rotate = 0, opts = {}) {
     await tap(page, page.locator('.opt').nth(idx));
     await page.waitForSelector('.feedback', { timeout: 3000 });
   }
+  await settle(page);
   const after = await read(page);
   return { before, after, idx, expected, unit, ok: after.feedback?.ok ?? null };
 }
@@ -756,6 +767,7 @@ async function scenarioFlash(browser) {
         await sleep(90);
         await page.touchscreen.tap(box.x + box.width / 2, box.y + box.height / 2);
         await sleep(500);
+        await settle(page);
         const a = await read(page);
         check('double tap on an option: answered once, still on the same question with feedback', Boolean(a.feedback) && a.counter === q.counter, `counter ${a.counter}, feedback ${Boolean(a.feedback)}`);
         const unit = lookup(q);
@@ -849,7 +861,7 @@ async function scenarioFlash(browser) {
       check(`round ${round}: option order reshuffled between the Flash display and the Review display`, compared === 0 || reordered === compared, `${reordered}/${compared} items in a different order`);
       metric(`round${round}ReviewReordered`, `${reordered}/${compared}`);
       q = await read(page);
-      check(`round ${round}: review round ends with a Review summary`, q.screen === 'summary' && /Review/.test(q.summary.label), q.summary?.label);
+      check(`round ${round}: review round ends with a Review summary`, q.screen === 'summary' && /Review/i.test(q.summary.label), q.summary?.label);
     }
   }
   aggFlush();
@@ -959,7 +971,7 @@ async function scenarioSteps(browser) {
   }
   aggFlush();
   q = await read(page);
-  check('round ends on a Step-Through summary', q.screen === 'summary' && /Step-Through/.test(q.summary?.label ?? ''), q.summary?.label);
+  check('round ends on a Step-Through summary', q.screen === 'summary' && /Step-Through/i.test(q.summary?.label ?? ''), q.summary?.label);
   check(`completed ≥2 problems with ≥2 wrong answers`, problemsDone >= 2 && wrongs >= 2, `${problemsDone} problems, ${wrongs} wrong / ${rights} right`);
   check('summary counts steps', q.summary && q.summary.line.startsWith(`${rights} of ${rights + wrongs} steps right`), q.summary?.line);
   metric('problems', problems);
@@ -1446,7 +1458,10 @@ async function fontReport(page) {
 async function swSetup(page, label) {
   const sw = await page.evaluate(async () => {
     const reg = await Promise.race([navigator.serviceWorker.ready, new Promise((r) => setTimeout(() => r(null), 15000))]);
-    return reg ? { state: reg.active?.state, scope: reg.scope, script: reg.active?.scriptURL } : null;
+    if (!reg) return null;
+    const t0 = performance.now();
+    while (reg.active?.state !== 'activated' && performance.now() - t0 < 10000) await new Promise((r) => setTimeout(r, 100));
+    return { state: reg.active?.state, scope: reg.scope, script: reg.active?.scriptURL, msToActivated: Math.round(performance.now() - t0) };
   });
   check(`${label}: service worker registered and active`, sw?.state === 'activated', JSON.stringify(sw));
   let controlled = await page.waitForFunction(() => Boolean(navigator.serviceWorker.controller), null, { timeout: 8000 }).then(() => true, () => false);
@@ -1606,6 +1621,7 @@ async function scenarioSweepSteps(browser) {
         questionChecks(q, 'sweep steps');
         const res = await answer(page, 'wrong', rot++, { before: q, fast: true });
         feedbackChecks(res, 'sweep steps');
+        while (PENDING_SHOT.length) await shot(page, PENDING_SHOT.shift());
         sweepRecord(store, u, q, res.after);
         await fastNext(page);
       } else if (q.screen === 'final') {

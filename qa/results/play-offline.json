@@ -1,0 +1,174 @@
+{
+  "name": "offline",
+  "startedAt": "2026-09-24T16:09:08.913Z",
+  "checks": [
+    {
+      "name": "setOffline: service worker registered and active",
+      "ok": false,
+      "detail": "{\"state\":\"activating\",\"scope\":\"http://localhost:4173/\",\"script\":\"http://localhost:4173/sw.js\"}"
+    },
+    {
+      "name": "setOffline: page is controlled by the service worker",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "setOffline: Cache Storage holds index.html, JS, CSS and the KaTeX woff2 fonts",
+      "ok": true,
+      "detail": "29 entries, 19 woff2"
+    },
+    {
+      "name": "setOffline: app reloads offline",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "setOffline: navigator.onLine is false",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "setOffline: Flash round starts offline",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "setOffline: full Flash round (10) played offline",
+      "ok": true,
+      "detail": "10 questions"
+    },
+    {
+      "name": "setOffline: Step-Through starts offline",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "setOffline: one Step-Through problem completed offline (final answer + recap)",
+      "ok": true,
+      "detail": "5 steps"
+    },
+    {
+      "name": "setOffline: Review round starts offline",
+      "ok": true,
+      "detail": "badge 8"
+    },
+    {
+      "name": "setOffline: Review round played offline to its summary",
+      "ok": true,
+      "detail": "8 questions"
+    },
+    {
+      "name": "setOffline Flash: ≥5 options per question",
+      "ok": true,
+      "detail": "10/10 ok"
+    },
+    {
+      "name": "setOffline Flash: no empty options",
+      "ok": true,
+      "detail": "10/10 ok"
+    },
+    {
+      "name": "setOffline Flash: option sources distinct",
+      "ok": true,
+      "detail": "10/10 ok"
+    },
+    {
+      "name": "setOffline Flash: no .katex-error",
+      "ok": true,
+      "detail": "10/10 ok"
+    },
+    {
+      "name": "setOffline Flash: no undefined/NaN/[object Object] text",
+      "ok": true,
+      "detail": "10/10 ok"
+    },
+    {
+      "name": "setOffline Flash: no horizontal page scroll (html & body ≤ 390)",
+      "ok": true,
+      "detail": "10/10 ok"
+    },
+    {
+      "name": "setOffline Flash: no content clipped sideways (overflow-x:hidden containers)",
+      "ok": true,
+      "detail": "10/10 ok"
+    },
+    {
+      "name": "setOffline Flash: no option spills out of its button",
+      "ok": true,
+      "detail": "10/10 ok"
+    },
+    {
+      "name": "setOffline Flash: option buttons ≥44px tall",
+      "ok": true,
+      "detail": "10/10 ok"
+    },
+    {
+      "name": "setOffline Flash: first option in the lower half (top ≥ 422)",
+      "ok": true,
+      "detail": "10/10 ok"
+    },
+    {
+      "name": "setOffline Flash: page not scrolled, top bar visible",
+      "ok": true,
+      "detail": "10/10 ok"
+    },
+    {
+      "name": "one tap on Next advances",
+      "ok": true,
+      "detail": "21/21 ok"
+    },
+    {
+      "name": "setOffline: KaTeX fonts loaded offline, none failed",
+      "ok": true,
+      "detail": "{\"byStatus\":{\"unloaded\":15,\"loaded\":5},\"checkMain\":true,\"errors\":[]}"
+    },
+    {
+      "name": "setOffline: no failed requests while offline",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "setOffline: every response while offline came from the service worker",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "setOffline: no console errors / page errors",
+      "ok": true,
+      "detail": ""
+    }
+  ],
+  "metrics": {
+    "setOffline controlledWithoutReload": true,
+    "setOffline cacheStorage": {
+      "workbox-precache-v2-http://localhost:4173/": 29
+    },
+    "setOffline precachedWoff2": 19,
+    "fontsOffline": {
+      "faces": 20,
+      "byStatus": {
+        "unloaded": 15,
+        "loaded": 5
+      },
+      "loaded": [
+        "KaTeX_Main 400 normal",
+        "KaTeX_Math 400 italic",
+        "KaTeX_Size1 400 normal",
+        "KaTeX_Size2 400 normal",
+        "KaTeX_Size3 400 normal"
+      ],
+      "errors": [],
+      "checkMain": true,
+      "checkMathItalic": true,
+      "katexNodes": 0,
+      "katexErrors": 0
+    },
+    "offlineResponses": {
+      "total": 8,
+      "fromServiceWorker": 8,
+      "notFromSW": []
+    },
+    "consoleErrors": []
+  },
+  "seconds": 27
+}

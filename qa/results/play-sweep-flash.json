@@ -1,0 +1,274 @@
+{
+  "name": "sweep-flash",
+  "startedAt": "2026-09-24T16:10:40.419Z",
+  "checks": [
+    {
+      "name": "sweep: displayed flash item found in the content key",
+      "ok": true,
+      "detail": "565/565 ok"
+    },
+    {
+      "name": "sweep: displayed item belongs to the seeded batch",
+      "ok": true,
+      "detail": "565/565 ok"
+    },
+    {
+      "name": "sweep flash: ≥5 options per question",
+      "ok": true,
+      "detail": "565/565 ok"
+    },
+    {
+      "name": "sweep flash: no empty options",
+      "ok": true,
+      "detail": "565/565 ok"
+    },
+    {
+      "name": "sweep flash: option sources distinct",
+      "ok": true,
+      "detail": "565/565 ok"
+    },
+    {
+      "name": "sweep flash: no .katex-error",
+      "ok": true,
+      "detail": "565/565 ok"
+    },
+    {
+      "name": "sweep flash: no undefined/NaN/[object Object] text",
+      "ok": true,
+      "detail": "565/565 ok"
+    },
+    {
+      "name": "sweep flash: no horizontal page scroll (html & body ≤ 390)",
+      "ok": true,
+      "detail": "565/565 ok"
+    },
+    {
+      "name": "sweep flash: no content clipped sideways (overflow-x:hidden containers)",
+      "ok": true,
+      "detail": "565/565 ok"
+    },
+    {
+      "name": "sweep flash: no option spills out of its button",
+      "ok": true,
+      "detail": "565/565 ok"
+    },
+    {
+      "name": "sweep flash: option buttons ≥44px tall",
+      "ok": true,
+      "detail": "565/565 ok"
+    },
+    {
+      "name": "sweep flash: first option in the lower half (top ≥ 422)",
+      "ok": true,
+      "detail": "565/565 ok"
+    },
+    {
+      "name": "sweep flash: page not scrolled, top bar visible",
+      "ok": true,
+      "detail": "565/565 ok"
+    },
+    {
+      "name": "sweep flash: feedback panel appears after one tap",
+      "ok": true,
+      "detail": "565/565 ok"
+    },
+    {
+      "name": "sweep flash: all options disabled after answering",
+      "ok": true,
+      "detail": "565/565 ok"
+    },
+    {
+      "name": "sweep flash: exactly one option marked correct",
+      "ok": true,
+      "detail": "565/565 ok"
+    },
+    {
+      "name": "sweep flash: wrong answer → chosen option red, correct option green",
+      "ok": false,
+      "detail": "183/565 ok; failures e.g.: wrong rgb(217, 217, 224) / rgb(217, 217, 224) || wrong rgb(217, 217, 224) / rgb(217, 217, 224) || wrong rgb(217, 217, 224) / rgb(217, 217, 224) || wrong rgb(217, 217, 224) / rgb(217, 217, 224) || wrong rgb(217, 217, 224) / rgb(217, 217, 224) || wrong rgb(217, 217, 224) / rgb(217, 217, 224)"
+    },
+    {
+      "name": "sweep flash: wrong answer → \"Not quite\" + mistake label + why",
+      "ok": true,
+      "detail": "565/565 ok"
+    },
+    {
+      "name": "sweep flash: explanation shown",
+      "ok": true,
+      "detail": "565/565 ok"
+    },
+    {
+      "name": "sweep flash: Next button fully on screen and ≥44px",
+      "ok": true,
+      "detail": "565/565 ok"
+    },
+    {
+      "name": "sweep flash: no .katex-error after answering",
+      "ok": true,
+      "detail": "565/565 ok"
+    },
+    {
+      "name": "sweep flash: no undefined/NaN/[object Object] in feedback",
+      "ok": true,
+      "detail": "565/565 ok"
+    },
+    {
+      "name": "sweep flash: no horizontal page scroll with feedback",
+      "ok": true,
+      "detail": "565/565 ok"
+    },
+    {
+      "name": "sweep flash: nothing clipped sideways with feedback",
+      "ok": true,
+      "detail": "565/565 ok"
+    },
+    {
+      "name": "sweep flash: page not scrolled after answering (top bar visible)",
+      "ok": true,
+      "detail": "565/565 ok"
+    },
+    {
+      "name": "sweep flash: option marked green is the content's correct option",
+      "ok": true,
+      "detail": "565/565 ok"
+    },
+    {
+      "name": "sweep flash: verdict agrees with the content key",
+      "ok": true,
+      "detail": "565/565 ok"
+    },
+    {
+      "name": "sweep flash: green (correct) option visible after answering",
+      "ok": true,
+      "detail": "565/565 ok"
+    },
+    {
+      "name": "sweep: review round shows every seeded unit",
+      "ok": true,
+      "detail": "29/29 ok"
+    },
+    {
+      "name": "sweep: every flash item (static + generator instances at 5 seeds each) displayed",
+      "ok": true,
+      "detail": "550/550 distinct items"
+    },
+    {
+      "name": "sweep flash: no vertically clipped math/text (overflow-y hidden, >2px)",
+      "ok": true,
+      "detail": "0 units, e.g. "
+    },
+    {
+      "name": "no console errors / page errors",
+      "ok": false,
+      "detail": "warning: Service Worker registration blocked by Playwright | warning: Service Worker registration blocked by Playwright | warning: Service Worker registration blocked by Playwright"
+    }
+  ],
+  "metrics": {
+    "unitsSwept": 565,
+    "unitsWithSideScrollingOptions": 0,
+    "widestOptions": [
+      {
+        "id": "dr-f-018",
+        "scrollX": 0
+      },
+      {
+        "id": "dr-f-001",
+        "scrollX": 0
+      },
+      {
+        "id": "dr-f-012",
+        "scrollX": 0
+      },
+      {
+        "id": "dr-f-016",
+        "scrollX": 0
+      },
+      {
+        "id": "dr-f-003",
+        "scrollX": 0
+      },
+      {
+        "id": "dr-f-015",
+        "scrollX": 0
+      },
+      {
+        "id": "dr-f-020",
+        "scrollX": 0
+      },
+      {
+        "id": "dr-f-004",
+        "scrollX": 0
+      }
+    ],
+    "widestPrompts": [
+      {
+        "id": "dr-f-018",
+        "scrollX": 0
+      },
+      {
+        "id": "dr-f-001",
+        "scrollX": 0
+      },
+      {
+        "id": "dr-f-012",
+        "scrollX": 0
+      },
+      {
+        "id": "dr-f-016",
+        "scrollX": 0
+      },
+      {
+        "id": "dr-f-003",
+        "scrollX": 0
+      },
+      {
+        "id": "dr-f-015",
+        "scrollX": 0
+      },
+      {
+        "id": "dr-f-020",
+        "scrollX": 0
+      },
+      {
+        "id": "dr-f-004",
+        "scrollX": 0
+      }
+    ],
+    "verticallyClipped": [],
+    "minOptionHeight": 52,
+    "minFirstOptionTop": 430,
+    "consoleErrors": [
+      "warning: Service Worker registration blocked by Playwright",
+      "warning: Service Worker registration blocked by Playwright",
+      "warning: Service Worker registration blocked by Playwright",
+      "warning: Service Worker registration blocked by Playwright",
+      "warning: Service Worker registration blocked by Playwright",
+      "warning: Service Worker registration blocked by Playwright",
+      "warning: Service Worker registration blocked by Playwright",
+      "warning: Service Worker registration blocked by Playwright",
+      "warning: Service Worker registration blocked by Playwright",
+      "warning: Service Worker registration blocked by Playwright",
+      "warning: Service Worker registration blocked by Playwright",
+      "warning: Service Worker registration blocked by Playwright",
+      "warning: Service Worker registration blocked by Playwright",
+      "warning: Service Worker registration blocked by Playwright",
+      "warning: Service Worker registration blocked by Playwright",
+      "warning: Service Worker registration blocked by Playwright",
+      "warning: Service Worker registration blocked by Playwright",
+      "warning: Service Worker registration blocked by Playwright",
+      "warning: Service Worker registration blocked by Playwright",
+      "warning: Service Worker registration blocked by Playwright",
+      "warning: Service Worker registration blocked by Playwright",
+      "warning: Service Worker registration blocked by Playwright",
+      "warning: Service Worker registration blocked by Playwright",
+      "warning: Service Worker registration blocked by Playwright",
+      "warning: Service Worker registration blocked by Playwright",
+      "warning: Service Worker registration blocked by Playwright",
+      "warning: Service Worker registration blocked by Playwright",
+      "warning: Service Worker registration blocked by Playwright",
+      "warning: Service Worker registration blocked by Playwright",
+      "warning: Service Worker registration blocked by Playwright"
+    ]
+  },
+  "seconds": 35
+}
