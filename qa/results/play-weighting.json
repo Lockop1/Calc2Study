@@ -1,0 +1,45 @@
+{
+  "name": "weighting",
+  "startedAt": "2026-09-24T16:17:39.629Z",
+  "checks": [
+    {
+      "name": "badge counts all 30 seeded misses",
+      "ok": true,
+      "detail": "30"
+    },
+    {
+      "name": "Review draws repeated misses more often than single misses (A > B)",
+      "ok": true,
+      "detail": "{\"A\":123,\"B\":60,\"C\":17,\"?\":0}"
+    },
+    {
+      "name": "Review draws recent misses more often than old ones (B > C)",
+      "ok": true,
+      "detail": "{\"A\":123,\"B\":60,\"C\":17,\"?\":0}"
+    },
+    {
+      "name": "every reviewed unit identified",
+      "ok": true,
+      "detail": "0 unidentified"
+    }
+  ],
+  "metrics": {
+    "observed": {
+      "A": 123,
+      "B": 60,
+      "C": 17,
+      "?": 0
+    },
+    "expectedFromFormula": {
+      "A": 115.8,
+      "B": 62,
+      "C": 22.2
+    },
+    "groups": {
+      "A": "misses 3, missed 1h ago",
+      "B": "misses 1, missed 1h ago",
+      "C": "misses 1, missed 10 days ago"
+    }
+  },
+  "seconds": 46
+}
