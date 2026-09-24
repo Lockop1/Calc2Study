@@ -121,3 +121,24 @@ reference examples).
 2. Re-run the blind test on the rewritten units (the current blind results predate the fix passes).
 3. Some `check` expressions restate the stored answer (e.g. ts-f-030, ti-f-057…061); they were
    verified by hand, but an independent formulation would let the automated suite guard them.
+
+## Cards mode deck (`content/cards/deck.ts`) — session 2
+
+| Deck | Author instance | Verifier instance | Automated checks | Verdict | Notes |
+|------|-----------------|-------------------|------------------|---------|-------|
+| 50 whiteboard flashcards | content-author #a5b4a1a | math-verifier #a5e3b31 | tests/cards.test.ts 54/54 | PASS (0 blocking) | report: `qa/verification/cards.md` |
+
+- Flashcards are not multiple-choice: no distractors, no blind-option test. Verified instead: the
+  deck is exactly the whiteboard list (50 cards in board order, fixed per-section counts, no LIATE),
+  answers in the board's notation (an "also written as" line only on the tan antiderivative and the
+  area formula), every checkable card re-derived by hand and by the verifier's own script over wide
+  domains including negative x and every quadrant, every `check` confirmed to describe its card, and
+  22 deliberately wrong answers confirmed to be rejected by the cards' own checks (including
+  1/(x√(x²−1)) for the arcsec derivative, so negative x is really sampled).
+- Orchestrator decisions: the washer card keeps the board's R_out/R_in (the course writes R/r); the
+  tan antiderivative leads with ln|sec x| as on the board, with −ln|cos x| as the "also" line.
+- Orchestrator follow-up on the verifier's optional note: the five antiderivative cards with
+  absolute values (tan, cot, sec, csc, 1/x) now sample where the argument of |·| is negative
+  (`domain` only; no answer changed; 54/54 still pass).
+- Formula cards (area, disk, washer, shell, both arc-length forms, IBP) have `check: none` and were
+  verified by hand against the course conventions.

@@ -172,6 +172,8 @@ export const CARDS: Card[] = [
     front: { latex: '\\tan x' },
     back: { latex: '\\ln|\\sec x| + C', also: '-\\ln|\\cos x| + C', expr: 'log(abs(sec(x)))' },
     check: { kind: 'antiderivative', integrand: 'tan(x)' },
+    // sampled where the argument of |·| is negative, so the absolute value is really tested
+    domain: [1.8, 2.8],
   },
   {
     id: 'card-antiderivatives-06',
@@ -181,6 +183,8 @@ export const CARDS: Card[] = [
     front: { latex: '\\cot x' },
     back: { latex: '\\ln|\\sin x| + C', expr: 'log(abs(sin(x)))' },
     check: { kind: 'antiderivative', integrand: 'cot(x)' },
+    // sampled where the argument of |·| is negative, so the absolute value is really tested
+    domain: [3.5, 4.5],
   },
   {
     id: 'card-antiderivatives-07',
@@ -190,6 +194,8 @@ export const CARDS: Card[] = [
     front: { latex: '\\sec x' },
     back: { latex: '\\ln|\\sec x + \\tan x| + C', expr: 'log(abs(sec(x) + tan(x)))' },
     check: { kind: 'antiderivative', integrand: 'sec(x)' },
+    // sampled where the argument of |·| is negative, so the absolute value is really tested
+    domain: [1.8, 2.8],
   },
   {
     id: 'card-antiderivatives-08',
@@ -199,6 +205,8 @@ export const CARDS: Card[] = [
     front: { latex: '\\csc x' },
     back: { latex: '-\\ln|\\csc x + \\cot x| + C', expr: '-log(abs(csc(x) + cot(x)))' },
     check: { kind: 'antiderivative', integrand: 'csc(x)' },
+    // sampled where the argument of |·| is negative, so the absolute value is really tested
+    domain: [3.5, 4.5],
   },
   {
     id: 'card-antiderivatives-09',
@@ -208,6 +216,8 @@ export const CARDS: Card[] = [
     front: { latex: '\\frac{1}{x}' },
     back: { latex: '\\ln|x| + C', expr: 'log(abs(x))' },
     check: { kind: 'antiderivative', integrand: '1/x' },
+    // sampled where the argument of |·| is negative, so the absolute value is really tested
+    domain: [-2, -0.5],
   },
   {
     id: 'card-antiderivatives-10',
