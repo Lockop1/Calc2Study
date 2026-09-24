@@ -173,6 +173,24 @@ const badgeCount = async (page) =>
   (await page.locator('.badge').count()) ? Number(await page.locator('.badge').innerText()) : 0;
 const nextButton = (page) => page.getByRole('button', { name: /^(Next|Finish)$/ });
 
+/**
+ * Taps a mode button on Home. Returns true when a question screen appears; when the selection has
+ * no content for that mode (e.g. real content still being written), checks that Home shows a
+ * friendly message instead and returns false so the caller can skip that part.
+ */
+async function startMode(page, label) {
+  await tap(page, page.getByRole('button', { name: new RegExp(label) }));
+  const question = page.waitForSelector('.opt', { timeout: 3000 }).then(() => 'question', () => 'none');
+  const notice = page
+    .waitForFunction(() => document.querySelector('.home .notice')?.textContent.trim(), null, { timeout: 3000 })
+    .then(() => 'notice', () => 'none');
+  const outcome = await Promise.race([question, notice]);
+  if (outcome === 'question') return true;
+  const text = outcome === 'notice' ? (await page.locator('.home .notice').innerText()).trim() : '';
+  check(`${label}: no content for the selection → friendly message, part skipped`, text.length > 0, text);
+  return false;
+}
+
 /** Taps the last option (a wrong one ~80% of the time). Returns true when the answer was wrong. */
 async function tapAnswer(page) {
   await tap(page, page.locator('.opt').last());
@@ -269,71 +287,71 @@ async function mainFlow(browser) {
   check('Home: Review badge increments after a miss', misses === 0 || badgeAfter === badgeBefore + misses, `${badgeBefore} → ${badgeAfter} (${misses} missed)`);
 
   // Step-Through
-  await tap(page, page.getByRole('button', { name: /Step-Through/ }));
-  await page.waitForSelector('.opt');
-  await layoutChecks(page, 'Step question');
-  await optionChecks(page, 'Step question');
-  await shot(page, 'steps-question');
-  let advancedAfterWrong = false;
-  let stepMisses = 0;
-  for (let guard = 0; guard < 60; guard++) {
-    if (await page.locator('.summary').count()) break;
-    if (await page.locator('.final-card').count()) {
-      const recap = (await page.locator('.final-recap').innerText()).trim();
-      check('Step final: answer and recap shown', recap.length > 0 && (await page.locator('.final-card .katex').count()) > 0);
-      await layoutChecks(page, 'Step final');
-      await shot(page, 'steps-final');
-      await tap(page, page.locator('.dock-actions button'));
-      continue;
+  if (await startMode(page, 'Step-Through')) {
+    await layoutChecks(page, 'Step question');
+    await optionChecks(page, 'Step question');
+    await shot(page, 'steps-question');
+    let advancedAfterWrong = false;
+    let stepMisses = 0;
+    for (let guard = 0; guard < 60; guard++) {
+      if (await page.locator('.summary').count()) break;
+      if (await page.locator('.final-card').count()) {
+        const recap = (await page.locator('.final-recap').innerText()).trim();
+        check('Step final: answer and recap shown', recap.length > 0 && (await page.locator('.final-card .katex').count()) > 0);
+        await layoutChecks(page, 'Step final');
+        await shot(page, 'steps-final');
+        await tap(page, page.locator('.dock-actions button'));
+        continue;
+      }
+      const workBefore = await page.locator('.work-line').count();
+      const stepBefore = Number((await counter(page)).split('/')[0]);
+      const wrong = await tapAnswer(page);
+      const revealed = await page.locator('.feedback-answer').count();
+      if (wrong) stepMisses++;
+      if (wrong && !advancedAfterWrong) {
+        check('Step wrong: feedback shows mistake + "Correct step:"', revealed === 1 && (await page.locator('.feedback-mistake').count()) === 1);
+        await shot(page, 'steps-feedback');
+      }
+      await tap(page, nextButton(page));
+      await settle(page, 60);
+      const final = (await page.locator('.final-card').count()) > 0;
+      const workAfter = await page.locator('.work-line').count();
+      if (wrong && !advancedAfterWrong) {
+        const stepAfter = Number((await counter(page)).split('/')[0]);
+        advancedAfterWrong = true;
+        check(
+          'Step-Through advances after a wrong answer (correct step appended to Work so far)',
+          workAfter === workBefore + 1 && (final || stepAfter === stepBefore + 1),
+          `work ${workBefore} → ${workAfter}, step ${stepBefore} → ${final ? 'final' : stepAfter}`,
+        );
+        await shot(page, 'steps-advanced');
+      }
     }
-    const workBefore = await page.locator('.work-line').count();
-    const stepBefore = Number((await counter(page)).split('/')[0]);
-    const wrong = await tapAnswer(page);
-    const revealed = await page.locator('.feedback-answer').count();
-    if (wrong) stepMisses++;
-    if (wrong && !advancedAfterWrong) {
-      check('Step wrong: feedback shows mistake + "Correct step:"', revealed === 1 && (await page.locator('.feedback-mistake').count()) === 1);
-      await shot(page, 'steps-feedback');
-    }
-    await tap(page, nextButton(page));
-    await settle(page, 60);
-    const final = (await page.locator('.final-card').count()) > 0;
-    const workAfter = await page.locator('.work-line').count();
-    if (wrong && !advancedAfterWrong) {
-      const stepAfter = Number((await counter(page)).split('/')[0]);
-      advancedAfterWrong = true;
-      check(
-        'Step-Through advances after a wrong answer (correct step appended to Work so far)',
-        workAfter === workBefore + 1 && (final || stepAfter === stepBefore + 1),
-        `work ${workBefore} → ${workAfter}, step ${stepBefore} → ${final ? 'final' : stepAfter}`,
-      );
-      await shot(page, 'steps-advanced');
-    }
+    check('Step-Through: saw at least one wrong answer to test advancing', advancedAfterWrong);
+    await page.waitForSelector('.summary');
+    await tap(page, page.getByRole('button', { name: /^Home$/ }));
+    await page.waitForSelector('.home');
+    const badgeSteps = await badgeCount(page);
+    check('Home: Review badge counts missed steps too', badgeSteps === badgeAfter + stepMisses, `${badgeAfter} → ${badgeSteps}`);
   }
-  check('Step-Through: saw at least one wrong answer to test advancing', advancedAfterWrong);
-  await page.waitForSelector('.summary');
-  await tap(page, page.getByRole('button', { name: /^Home$/ }));
-  await page.waitForSelector('.home');
-  const badgeSteps = await badgeCount(page);
-  check('Home: Review badge counts missed steps too', badgeSteps === badgeAfter + stepMisses, `${badgeAfter} → ${badgeSteps}`);
 
   // Review
-  await tap(page, page.getByRole('button', { name: /Review/ }));
-  await page.waitForSelector('.opt');
-  await layoutChecks(page, 'Review question');
-  await optionChecks(page, 'Review question');
-  check('Review: title is "Review"', (await page.locator('.topbar-title').innerText()) === 'Review');
-  await shot(page, 'review');
-  const reviewTotal = Number((await counter(page)).split('/')[1]);
-  for (let i = 0; i < reviewTotal; i++) {
-    await tapAllCorrectOrFirst(page);
-    await tap(page, nextButton(page));
+  if (await startMode(page, 'Review')) {
+    await layoutChecks(page, 'Review question');
+    await optionChecks(page, 'Review question');
+    check('Review: title is "Review"', (await page.locator('.topbar-title').innerText()) === 'Review');
+    await shot(page, 'review');
+    const reviewTotal = Number((await counter(page)).split('/')[1]);
+    for (let i = 0; i < reviewTotal; i++) {
+      await tapAllCorrectOrFirst(page);
+      await tap(page, nextButton(page));
+    }
+    await page.waitForSelector('.summary');
+    check('Review: round ends in a summary', true);
   }
-  await page.waitForSelector('.summary');
-  check('Review: round ends in a summary', true);
 
   // Settings
-  await tap(page, page.getByRole('button', { name: /^Home$/ }));
+  if (!(await page.locator('.home').count())) await tap(page, page.getByRole('button', { name: /^Home$/ }));
   await tap(page, page.getByRole('button', { name: 'Settings' }));
   await page.waitForSelector('.settings');
   await layoutChecks(page, 'Settings');
@@ -431,13 +449,16 @@ async function otherViewports(browser) {
     const label = `${viewport.width}×${viewport.height}`;
     const { context, page } = await newPage(browser, { viewport });
     await layoutChecks(page, `${label} home`);
-    await tap(page, page.getByRole('button', { name: /Step-Through/ }));
-    await page.waitForSelector('.opt');
-    await layoutChecks(page, `${label} step question`);
+    const mode = (await startMode(page, 'Step-Through')) ? 'step' : (await startMode(page, 'Flash Drill')) ? 'flash' : null;
+    if (!mode) {
+      await context.close();
+      continue;
+    }
+    await layoutChecks(page, `${label} ${mode} question`);
     const top = await page.locator('.opt').first().boundingBox();
     check(`${label}: first option in the lower half`, top && top.y >= viewport.height / 2, `y ${top?.y}`);
     await tapAnswer(page);
-    await layoutChecks(page, `${label} step feedback`);
+    await layoutChecks(page, `${label} ${mode} feedback`);
     const next = await nextButton(page).boundingBox();
     check(`${label}: Next button visible`, next && next.y + next.height <= viewport.height + 1, `y ${next?.y}`);
     await shot(page, `vp-${viewport.width}x${viewport.height}`);

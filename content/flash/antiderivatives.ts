@@ -1227,7 +1227,7 @@ export const flash: FlashItem[] = [
     id: 'ad-f-034',
     topic: 'antiderivatives',
     kind: 'evaluate',
-    prompt: { latex: '\\int_0^{\\pi/2} \\cos x\\,e^{\\sin x}\\,dx' },
+    prompt: { latex: '\\int_0^{\\pi/2} e^{\\sin x}\\cos x\\,dx' },
     options: [
       { latex: 'e - 1', expr: 'e - 1' },
       { latex: 'e', expr: 'e', mistake: 'ftc-not-subtracted', why: 'The lower limit gives e^{sin 0} = e⁰ = 1, not 0; it must be subtracted.' },
@@ -1708,7 +1708,7 @@ export const flash: FlashItem[] = [
     id: 'ad-f-049',
     topic: 'antiderivatives',
     kind: 'concept',
-    prompt: { text: 'After the substitution $u = \\cos x$, the integral becomes', latex: '\\int_0^{\\pi} \\sin x\\,e^{\\cos x}\\,dx' },
+    prompt: { text: 'After the substitution $u = \\cos x$, the integral becomes', latex: '\\int_0^{\\pi} e^{\\cos x}\\sin x\\,dx' },
     options: [
       { latex: '\\int_{-1}^{1} e^u\\,du', expr: 'integral(exp(u), u, -1, 1)' },
       {
@@ -1724,7 +1724,7 @@ export const flash: FlashItem[] = [
         why: 'The x-limits 0 and π were kept; they become cos 0 = 1 and cos π = −1.',
       },
       {
-        latex: '\\int_{-1}^{1} \\sin x\\,e^u\\,du',
+        latex: '\\int_{-1}^{1} e^u\\sin x\\,du',
         expr: 'integral(sin(x)*exp(u), u, -1, 1)',
         mistake: 'leftover-x-in-u-integral',
         why: 'sin x dx is absorbed into −du; no x may remain inside the u-integral.',
