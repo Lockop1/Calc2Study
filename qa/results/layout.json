@@ -1,0 +1,62 @@
+{
+  "Home": {
+    "htmlScrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "viewport": "390x844",
+    "options": 0,
+    "minOptionHeight": null,
+    "firstOptionTop": null,
+    "katexErrors": 0,
+    "clippedSideways": 0
+  },
+  "Flash question": {
+    "htmlScrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "viewport": "390x844",
+    "options": 6,
+    "minOptionHeight": 52,
+    "firstOptionTop": 480,
+    "katexErrors": 0,
+    "clippedSideways": 0
+  },
+  "Flash feedback (wrong)": {
+    "htmlScrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "viewport": "390x844",
+    "options": 6,
+    "minOptionHeight": 52,
+    "firstOptionTop": 198.7,
+    "katexErrors": 0,
+    "clippedSideways": 0,
+    "skipOptionPosition": true,
+    "nextButton": {
+      "top": 788,
+      "bottom": 840,
+      "left": 16,
+      "right": 374,
+      "height": 52,
+      "width": 358
+    },
+    "feedbackTop": 566.7
+  },
+  "Summary": {
+    "htmlScrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "viewport": "390x844",
+    "options": 0,
+    "minOptionHeight": null,
+    "firstOptionTop": null,
+    "katexErrors": 0,
+    "clippedSideways": 0
+  },
+  "Review question": {
+    "htmlScrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "viewport": "390x844",
+    "options": 6,
+    "minOptionHeight": 52,
+    "firstOptionTop": 430,
+    "katexErrors": 0,
+    "clippedSideways": 0
+  }
+}

@@ -1,0 +1,187 @@
+{
+  "name": "home",
+  "startedAt": "2026-09-24T16:04:27.291Z",
+  "checks": [
+    {
+      "name": "9 topic chips, all selected by default",
+      "ok": true,
+      "detail": "1 Derivatives:true, 2 u-sub:true, 3 Area:true, 4 Disks/washers:true, 5 Shells:true, 6 Arc length:true, 7 IBP:true, 8 Trig integrals:true, 9 Trig sub:true"
+    },
+    {
+      "name": "topic counter shows 9/9",
+      "ok": true,
+      "detail": "9/9"
+    },
+    {
+      "name": "Review badge absent on a fresh device",
+      "ok": true,
+      "detail": "badge 0"
+    },
+    {
+      "name": "layout Home: html & body scrollWidth ≤ 390",
+      "ok": true,
+      "detail": "html 390, body 390"
+    },
+    {
+      "name": "deselecting 4 chips updates aria-pressed and the counter (5/9)",
+      "ok": true,
+      "detail": "false,true,false,true,true,false,true,true,false 5/9"
+    },
+    {
+      "name": "selection persists across reload",
+      "ok": true,
+      "detail": "false,true,false,true,true,false,true,true,false 5/9"
+    },
+    {
+      "name": "Flash Drill starts",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Flash question topic (from the .q-kind label) is a selected topic",
+      "ok": true,
+      "detail": "10/10 ok"
+    },
+    {
+      "name": "Flash question topic (from the content key) is a selected topic",
+      "ok": true,
+      "detail": "10/10 ok"
+    },
+    {
+      "name": "one tap on Next advances",
+      "ok": true,
+      "detail": "10/10 ok"
+    },
+    {
+      "name": "Flash round under a 5-topic filter completes with a summary",
+      "ok": true,
+      "detail": "10 questions"
+    },
+    {
+      "name": "Step-Through starts",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Step-Through problem topic is a selected topic",
+      "ok": true,
+      "detail": "10/10 ok"
+    },
+    {
+      "name": "Review badge = number of missed units in the selected topics",
+      "ok": true,
+      "detail": "badge 17, missed units 17 {\"trig-integrals\":4,\"volumes-disks\":2,\"ibp\":8,\"antiderivatives\":2,\"volumes-shells\":1}"
+    },
+    {
+      "name": "deselecting ibp lowers the badge by its misses (8)",
+      "ok": true,
+      "detail": "badge 9"
+    },
+    {
+      "name": "Review question topic is a selected topic",
+      "ok": true,
+      "detail": "9/9 ok"
+    },
+    {
+      "name": "\"None\" deselects all; Home asks to pick a topic",
+      "ok": true,
+      "detail": "0/9 \"Pick at least one topic to start.\""
+    },
+    {
+      "name": "with no topics, Flash Drill stays on Home with a message",
+      "ok": true,
+      "detail": "\"Pick at least one topic first.\""
+    },
+    {
+      "name": "\"All\" reselects all 9",
+      "ok": true,
+      "detail": "9/9"
+    },
+    {
+      "name": "no console errors / page errors",
+      "ok": false,
+      "detail": "warning: Service Worker registration blocked by Playwright | warning: Service Worker registration blocked by Playwright"
+    }
+  ],
+  "metrics": {
+    "home": {
+      "chips": [
+        {
+          "label": "1 Derivatives",
+          "pressed": true
+        },
+        {
+          "label": "2 u-sub",
+          "pressed": true
+        },
+        {
+          "label": "3 Area",
+          "pressed": true
+        },
+        {
+          "label": "4 Disks/washers",
+          "pressed": true
+        },
+        {
+          "label": "5 Shells",
+          "pressed": true
+        },
+        {
+          "label": "6 Arc length",
+          "pressed": true
+        },
+        {
+          "label": "7 IBP",
+          "pressed": true
+        },
+        {
+          "label": "8 Trig integrals",
+          "pressed": true
+        },
+        {
+          "label": "9 Trig sub",
+          "pressed": true
+        }
+      ],
+      "count": "9/9",
+      "badge": 0,
+      "notice": "",
+      "modes": [
+        {
+          "title": "Flash Drill",
+          "sub": "Fast multiple choice",
+          "empty": false
+        },
+        {
+          "title": "Step-Through",
+          "sub": "Pick the next step of a worked problem",
+          "empty": false
+        },
+        {
+          "title": "Review",
+          "sub": "Missed questions show up here",
+          "empty": true
+        }
+      ]
+    },
+    "storedSettings": "{\"version\":1,\"roundSize\":10,\"topics\":[\"antiderivatives\",\"volumes-disks\",\"volumes-shells\",\"ibp\",\"trig-integrals\"]}",
+    "flashTopicsSeen": [
+      "trig-integrals",
+      "volumes-disks",
+      "ibp",
+      "antiderivatives",
+      "volumes-shells"
+    ],
+    "qKindExamples": [
+      "Trig integrals · Antiderivative",
+      "Disks/washers · Concept",
+      "Trig integrals · Technique",
+      "Trig integrals · Formula"
+    ],
+    "consoleErrors": [
+      "warning: Service Worker registration blocked by Playwright",
+      "warning: Service Worker registration blocked by Playwright"
+    ]
+  },
+  "seconds": 18
+}
