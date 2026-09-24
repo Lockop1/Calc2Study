@@ -226,8 +226,8 @@ export const steps: StepProblem[] = [
           {
             latex: '-\\frac{1}{6(x^3+1)^2} + C',
             expr: '-1/(6*(x^3+1)^2)',
-            mistake: 'ln-misapplied',
-            why: 'Used a power rule on u^{−1} (as u^{−2}/(−2)); the power −1 integrates to ln|u|.',
+            mistake: 'power-rule-int-exponent',
+            why: 'Lowered the exponent of u^{−1} to −2 (as when differentiating) and divided by it; the power −1 is exactly the case that gives ln|u|.',
           },
           { latex: '\\frac{1}{3}\\ln|x^3| + C', expr: 'log(abs(x^3))/3', mistake: 'ln-argument-wrong', why: 'The argument is u = x³ + 1; the +1 was lost.' },
           { latex: '\\frac{1}{3}\\ln|u| + C', expr: 'log(abs(u))/3', mistake: 'not-back-substituted', why: 'The answer must be in x: replace u by x³ + 1.' },
@@ -592,9 +592,9 @@ export const steps: StepProblem[] = [
             why: 'The radical √(1 − u²) signals the arcsine formula; 1/(1 + u²) is the arctangent form.',
           },
           {
-            text: '$u = 1 - 16x^2$, to use the power rule',
+            text: '$u = 16x^2$, to use the power rule',
             mistake: 'u-choice-wrong',
-            why: 'du = −32x dx, but there is no x in the numerator.',
+            why: 'du = 32x dx needs a factor x in the numerator, which is missing; and 16x² is only part of the radicand.',
           },
           {
             text: '$u = \\sqrt{1-16x^2}$',
@@ -957,7 +957,7 @@ export const steps: StepProblem[] = [
       {
         prompt: 'Which first step works directly?',
         options: [
-          { text: '$u = e^t + 1$, writing $e^{2t} = e^t\\cdot e^t$' },
+          { text: '$u = e^t + 1$' },
           {
             text: '$u = e^{2t}$',
             mistake: 'u-choice-wrong',
@@ -1112,7 +1112,7 @@ export const steps: StepProblem[] = [
       {
         prompt: 'Which first step works directly?',
         options: [
-          { text: '$u = x + 4$, so $x = u - 4$ and $du = dx$' },
+          { text: '$u = x + 4$' },
           {
             text: '$u = 4x$',
             mistake: 'u-choice-wrong',

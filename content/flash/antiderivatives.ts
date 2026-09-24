@@ -160,7 +160,7 @@ export const flash: FlashItem[] = [
       {
         latex: '\\frac{3^{2x}}{2} + C',
         expr: '3^(2*x)/2',
-        mistake: 'exp-antiderivative-wrong',
+        mistake: 'exp-base-log-missing',
         why: 'Treated 3^{2x} like e^{2x}; for base 3 you must also divide by ln 3.',
       },
     ],
@@ -750,14 +750,14 @@ export const flash: FlashItem[] = [
       {
         latex: '-\\frac{1}{2\\tan^2 x} + C',
         expr: '-1/(2*tan(x)^2)',
-        mistake: 'ln-misapplied',
-        why: 'Treated ∫u^{−1}du with a power rule (u^{−2}/(−2)); the power −1 is exactly the case that gives ln|u|.',
+        mistake: 'power-rule-int-exponent',
+        why: 'Lowered the exponent of u^{−1} to −2 (as when differentiating) and divided by it; the power −1 is exactly the case that gives ln|u|.',
       },
       {
-        latex: '\\sec^2 x\\ln|\\tan x| + C',
-        expr: 'sec(x)^2*log(abs(tan(x)))',
-        mistake: 'leftover-x-in-u-integral',
-        why: 'sec²x dx is du; the factor sec²x must not be kept in the answer.',
+        latex: '\\frac{\\tan^2 x}{2} + C',
+        expr: 'tan(x)^2/2',
+        mistake: 'algebra-error',
+        why: 'Read the integrand as tan x · sec²x and integrated u du; it is (1/tan x) · sec²x = du/u.',
       },
     ],
     correct: 0,
@@ -1054,8 +1054,8 @@ export const flash: FlashItem[] = [
       {
         latex: '\\frac{4}{9}',
         expr: '4/9',
-        mistake: 'ln-misapplied',
-        why: 'Used a power rule on (x + 2)^{−1}, getting −1/(2(x + 2)²); the power −1 integrates to ln|x + 2|.',
+        mistake: 'power-rule-int-exponent',
+        why: 'Lowered the exponent of (x + 2)^{−1} to −2 (as when differentiating) and divided by it, getting −1/(2(x + 2)²); the power −1 integrates to ln|x + 2|.',
       },
       { latex: '0', expr: '0', mistake: 'ln-argument-wrong', why: 'Wrote ln|x| instead of ln|x + 2|: ln 1 − ln 1 = 0.' },
     ],
@@ -1142,7 +1142,7 @@ export const flash: FlashItem[] = [
     prompt: { latex: '\\int_0^{1/2} \\frac{1}{\\sqrt{1-x^2}}\\,dx' },
     options: [
       { latex: '\\frac{\\pi}{6}', expr: 'pi/6' },
-      { latex: '\\frac{\\pi}{3}', expr: 'pi/3', mistake: 'arithmetic-error', why: 'sin(π/3) = √3/2; the angle whose sine is 1/2 is π/6.' },
+      { latex: '\\frac{\\pi}{3}', expr: 'pi/3', mistake: 'inverse-trig-value-wrong', why: 'sin(π/3) = √3/2; the angle whose sine is 1/2 is π/6.' },
       { latex: '-\\frac{\\pi}{6}', expr: '-pi/6', mistake: 'ftc-order-swapped', why: 'Computed F(0) − F(1/2) instead of F(1/2) − F(0).' },
       {
         latex: '\\arctan\\left(\\frac{1}{2}\\right)',
@@ -1304,7 +1304,7 @@ export const flash: FlashItem[] = [
         mistake: 'mixed-limits-variable',
         why: 'The u-limits 0 and 1 were plugged into 2^{x²−1}/(2 ln 2), an x-expression: (2⁰ − 2^{−1})/(2 ln 2).',
       },
-      { latex: '\\frac{1}{2}', expr: '1/2', mistake: 'exp-antiderivative-wrong', why: 'Integrated 2^u as 2^u (like e^u); the antiderivative of 2^u is 2^u/ln 2.' },
+      { latex: '\\frac{1}{2}', expr: '1/2', mistake: 'exp-base-log-missing', why: 'Integrated 2^u as 2^u (like e^u); the antiderivative of 2^u is 2^u/ln 2.' },
       {
         latex: '\\frac{2^{\\sqrt{2}} - 2}{2\\ln 2}',
         expr: '(2^sqrt(2) - 2)/(2*log(2))',
@@ -1461,7 +1461,7 @@ export const flash: FlashItem[] = [
       text: 'A student finds $\\int f(x)\\,dx = F(x) + 1 + C$, while a computer algebra system gives $F(x) + C$ (and that answer is correct). Which statement is true?',
     },
     options: [
-      { text: 'Both answers are correct: $1 + C$ is still an arbitrary constant, so both describe the same family of antiderivatives.' },
+      { text: 'Both answers are correct: $1 + C$ is still an arbitrary constant.' },
       {
         text: 'The student is wrong: the extra $+1$ changes the derivative of the answer.',
         mistake: 'constant-derivative',
@@ -1529,9 +1529,9 @@ export const flash: FlashItem[] = [
     options: [
       { latex: '\\int_{-1}^{1} \\frac{1}{x+2}\\,dx' },
       {
-        latex: '\\int_{-1}^{1} \\frac{1}{x^2}\\,dx',
+        latex: '\\int_{-3}^{0} \\frac{1}{x^2}\\,dx',
         mistake: 'ftc-hypothesis-ignored',
-        why: '1/x² is not continuous at x = 0, which lies in [−1, 1].',
+        why: '1/x² is not continuous at x = 0, the upper limit of [−3, 0].',
       },
       {
         latex: '\\int_{-3}^{0} \\frac{1}{x+2}\\,dx',
@@ -1621,7 +1621,8 @@ export const flash: FlashItem[] = [
       { latex: '12', expr: '12', mistake: 'bounds-swapped', why: 'Reversing the limits changes the sign: ∫₅² = −∫₂⁵.' },
       { latex: '-4', expr: '-4', mistake: 'coefficient-mishandled', why: 'The constant 3 comes out of the integral as a factor: 3 · (−4).' },
       { latex: '-\\frac{4}{3}', expr: '-4/3', mistake: 'coefficient-mishandled', why: 'Divided by 3 instead of multiplying; ∫c·g = c∫g.' },
-      { latex: '-7', expr: '-7', mistake: 'algebra-error', why: 'Added 3 to the integral instead of multiplying it by 3.' },
+      { latex: '4', expr: '4', mistake: 'bounds-swapped', why: 'Kept the given value: the reversed limits flip the sign, and the factor 3 was dropped as well.' },
+      { latex: '\\frac{4}{3}', expr: '4/3', mistake: 'coefficient-mishandled', why: 'Divided by 3 instead of multiplying, and ignored that reversing the limits changes the sign.' },
     ],
     correct: 0,
     explanation: '$\\int_5^2 3g(x)\\,dx = -3\\int_2^5 g(x)\\,dx = -3\\cdot 4 = -12$.',
@@ -1644,10 +1645,16 @@ export const flash: FlashItem[] = [
         why: 'The part below the axis (π/2 to π) counts negatively in I, so I is not the area.',
       },
       {
-        latex: 'I = 0,\\quad A = 0',
-        expr: '[0, 0]',
+        latex: 'I = 2,\\quad A = 0',
+        expr: '[2, 0]',
         mistake: 'signed-area-confusion',
-        why: 'Area is never negative: each half of the region has area 1, so A = 2 even though I = 0.',
+        why: 'The two quantities are swapped: the signed integral cancels to 0, while the area of the two pieces is 1 + 1 = 2.',
+      },
+      {
+        latex: 'I = -2,\\quad A = 1',
+        expr: '[-2, 1]',
+        mistake: 'trig-antiderivative-swapped',
+        why: 'Used cos x as its own antiderivative (giving −2) and counted only the piece above the axis.',
       },
       {
         latex: 'I = -2,\\quad A = 2',
@@ -1823,7 +1830,7 @@ export const flash: FlashItem[] = [
       text: 'A student evaluates $\\int_0^{\\sqrt{3}}\\frac{x}{\\sqrt{x^2+1}}\\,dx$ with $u = x^2 + 1$ and writes $\\frac{1}{2}\\int_1^4 u^{-1/2}\\,du = \\sqrt{x^2+1}\\,\\Big|_1^4 = \\sqrt{17} - \\sqrt{2}$. What went wrong?',
     },
     options: [
-      { text: 'The limits 1 and 4 are $u$-values but were plugged into an expression in $x$; evaluating $\\sqrt{u}\\,\\big|_1^4$ gives $1$.' },
+      { text: 'The limits $1$ and $4$ are $u$-values but were plugged into an expression in $x$.' },
       {
         text: 'The limits should have stayed $0$ and $\\sqrt{3}$ in the $u$-integral.',
         mistake: 'bounds-not-converted',
@@ -1859,9 +1866,9 @@ export const flash: FlashItem[] = [
       { latex: '\\frac{1}{2}\\left(F(8) - F(2)\\right)' },
       { latex: 'F(8) - F(2)', mistake: 'inner-constant-factor-missing', why: 'u = 2x gives dx = du/2; the factor 1/2 is missing.' },
       {
-        latex: '2\\left(F(8) - F(2)\\right)',
-        mistake: 'inner-constant-factor-missing',
-        why: 'Multiplied by the inner constant 2 instead of dividing by it.',
+        latex: 'F(4) - F(1)',
+        mistake: 'bounds-not-converted',
+        why: 'Treated f(2x) like f(x): the limits were not converted (u = 2x runs from 2 to 8) and the factor 1/2 is missing.',
       },
       {
         latex: '\\frac{1}{2}\\left(F(4) - F(1)\\right)',
@@ -2169,7 +2176,7 @@ export const flash: FlashItem[] = [
       {
         latex: 'a^x + C',
         expr: 'a^x',
-        mistake: 'exp-antiderivative-wrong',
+        mistake: 'exp-base-log-missing',
         why: 'Only base e is its own antiderivative; for base a divide by ln a.',
       },
       {
@@ -2243,22 +2250,22 @@ export const generators: FlashGenerator[] = [
             why: `The exponent was raised to −${m} correctly, but the division was by the old exponent −${n} instead of the new exponent −${m}.`,
           },
           {
-            latex: `-\\frac{1}{${n + 1}x^{${n + 1}}} + C`,
-            expr: `-1/(${n + 1}*x^${n + 1})`,
+            latex: `\\frac{1}{${n}${xPowTex(m)}} + C`,
+            expr: `1/(${n}*${xPowExpr(m)})`,
+            mistake: 'power-rule-int-coefficient',
+            why: `Divided by the old exponent ${n} instead of the new exponent ${m}, and the minus sign from dividing by −${m} was dropped.`,
+          },
+          {
+            latex: `\\frac{1}{${n + 1}x^{${n + 1}}} + C`,
+            expr: `1/(${n + 1}*x^${n + 1})`,
             mistake: 'power-rule-int-exponent',
-            why: `The exponent was lowered from −${n} to −${n + 1} (as when differentiating) instead of raised to −${m}.`,
+            why: `The exponent was lowered from −${n} to −${n + 1} (as when differentiating) instead of raised to −${m}, then divided by ${n + 1}.`,
           },
           {
             latex: `-\\frac{${n}}{x^{${n + 1}}} + C`,
             expr: `-${n}/x^${n + 1}`,
             mistake: 'differentiated-instead',
             why: `This is the derivative of x^{−${n}}, namely −${n}x^{−${n + 1}}, not an antiderivative.`,
-          },
-          {
-            latex: `\\ln|x^{${n}}| + C`,
-            expr: `log(abs(x^${n}))`,
-            mistake: 'ln-misapplied',
-            why: `Only x^{−1} integrates to a logarithm; 1/x^${n} = x^{−${n}} needs the power rule.`,
           },
         ],
         correct: 0,
@@ -2372,6 +2379,12 @@ export const generators: FlashGenerator[] = [
               mistake: 'differentiated-instead',
               why: `This is the derivative of sin(${kx}), not an antiderivative.`,
             },
+            {
+              latex: `\\cos(${kx}) + C`,
+              expr: `cos(${kxE})`,
+              mistake: 'trig-antiderivative-sign',
+              why: `Dropped both the minus sign of ∫sin u du = −cos u and the factor 1/${k} from dx = du/${k}.`,
+            },
           ],
           correct: 0,
           explanation: `With $u = ${kx}$, $dx = \\frac{du}{${k}}$: $\\frac{1}{${k}}\\int\\sin u\\,du = -\\frac{1}{${k}}\\cos(${kx}) + C$.`,
@@ -2409,6 +2422,12 @@ export const generators: FlashGenerator[] = [
             expr: `-${k}*sin(${kxE})`,
             mistake: 'differentiated-instead',
             why: `This is the derivative of cos(${kx}), not an antiderivative.`,
+          },
+          {
+            latex: `-\\sin(${kx}) + C`,
+            expr: `-sin(${kxE})`,
+            mistake: 'trig-antiderivative-sign',
+            why: `Added a minus sign that belongs to ∫sin u du, and dropped the factor 1/${k} from dx = du/${k}.`,
           },
         ],
         correct: 0,
