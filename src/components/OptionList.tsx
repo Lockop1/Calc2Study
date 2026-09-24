@@ -16,7 +16,7 @@ export interface OptionListProps {
   correctIndex: number;
   /** Index of the chosen option, or null before answering. */
   chosen: number | null;
-  onChoose: (index: number) => void;
+  onChoose: (index: number, event: { detail: number }) => void;
 }
 
 export function optionState(index: number, correctIndex: number, chosen: number | null): OptionState {
@@ -46,7 +46,7 @@ export function OptionList({ options, keys, correctIndex, chosen, onChoose }: Op
             className={`opt opt--${state}`}
             data-state={state}
             disabled={answered}
-            onClick={() => onChoose(i)}
+            onClick={(event) => onChoose(i, event)}
           >
             <span className="opt-body">
               <OptionContent option={option} />

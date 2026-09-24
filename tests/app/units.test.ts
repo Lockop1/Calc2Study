@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import {
   isUnitId,
   problemById,
@@ -9,6 +9,10 @@ import {
   workLinesBefore,
 } from '../../src/lib/units';
 import { makeContent, makeFlash, makeGenerator, makeProblem, withTopic } from './fixtures';
+
+// These tests inject fixture content. Never load the real content aggregate: it is authored
+// concurrently and may be mid-edit, and app logic must not depend on it.
+vi.mock('@content/index', () => ({ CONTENT: [] }));
 
 const content = makeContent({
   'diff-review': { flash: 3, generators: ['sin-kx'] },

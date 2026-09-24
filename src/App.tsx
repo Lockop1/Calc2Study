@@ -5,7 +5,8 @@
  * Settings and progress are loaded once, kept in state, and saved on every change.
  */
 import type { TopicContent, TopicId } from '@content/types';
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState, type ReactNode } from 'react';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import { getContent, usingSampleContent } from './lib/content-source';
 import { buildReviewRound, dueUnitIds, recordAnswer, type Progress } from './lib/progress';
 import type { Rng } from './lib/rng';
@@ -57,6 +58,7 @@ export default function App({ content: contentProp, rng = Math.random, now = Dat
   const progressRef = useRef(progress);
   const [screen, setScreen] = useState<Screen>({ name: 'home' });
   const [notice, setNotice] = useState<string | null>(null);
+  const [crashResets, setCrashResets] = useState(0);
   const roundCounter = useRef(0);
 
   const go = useCallback((next: Screen) => {
@@ -125,10 +127,11 @@ export default function App({ content: contentProp, rng = Math.random, now = Dat
     [settings.topics, progress, content],
   );
 
+  let body: ReactNode;
   switch (screen.name) {
     case 'flash':
     case 'review':
-      return (
+      body = (
         <DrillScreen
           key={screen.key}
           mode={screen.name}
@@ -140,8 +143,9 @@ export default function App({ content: contentProp, rng = Math.random, now = Dat
           onHome={() => goHome()}
         />
       );
+      break;
     case 'steps':
-      return (
+      body = (
         <StepThroughScreen
           key={screen.key}
           roundKey={screen.key}
@@ -152,8 +156,9 @@ export default function App({ content: contentProp, rng = Math.random, now = Dat
           onHome={() => goHome()}
         />
       );
+      break;
     case 'summary':
-      return (
+      body = (
         <SummaryScreen
           result={screen.result}
           onReviewMisses={(ids) => startRound('review', ids)}
@@ -161,8 +166,9 @@ export default function App({ content: contentProp, rng = Math.random, now = Dat
           onHome={() => goHome()}
         />
       );
+      break;
     case 'settings':
-      return (
+      body = (
         <SettingsScreen
           roundSize={settings.roundSize}
           missedCount={dueUnitIds({ topics: defaultSettings().topics, progress, content }).length}
@@ -176,9 +182,10 @@ export default function App({ content: contentProp, rng = Math.random, now = Dat
           onHome={() => goHome()}
         />
       );
+      break;
     case 'home':
     default:
-      return (
+      body = (
         <HomeScreen
           selected={settings.topics}
           availability={availability}
@@ -204,4 +211,18 @@ export default function App({ content: contentProp, rng = Math.random, now = Dat
         />
       );
   }
+
+  // A crash while rendering (malformed content) shows a friendly screen; navigating resets it.
+  const boundaryKey = `${'key' in screen ? `${screen.name}:${screen.key}` : screen.name}#${crashResets}`;
+  return (
+    <ErrorBoundary
+      key={boundaryKey}
+      onHome={() => {
+        setCrashResets((n) => n + 1);
+        goHome();
+      }}
+    >
+      {body}
+    </ErrorBoundary>
+  );
 }

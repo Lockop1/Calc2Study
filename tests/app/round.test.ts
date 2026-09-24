@@ -1,12 +1,16 @@
 import { sampleFlash, sampleGenerators, sampleSteps } from '@content/examples/sample';
 import { TOPIC_IDS } from '@content/topics';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { contentFromSample } from '../../src/lib/content-source';
 import { DAY_MS, emptyProgress, recordAnswer, type Progress } from '../../src/lib/progress';
 import { mulberry32 } from '../../src/lib/rng';
 import { buildFlashRound, buildStepRound, MAX_GENERATOR_SEED } from '../../src/lib/round';
 import { MIN_OPTIONS, resolveUnit, topicOfId, unitTopic } from '../../src/lib/units';
 import { makeContent, makeFlash, makeGenerator, withTopic } from './fixtures';
+
+// These tests inject fixture content. Never load the real content aggregate: it is authored
+// concurrently and may be mid-edit, and app logic must not depend on it.
+vi.mock('@content/index', () => ({ CONTENT: [] }));
 
 const NOW = Date.UTC(2026, 8, 24, 12);
 

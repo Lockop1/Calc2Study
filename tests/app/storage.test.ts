@@ -15,6 +15,10 @@ import {
   storageAvailable,
 } from '../../src/lib/storage';
 
+// These tests inject fixture content. Never load the real content aggregate: it is authored
+// concurrently and may be mid-edit, and app logic must not depend on it.
+vi.mock('@content/index', () => ({ CONTENT: [] }));
+
 const NOW = Date.UTC(2026, 8, 24, 12);
 
 beforeEach(() => {

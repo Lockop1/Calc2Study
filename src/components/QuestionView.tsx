@@ -7,6 +7,7 @@ import type { Option } from '@content/types';
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { mistakeLabel } from '../lib/mistake-label';
 import { shuffleOptions } from '../lib/shuffle';
+import { useTapGuard } from '../lib/tap-guard';
 import { FeedbackPanel } from './FeedbackPanel';
 import { OptionList } from './OptionList';
 import { QuestionLayout } from './QuestionLayout';
@@ -45,15 +46,17 @@ export function QuestionView({
   const shuffled = useMemo(() => shuffleOptions(options, correct), [displayKey]);
   const [chosen, setChosen] = useState<number | null>(null);
   const answeredRef = useRef(false);
+  const tooSoon = useTapGuard();
 
   const choose = useCallback(
-    (index: number) => {
+    (index: number, event?: { detail: number }) => {
       if (answeredRef.current) return; // no double answers, even on a fast double tap
+      if (event && tooSoon(event)) return; // second half of a double tap on the previous screen
       answeredRef.current = true;
       setChosen(index);
       onAnswer(index === shuffled.correctIndex);
     },
-    [onAnswer, shuffled],
+    [onAnswer, shuffled, tooSoon],
   );
 
   // Desktop nicety: number keys 1–9 pick an option.

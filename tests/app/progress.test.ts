@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import {
   buildReviewRound,
   DAY_MS,
@@ -14,6 +14,10 @@ import {
 } from '../../src/lib/progress';
 import { mulberry32 } from '../../src/lib/rng';
 import { makeContent } from './fixtures';
+
+// These tests inject fixture content. Never load the real content aggregate: it is authored
+// concurrently and may be mid-edit, and app logic must not depend on it.
+vi.mock('@content/index', () => ({ CONTENT: [] }));
 
 const NOW = Date.UTC(2026, 8, 24, 12);
 const entry = (e: Partial<UnitProgress>): UnitProgress => ({

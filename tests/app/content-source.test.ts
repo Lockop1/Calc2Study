@@ -5,6 +5,10 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { contentFromSample, isContentEmpty } from '../../src/lib/content-source';
 import { makeContent } from './fixtures';
 
+// These tests inject fixture content. Never load the real content aggregate: it is authored
+// concurrently and may be mid-edit, and app logic must not depend on it.
+vi.mock('@content/index', () => ({ CONTENT: [] }));
+
 const sample = { sampleFlash, sampleGenerators, sampleSteps };
 
 async function freshContentSource(content: unknown) {

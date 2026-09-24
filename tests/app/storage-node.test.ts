@@ -1,7 +1,11 @@
 // Node environment: no `window` at all. Storage must silently use the in-memory fallback.
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { emptyProgress, recordAnswer } from '../../src/lib/progress';
 import { loadProgress, loadSettings, saveProgress, saveSettings, storageAvailable } from '../../src/lib/storage';
+
+// These tests inject fixture content. Never load the real content aggregate: it is authored
+// concurrently and may be mid-edit, and app logic must not depend on it.
+vi.mock('@content/index', () => ({ CONTENT: [] }));
 
 describe('storage without a browser', () => {
   it('keeps values in memory', () => {

@@ -1,6 +1,7 @@
 /** End of a round: score, misses by topic, and what to do next. */
 import { topicById } from '@content/topics';
 import { MODE_TITLES, summarize, type RoundResult } from '../lib/session';
+import { useTapGuard } from '../lib/tap-guard';
 
 export interface SummaryScreenProps {
   result: RoundResult;
@@ -20,6 +21,10 @@ function verdict(correct: number, total: number): string {
 
 export function SummaryScreen({ result, onReviewMisses, onAnotherRound, onHome }: SummaryScreenProps) {
   const s = summarize(result);
+  const tooSoon = useTapGuard(); // the Finish tap's twin must not hit an action
+  const guarded = (action: () => void) => (event: { detail: number }) => {
+    if (!tooSoon(event)) action();
+  };
   const unit = result.mode === 'steps' ? 'steps' : 'questions';
   return (
     <main className="page summary">
@@ -62,18 +67,18 @@ export function SummaryScreen({ result, onReviewMisses, onAnotherRound, onHome }
 
       <div className="actions">
         {s.missedIds.length > 0 ? (
-          <button type="button" className="btn btn-primary btn-lg btn-block" onClick={() => onReviewMisses(s.missedIds)}>
+          <button type="button" className="btn btn-primary btn-lg btn-block" onClick={guarded(() => onReviewMisses(s.missedIds))}>
             Review misses ({s.missedIds.length})
           </button>
         ) : null}
         <button
           type="button"
           className={`btn btn-lg btn-block${s.missedIds.length === 0 ? ' btn-primary' : ''}`}
-          onClick={onAnotherRound}
+          onClick={guarded(onAnotherRound)}
         >
           Another round
         </button>
-        <button type="button" className="btn btn-lg btn-block btn-ghost" onClick={onHome}>
+        <button type="button" className="btn btn-lg btn-block btn-ghost" onClick={guarded(onHome)}>
           Home
         </button>
       </div>

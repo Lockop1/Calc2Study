@@ -1,11 +1,15 @@
 // @vitest-environment jsdom
 import { render, screen, within } from '@testing-library/react';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import App from '../../src/App';
 import { mulberry32 } from '../../src/lib/rng';
 import { clearMemoryFallback, PROGRESS_KEY, SETTINGS_KEY } from '../../src/lib/storage';
 import { clickButton, clickOption, counterText, feedback, optionButtons } from './dom-helpers';
 import { makeContent } from './fixtures';
+
+// These tests inject fixture content. Never load the real content aggregate: it is authored
+// concurrently and may be mid-edit, and app logic must not depend on it.
+vi.mock('@content/index', () => ({ CONTENT: [] }));
 
 const content = makeContent({
   'diff-review': { flash: 3 },
@@ -36,7 +40,7 @@ describe('Home', () => {
 
   it('persists the topic selection (toggle, None, All)', () => {
     const { unmount } = renderApp();
-    clickButton('4. Volumes: slicing, disks & washers');
+    clickButton('4 Disks/washers');
     expect(chips()[3].getAttribute('aria-pressed')).toBe('false');
     expect(storedSettings().topics).toHaveLength(8);
     unmount();
@@ -67,7 +71,7 @@ describe('Home', () => {
   it('respects the topic filter in every mode', () => {
     renderApp();
     clickButton('None');
-    clickButton('2. Antiderivatives & u-substitution');
+    clickButton('2 u-sub');
     clickButton(/Flash Drill/); // no flash content in topic 2
     expect(screen.getByRole('status').textContent).toMatch(/No Flash Drill questions/);
     clickButton(/Step-Through/);

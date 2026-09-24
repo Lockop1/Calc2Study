@@ -7,6 +7,10 @@ import { StepThroughScreen } from '../../src/screens/StepThroughScreen';
 import { clickButton, clickOption, counterText, feedback, optionButtons } from './dom-helpers';
 import { makeContent, makeProblem, withTopic } from './fixtures';
 
+// These tests inject fixture content. Never load the real content aggregate: it is authored
+// concurrently and may be mid-edit, and app logic must not depend on it.
+vi.mock('@content/index', () => ({ CONTENT: [] }));
+
 function setup(content = makeContent({ antiderivatives: { problems: [3, 2] } })) {
   const onAnswer = vi.fn<(id: string, correct: boolean) => void>();
   const onFinish = vi.fn<(r: RoundResult) => void>();

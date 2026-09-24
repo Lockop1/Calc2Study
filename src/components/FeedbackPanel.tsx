@@ -5,6 +5,7 @@
 import type { Option } from '@content/types';
 import { useEffect, useRef } from 'react';
 import { mistakeLabel } from '../lib/mistake-label';
+import { useTapGuard } from '../lib/tap-guard';
 import { CheckIcon, CrossIcon } from './Icons';
 import { OptionContent } from './OptionContent';
 import { RichText } from './RichText';
@@ -23,6 +24,7 @@ export interface FeedbackPanelProps {
 
 export function FeedbackPanel({ correct, chosen, explanation, correctStep, nextLabel, onNext }: FeedbackPanelProps) {
   const nextRef = useRef<HTMLButtonElement>(null);
+  const tooSoon = useTapGuard();
   useEffect(() => {
     nextRef.current?.focus({ preventScroll: true });
   }, []);
@@ -49,7 +51,14 @@ export function FeedbackPanel({ correct, chosen, explanation, correctStep, nextL
         ) : null}
         <RichText className="feedback-expl" text={explanation} />
       </div>
-      <button ref={nextRef} type="button" className="btn btn-primary btn-lg btn-block btn-next" onClick={onNext}>
+      <button
+        ref={nextRef}
+        type="button"
+        className="btn btn-primary btn-lg btn-block btn-next"
+        onClick={(event) => {
+          if (!tooSoon(event)) onNext();
+        }}
+      >
         {nextLabel}
       </button>
     </section>

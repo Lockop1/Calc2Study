@@ -3,6 +3,7 @@ import { TOPICS } from '@content/topics';
 import type { TopicId } from '@content/types';
 import { ChevronIcon, GearIcon } from '../components/Icons';
 import type { Mode } from '../lib/session';
+import { useTapGuard } from '../lib/tap-guard';
 import { cx } from '../lib/util';
 
 export interface Availability {
@@ -38,6 +39,7 @@ export function HomeScreen({
   onSettings,
 }: HomeScreenProps) {
   const chosen = new Set(selected);
+  const tooSoon = useTapGuard(); // e.g. the twin of a double tap on Summary's Home button
   const none = selected.length === 0;
   const modes: Array<{ mode: Mode; title: string; sub: string; empty: boolean; primary?: boolean }> = [
     {
@@ -99,7 +101,7 @@ export function HomeScreen({
                 className="chip"
                 aria-pressed={on}
                 title={t.title}
-                aria-label={`${t.num}. ${t.title}`}
+                aria-label={`${t.num} ${t.short}`}
                 onClick={() => onToggleTopic(t.id)}
               >
                 <span className="chip-num" aria-hidden="true">
@@ -123,7 +125,9 @@ export function HomeScreen({
             key={m.mode}
             type="button"
             className={cx('mode-btn', m.primary && 'mode-btn--primary', (m.empty || none) && 'mode-btn--empty')}
-            onClick={() => onStart(m.mode)}
+            onClick={(event) => {
+              if (!tooSoon(event)) onStart(m.mode);
+            }}
           >
             <span className="mode-text">
               <span className="mode-title">

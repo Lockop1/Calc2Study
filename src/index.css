@@ -82,14 +82,17 @@ button { font: inherit; color: inherit; }
 }
 
 /* ───────────────────────── math & rich text ───────────────────────── */
-/* Wide math scrolls inside its own box; the page never scrolls sideways. */
+/* Wide math scrolls inside its own box; the page never scrolls sideways. `overflow-x: auto` forces
+   `overflow-y` to clip, and KaTeX's script-size boxes reach a few px past the formula's struts, so
+   the clip box gets extra vertical padding, cancelled by a negative margin (no visual change). */
 .math-scroll {
   display: block;
   max-width: 100%;
   overflow-x: auto;
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
-  padding: 2px 0;
+  padding: 6px 0;
+  margin: -4px 0;
 }
 .math-scroll .katex-display { margin: 0.2em 0; }
 .rich {
@@ -98,9 +101,10 @@ button { font: inherit; color: inherit; }
   overflow-x: auto;
   overflow-y: hidden;
   overflow-wrap: anywhere;
-  padding-block: 0.1em;
+  padding: 6px 0; /* room for inline limits/scripts inside the clip box (see .math-scroll) */
+  margin: -4px 0;
 }
-.rich-display { display: block; max-width: 100%; overflow-x: auto; overflow-y: hidden; }
+.rich-display { display: block; max-width: 100%; overflow-x: auto; overflow-y: hidden; padding: 6px 0; margin: -4px 0; }
 
 /* ───────────────────────── buttons ───────────────────────── */
 .btn {
@@ -213,6 +217,8 @@ button { font: inherit; color: inherit; }
   gap: 12px;
 }
 .stage > * { flex: none; min-width: 0; }
+/* Flex column whose children never shrink: when space runs out the list scrolls (a grid here would
+   squeeze its rows down to the buttons' min-height and spill the text). */
 .answers {
   flex: 0 1 auto;
   min-height: 0;
@@ -220,12 +226,12 @@ button { font: inherit; color: inherit; }
   overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: contain;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  align-content: start;
+  display: flex;
+  flex-direction: column;
   gap: var(--gap);
   padding: 8px var(--pad) calc(12px + var(--safe-bottom));
 }
+.answers > * { flex: none; }
 .screen-q.is-answered .answers { padding-bottom: 8px; }
 
 .q-card {
@@ -332,15 +338,18 @@ button { font: inherit; color: inherit; }
   animation: feedback-in var(--dur) ease-out;
 }
 .feedback--bad { border-top-color: var(--bad); }
+/* Same rule: the text blocks are scroll containers (automatic min-height 0), so they must not be
+   allowed to shrink; the body scrolls instead. */
 .feedback-body {
   flex: 0 1 auto;
   min-height: 0;
   overflow-x: hidden;
   overflow-y: auto;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
+  display: flex;
+  flex-direction: column;
   gap: 6px;
 }
+.feedback-body > * { flex: none; min-width: 0; }
 .feedback-title { display: flex; align-items: center; gap: 8px; font-size: 1.12rem; font-weight: 800; }
 .feedback--ok .feedback-title { color: var(--ok-strong); }
 .feedback--bad .feedback-title { color: var(--bad-strong); }

@@ -103,6 +103,13 @@ async function newPage(browser, options = {}) {
 
 const settle = (page, ms = 220) => page.waitForTimeout(ms); // longer than every animation (≤150ms)
 
+/** Screens ignore pointer taps within 350ms of appearing (double-tap guard), so pause like a human. */
+const GUARD_WAIT = 400;
+async function tap(page, locator) {
+  await page.waitForTimeout(GUARD_WAIT);
+  await locator.tap();
+}
+
 async function shot(page, name) {
   await settle(page);
   await page.screenshot({ path: `${SHOTS}/ui-${name}.png` });
@@ -121,6 +128,24 @@ async function layoutChecks(page, label) {
     return ['undefined', 'NaN', '[object Object]'].filter((s) => text.includes(s));
   });
   check(`${label}: no undefined/NaN/[object Object] text`, bad.length === 0, bad.join(', '));
+  await integrityChecks(page, label);
+}
+
+/** Nothing is squeezed: no option spills out of its button, no text/math block is clipped. */
+async function integrityChecks(page, label) {
+  const bad = await page.evaluate(() => {
+    const out = [];
+    for (const el of document.querySelectorAll('.opt, .rich, .math-scroll, .rich-display')) {
+      const text = el.textContent.trim();
+      if (!text) continue;
+      if (el.clientHeight === 0) out.push(`${el.className} collapsed: "${text.slice(0, 30)}"`);
+      else if (el.scrollHeight > el.clientHeight + 2) {
+        out.push(`${el.className} clipped ${el.scrollHeight}>${el.clientHeight}: "${text.slice(0, 30)}"`);
+      }
+    }
+    return out;
+  });
+  check(`${label}: no squeezed or clipped text`, bad.length === 0, bad.slice(0, 2).join(' | '));
 }
 
 async function optionChecks(page, label) {
@@ -150,13 +175,13 @@ const nextButton = (page) => page.getByRole('button', { name: /^(Next|Finish)$/ 
 
 /** Taps the last option (a wrong one ~80% of the time). Returns true when the answer was wrong. */
 async function tapAnswer(page) {
-  await page.locator('.opt').last().tap();
+  await tap(page, page.locator('.opt').last());
   await page.waitForSelector('.feedback');
   return (await page.locator('.opt--wrong').count()) > 0;
 }
 
 async function tapAllCorrectOrFirst(page) {
-  await page.locator('.opt').first().tap();
+  await tap(page, page.locator('.opt').first());
   await page.waitForSelector('.feedback');
 }
 
@@ -177,7 +202,7 @@ async function mainFlow(browser) {
   await shot(page, 'home');
 
   // Flash Drill
-  await page.getByRole('button', { name: /Flash Drill/ }).tap();
+  await tap(page, page.getByRole('button', { name: /Flash Drill/ }));
   await page.waitForSelector('.opt');
   const total = Number((await counter(page)).split('/')[1]);
   check('Flash: round has questions', total > 0, `counter ${await counter(page)}`);
@@ -211,11 +236,14 @@ async function mainFlow(browser) {
     } else if (q === 1) {
       check('Flash right: feedback says "Correct"', (await page.locator('.feedback-title').innerText()).includes('Correct'));
     }
-    await nextButton(page).tap();
+    await tap(page, nextButton(page));
     if (q < total) {
       await page.waitForSelector('.opt:not([disabled])');
       if (q === 1) {
         check('Flash: one tap on Next shows the next question immediately', (await counter(page)) === `2/${total}` && (await page.locator('.feedback').count()) === 0);
+        await page.locator('.opt').first().tap(); // the twin of a double tap on Next
+        await page.waitForTimeout(80);
+        check('Double-tap guard: a tap right after the question appears is ignored', (await page.locator('.feedback').count()) === 0);
       }
     }
   }
@@ -235,13 +263,13 @@ async function mainFlow(browser) {
   await shot(page, 'summary');
 
   // Review badge
-  await page.getByRole('button', { name: /^Home$/ }).tap();
+  await tap(page, page.getByRole('button', { name: /^Home$/ }));
   await page.waitForSelector('.home');
   const badgeAfter = await badgeCount(page);
   check('Home: Review badge increments after a miss', misses === 0 || badgeAfter === badgeBefore + misses, `${badgeBefore} → ${badgeAfter} (${misses} missed)`);
 
   // Step-Through
-  await page.getByRole('button', { name: /Step-Through/ }).tap();
+  await tap(page, page.getByRole('button', { name: /Step-Through/ }));
   await page.waitForSelector('.opt');
   await layoutChecks(page, 'Step question');
   await optionChecks(page, 'Step question');
@@ -255,7 +283,7 @@ async function mainFlow(browser) {
       check('Step final: answer and recap shown', recap.length > 0 && (await page.locator('.final-card .katex').count()) > 0);
       await layoutChecks(page, 'Step final');
       await shot(page, 'steps-final');
-      await page.locator('.dock-actions button').tap();
+      await tap(page, page.locator('.dock-actions button'));
       continue;
     }
     const workBefore = await page.locator('.work-line').count();
@@ -267,7 +295,7 @@ async function mainFlow(browser) {
       check('Step wrong: feedback shows mistake + "Correct step:"', revealed === 1 && (await page.locator('.feedback-mistake').count()) === 1);
       await shot(page, 'steps-feedback');
     }
-    await nextButton(page).tap();
+    await tap(page, nextButton(page));
     await settle(page, 60);
     const final = (await page.locator('.final-card').count()) > 0;
     const workAfter = await page.locator('.work-line').count();
@@ -284,13 +312,13 @@ async function mainFlow(browser) {
   }
   check('Step-Through: saw at least one wrong answer to test advancing', advancedAfterWrong);
   await page.waitForSelector('.summary');
-  await page.getByRole('button', { name: /^Home$/ }).tap();
+  await tap(page, page.getByRole('button', { name: /^Home$/ }));
   await page.waitForSelector('.home');
   const badgeSteps = await badgeCount(page);
   check('Home: Review badge counts missed steps too', badgeSteps === badgeAfter + stepMisses, `${badgeAfter} → ${badgeSteps}`);
 
   // Review
-  await page.getByRole('button', { name: /Review/ }).tap();
+  await tap(page, page.getByRole('button', { name: /Review/ }));
   await page.waitForSelector('.opt');
   await layoutChecks(page, 'Review question');
   await optionChecks(page, 'Review question');
@@ -299,28 +327,28 @@ async function mainFlow(browser) {
   const reviewTotal = Number((await counter(page)).split('/')[1]);
   for (let i = 0; i < reviewTotal; i++) {
     await tapAllCorrectOrFirst(page);
-    await nextButton(page).tap();
+    await tap(page, nextButton(page));
   }
   await page.waitForSelector('.summary');
   check('Review: round ends in a summary', true);
 
   // Settings
-  await page.getByRole('button', { name: /^Home$/ }).tap();
-  await page.getByRole('button', { name: 'Settings' }).tap();
+  await tap(page, page.getByRole('button', { name: /^Home$/ }));
+  await tap(page, page.getByRole('button', { name: 'Settings' }));
   await page.waitForSelector('.settings');
   await layoutChecks(page, 'Settings');
-  await page.getByRole('button', { name: '5', exact: true }).tap();
+  await tap(page, page.getByRole('button', { name: '5', exact: true }));
   check('Settings: round size 5 selected', (await page.getByRole('button', { name: '5', exact: true }).getAttribute('aria-pressed')) === 'true');
   check('Settings: storage status line', (await page.getByText('Progress is saved on this device.').count()) === 1);
-  await page.getByRole('button', { name: 'Reset progress' }).tap();
+  await tap(page, page.getByRole('button', { name: 'Reset progress' }));
   await shot(page, 'settings-confirm');
-  await page.getByRole('button', { name: 'Tap again to erase' }).tap();
+  await tap(page, page.getByRole('button', { name: 'Tap again to erase' }));
   check('Settings: reset needs a second tap and then confirms', (await page.getByText('Progress cleared.').count()) === 1);
   await shot(page, 'settings');
-  await page.getByRole('button', { name: 'Home' }).tap();
+  await tap(page, page.getByRole('button', { name: 'Home' }));
   await page.waitForSelector('.home');
   check('Home: badge cleared after reset', (await badgeCount(page)) === 0);
-  await page.getByRole('button', { name: /Flash Drill/ }).tap();
+  await tap(page, page.getByRole('button', { name: /Flash Drill/ }));
   await page.waitForSelector('.opt');
   const smallTotal = Number((await counter(page)).split('/')[1]);
   check('Settings: round size applies to the next round', smallTotal <= 5, `counter ${await counter(page)}`);
@@ -365,7 +393,7 @@ async function mainFlow(browser) {
     if (i === 0) await shot(page, 'long-math');
     if (i < smallTotal - 1) {
       await tapAnswer(page);
-      await nextButton(page).tap();
+      await tap(page, nextButton(page));
       await page.waitForSelector('.opt:not([disabled])');
     }
   }
@@ -384,7 +412,7 @@ async function darkMode(browser) {
   const bg = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);
   check('Dark mode: dark background', bg === 'rgb(26, 26, 46)', bg);
   await shot(page, 'dark-home');
-  await page.getByRole('button', { name: /Flash Drill/ }).tap();
+  await tap(page, page.getByRole('button', { name: /Flash Drill/ }));
   await page.waitForSelector('.opt');
   await tapAnswer(page);
   await layoutChecks(page, 'Dark flash feedback');
@@ -403,7 +431,7 @@ async function otherViewports(browser) {
     const label = `${viewport.width}×${viewport.height}`;
     const { context, page } = await newPage(browser, { viewport });
     await layoutChecks(page, `${label} home`);
-    await page.getByRole('button', { name: /Step-Through/ }).tap();
+    await tap(page, page.getByRole('button', { name: /Step-Through/ }));
     await page.waitForSelector('.opt');
     await layoutChecks(page, `${label} step question`);
     const top = await page.locator('.opt').first().boundingBox();
@@ -425,12 +453,12 @@ async function blockedStorage(browser) {
       };
     },
   });
-  await page.getByRole('button', { name: /Flash Drill/ }).tap();
+  await tap(page, page.getByRole('button', { name: /Flash Drill/ }));
   await page.waitForSelector('.opt');
   await tapAnswer(page);
-  await nextButton(page).tap();
-  await page.getByRole('button', { name: 'Home' }).tap();
-  await page.getByRole('button', { name: 'Settings' }).tap();
+  await tap(page, nextButton(page));
+  await tap(page, page.getByRole('button', { name: 'Home' }));
+  await tap(page, page.getByRole('button', { name: 'Settings' }));
   const status = await page.getByText(/Storage is unavailable/).count();
   check('Blocked localStorage: app still works and says storage is unavailable', status === 1 && problems.length === 0, problems.join(' | '));
   await context.close();

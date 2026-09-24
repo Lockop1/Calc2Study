@@ -11,6 +11,7 @@ import { QuestionView } from '../components/QuestionView';
 import { StepContext } from '../components/StepContext';
 import type { TopBarProps } from '../components/TopBar';
 import type { AnswerRecord, RoundResult } from '../lib/session';
+import { useTapGuard } from '../lib/tap-guard';
 import { isPlayableProblem, problemById, stepUnitId } from '../lib/units';
 
 export interface StepThroughScreenProps {
@@ -113,6 +114,7 @@ interface FinalViewProps {
 
 function FinalView({ topbar, problem, label, buttonLabel, onContinue }: FinalViewProps) {
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const tooSoon = useTapGuard(); // a double tap on Next must not skip the answer and recap
   useEffect(() => {
     buttonRef.current?.focus({ preventScroll: true });
   }, []);
@@ -124,7 +126,14 @@ function FinalView({ topbar, problem, label, buttonLabel, onContinue }: FinalVie
       announcement="Problem complete."
       dock={
         <div className="dock-actions">
-          <button ref={buttonRef} type="button" className="btn btn-primary btn-lg btn-block" onClick={onContinue}>
+          <button
+            ref={buttonRef}
+            type="button"
+            className="btn btn-primary btn-lg btn-block"
+            onClick={(event) => {
+              if (!tooSoon(event)) onContinue();
+            }}
+          >
             {buttonLabel}
           </button>
         </div>
