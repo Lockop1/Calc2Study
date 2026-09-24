@@ -20,6 +20,16 @@ Three modes:
 
 Topic picker (multi-select, defaults to all, persisted) filters every mode. Rounds of 10 (5/10/20).
 
+A fourth mode, **Cards**, is a flashcard deck of the exact identities and formulas from the class
+whiteboard (50 cards in 9 sections: derivatives, antiderivatives, Pythagorean / double-angle /
+half-angle identities, trig substitution, area & volume, arc length, integration by parts). Tap to
+flip, grade "Got it" / "Missed it", missed cards re-enter the queue a few cards later until marked
+got, session summary with "Study missed only", section filters + shuffle + missed-only toggles,
+and a two-tap reset (filtered or full). Card progress and filters persist through the storage
+wrapper. **Cards are not multiple-choice, so the ≥5-option / mistake-tag rules do not apply to
+Cards mode**; every other constraint does. The deck lives in `content/cards/deck.ts`; the Cards
+topic picker is independent of the quiz topic picker.
+
 Exam 1 topics (source of truth: `reference/lectures/`, read-only):
 1. Differentiation review (Lecture 1, §1.4–1.7) · 2. Antiderivatives & u-substitution (Lecture 1) ·
 3. Area between curves (Lecture 2, §2.1) · 4. Volumes: slicing, disks & washers (Lecture 3, §2.2) ·
@@ -55,6 +65,7 @@ content/                 all question content (pure data, TypeScript)
   steps/<topic>.ts       `export const steps: StepProblem[]`
   index.ts               aggregate (CONTENT, ALL_FLASH, ALL_STEPS, contentFor)
   examples/sample.ts     reference examples for authors (validated, not shipped)
+  cards/deck.ts          Cards mode flashcard deck (`CARDS`, `CARD_SECTIONS`); checked by tests/cards.test.ts
   VERIFICATION_LOG.md    verifier results, blind-option results, resolved disagreements
 checker/                 TEST-TIME ONLY (mathjs): mathenv.ts, numeric.ts, latex2math.ts, validate.ts
 tests/                   vitest: content checks, parser tests, app logic tests
@@ -118,6 +129,16 @@ top-level lists `A = …,\quad B = …` (→ vector). Not supported: `\frac{d}{d
 
 Text fields (`explanation`, `why`, `prompt.text`, `text` options, `recap`, `result.text`) may contain
 inline math delimited by `$...$`.
+
+Cards (`Card` in `content/types.ts`): `{ id: 'card-<section>-<nn>', category, section, kind, front,
+back:{latex, also?, expr?, checkExpr?}, check, variable?, domain? }`. `kind` frames the front
+(derivative → d/dx[…], antiderivative → ∫…dx, identity → LHS = ?, trig-sub / formula → as written)
+and picks the check: derivative and antiderivative cards by finite differences, identities at random
+points, trig-sub cards by substituting the sub into the radical on the θ interval (identity) and
+differentiating the sub for dx (derivative), formula cards `none` (math-verifier only).
+`tests/cards.test.ts` enforces the exact whiteboard deck (50 cards, fixed per-section counts, no
+LIATE), KaTeX rendering, doubled backslashes, LaTeX↔expr agreement and the numeric checks. Every
+deck change goes through a `math-verifier` that did not author it.
 
 ## Distractor rules (verifier-enforced; the mechanical parts are test-enforced)
 

@@ -68,6 +68,7 @@ export const ALL_FLASH: readonly FlashItem[] = CONTENT.flatMap((c) => c.flash);
 export const ALL_GENERATORS: readonly FlashGenerator[] = CONTENT.flatMap((c) => c.generators);
 export const ALL_STEPS: readonly StepProblem[] = CONTENT.flatMap((c) => c.steps);
 
+export { CARDS, CARD_SECTIONS, cardsInSection } from './cards/deck';
 export { TOPICS } from './topics';
 export type { TopicId } from './topics';
 export type * from './types';

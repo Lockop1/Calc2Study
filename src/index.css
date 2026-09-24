@@ -554,3 +554,159 @@ button { font: inherit; color: inherit; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* ───────────────────────── cards mode (flashcards) ───────────────────────── */
+/* Filter panel */
+.chip--text { padding: 6px 14px; }
+.card-switches { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; }
+.switch-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-width: 0;
+  min-height: 56px;
+  padding: 8px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--card);
+  color: var(--fg);
+  text-align: left;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+.switch-text { flex: 1; min-width: 0; display: grid; gap: 1px; }
+.switch-title { font-weight: 700; }
+.switch-sub { font-size: 0.86rem; color: var(--muted); overflow-wrap: anywhere; }
+.switch {
+  flex: none;
+  position: relative;
+  width: 46px;
+  height: 28px;
+  border-radius: 14px;
+  background: var(--chip-num-bg);
+  border: 1px solid var(--border);
+  transition: background-color var(--dur);
+}
+.switch::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  transition: transform var(--dur);
+}
+.switch-row[aria-checked='true'] .switch { background: var(--accent); border-color: transparent; }
+.switch-row[aria-checked='true'] .switch::after { transform: translateX(18px); }
+.card-reset { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; }
+.card-reset .small:empty { display: none; }
+.cards-filters .btn:disabled { opacity: 0.5; cursor: default; transform: none; }
+.cards-selection { font-size: 0.92rem; color: var(--muted); text-align: center; }
+
+/* Counter in the top bar: "14 / 50 got" (opens the filters) */
+.cards-counter {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: var(--tap);
+  padding: 0 12px;
+  margin-right: -6px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--fg);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+.cards-counter:active { background: var(--accent-soft); }
+
+/* The card fills the stage; its face is centred; long math scrolls inside .math-scroll */
+.stage > .flashcard { flex: 1 0 auto; }
+.flashcard {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto 1fr auto;
+  gap: 10px;
+  min-height: 240px;
+  padding: 12px 16px 8px;
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+.flashcard--back { border-color: var(--accent); }
+.fc-category {
+  font-size: 0.74rem;
+  font-weight: 750;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.fc-face {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: center;
+  gap: 14px;
+  min-width: 0;
+  text-align: center;
+  animation: fc-in 140ms ease-out;
+}
+.fc-face > * { min-width: 0; }
+.fc-prompt, .fc-recall { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; }
+.fc-text { font-size: 1.3rem; font-weight: 650; }
+.fc-math { font-size: 1.55rem; }
+.fc-recall { padding-bottom: 12px; border-bottom: 1px dashed var(--border); color: var(--muted); }
+.fc-recall .fc-text { font-size: 0.98rem; font-weight: 600; }
+.fc-recall .fc-math { font-size: 1rem; }
+.fc-answer { font-size: 1.3rem; }
+.fc-also { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2px; font-size: 0.95rem; color: var(--muted); }
+.fc-also-label { font-size: 0.8rem; font-weight: 650; }
+.fc-flip-hint { font-size: 0.8rem; color: var(--muted); text-align: center; }
+@keyframes fc-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Dock: "Show answer" before the flip, the grade buttons after it (same height) */
+.fc-dock {
+  flex: none;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--gap);
+  padding: 8px var(--pad) calc(12px + var(--safe-bottom));
+}
+.fc-dock-btn { min-height: 56px; font-size: 1.1rem; }
+.fc-hint { min-height: 56px; display: grid; place-items: center; text-align: center; font-size: 0.92rem; color: var(--muted); }
+.grade-btn--got { background: var(--ok-strong); border-color: transparent; color: #fff; }
+.grade-btn--missed { background: var(--bad-bg); border-color: var(--bad); color: var(--bad-strong); }
+@media (prefers-color-scheme: dark) {
+  .grade-btn--got { color: #10101e; }
+}
+
+/* Summary */
+.card-summary-title { font-size: 1.9rem; font-weight: 800; line-height: 1.15; margin: 2px 0 6px; }
+.card-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.card-stat {
+  display: grid;
+  gap: 2px;
+  padding: 12px 14px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--card);
+}
+.card-stat-num { font-size: 2.4rem; font-weight: 800; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.card-stat--got .card-stat-num { color: var(--ok-strong); }
+.card-stat--missed .card-stat-num { color: var(--bad-strong); }
+.card-stat-label { font-size: 0.9rem; color: var(--muted); }
