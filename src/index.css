@@ -8,6 +8,8 @@
   --accent: #3454d1;
   --accent-fg: #fff;
   --accent-soft: #e6eafb;
+  --card-back: #e4eafc; /* Cards mode: answer side */
+  --card-back-border: #3454d1;
   --ok: #1f9d55;
   --ok-strong: #146c3a;
   --ok-bg: #e5f5eb;
@@ -38,6 +40,8 @@
     --accent: #7c93ff;
     --accent-fg: #0f1233;
     --accent-soft: #2f3663;
+    --card-back: #2b3260; /* Cards mode: answer side */
+    --card-back-border: #7c93ff;
     --ok: #4ccf7e;
     --ok-strong: #7fe3a6;
     --ok-bg: rgba(76, 207, 126, 0.15);
@@ -646,7 +650,25 @@ button { font: inherit; color: inherit; }
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
 }
-.flashcard--back { border-color: var(--accent); }
+.flashcard--back { background: var(--card-back); border-color: var(--card-back-border); }
+.flashcard--turning { animation: fc-turn 200ms ease-in-out; will-change: transform; }
+/* One face is in the DOM at a time: the card turns edge-on (90°), the face and colour swap, and the
+   new face swings in from the far side (−90° → 0), which reads as a continuous half turn. */
+@keyframes fc-turn {
+  0% { transform: perspective(900px) rotateY(0deg); }
+  50% { transform: perspective(900px) rotateY(90deg); }
+  50.01% { transform: perspective(900px) rotateY(-90deg); }
+  100% { transform: perspective(900px) rotateY(0deg); }
+}
+.fc-side-tag {
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--card-back-border);
+  color: var(--accent-fg);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+}
 .fc-category {
   font-size: 0.74rem;
   font-weight: 750;
@@ -661,7 +683,6 @@ button { font: inherit; color: inherit; }
   gap: 14px;
   min-width: 0;
   text-align: center;
-  animation: fc-in 140ms ease-out;
 }
 .fc-face > * { min-width: 0; }
 .fc-prompt, .fc-recall { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; }
@@ -674,10 +695,6 @@ button { font: inherit; color: inherit; }
 .fc-also { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2px; font-size: 0.95rem; color: var(--muted); }
 .fc-also-label { font-size: 0.8rem; font-weight: 650; }
 .fc-flip-hint { font-size: 0.8rem; color: var(--muted); text-align: center; }
-@keyframes fc-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
 
 /* Dock: "Show answer" before the flip, the grade buttons after it (same height) */
 .fc-dock {
