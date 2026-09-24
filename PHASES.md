@@ -8,11 +8,11 @@ Legend: ☐ not started · ◐ in progress · ☑ done · ✗ blocked
 | 2 | Content schema + mistake taxonomy | ☑ | `content/types.ts`, `content/mistakes.ts` (100+ tags), `content/topics.ts` |
 | 3 | Automated content checks | ☑ | `checker/` (mathjs env, adaptive tanh-sinh, finite differences, LaTeX→mathjs parser, validator), `tests/content*.test.ts`, negative tests, KaTeX render test |
 | 4 | Content authoring (9 topics, parallel content-author agents) | ☑ | 485 flash + 16 generators, 89 step problems / 398 steps; all minimums met; suite green |
-| 5 | Content verification (math-verifier per file, blind-option test, VERIFICATION_LOG.md) | ◐ | 9 verifiers running (one per topic, none authored what it checks) |
+| 5 | Content verification (math-verifier per file, blind-option test, VERIFICATION_LOG.md) | ☑ | 9 independent verifiers: 0 wrong answers; 3 also-correct wording issues fixed; form-leak fix passes applied per topic; residuals logged |
 | 6 | Flash Drill mode | ☑ | src/screens/DrillScreen.tsx + shared question components |
 | 7 | Step-Through mode | ☑ | src/screens/StepThroughScreen.tsx |
 | 8 | Topic picker, Review mode, progress, settings | ☑ | weighted review deck, retire after 3 correct, storage in try/catch |
-| 9 | PWA/offline + mobile QA | ◐ | vite-plugin-pwa (35 precached files incl. KaTeX woff2); qa-tester running |
+| 9 | PWA/offline + mobile QA | ◐ | PWA verified incl. GitHub-Pages sub-path offline reload (qa/subpath-offline-smoke.mjs); qa-tester report pending |
 
 ## Log
 
@@ -23,3 +23,5 @@ Legend: ☐ not started · ◐ in progress · ☑ done · ✗ blocked
 - Tasks 6–8 done (ui-builder): 13 test files / 110 tests; Playwright smoke 160/160 at 390×844 incl. offline reload.
 - Task 4 done: all 9 topics authored after a rate-limit interruption and resume; content-stats table in CLAUDE.md commands.
 - Task 5/9 in progress: 9 math-verifiers + qa-tester running.
+- Task 5 done: all nine topics verified (reports in qa/verification/), fixes applied and committed per topic, VERIFICATION_LOG.md finalized.
+- Deploy: user added .github/workflows/deploy.yml (GitHub Pages on push to main); build verified to work under a sub-path.
