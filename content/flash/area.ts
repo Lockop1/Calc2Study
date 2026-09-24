@@ -1875,5 +1875,78 @@ export const flash: FlashItem[] = [
   },
 ];
 
-/** Parameterized generators (optional). */
-export const generators: FlashGenerator[] = [];
+/** Reduced fraction n/d as an option (LaTeX + mathjs). */
+function fracOption(n: number, d: number): { latex: string; expr: string } {
+  let a = Math.abs(n);
+  let b = Math.abs(d);
+  while (b) [a, b] = [b, a % b];
+  let p = n / a;
+  let q = d / a;
+  if (q < 0) {
+    p = -p;
+    q = -q;
+  }
+  if (q === 1) return { latex: `${p}`, expr: `${p}` };
+  return { latex: `${p < 0 ? '-' : ''}\\frac{${Math.abs(p)}}{${q}}`, expr: `${p}/${q}` };
+}
+
+/** Parameterized generators. */
+export const generators: FlashGenerator[] = [
+  {
+    id: 'ar-g-line-parabola-eval',
+    topic: 'area',
+    kind: 'evaluate',
+    describe: 'Evaluate the area integral ∫₀ᵏ (kx − x²) dx between y = kx and y = x² (k ∈ {3, 5, 6, 7, 8, 9})',
+    generate(seed: number): FlashItem {
+      const K = [3, 5, 6, 7, 8, 9]; // k = 2 and k = 4 appear as static items
+      const k = K[seed % K.length];
+      const k2 = k * k;
+      const k3 = k2 * k;
+      const correct = { ...fracOption(k3, 6) };
+      const distractors = [
+        {
+          ...fracOption(2 * k3, 3),
+          mistake: 'power-rule-int-coefficient' as const,
+          why: `Took $\\int ${k}x\\,dx = ${k}x^2$ without dividing by 2: $${k3} - \\frac{${k3}}{3}$.`,
+        },
+        {
+          ...fracOption(-k3, 2),
+          mistake: 'power-rule-int-coefficient' as const,
+          why: `Took $\\int x^2\\,dx = x^3$ without dividing by 3: $\\frac{${k3}}{2} - ${k3}$.`,
+        },
+        {
+          ...fracOption(5 * k3, 6),
+          mistake: 'sign-error' as const,
+          why: `The antiderivative was written $\\frac{${k}x^2}{2} + \\frac{x^3}{3}$; the minus sign was lost.`,
+        },
+        {
+          ...fracOption(3 * k3 - 2 * k2, 6),
+          mistake: 'power-rule-int-exponent' as const,
+          why: `Divided by 3 but kept the exponent: $\\int x^2\\,dx$ written as $\\frac{x^2}{3}$, giving $\\frac{${k3}}{2} - \\frac{${k2}}{3}$.`,
+        },
+        {
+          ...fracOption(-k3, 6),
+          mistake: 'ftc-order-swapped' as const,
+          why: `Computed $F(0) - F(${k})$ instead of $F(${k}) - F(0)$.`,
+        },
+      ];
+      const all = [correct, ...distractors];
+      const r = seed % all.length; // vary where the correct option sits
+      const options = [...all.slice(r), ...all.slice(0, r)];
+      return {
+        id: `ar-g-line-parabola-eval:${seed}`,
+        topic: 'area',
+        kind: 'evaluate',
+        prompt: {
+          text: `This integral is the area between $y = ${k}x$ and $y = x^2$. Evaluate it.`,
+          latex: `\\int_0^{${k}} (${k}x - x^2)\\,dx`,
+        },
+        options,
+        correct: (all.length - r) % all.length,
+        explanation: `$\\left[\\frac{${k}x^2}{2} - \\frac{x^3}{3}\\right]_0^{${k}} = \\frac{${k3}}{2} - \\frac{${k3}}{3} = ${correct.latex}$.`,
+        check: { kind: 'definite-integral', integrand: `${k}*x - x^2`, lower: '0', upper: `${k}` },
+        difficulty: 1,
+      };
+    },
+  },
+];

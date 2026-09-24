@@ -382,6 +382,21 @@ export const MISTAKES = {
     description: 'Treated |x| as x on the whole region instead of splitting at 0.',
     group: 'area',
   },
+  'integrand-vs-integral': {
+    label: 'Confused the integrand with the integral',
+    description: 'Read a length (top − bottom) as the area, or the area formula as the length of a slice.',
+    group: 'area',
+  },
+  'test-point-outside-interval': {
+    label: 'Test point taken outside the sub-interval',
+    description: 'Decided which curve is on top using a point that is not between the two consecutive intersection values.',
+    group: 'area',
+  },
+  'split-at-wrong-point': {
+    label: 'Split the region at the wrong point',
+    description: 'Split at a vertex or an x-intercept instead of where the two curves cross.',
+    group: 'area',
+  },
   'interval-not-respected': {
     label: 'Ignored the given interval',
     description: 'Used intersection points as bounds although the problem restricts x (or y) to a given interval.',
@@ -592,6 +607,26 @@ export const MISTAKES = {
     label: 'Tabular method sign pattern wrong',
     description: 'Alternating signs (+, −, +, …) applied incorrectly in the tabular/repeated IBP.',
     group: 'ibp',
+  },
+  'ibp-u-du-confused': {
+    label: 'Wrote du where u belongs (or vice versa)',
+    description: 'e.g. set u = 1/x for an integrand containing ln x, confusing the function with its derivative.',
+    group: 'ibp',
+  },
+  'ibp-v-dv-confused': {
+    label: 'Used dv itself as v',
+    description: 'Did not integrate dv: took v equal to the dv factor (or its derivative).',
+    group: 'ibp',
+  },
+  'ibp-cyclic-roles-swapped': {
+    label: 'Swapped u and dv in the second IBP of a cyclic integral',
+    description: 'Reversing the roles on the second application undoes the first and gives I = I.',
+    group: 'ibp',
+  },
+  'inverse-trig-value-wrong': {
+    label: 'Inverse-trig value misremembered',
+    description: 'e.g. tan⁻¹(1/√3) taken as π/3 instead of π/6, or sin⁻¹(1/2) as π/3.',
+    group: 'algebra',
   },
   'liate-misordered': {
     label: 'LIATE order misremembered',

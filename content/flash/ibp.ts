@@ -313,7 +313,7 @@ export const flash: FlashItem[] = [
         why: 'The roles are reversed: u should simplify when differentiated, and dv must be easy to integrate.',
       },
       {
-        text: 'A factor of the integrand may be left out of both $u$ and $dv$ and multiplied back in at the end.',
+        text: 'A non-constant factor of the integrand may be left out of both $u$ and $dv$ and multiplied back in at the end.',
         mistake: 'ibp-incomplete-dv',
         why: 'u dv must contain the entire integrand; every non-constant factor goes into u or into dv.',
       },
@@ -2628,6 +2628,10 @@ export const generators: FlashGenerator[] = [
       const prodLead = k > 0 ? `\\frac{x^2}{${2 * a}}${ex}` : `-\\frac{x^2}{${2 * a}}${ex}`;
       // (1/k)e^{kx} with its sign when subtracted: − (1/k)e^{kx}
       const minusOneOverK = k > 0 ? `- \\frac{1}{${a}}${ex}` : `+ \\frac{1}{${a}}${ex}`;
+      // Signed 1/k for prose and explanations: "1/3" or "−1/3" (never "1/-3").
+      const kText = k > 0 ? `1/${a}` : `−1/${a}`;
+      const vTex = k > 0 ? `\\frac{1}{${a}}${ex}` : `-\\frac{1}{${a}}${ex}`;
+      const minusIntTex = k > 0 ? `- \\frac{1}{${a}}\\int ${ex}\\,dx` : `+ \\frac{1}{${a}}\\int ${ex}\\,dx`;
       return {
         id,
         topic: 'ibp',
@@ -2639,13 +2643,13 @@ export const generators: FlashGenerator[] = [
             latex: `${lead} + \\frac{1}{${a * a}}${ex} + C`,
             expr: `x/(${k})*${E} + ${E}/${a * a}`,
             mistake: 'ibp-sign-error',
-            why: `The formula subtracts ∫v du = ∫(1/${k})e^{${k}x} dx; that term was added.`,
+            why: `The formula subtracts ∫v du = ∫(${kText})e^{${k}x} dx; that term was added.`,
           },
           {
             latex: `x${ex} - ${ex} + C`,
             expr: `x*${E} - ${E}`,
             mistake: 'exp-antiderivative-wrong',
-            why: `Both antiderivatives of e^{${k}x} were written without the factor 1/(${k}).`,
+            why: `Both antiderivatives of e^{${k}x} were written without the factor ${kText}.`,
           },
           {
             latex: `${kx} - ${a * a}${ex} + C`,
@@ -2657,7 +2661,7 @@ export const generators: FlashGenerator[] = [
             latex: `${lead} ${minusOneOverK} + C`,
             expr: `x/(${k})*${E} - ${E}/(${k})`,
             mistake: 'coefficient-mishandled',
-            why: `v = (1/${k})e^{${k}x} carries its factor 1/(${k}) into ∫v du, which gives (1/${k * k})e^{${k}x}.`,
+            why: `v = (${kText})e^{${k}x} carries its factor ${kText} into ∫v du, which gives (1/${k * k})e^{${k}x}.`,
           },
           {
             latex: `${prodLead} + C`,
@@ -2667,7 +2671,7 @@ export const generators: FlashGenerator[] = [
           },
         ],
         correct: 0,
-        explanation: `$u = x$, $v = \\frac{1}{${k}}${ex}$: $\\frac{x}{${k}}${ex} - \\frac{1}{${k}}\\int ${ex}\\,dx = \\frac{x}{${k}}${ex} - \\frac{1}{${a * a}}${ex} + C$.`,
+        explanation: `$u = x$, $v = ${vTex}$: $${lead} ${minusIntTex} = ${lead} - \\frac{1}{${a * a}}${ex} + C$.`,
         check: { kind: 'antiderivative', integrand: `x*${E}` },
         difficulty: 1,
       };
