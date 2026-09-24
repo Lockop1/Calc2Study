@@ -717,6 +717,11 @@ export const MISTAKES = {
     description: 'Used x = a tanθ (or similar) although the derivative of the radicand is present (u = x² + a²).',
     group: 'technique',
   },
+  'reciprocal-identity-confused': {
+    label: 'Reciprocal identity confused',
+    description: 'Treated 1/sec θ as sin θ (it is cos θ), 1/csc θ as cos θ, or 1/tan θ as sec θ.',
+    group: 'trig-sub',
+  },
   'theta-bounds-wrong': {
     label: 'θ-bounds computed wrong',
     description: 'Solved a sinθ = x (or similar) for the bounds incorrectly (wrong angle or wrong inverse function).',
