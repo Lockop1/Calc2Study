@@ -1,0 +1,694 @@
+{
+  "files": [
+    "dist/assets/KaTeX_AMS-Regular-BQhdFMY1.woff2",
+    "dist/assets/KaTeX_AMS-Regular-DMm9YOAa.woff",
+    "dist/assets/KaTeX_AMS-Regular-DRggAlZN.ttf",
+    "dist/assets/KaTeX_Caligraphic-Bold-ATXxdsX0.ttf",
+    "dist/assets/KaTeX_Caligraphic-Bold-BEiXGLvX.woff",
+    "dist/assets/KaTeX_Caligraphic-Bold-Dq_IR9rO.woff2",
+    "dist/assets/KaTeX_Caligraphic-Regular-CTRA-rTL.woff",
+    "dist/assets/KaTeX_Caligraphic-Regular-Di6jR-x-.woff2",
+    "dist/assets/KaTeX_Caligraphic-Regular-wX97UBjC.ttf",
+    "dist/assets/KaTeX_Fraktur-Bold-BdnERNNW.ttf",
+    "dist/assets/KaTeX_Fraktur-Bold-BsDP51OF.woff",
+    "dist/assets/KaTeX_Fraktur-Bold-CL6g_b3V.woff2",
+    "dist/assets/KaTeX_Fraktur-Regular-CB_wures.ttf",
+    "dist/assets/KaTeX_Fraktur-Regular-CTYiF6lA.woff2",
+    "dist/assets/KaTeX_Fraktur-Regular-Dxdc4cR9.woff",
+    "dist/assets/KaTeX_Main-Bold-Cx986IdX.woff2",
+    "dist/assets/KaTeX_Main-Bold-Jm3AIy58.woff",
+    "dist/assets/KaTeX_Main-Bold-waoOVXN0.ttf",
+    "dist/assets/KaTeX_Main-BoldItalic-DxDJ3AOS.woff2",
+    "dist/assets/KaTeX_Main-BoldItalic-DzxPMmG6.ttf",
+    "dist/assets/KaTeX_Main-BoldItalic-SpSLRI95.woff",
+    "dist/assets/KaTeX_Main-Italic-3WenGoN9.ttf",
+    "dist/assets/KaTeX_Main-Italic-BMLOBm91.woff",
+    "dist/assets/KaTeX_Main-Italic-NWA7e6Wa.woff2",
+    "dist/assets/KaTeX_Main-Regular-B22Nviop.woff2",
+    "dist/assets/KaTeX_Main-Regular-Dr94JaBh.woff",
+    "dist/assets/KaTeX_Main-Regular-ypZvNtVU.ttf",
+    "dist/assets/KaTeX_Math-BoldItalic-B3XSjfu4.ttf",
+    "dist/assets/KaTeX_Math-BoldItalic-CZnvNsCZ.woff2",
+    "dist/assets/KaTeX_Math-BoldItalic-iY-2wyZ7.woff",
+    "dist/assets/KaTeX_Math-Italic-DA0__PXp.woff",
+    "dist/assets/KaTeX_Math-Italic-flOr_0UB.ttf",
+    "dist/assets/KaTeX_Math-Italic-t53AETM-.woff2",
+    "dist/assets/KaTeX_SansSerif-Bold-CFMepnvq.ttf",
+    "dist/assets/KaTeX_SansSerif-Bold-D1sUS0GD.woff2",
+    "dist/assets/KaTeX_SansSerif-Bold-DbIhKOiC.woff",
+    "dist/assets/KaTeX_SansSerif-Italic-C3H0VqGB.woff2",
+    "dist/assets/KaTeX_SansSerif-Italic-DN2j7dab.woff",
+    "dist/assets/KaTeX_SansSerif-Italic-YYjJ1zSn.ttf",
+    "dist/assets/KaTeX_SansSerif-Regular-BNo7hRIc.ttf",
+    "dist/assets/KaTeX_SansSerif-Regular-CS6fqUqJ.woff",
+    "dist/assets/KaTeX_SansSerif-Regular-DDBCnlJ7.woff2",
+    "dist/assets/KaTeX_Script-Regular-C5JkGWo-.ttf",
+    "dist/assets/KaTeX_Script-Regular-D3wIWfF6.woff2",
+    "dist/assets/KaTeX_Script-Regular-D5yQViql.woff",
+    "dist/assets/KaTeX_Size1-Regular-C195tn64.woff",
+    "dist/assets/KaTeX_Size1-Regular-Dbsnue_I.ttf",
+    "dist/assets/KaTeX_Size1-Regular-mCD8mA8B.woff2",
+    "dist/assets/KaTeX_Size2-Regular-B7gKUWhC.ttf",
+    "dist/assets/KaTeX_Size2-Regular-Dy4dx90m.woff2",
+    "dist/assets/KaTeX_Size2-Regular-oD1tc_U0.woff",
+    "dist/assets/KaTeX_Size3-Regular-CTq5MqoE.woff",
+    "dist/assets/KaTeX_Size3-Regular-DgpXs0kz.ttf",
+    "dist/assets/KaTeX_Size4-Regular-BF-4gkZK.woff",
+    "dist/assets/KaTeX_Size4-Regular-DWFBv043.ttf",
+    "dist/assets/KaTeX_Size4-Regular-Dl5lxZxV.woff2",
+    "dist/assets/KaTeX_Typewriter-Regular-C0xS9mPB.woff",
+    "dist/assets/KaTeX_Typewriter-Regular-CO6r4hn1.woff2",
+    "dist/assets/KaTeX_Typewriter-Regular-D3Ib7_Hf.ttf",
+    "dist/assets/index-MWm0pd_o.css",
+    "dist/assets/index-Y6XSVVpx.js",
+    "dist/assets/workbox-window.prod.es5-BBnX5xw4.js",
+    "dist/icons/apple-touch-icon.png",
+    "dist/icons/icon-192.png",
+    "dist/icons/icon-512-maskable.png",
+    "dist/icons/icon-512.png",
+    "dist/icons/icon.svg",
+    "dist/index.html",
+    "dist/manifest.webmanifest",
+    "dist/sw.js",
+    "dist/workbox-9c191d2f.js"
+  ],
+  "hits": [
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "http://",
+      "offset": 115620,
+      "context": "{var f=Rs(Ha.current);switch(c){case 1:c=f.createElementNS(\"http://www.w3.org/2000/svg\",x);break;case 2:c=f.createElementNS(\"ht"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "http://",
+      "offset": 115685,
+      "context": "//www.w3.org/2000/svg\",x);break;case 2:c=f.createElementNS(\"http://www.w3.org/1998/Math/MathML\",x);break;default:switch(x){case"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "http://",
+      "offset": 115779,
+      "context": "\",x);break;default:switch(x){case\"svg\":c=f.createElementNS(\"http://www.w3.org/2000/svg\",x);break;case\"math\":c=f.createElementNS"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "http://",
+      "offset": 115848,
+      "context": "w.w3.org/2000/svg\",x);break;case\"math\":c=f.createElementNS(\"http://www.w3.org/1998/Math/MathML\",x);break;case\"script\":c=f.creat"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "http://",
+      "offset": 137277,
+      "context": "sByTagName(\"title\")[0],(!n||n[Zn]||n[Et]||n.namespaceURI===\"http://www.w3.org/2000/svg\"||n.hasAttribute(\"itemprop\"))&&(n=x.crea"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "http://",
+      "offset": 174415,
+      "context": "moveAttribute(\"xlink:href\");break}a=lo(n),e.setAttributeNS(\"http://www.w3.org/1999/xlink\",\"xlink:href\",a);break;case\"contentEdi"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "http://",
+      "offset": 175752,
+      "context": "toggle\",e),oo(e,\"popover\",n);break;case\"xlinkActuate\":si(e,\"http://www.w3.org/1999/xlink\",\"xlink:actuate\",n);break;case\"xlinkAr"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "http://",
+      "offset": 175832,
+      "context": "99/xlink\",\"xlink:actuate\",n);break;case\"xlinkArcrole\":si(e,\"http://www.w3.org/1999/xlink\",\"xlink:arcrole\",n);break;case\"xlinkRo"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "http://",
+      "offset": 175909,
+      "context": "/1999/xlink\",\"xlink:arcrole\",n);break;case\"xlinkRole\":si(e,\"http://www.w3.org/1999/xlink\",\"xlink:role\",n);break;case\"xlinkShow\""
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "http://",
+      "offset": 175983,
+      "context": "org/1999/xlink\",\"xlink:role\",n);break;case\"xlinkShow\":si(e,\"http://www.w3.org/1999/xlink\",\"xlink:show\",n);break;case\"xlinkTitle"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "http://",
+      "offset": 176058,
+      "context": "rg/1999/xlink\",\"xlink:show\",n);break;case\"xlinkTitle\":si(e,\"http://www.w3.org/1999/xlink\",\"xlink:title\",n);break;case\"xlinkType"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "http://",
+      "offset": 176133,
+      "context": "rg/1999/xlink\",\"xlink:title\",n);break;case\"xlinkType\":si(e,\"http://www.w3.org/1999/xlink\",\"xlink:type\",n);break;case\"xmlBase\":s"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "http://",
+      "offset": 176205,
+      "context": "3.org/1999/xlink\",\"xlink:type\",n);break;case\"xmlBase\":si(e,\"http://www.w3.org/XML/1998/namespace\",\"xml:base\",n);break;case\"xmlL"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "http://",
+      "offset": 176283,
+      "context": "XML/1998/namespace\",\"xml:base\",n);break;case\"xmlLang\":si(e,\"http://www.w3.org/XML/1998/namespace\",\"xml:lang\",n);break;case\"xmlS"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "http://",
+      "offset": 176362,
+      "context": "ML/1998/namespace\",\"xml:lang\",n);break;case\"xmlSpace\":si(e,\"http://www.w3.org/XML/1998/namespace\",\"xml:space\",n);break;case\"is\""
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "http://",
+      "offset": 183852,
+      "context": "odeType===9?e:e.ownerDocument}function Lp(e){switch(e){case\"http://www.w3.org/2000/svg\":return 1;case\"http://www.w3.org/1998/Ma"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "http://",
+      "offset": 183894,
+      "context": "e){switch(e){case\"http://www.w3.org/2000/svg\":return 1;case\"http://www.w3.org/1998/Math/MathML\":return 2;default:return 0}}func"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "http://",
+      "offset": 209364,
+      "context": "\"&&c.getAttribute(\"rel\")===\"stylesheet\")&&c.namespaceURI!==\"http://www.w3.org/2000/svg\"){var f=c.getAttribute(t)||\"\";f=e+f;var "
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "http://",
+      "offset": 1428095,
+      "context": "0,this.children=i||[],this.attributes=r||{}}toNode(){var i=\"http://www.w3.org/2000/svg\",r=document.createElementNS(i,\"svg\");for"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "http://",
+      "offset": 1428357,
+      "context": "hildren[l].toNode());return r}toMarkup(){var i='<svg xmlns=\"http://www.w3.org/2000/svg\"';for(var r of Object.keys(this.attribut"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "http://",
+      "offset": 1428686,
+      "context": "ate=void 0,this.pathName=i,this.alternate=r}toNode(){var i=\"http://www.w3.org/2000/svg\",r=document.createElementNS(i,\"path\");re"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "http://",
+      "offset": 1429044,
+      "context": "his.attributes=void 0,this.attributes=i||{}}toNode(){var i=\"http://www.w3.org/2000/svg\",r=document.createElementNS(i,\"line\");fo"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "http://",
+      "offset": 1519414,
+      "context": "this.attributes[i]}toNode(){var i=document.createElementNS(\"http://www.w3.org/1998/Math/MathML\",this.type);for(var r in this.at"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "http://",
+      "offset": 1521050,
+      "context": "ateTextNode(this.character);var i=document.createElementNS(\"http://www.w3.org/1998/Math/MathML\",\"mspace\");return i.setAttribute"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "http://",
+      "offset": 1524462,
+      "context": "mantics\",[u,$]),v=new Q(\"math\",[m]);v.setAttribute(\"xmlns\",\"http://www.w3.org/1998/Math/MathML\"),o&&v.setAttribute(\"display\",\"b"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "https://",
+      "offset": 13700,
+      "context": "n g3(){if(H0)return Bt;H0=1;var s=Ud();function i(k){var b=\"https://react.dev/errors/\"+k;if(1<arguments.length){b+=\"?args[]=\"+en"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "https://",
+      "offset": 17635,
+      "context": "eturn Vs;L0=1;var s=m3(),i=Ud(),r=y3();function o(e){var t=\"https://react.dev/errors/\"+e;if(1<arguments.length){t+=\"?args[]=\"+en"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "fetch(",
+      "offset": 858,
+      "context": "origin\",h}function o(l){if(l.ep)return;l.ep=!0;const h=r(l);fetch(l.href,h)}})();function h3(s){return s&&s.__esModule&&Object"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "fetch(",
+      "offset": 1542178,
+      "context": ",\"\\\\\\\\\")),s.gullet.endGroup(),s.gullet.beginGroup();var r=s.fetch().text;if(r===\"&\"||r===\"\\\\\\\\\")s.consume();else if(r===\"\\\\end"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "fetch(",
+      "offset": 1547045,
+      "context": "ler(s){var{parser:i,funcName:r}=s;i.consumeSpaces();var o=i.fetch();if(Md[o.text])return(r===\"\\\\global\"||r===\"\\\\\\\\globallong\")"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "fetch(",
+      "offset": 1564955,
+      "context": "this,i))}}function T1(s){var i=[];s.consumeSpaces();var r=s.fetch().text;for(r===\"\\\\relax\"&&(s.consume(),s.consumeSpaces(),r=s"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "fetch(",
+      "offset": 1565022,
+      "context": ".text;for(r===\"\\\\relax\"&&(s.consume(),s.consumeSpaces(),r=s.fetch().text);r===\"\\\\hline\"||r===\"\\\\hdashline\";)s.consume(),i.push"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "fetch(",
+      "offset": 1565130,
+      "context": "s.consume(),i.push(r===\"\\\\hdashline\"),s.consumeSpaces(),r=s.fetch().text;return i}var ul=s=>{var i=s.parser.settings;if(!i.dis"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "fetch(",
+      "offset": 1566296,
+      "context": ":s.mode,style:r,resetFont:!0,body:[te]}),H.push(te);var Z=s.fetch().text;if(Z===\"&\"){if(b&&H.length===b){if(v||$)throw new X(\""
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "fetch(",
+      "offset": 1573777,
+      "context": "Name.length-1)===\"*\"){var l=s.parser;if(l.consumeSpaces(),l.fetch().text===\"[\"){if(l.consume(),l.consumeSpaces(),r=l.fetch().t"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "fetch(",
+      "offset": 1573834,
+      "context": ",l.fetch().text===\"[\"){if(l.consume(),l.consumeSpaces(),r=l.fetch().text,!\"lcr\".includes(r))throw new X(\"Expected l or c or r\""
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "fetch(",
+      "offset": 1641060,
+      "context": ",this.nextToken=null}expect(i,r){if(r===void 0&&(r=!0),this.fetch().text!==i)throw new X(\"Expected '\"+i+\"', got '\"+this.fetch("
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "fetch(",
+      "offset": 1641120,
+      "context": "fetch().text!==i)throw new X(\"Expected '\"+i+\"', got '\"+this.fetch().text+\"'\",this.fetch());r&&this.consume()}consume(){this.ne"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "fetch(",
+      "offset": 1641142,
+      "context": " new X(\"Expected '\"+i+\"', got '\"+this.fetch().text+\"'\",this.fetch());r&&this.consume()}consume(){this.nextToken=null}fetch(){r"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "fetch(",
+      "offset": 1641199,
+      "context": "is.fetch());r&&this.consume()}consume(){this.nextToken=null}fetch(){return this.nextToken==null&&(this.nextToken=this.gullet.e"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "fetch(",
+      "offset": 1641908,
+      "context": "o=[];;){this.mode===\"math\"&&this.consumeSpaces();var l=this.fetch();if(fl.endOfExpression.has(l.text)||r&&l.text===r||i&&or[l."
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "fetch(",
+      "offset": 1642713,
+      "context": "u,$],[]),[k]}else return i}handleSupSubscript(i){var r=this.fetch(),o=r.text;this.consume(),this.consumeSpaces();var l;do{var "
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "fetch(",
+      "offset": 1643282,
+      "context": "xt\")return r;for(var o,l;;){this.consumeSpaces();var h=this.fetch();if(h.text===\"\\\\limits\"||h.text===\"\\\\nolimits\"){if(r&&r.typ"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "fetch(",
+      "offset": 1643937,
+      "context": "ode:this.mode,text:\"\\\\prime\"},m=[$];for(this.consume();this.fetch().text===\"'\";)m.push($),this.consume();this.fetch().text===\""
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "fetch(",
+      "offset": 1643987,
+      "context": "me();this.fetch().text===\"'\";)m.push($),this.consume();this.fetch().text===\"^\"&&m.push(this.handleSupSubscript(\"superscript\"))"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "fetch(",
+      "offset": 1644203,
+      "context": "for(k.push(new ma(Hx[h.text])),this.consume();;){var b=this.fetch().text;if(!Hx[b]||H1.test(b)!==v)break;k.unshift(new ma(Hx[b"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "fetch(",
+      "offset": 1644496,
+      "context": "is.mode,base:r,sup:o,sub:l}:r}parseFunction(i,r){var o=this.fetch(),l=o.text,h=or[l];if(!h)return null;if(this.consume(),r&&r!"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "fetch(",
+      "offset": 1646181,
+      "context": "Group(i);if(u==null)throw new X(\"Expected group as \"+i,this.fetch());return u}case\"original\":case null:case void 0:return this"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "fetch(",
+      "offset": 1646322,
+      "context": "roup(o);default:throw new X(\"Unknown group type as \"+i,this.fetch())}}consumeSpaces(){for(;this.fetch().text===\" \";)this.consu"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "fetch(",
+      "offset": 1646358,
+      "context": " group type as \"+i,this.fetch())}}consumeSpaces(){for(;this.fetch().text===\" \";)this.consume()}parseStringGroup(i,r){var o=thi"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "fetch(",
+      "offset": 1646495,
+      "context": "anArgument(r);if(o==null)return null;for(var l=\"\",h;(h=this.fetch()).text!==\"EOF\";)l+=h.text,this.consume();return this.consum"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "fetch(",
+      "offset": 1646612,
+      "context": "is.consume(),o.text=l,o}parseRegexGroup(i,r){for(var o=this.fetch(),l=o,h=\"\",u;(u=this.fetch()).text!==\"EOF\"&&i.test(h+u.text)"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "fetch(",
+      "offset": 1646639,
+      "context": "seRegexGroup(i,r){for(var o=this.fetch(),l=o,h=\"\",u;(u=this.fetch()).text!==\"EOF\"&&i.test(h+u.text);)l=u,h+=l.text,this.consum"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "fetch(",
+      "offset": 1648275,
+      "context": "};return r&&this.switchMode(l),u}parseGroup(i,r){var o=this.fetch(),l=o.text,h;if(l===\"{\"||l===\"\\\\begingroup\"){this.consume();"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "fetch(",
+      "offset": 1648437,
+      "context": "gullet.beginGroup();var $=this.parseExpression(!1,u),m=this.fetch();this.expect(u),this.gullet.endGroup(),h={type:\"ordgroup\",m"
+    },
+    {
+      "file": "dist/assets/index-Y6XSVVpx.js",
+      "binary": false,
+      "pattern": "fetch(",
+      "offset": 1649326,
+      "context": ":ia.range(l,u),text:h+h}),r-=1)}}}}parseSymbol(){var i=this.fetch(),r=i.text;if(/^\\\\verb[^a-zA-Z]/.test(r)){this.consume();var"
+    },
+    {
+      "file": "dist/icons/icon.svg",
+      "binary": false,
+      "pattern": "http://",
+      "offset": 12,
+      "context": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 64 64\"><rect width=\"64\" he"
+    },
+    {
+      "file": "dist/workbox-9c191d2f.js",
+      "binary": false,
+      "pattern": "https://",
+      "offset": 12222,
+      "context": " ${e.join(\", \")}\\nThis is generally NOT safe. Learn more at https://bit.ly/wb-precache`;console.warn(t)}}}install(t){return d(t,"
+    },
+    {
+      "file": "dist/workbox-9c191d2f.js",
+      "binary": false,
+      "pattern": "fetch(",
+      "offset": 5468,
+      "context": "this.v.set(t,{});this.event.waitUntil(this.p.promise)}async fetch(t){const{event:e}=this;let n=L(t);if(\"navigate\"===n.mode&&e "
+    },
+    {
+      "file": "dist/workbox-9c191d2f.js",
+      "binary": false,
+      "pattern": "fetch(",
+      "offset": 5923,
+      "context": "rrorMessage:t.message})}const r=n.clone();try{let t;t=await fetch(n,\"navigate\"===n.mode?void 0:this.l.fetchOptions);for(const "
+    },
+    {
+      "file": "dist/workbox-9c191d2f.js",
+      "binary": false,
+      "pattern": "fetch(",
+      "offset": 6254,
+      "context": "r.clone()}),t}}async fetchAndCachePut(t){const e=await this.fetch(t),s=e.clone();return this.waitUntil(this.cachePut(t,s)),e}a"
+    },
+    {
+      "file": "dist/workbox-9c191d2f.js",
+      "binary": false,
+      "pattern": "fetch(",
+      "offset": 10304,
+      "context": "});{const s=i.integrity,r=t.integrity,o=!r||r===s;n=await e.fetch(new Request(t,{integrity:\"no-cors\"!==t.mode?r||s:void 0})),s"
+    },
+    {
+      "file": "dist/workbox-9c191d2f.js",
+      "binary": false,
+      "pattern": "fetch(",
+      "offset": 10483,
+      "context": ",n.clone()))}return n}async O(t,e){this.P();const n=await e.fetch(t);if(!await e.cachePut(t,n.clone()))throw new s(\"bad-precac"
+    }
+  ],
+  "precache": {
+    "count": 35,
+    "urls": [
+      "manifest.webmanifest",
+      "index.html",
+      "icons/icon.svg",
+      "icons/icon-512.png",
+      "icons/icon-512-maskable.png",
+      "icons/icon-192.png",
+      "icons/apple-touch-icon.png",
+      "assets/workbox-window.prod.es5-BBnX5xw4.js",
+      "assets/index-Y6XSVVpx.js",
+      "assets/index-MWm0pd_o.css",
+      "assets/KaTeX_Typewriter-Regular-CO6r4hn1.woff2",
+      "assets/KaTeX_Size4-Regular-Dl5lxZxV.woff2",
+      "assets/KaTeX_Size2-Regular-Dy4dx90m.woff2",
+      "assets/KaTeX_Size1-Regular-mCD8mA8B.woff2",
+      "assets/KaTeX_Script-Regular-D3wIWfF6.woff2",
+      "assets/KaTeX_SansSerif-Regular-DDBCnlJ7.woff2",
+      "assets/KaTeX_SansSerif-Italic-C3H0VqGB.woff2",
+      "assets/KaTeX_SansSerif-Bold-D1sUS0GD.woff2",
+      "assets/KaTeX_Math-Italic-t53AETM-.woff2",
+      "assets/KaTeX_Math-BoldItalic-CZnvNsCZ.woff2",
+      "assets/KaTeX_Main-Regular-B22Nviop.woff2",
+      "assets/KaTeX_Main-Italic-NWA7e6Wa.woff2",
+      "assets/KaTeX_Main-BoldItalic-DxDJ3AOS.woff2",
+      "assets/KaTeX_Main-Bold-Cx986IdX.woff2",
+      "assets/KaTeX_Fraktur-Regular-CTYiF6lA.woff2",
+      "assets/KaTeX_Fraktur-Bold-CL6g_b3V.woff2",
+      "assets/KaTeX_Caligraphic-Regular-Di6jR-x-.woff2",
+      "assets/KaTeX_Caligraphic-Bold-Dq_IR9rO.woff2",
+      "assets/KaTeX_AMS-Regular-BQhdFMY1.woff2",
+      "icons/apple-touch-icon.png",
+      "icons/icon-192.png",
+      "icons/icon-512-maskable.png",
+      "icons/icon-512.png",
+      "icons/icon.svg",
+      "manifest.webmanifest"
+    ],
+    "hasIndexHtml": true,
+    "js": [
+      "assets/workbox-window.prod.es5-BBnX5xw4.js",
+      "assets/index-Y6XSVVpx.js"
+    ],
+    "css": [
+      "assets/index-MWm0pd_o.css"
+    ],
+    "woff2": [
+      "assets/KaTeX_Typewriter-Regular-CO6r4hn1.woff2",
+      "assets/KaTeX_Size4-Regular-Dl5lxZxV.woff2",
+      "assets/KaTeX_Size2-Regular-Dy4dx90m.woff2",
+      "assets/KaTeX_Size1-Regular-mCD8mA8B.woff2",
+      "assets/KaTeX_Script-Regular-D3wIWfF6.woff2",
+      "assets/KaTeX_SansSerif-Regular-DDBCnlJ7.woff2",
+      "assets/KaTeX_SansSerif-Italic-C3H0VqGB.woff2",
+      "assets/KaTeX_SansSerif-Bold-D1sUS0GD.woff2",
+      "assets/KaTeX_Math-Italic-t53AETM-.woff2",
+      "assets/KaTeX_Math-BoldItalic-CZnvNsCZ.woff2",
+      "assets/KaTeX_Main-Regular-B22Nviop.woff2",
+      "assets/KaTeX_Main-Italic-NWA7e6Wa.woff2",
+      "assets/KaTeX_Main-BoldItalic-DxDJ3AOS.woff2",
+      "assets/KaTeX_Main-Bold-Cx986IdX.woff2",
+      "assets/KaTeX_Fraktur-Regular-CTYiF6lA.woff2",
+      "assets/KaTeX_Fraktur-Bold-CL6g_b3V.woff2",
+      "assets/KaTeX_Caligraphic-Regular-Di6jR-x-.woff2",
+      "assets/KaTeX_Caligraphic-Bold-Dq_IR9rO.woff2",
+      "assets/KaTeX_AMS-Regular-BQhdFMY1.woff2"
+    ],
+    "woffOrTtf": [],
+    "woff2InDist": 19,
+    "woff2NotPrecached": [],
+    "navigateFallback": true,
+    "skipWaiting": true,
+    "clientsClaim": true,
+    "cleanupOutdatedCaches": true,
+    "runtimeCaching": [
+      "registerRoute(new e.NavigationRoute(e.createHandlerBoundToURL(\"index.html\")))})"
+    ],
+    "cssFontFaces": 20,
+    "cssFontFacesWithInlinedWoff2": [
+      "KaTeX_Size3 400 normal"
+    ],
+    "cssFontFacesListingWoff2First": 20
+  },
+  "manifestCheck": {
+    "manifest": {
+      "name": "Calc 2 Study",
+      "short_name": "Calc2",
+      "description": "Offline micro-learning drills for MAC 2312 Exam 1",
+      "start_url": "./",
+      "display": "standalone",
+      "background_color": "#1a1a2e",
+      "theme_color": "#1a1a2e",
+      "lang": "en",
+      "scope": "./",
+      "orientation": "portrait",
+      "icons": [
+        {
+          "src": "icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        },
+        {
+          "src": "icons/icon-512.png",
+          "sizes": "512x512",
+          "type": "image/png"
+        },
+        {
+          "src": "icons/icon-512-maskable.png",
+          "sizes": "512x512",
+          "type": "image/png",
+          "purpose": "maskable"
+        }
+      ]
+    },
+    "name": true,
+    "shortName": true,
+    "display": "standalone",
+    "startUrlRelative": true,
+    "scopeRelative": true,
+    "has192": true,
+    "has512": true,
+    "hasMaskable": true,
+    "icons": [
+      {
+        "src": "icons/icon-192.png",
+        "sizes": "192x192",
+        "type": "image/png",
+        "exists": true,
+        "actual": {
+          "width": 192,
+          "height": 192
+        },
+        "sizeMatches": true,
+        "precached": true
+      },
+      {
+        "src": "icons/icon-512.png",
+        "sizes": "512x512",
+        "type": "image/png",
+        "exists": true,
+        "actual": {
+          "width": 512,
+          "height": 512
+        },
+        "sizeMatches": true,
+        "precached": true
+      },
+      {
+        "src": "icons/icon-512-maskable.png",
+        "sizes": "512x512",
+        "type": "image/png",
+        "purpose": "maskable",
+        "exists": true,
+        "actual": {
+          "width": 512,
+          "height": 512
+        },
+        "sizeMatches": true,
+        "precached": true
+      }
+    ],
+    "linkedFromIndex": true,
+    "appleTouchIcon": {
+      "width": 180,
+      "height": 180
+    }
+  },
+  "bundle": {
+    "mainJs": "index-Y6XSVVpx.js",
+    "mainJsBytes": 1702343,
+    "containsMathjs": false,
+    "containsChecker": false,
+    "containsSampleContent": false,
+    "swRegistration": true
+  }
+}
