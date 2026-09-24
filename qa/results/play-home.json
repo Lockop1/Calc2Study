@@ -1,6 +1,6 @@
 {
   "name": "home",
-  "startedAt": "2026-09-24T16:04:27.291Z",
+  "startedAt": "2026-09-24T16:12:43.924Z",
   "checks": [
     {
       "name": "9 topic chips, all selected by default",
@@ -65,22 +65,22 @@
     {
       "name": "Step-Through problem topic is a selected topic",
       "ok": true,
-      "detail": "10/10 ok"
+      "detail": "11/11 ok"
     },
     {
       "name": "Review badge = number of missed units in the selected topics",
       "ok": true,
-      "detail": "badge 17, missed units 17 {\"trig-integrals\":4,\"volumes-disks\":2,\"ibp\":8,\"antiderivatives\":2,\"volumes-shells\":1}"
+      "detail": "badge 21, missed units 21 {\"ibp\":9,\"antiderivatives\":6,\"volumes-disks\":2,\"trig-integrals\":3,\"volumes-shells\":1}"
     },
     {
-      "name": "deselecting ibp lowers the badge by its misses (8)",
+      "name": "deselecting ibp lowers the badge by its misses (9)",
       "ok": true,
-      "detail": "badge 9"
+      "detail": "badge 12"
     },
     {
       "name": "Review question topic is a selected topic",
       "ok": true,
-      "detail": "9/9 ok"
+      "detail": "10/10 ok"
     },
     {
       "name": "\"None\" deselects all; Home asks to pick a topic",
@@ -99,8 +99,8 @@
     },
     {
       "name": "no console errors / page errors",
-      "ok": false,
-      "detail": "warning: Service Worker registration blocked by Playwright | warning: Service Worker registration blocked by Playwright"
+      "ok": true,
+      "detail": ""
     }
   ],
   "metrics": {
@@ -166,22 +166,19 @@
     },
     "storedSettings": "{\"version\":1,\"roundSize\":10,\"topics\":[\"antiderivatives\",\"volumes-disks\",\"volumes-shells\",\"ibp\",\"trig-integrals\"]}",
     "flashTopicsSeen": [
-      "trig-integrals",
-      "volumes-disks",
       "ibp",
       "antiderivatives",
+      "volumes-disks",
+      "trig-integrals",
       "volumes-shells"
     ],
     "qKindExamples": [
-      "Trig integrals · Antiderivative",
+      "IBP · Concept",
+      "u-sub · Definite integral",
       "Disks/washers · Concept",
-      "Trig integrals · Technique",
-      "Trig integrals · Formula"
+      "Trig integrals · Antiderivative"
     ],
-    "consoleErrors": [
-      "warning: Service Worker registration blocked by Playwright",
-      "warning: Service Worker registration blocked by Playwright"
-    ]
+    "consoleErrors": []
   },
-  "seconds": 18
+  "seconds": 23
 }

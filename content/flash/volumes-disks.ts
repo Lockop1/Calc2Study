@@ -170,7 +170,7 @@ export const flash: FlashItem[] = [
     kind: 'concept',
     prompt: { text: 'A washer integral for a volume came out negative. Which setup error causes that?' },
     options: [
-      { text: 'The inner and outer radii were swapped, so $r^2 > R^2$ on the slices' },
+      { text: 'The inner and outer radii were swapped' },
       { text: 'The factor $\\pi$ was left out', mistake: 'pi-missing', why: 'Dropping $\\pi$ rescales the answer but cannot change its sign.' },
       { text: 'The radii were not squared, giving $\\pi(R - r)$', mistake: 'radius-not-squared', why: 'With $R \\ge r$, $\\pi(R - r)$ is still nonnegative; only $r > R$ flips the sign.' },
       { text: 'A disk was used where a washer was needed', mistake: 'washer-as-disk', why: 'Ignoring the hole makes the volume too large, never negative.' },
@@ -191,7 +191,7 @@ export const flash: FlashItem[] = [
       { latex: 's = \\sqrt{y}', expr: 'sqrt(y)', mistake: 'coefficient-mishandled', why: 'At height $y$ the base runs from $x = -\\sqrt{y}$ to $x = \\sqrt{y}$; $\\sqrt{y}$ is only the right half.' },
       { latex: 's = 4 - x^2', expr: '4 - x^2', mistake: 'wrong-integration-variable', why: '$4 - x^2$ is the vertical chord for slices perpendicular to the x-axis; these slices are horizontal, so the side is a width written in $y$.' },
       { latex: 's = 2y^2', expr: '2*y^2', mistake: 'inverse-function-wrong', why: 'Solving $y = x^2$ for $x$ gives $x = \\pm\\sqrt{y}$, not $y^2$.' },
-      { latex: 's = 4 - y', expr: '4 - y', mistake: 'wrong-integration-variable', why: '$4 - y$ is the vertical distance from the slice up to $y = 4$; the side of a horizontal slice is its horizontal width.' },
+      { latex: 's = 4 - y', expr: '4 - y', mistake: 'cross-section-area-wrong', why: '$4 - y$ is the vertical distance from the slice up to $y = 4$; the side of a horizontal slice is its horizontal width.' },
     ],
     correct: 0,
     explanation: 'At height $y$ the base spans $-\\sqrt{y} \\le x \\le \\sqrt{y}$, a width of $2\\sqrt{y}$.',
@@ -242,7 +242,8 @@ export const flash: FlashItem[] = [
     prompt: { text: 'The base of a solid is the region between $y = x^2$ and $y = 4$. Cross-sections perpendicular to the y-axis are squares. Which integral gives the volume?' },
     options: [
       { latex: '\\int_0^4 \\left(2\\sqrt{y}\\right)^2dy', expr: 'integral((2*sqrt(y))^2, y, 0, 4)' },
-      { latex: '\\int_0^4 \\left(\\sqrt{y}\\right)^2dy', expr: 'integral((sqrt(y))^2, y, 0, 4)', mistake: 'coefficient-mishandled', why: 'At height $y$ the base runs from $x = -\\sqrt{y}$ to $x = \\sqrt{y}$, a width of $2\\sqrt{y}$, not $\\sqrt{y}$.' },
+      { latex: '\\pi\\int_0^4 \\left(2\\sqrt{y}\\right)^2dy', expr: 'pi*integral((2*sqrt(y))^2, y, 0, 4)', mistake: 'cross-section-area-wrong', why: 'A square slice has area side squared; the $\\pi$ belongs to circular slices.' },
+      { latex: '\\int_0^2 \\left(2\\sqrt{y}\\right)^2dy', expr: 'integral((2*sqrt(y))^2, y, 0, 2)', mistake: 'bounds-wrong-axis', why: '0 to 2 is the x-range of the base; the horizontal slices run over the heights 0 to 4.' },
       { latex: '\\int_{-2}^{2} (4 - x^2)^2\\,dx', expr: 'integral((4 - x^2)^2, x, -2, 2)', mistake: 'wrong-integration-variable', why: 'These are squares perpendicular to the x-axis (side $4 - x^2$); the slices here are perpendicular to the y-axis.' },
       { latex: '\\int_0^4 2\\sqrt{y}\\,dy', expr: 'integral(2*sqrt(y), y, 0, 4)', mistake: 'cross-section-area-wrong', why: '$2\\sqrt{y}$ is the side; the square has area $(2\\sqrt{y})^2 = 4y$.' },
       { latex: '\\pi\\int_0^4 \\left(\\sqrt{y}\\right)^2dy', expr: 'pi*integral((sqrt(y))^2, y, 0, 4)', mistake: 'formula-swapped', why: 'This is the disk volume for rotating the region about the y-axis; squares standing on the base have area side squared, with no $\\pi$.' },
@@ -258,7 +259,7 @@ export const flash: FlashItem[] = [
     id: 'vd-f-015',
     topic: 'volumes-disks',
     kind: 'concept',
-    prompt: { text: 'The region between $y = x$ and $y = x^2$ is rotated about the x-axis. For the washer perpendicular to the x-axis at $x$, what are the outer and inner radii?' },
+    prompt: { text: 'The region between $y = x$ and $y = x^2$ is rotated about the x-axis. For the slice perpendicular to the x-axis at $x$, what are the outer and inner radii?' },
     options: [
       { latex: 'R = x,\\ r = x^2', expr: '[x, x^2]' },
       { latex: 'R = x^2,\\ r = x', expr: '[x^2, x]', mistake: 'radii-swapped', why: 'On $0 < x < 1$, $x^2 < x$, so the parabola is nearer the axis and gives the inner radius.' },
@@ -275,7 +276,7 @@ export const flash: FlashItem[] = [
     id: 'vd-f-016',
     topic: 'volumes-disks',
     kind: 'concept',
-    prompt: { text: 'The region between $y = x$ and $y = x^2$ is rotated about the line $y = 2$. For the washer perpendicular to the x-axis at $x$, what are the outer and inner radii?' },
+    prompt: { text: 'The region between $y = x$ and $y = x^2$ is rotated about the line $y = 2$. For the slice perpendicular to the x-axis at $x$, what are the outer and inner radii?' },
     options: [
       { latex: 'R = 2 - x^2,\\ r = 2 - x', expr: '[2 - x^2, 2 - x]' },
       { latex: 'R = 2 - x,\\ r = 2 - x^2', expr: '[2 - x, 2 - x^2]', mistake: 'radii-swapped', why: 'The axis $y = 2$ is above the region, so the lower curve $y = x^2$ is the farther one and gives $R$.' },
@@ -293,13 +294,13 @@ export const flash: FlashItem[] = [
     id: 'vd-f-017',
     topic: 'volumes-disks',
     kind: 'concept',
-    prompt: { text: 'The region between $y = x^2$ and $y = 4$ is rotated about the x-axis. For the washer perpendicular to the x-axis at $x$, what are the outer and inner radii?' },
+    prompt: { text: 'The region between $y = x^2$ and $y = 4$ is rotated about the x-axis. For the slice perpendicular to the x-axis at $x$, what are the outer and inner radii?' },
     options: [
       { latex: 'R = 4,\\ r = x^2', expr: '[4, x^2]' },
-      { latex: 'R = x^2,\\ r = 4', expr: '[x^2, 4]', mistake: 'radii-swapped', why: 'The line $y = 4$ is the top of the slice, farthest from the x-axis, so it gives $R$.' },
       { latex: 'R = 4 - x^2,\\ r = 0', expr: '[4 - x^2, 0]', mistake: 'washer-difference-squared', why: '$4 - x^2$ is the slice length; as a single radius it computes $\\pi(R - r)^2$, not $\\pi(R^2 - r^2)$.' },
       { latex: 'R = 4,\\ r = 0', expr: '[4, 0]', mistake: 'washer-as-disk', why: 'The parabola sits above the x-axis except at $x = 0$, leaving a hole of radius $x^2$.' },
-      { latex: 'R = 4,\\ r = \\sqrt{y}', expr: '[4, sqrt(y)]', mistake: 'not-in-terms-of-variable', why: 'For vertical slices the inner radius is the height $x^2$ of the parabola, written in $x$; $\\sqrt{y}$ is a horizontal position.' },
+      { latex: 'R = 2,\\ r = \\sqrt{y}', expr: '[2, sqrt(y)]', mistake: 'wrong-integration-variable', why: '2 and $\\sqrt{y}$ are horizontal distances from horizontal slices; slices perpendicular to the x-axis are vertical, with heights 4 and $x^2$.' },
+      { latex: 'R = \\sqrt{y},\\ r = 0', expr: '[sqrt(y), 0]', mistake: 'not-in-terms-of-variable', why: '$\\sqrt{y}$ is the parabola solved for $x$, a horizontal position; the radii of a vertical slice are the heights 4 and $x^2$.' },
     ],
     correct: 0,
     explanation: 'Each vertical slice runs from $y = x^2$ up to $y = 4$, so $R = 4$ and $r = x^2$.',
@@ -314,9 +315,9 @@ export const flash: FlashItem[] = [
     options: [
       { latex: 'R = 4 - x^2,\\ r = 0', expr: '[4 - x^2, 0]' },
       { latex: 'R = 4,\\ r = x^2', expr: '[4, x^2]', mistake: 'axis-shift-missing', why: 'Those are distances to the x-axis; the axis here is $y = 4$, the top edge of the region.' },
-      { latex: 'R = 4 - x^2,\\ r = 4', expr: '[4 - x^2, 4]', mistake: 'radius-is-function-value', why: 'The line $y = 4$ is the axis itself, so its distance to the axis is 0, not its height 4.' },
+      { latex: 'R = 4,\\ r = 4 - x^2', expr: '[4, 4 - x^2]', mistake: 'disk-as-washer', why: 'The x-axis is not an edge of this region: each slice runs from the parabola up to the axis itself, so there is no hole.' },
       { latex: 'R = x^2 - 4,\\ r = 0', expr: '[x^2 - 4, 0]', mistake: 'axis-shift-sign', why: 'The region lies below $y = 4$, so the distance is $4 - x^2$; $x^2 - 4$ is negative.' },
-      { latex: 'R = x^2 + 4,\\ r = 0', expr: '[x^2 + 4, 0]', mistake: 'axis-shift-sign', why: 'Adding 4 measures distance to $y = -4$, not to $y = 4$.' },
+      { latex: 'R = 4 - x^2,\\ r = 4', expr: '[4 - x^2, 4]', mistake: 'disk-as-washer', why: 'The line $y = 4$ is the axis itself, so its distance to the axis is 0: there is no hole.' },
     ],
     correct: 0,
     explanation: 'The axis is the top edge of the region, so each slice is a disk reaching from $y = 4$ down to the parabola: $R = 4 - x^2$, $r = 0$.',
@@ -327,13 +328,13 @@ export const flash: FlashItem[] = [
     id: 'vd-f-019',
     topic: 'volumes-disks',
     kind: 'concept',
-    prompt: { text: 'The region between $y = x^2$ and $y = 4$ is rotated about the line $y = -1$. For the washer perpendicular to the x-axis at $x$, what are the outer and inner radii?' },
+    prompt: { text: 'The region between $y = x^2$ and $y = 4$ is rotated about the line $y = -1$. For the slice perpendicular to the x-axis at $x$, what are the outer and inner radii?' },
     options: [
       { latex: 'R = 5,\\ r = x^2 + 1', expr: '[5, x^2 + 1]' },
       { latex: 'R = 4,\\ r = x^2', expr: '[4, x^2]', mistake: 'axis-shift-missing', why: 'Measured from the x-axis; from $y = -1$ every distance grows by 1.' },
       { latex: 'R = 3,\\ r = x^2 - 1', expr: '[3, x^2 - 1]', mistake: 'axis-shift-sign', why: 'The distance from height $y$ down to $y = -1$ is $y + 1$, not $y - 1$.' },
-      { latex: 'R = 5,\\ r = 0', expr: '[5, 0]', mistake: 'washer-as-disk', why: 'The parabola stays at least 1 unit above $y = -1$, so each slice has a hole of radius $x^2 + 1$.' },
-      { latex: 'R = x^2 + 1,\\ r = 5', expr: '[x^2 + 1, 5]', mistake: 'radii-swapped', why: 'The line $y = 4$ is farther from $y = -1$ than the parabola is, so 5 is the outer radius.' },
+      { latex: 'R = 5,\\ r = x^2', expr: '[5, x^2]', mistake: 'axis-shift-missing', why: 'Only the outer edge was measured from $y = -1$; the parabola is also 1 unit farther from that axis, so $r = x^2 + 1$.' },
+      { latex: 'R = 4,\\ r = x^2 + 1', expr: '[4, x^2 + 1]', mistake: 'axis-shift-missing', why: 'Only the inner edge was measured from $y = -1$; the line $y = 4$ is $4 + 1 = 5$ units from the axis.' },
       { latex: 'R = 4 - x^2,\\ r = 0', expr: '[4 - x^2, 0]', mistake: 'washer-difference-squared', why: '$4 - x^2 = 5 - (x^2 + 1)$ is the slice length; using it as one radius computes $\\pi(R - r)^2$.' },
     ],
     correct: 0,
@@ -345,7 +346,7 @@ export const flash: FlashItem[] = [
     id: 'vd-f-020',
     topic: 'volumes-disks',
     kind: 'concept',
-    prompt: { text: 'The region bounded by $y = x^2$, $y = 0$, and $x = 2$ is rotated about the y-axis. For the washer perpendicular to the y-axis at height $y$, what are the outer and inner radii?' },
+    prompt: { text: 'The region bounded by $y = x^2$, $y = 0$, and $x = 2$ is rotated about the y-axis. For the slice perpendicular to the y-axis at height $y$, what are the outer and inner radii?' },
     options: [
       { latex: 'R = 2,\\ r = \\sqrt{y}', expr: '[2, sqrt(y)]' },
       { latex: 'R = \\sqrt{y},\\ r = 2', expr: '[sqrt(y), 2]', mistake: 'radii-swapped', why: 'The line $x = 2$ is farther from the y-axis than the parabola, so it gives $R$.' },
@@ -363,7 +364,7 @@ export const flash: FlashItem[] = [
     id: 'vd-f-021',
     topic: 'volumes-disks',
     kind: 'concept',
-    prompt: { text: 'The region bounded by $y = e^{x}$, $y = 1$, and $x = 1$ is rotated about the y-axis. For the washer perpendicular to the y-axis at height $y$, what are the outer and inner radii?' },
+    prompt: { text: 'The region bounded by $y = e^{x}$, $y = 1$, and $x = 1$ is rotated about the y-axis. For the slice perpendicular to the y-axis at height $y$, what are the outer and inner radii?' },
     options: [
       { latex: 'R = 1,\\ r = \\ln y', expr: '[1, log(y)]' },
       { latex: 'R = \\ln y,\\ r = 1', expr: '[log(y), 1]', mistake: 'radii-swapped', why: 'For $1 < y < e$, $\\ln y < 1$: the curve is nearer the y-axis, so it gives the inner radius.' },
@@ -383,7 +384,7 @@ export const flash: FlashItem[] = [
     id: 'vd-f-022',
     topic: 'volumes-disks',
     kind: 'concept',
-    prompt: { text: 'The region bounded by $y = \\frac{1}{x}$, $y = 0$, $x = 1$, and $x = 3$ is rotated about the line $y = -1$. For the washer perpendicular to the x-axis at $x$, what are the outer and inner radii?' },
+    prompt: { text: 'The region bounded by $y = \\frac{1}{x}$, $y = 0$, $x = 1$, and $x = 3$ is rotated about the line $y = -1$. For the slice perpendicular to the x-axis at $x$, what are the outer and inner radii?' },
     options: [
       { latex: 'R = \\frac{1}{x} + 1,\\ r = 1', expr: '[1/x + 1, 1]' },
       { latex: 'R = \\frac{1}{x},\\ r = 0', expr: '[1/x, 0]', mistake: 'axis-shift-missing', why: 'These are the radii for the x-axis; from $y = -1$ every distance grows by 1, and the x-axis edge becomes a hole of radius 1.' },
@@ -402,7 +403,7 @@ export const flash: FlashItem[] = [
     id: 'vd-f-023',
     topic: 'volumes-disks',
     kind: 'concept',
-    prompt: { text: 'The region bounded by $y = x^3$, $y = 8$, and the y-axis is rotated about the line $x = 2$. For the washer perpendicular to the y-axis at height $y$, what are the outer and inner radii?' },
+    prompt: { text: 'The region bounded by $y = x^3$, $y = 8$, and the y-axis is rotated about the line $x = 2$. For the slice perpendicular to the y-axis at height $y$, what are the outer and inner radii?' },
     options: [
       { latex: 'R = 2,\\ r = 2 - \\sqrt[3]{y}', expr: '[2, 2 - nthRoot(y, 3)]' },
       { latex: 'R = 2 - \\sqrt[3]{y},\\ r = 2', expr: '[2 - nthRoot(y, 3), 2]', mistake: 'radii-swapped', why: 'The y-axis edge $x = 0$ is farthest from $x = 2$, so $R = 2$; the curve is the near edge.' },
@@ -420,7 +421,7 @@ export const flash: FlashItem[] = [
     id: 'vd-f-024',
     topic: 'volumes-disks',
     kind: 'concept',
-    prompt: { text: 'The region between $y = \\sqrt{x}$ and $y = x$ is rotated about the line $x = -1$. For the washer perpendicular to the y-axis at height $y$, what are the outer and inner radii?' },
+    prompt: { text: 'The region between $y = \\sqrt{x}$ and $y = x$ is rotated about the line $x = -1$. For the slice perpendicular to the y-axis at height $y$, what are the outer and inner radii?' },
     options: [
       { latex: 'R = y + 1,\\ r = y^2 + 1', expr: '[y + 1, y^2 + 1]' },
       { latex: 'R = y^2 + 1,\\ r = y + 1', expr: '[y^2 + 1, y + 1]', mistake: 'radii-swapped', why: 'For $0 < y < 1$, $y^2 < y$, so $x = y^2$ is nearer the axis $x = -1$ and gives the inner radius.' },
@@ -443,10 +444,10 @@ export const flash: FlashItem[] = [
     options: [
       { latex: 'R = 2 - \\sqrt{y},\\ r = 0', expr: '[2 - sqrt(y), 0]' },
       { latex: 'R = 2,\\ r = \\sqrt{y}', expr: '[2, sqrt(y)]', mistake: 'axis-shift-missing', why: 'Those are the radii about the y-axis; here the axis $x = 2$ is the right edge of the region.' },
+      { latex: 'R = 2,\\ r = 2 - \\sqrt{y}', expr: '[2, 2 - sqrt(y)]', mistake: 'disk-as-washer', why: 'The y-axis is not an edge of this region; each slice runs from the parabola to the axis $x = 2$ itself, so there is no hole.' },
       { latex: 'R = \\sqrt{y} - 2,\\ r = 0', expr: '[sqrt(y) - 2, 0]', mistake: 'axis-shift-sign', why: 'The region lies left of $x = 2$, so the distance is $2 - \\sqrt{y}$; $\\sqrt{y} - 2$ is negative.' },
-      { latex: 'R = 2 - y^2,\\ r = 0', expr: '[2 - y^2, 0]', mistake: 'inverse-function-wrong', why: '$y = x^2$ gives $x = \\sqrt{y}$, not $y^2$.' },
-      { latex: 'R = 2 - x^2,\\ r = 0', expr: '[2 - x^2, 0]', mistake: 'not-in-terms-of-variable', why: 'Slices perpendicular to $x = 2$ are horizontal, so the radius must be written in $y$.' },
-      { latex: 'R = 2 - \\sqrt{y},\\ r = 2', expr: '[2 - sqrt(y), 2]', mistake: 'radius-is-function-value', why: 'The line $x = 2$ is the axis itself, so its distance to the axis is 0, not 2.' },
+      { latex: 'R = 2,\\ r = y^2', expr: '[2, y^2]', mistake: 'inverse-function-wrong', why: 'Solving $y = x^2$ gives $x = \\sqrt{y}$, not $y^2$; and with the axis on the edge of the region there is no hole to subtract.' },
+      { latex: 'R = 2 - \\sqrt{y},\\ r = 2', expr: '[2 - sqrt(y), 2]', mistake: 'disk-as-washer', why: 'The line $x = 2$ is the axis itself, so its distance to the axis is 0: there is no hole.' },
     ],
     correct: 0,
     explanation: 'The axis $x = 2$ is the right edge of the region, so each horizontal slice is a disk from $x = 2$ to the parabola $x = \\sqrt{y}$: $R = 2 - \\sqrt{y}$.',
@@ -464,7 +465,7 @@ export const flash: FlashItem[] = [
     options: [
       { latex: '\\pi\\int_0^2 (2x - x^2)^2\\,dx', expr: 'integral(pi*(2*x - x^2)^2, x, 0, 2)' },
       { latex: '\\pi\\int_0^2 (2x - x^2)\\,dx', expr: 'integral(pi*(2*x - x^2), x, 0, 2)', mistake: 'radius-not-squared', why: 'A disk has area $\\pi R^2$; the radius $2x - x^2$ was not squared.' },
-      { latex: '\\int_0^2 (2x - x^2)^2\\,dx', expr: 'integral((2*x - x^2)^2, x, 0, 2)', mistake: 'pi-missing', why: 'A disk of radius $R$ has area $\\pi R^2$; the $\\pi$ is missing.' },
+      { latex: '\\pi\\int_0^2 (2x + x^2)^2\\,dx', expr: 'integral(pi*(2*x + x^2)^2, x, 0, 2)', mistake: 'sign-error', why: 'The curve is $y = 2x - x^2$; the radius $2x + x^2$ has the wrong sign on $x^2$.' },
       { latex: '\\pi\\int_0^2 (4x^2 - x^4)\\,dx', expr: 'integral(pi*(4*x^2 - x^4), x, 0, 2)', mistake: 'algebra-error', why: '$(2x - x^2)^2$ was squared term by term; the cross term $-4x^3$ is missing.' },
       { latex: '\\pi\\int_0^1 (2x - x^2)^2\\,dx', expr: 'integral(pi*(2*x - x^2)^2, x, 0, 1)', mistake: 'bounds-wrong-axis', why: '0 to 1 is the height range of the region; $x$ runs between the roots $x = 0$ and $x = 2$.' },
       { latex: '2\\pi\\int_0^2 x(2x - x^2)\\,dx', expr: 'integral(2*pi*x*(2*x - x^2), x, 0, 2)', mistake: 'method-formula-swapped', why: '$2\\pi x \\cdot$ height is the shell formula for rotation about the y-axis; about the x-axis vertical slices make disks.' },
@@ -570,9 +571,9 @@ export const flash: FlashItem[] = [
     prompt: { text: 'The region between $x = y^2$ and $x = y + 2$ is rotated about the y-axis. Which integral gives the volume?' },
     options: [
       { latex: '\\pi\\int_{-1}^{2} \\left[(y + 2)^2 - (y^2)^2\\right]dy', expr: 'integral(pi*((y + 2)^2 - (y^2)^2), y, -1, 2)' },
-      { latex: '\\pi\\int_{-1}^{2} \\left[(y^2)^2 - (y + 2)^2\\right]dy', expr: 'integral(pi*((y^2)^2 - (y + 2)^2), y, -1, 2)', mistake: 'radii-swapped', why: 'On $-1 < y < 2$ the line $x = y + 2$ is farther right, so it is the outer radius; this integral is negative.' },
+      { latex: '\\pi\\int_{-2}^{1} \\left[(y + 2)^2 - (y^2)^2\\right]dy', expr: 'integral(pi*((y + 2)^2 - (y^2)^2), y, -2, 1)', mistake: 'algebra-error', why: '$y^2 = y + 2$ factors as $(y - 2)(y + 1) = 0$, so the curves meet at $y = -1$ and $y = 2$, not at $-2$ and 1.' },
       { latex: '\\pi\\int_{-1}^{2} (y + 2 - y^2)^2\\,dy', expr: 'integral(pi*(y + 2 - y^2)^2, y, -1, 2)', mistake: 'washer-difference-squared', why: 'The washer area is $\\pi(R^2 - r^2)$, not the squared slice length $\\pi(R - r)^2$.' },
-      { latex: '\\pi\\int_{-1}^{2} (y + 2)^2\\,dy', expr: 'integral(pi*(y + 2)^2, y, -1, 2)', mistake: 'washer-as-disk', why: 'The region starts at $x = y^2$, not at the y-axis (except at $y = 0$), so each slice has a hole of radius $y^2$.' },
+      { latex: '\\pi\\int_0^2 (y + 2)^2\\,dy', expr: 'integral(pi*(y + 2)^2, y, 0, 2)', mistake: 'washer-as-disk', why: 'The region starts at $x = y^2$, not at the axis, so each slice has a hole of radius $y^2$; and the region reaches down to $y = -1$.' },
       { latex: '\\pi\\int_0^2 \\left[(y + 2)^2 - (y^2)^2\\right]dy', expr: 'integral(pi*((y + 2)^2 - (y^2)^2), y, 0, 2)', mistake: 'missing-intersection', why: 'The curves meet at $y = -1$ and $y = 2$; starting at 0 cuts off the part of the region below the x-axis.' },
       { latex: '\\pi\\int_{-1}^{2} \\left[(y + 2)^2 - y^2\\right]dy', expr: 'integral(pi*((y + 2)^2 - y^2), y, -1, 2)', mistake: 'radius-not-squared', why: 'The inner radius is $r = y^2$, so $r^2 = y^4$; $y^2$ is the radius itself.' },
     ],
@@ -591,8 +592,8 @@ export const flash: FlashItem[] = [
       { latex: '\\pi\\int_0^4 \\left(\\sqrt{y}\\right)^2dy', expr: 'integral(pi*(sqrt(y))^2, y, 0, 4)', mistake: 'axis-shift-missing', why: 'This is the disk volume about the y-axis; about $x = -1$ both radii grow by 1 and the y-axis edge becomes a hole of radius 1.' },
       { latex: '\\pi\\int_0^4 \\left(\\sqrt{y} + 1\\right)^2dy', expr: 'integral(pi*(sqrt(y) + 1)^2, y, 0, 4)', mistake: 'washer-as-disk', why: 'The left edge $x = 0$ is 1 unit from the axis, leaving a hole of radius 1.' },
       { latex: '\\pi\\int_0^4 \\left[\\left(\\sqrt{y} - 1\\right)^2 - 1^2\\right]dy', expr: 'integral(pi*((sqrt(y) - 1)^2 - 1^2), y, 0, 4)', mistake: 'axis-shift-sign', why: 'The distance from $x = \\sqrt{y}$ to the line $x = -1$ is $\\sqrt{y} + 1$.' },
-      { latex: '\\pi\\int_0^2 \\left[(x^2 + 1)^2 - 1^2\\right]dx', expr: 'integral(pi*((x^2 + 1)^2 - 1^2), x, 0, 2)', mistake: 'wrong-integration-variable', why: 'Adding 1 to $x^2$ measures distance to the horizontal line $y = -1$; the axis $x = -1$ is vertical, so slices are horizontal (in $y$).' },
-      { latex: '\\pi\\int_0^4 \\left[\\left(\\sqrt{y} + 1\\right) - 1\\right]dy', expr: 'integral(pi*((sqrt(y) + 1) - 1), y, 0, 4)', mistake: 'radius-not-squared', why: 'Both radii must be squared: $\\pi(R^2 - r^2)$.' },
+      { latex: '\\pi\\int_0^2 \\left[\\left(\\sqrt{y} + 1\\right)^2 - 1^2\\right]dy', expr: 'integral(pi*((sqrt(y) + 1)^2 - 1^2), y, 0, 2)', mistake: 'bounds-wrong-axis', why: '0 to 2 is the x-range; the horizontal slices run over the heights 0 to 4.' },
+      { latex: '\\pi\\int_0^4 \\left[\\left(y^2 + 1\\right)^2 - 1^2\\right]dy', expr: 'integral(pi*((y^2 + 1)^2 - 1^2), y, 0, 4)', mistake: 'inverse-function-wrong', why: 'Solving $y = x^2$ for $x$ gives $x = \\sqrt{y}$, not $y^2$.' },
     ],
     correct: 0,
     explanation: 'Horizontal washers from $x = 0$ to $x = \\sqrt{y}$; distances to $x = -1$ give $R = \\sqrt{y} + 1$ and $r = 1$.',
@@ -754,11 +755,12 @@ export const flash: FlashItem[] = [
     kind: 'technique',
     prompt: { text: 'The region bounded by $y = e^{x}$, $y = 0$, $x = 0$, and $x = 1$ is rotated about the line $y = -1$. What do the slices perpendicular to the axis look like?' },
     options: [
-      { text: 'Washers: the region stops at $y = 0$, one unit above the axis, so every slice has a hole of radius 1' },
-      { text: 'Disks: the region touches the x-axis, so each slice is solid', mistake: 'washer-as-disk', why: 'Touching the x-axis does not matter; the axis is $y = -1$, and the strip between $y = -1$ and $y = 0$ is a hole.' },
-      { text: 'Disks of radius $e^{x} + 1$ reaching from the axis up to the curve', mistake: 'washer-as-disk', why: 'The strip between $y = -1$ and $y = 0$ is not part of the region, so it cannot be part of the slice.' },
-      { text: 'Washers with a hole of radius $e^{x}$', mistake: 'radius-is-function-value', why: 'The hole reaches from $y = -1$ to the near edge $y = 0$, so its radius is 1; $e^x$ belongs to the outer edge.' },
-      { text: 'Washers with a hole of radius 1 and outer radius $e^{x} - 1$', mistake: 'axis-shift-sign', why: 'The distance from $y = e^x$ down to $y = -1$ is $e^x + 1$.' },
+      { text: 'Washers with outer radius $e^{x} + 1$ and a hole of radius 1' },
+      { text: 'Washers with outer radius $e^{x} + 1$ and a hole of radius $e^{x}$', mistake: 'radius-is-function-value', why: 'The hole reaches from $y = -1$ to the near edge $y = 0$, so its radius is 1; $e^x$ belongs to the outer edge.' },
+      { text: 'Washers with outer radius $e^{x} - 1$ and a hole of radius 1', mistake: 'axis-shift-sign', why: 'The distance from $y = e^x$ down to $y = -1$ is $e^x + 1$, not $e^x - 1$.' },
+      { text: 'Washers with outer radius $e^{x}$ and a hole of radius 1', mistake: 'axis-shift-missing', why: 'The hole was measured from $y = -1$ but the curve was not: its distance to the axis is $e^x + 1$.' },
+      { text: 'Disks of radius $e^{x} + 1$', mistake: 'washer-as-disk', why: 'The strip between $y = -1$ and $y = 0$ is not part of the region, so every slice has a hole of radius 1.' },
+      { text: 'Disks of radius $e^{x}$', mistake: 'axis-shift-missing', why: 'That is the slice for rotation about the x-axis; the axis here is $y = -1$, one unit below the region.' },
     ],
     correct: 0,
     explanation: 'Measured from $y = -1$: the outer edge is at distance $e^x + 1$ and the inner edge $y = 0$ at distance 1, so each slice is a washer.',
@@ -771,9 +773,9 @@ export const flash: FlashItem[] = [
     kind: 'technique',
     prompt: { text: 'The region between $y = x^2$ and $y = 1$ is rotated about the line $y = 1$. Which description of the slices perpendicular to the axis is correct?' },
     options: [
-      { text: 'Disks of radius $1 - x^2$: the axis is the top edge of the region' },
+      { text: 'Disks of radius $1 - x^2$' },
       { text: 'Washers with $R = 1$ and $r = x^2$', mistake: 'axis-shift-missing', why: 'Those radii are measured from the x-axis; from $y = 1$ the parabola is $1 - x^2$ away and the top edge lies on the axis.' },
-      { text: 'Washers with $R = 1 - x^2$ and $r = 1$', mistake: 'radius-is-function-value', why: 'The line $y = 1$ is the axis, so its distance to the axis is 0, not its height 1.' },
+      { text: 'Washers with $R = 1 - x^2$ and $r = 1$', mistake: 'disk-as-washer', why: 'The line $y = 1$ is the axis itself, so its distance to the axis is 0: there is no hole.' },
       { text: 'Disks of radius $1 + x^2$', mistake: 'axis-shift-sign', why: 'The parabola lies below $y = 1$, so its distance to the axis is $1 - x^2$.' },
       { text: 'Disks of radius $x^2$', mistake: 'radius-is-function-value', why: '$x^2$ is the height of the parabola above the x-axis; the radius is its distance to $y = 1$.' },
       { text: 'Disks of radius $\\sqrt{y}$ stacked along the y-axis', mistake: 'wrong-integration-variable', why: 'Slices perpendicular to the horizontal axis $y = 1$ are vertical, so they are stacked along $x$.' },
@@ -787,14 +789,14 @@ export const flash: FlashItem[] = [
     id: 'vd-f-044',
     topic: 'volumes-disks',
     kind: 'technique',
-    prompt: { text: 'The region between $y = x^2$ and $y = 2x$ is rotated about the y-axis using washers. Which setup is correct?' },
+    prompt: { text: 'The region between $y = x^2$ and $y = 2x$ is rotated about the y-axis. Using slices perpendicular to the axis, which setup is correct?' },
     options: [
       { text: 'Integrate in $y$ from 0 to 4 with $R = \\sqrt{y}$ and $r = \\frac{y}{2}$' },
       { text: 'Integrate in $x$ from 0 to 2 with $R = 2x$ and $r = x^2$', mistake: 'wrong-integration-variable', why: 'Those are the washers for rotation about the x-axis; slices perpendicular to the y-axis are horizontal, in $y$.' },
-      { text: 'Integrate in $y$ from 0 to 2 with $R = \\sqrt{y}$ and $r = \\frac{y}{2}$', mistake: 'bounds-wrong-axis', why: '0 to 2 is the x-range; the heights of the region run from $y = 0$ to $y = 4$.' },
-      { text: 'Integrate in $y$ from 0 to 4 with $R = \\frac{y}{2}$ and $r = \\sqrt{y}$', mistake: 'radii-swapped', why: 'For $0 < y < 4$, $\\sqrt{y} > \\frac{y}{2}$, so the parabola is the far edge and gives $R$.' },
-      { text: 'Integrate in $y$ from 0 to 4 with $R = 2y$ and $r = y^2$', mistake: 'inverse-function-wrong', why: 'The curves must be solved for $x$: $y = 2x$ gives $x = \\frac{y}{2}$ and $y = x^2$ gives $x = \\sqrt{y}$.' },
+      { text: 'Integrate in $y$ from 0 to 2 with $R = 2y$ and $r = y^2$', mistake: 'inverse-function-wrong', why: 'Renaming $x$ as $y$ is not solving for $x$: the curves are $x = \\frac{y}{2}$ and $x = \\sqrt{y}$, and the heights run from 0 to 4.' },
       { text: 'Integrate in $y$ from 0 to 4 with $R = \\sqrt{y}$ and $r = 0$', mistake: 'washer-as-disk', why: 'At height $y$ the region starts at $x = \\frac{y}{2}$, not at the axis, so there is a hole.' },
+      { text: 'Integrate in $y$ from 0 to 2 with $R = \\sqrt{y}$ and $r = \\frac{y}{2}$', mistake: 'bounds-wrong-axis', why: '0 to 2 is the x-range; the heights of the region run from $y = 0$ to $y = 4$.' },
+      { text: 'Integrate in $x$ from 0 to 2 with $R = 2x$ and $r = 0$', mistake: 'wrong-integration-variable', why: 'Vertical slices belong to rotation about the x-axis (and even there the parabola leaves a hole); about the y-axis the slices are horizontal.' },
     ],
     correct: 0,
     explanation: 'Horizontal slices at height $y \\in [0, 4]$ run from $x = \\frac{y}{2}$ (line, near) to $x = \\sqrt{y}$ (parabola, far).',
@@ -809,8 +811,8 @@ export const flash: FlashItem[] = [
     options: [
       { text: 'Two integrals in $x$, split at $x = 1$: radius $x^2$ on $[0, 1]$ and radius $2 - x$ on $[1, 2]$' },
       { text: 'One integral in $x$ over $[0, 2]$ with radius $x^2$', mistake: 'volume-two-integrals-missed', why: 'For $1 < x < 2$ the top of the region is the line $y = 2 - x$, not the parabola.' },
-      { text: 'One integral in $x$ over $[0, 2]$ with $R = 2 - x$ and $r = x^2$', mistake: 'volume-two-integrals-missed', why: 'The region reaches the x-axis, so there is no hole, and its top edge switches from $x^2$ to $2 - x$ at $x = 1$.' },
-      { text: 'Two integrals in $x$, split at $x = 1$: radius $2 - x$ on $[0, 1]$ and radius $x^2$ on $[1, 2]$', mistake: 'top-bottom-swapped', why: 'On $[0, 1]$ the parabola is the top edge ($x^2 \\le 2 - x$); on $[1, 2]$ the line is.' },
+      { text: 'One integral in $x$ over $[0, 2]$ with $R = 2 - x$ and $r = x^2$', mistake: 'disk-as-washer', why: 'The region reaches the x-axis, so there is no hole, and its top edge switches from $x^2$ to $2 - x$ at $x = 1$.' },
+      { text: 'Two integrals in $x$, split at $x = 1$: radius $2 - x$ on $[0, 1]$ and radius $x^2$ on $[1, 2]$', mistake: 'boundary-pieces-swapped', why: 'On $[0, 1]$ the parabola is the top edge ($x^2 \\le 2 - x$); on $[1, 2]$ the line is.' },
       { text: 'One integral in $y$ over $[0, 1]$ with $R = 2 - y$ and $r = \\sqrt{y}$', mistake: 'wrong-integration-variable', why: 'Horizontal slices are parallel to the x-axis; those washers describe rotation about the y-axis.' },
       { text: 'One integral in $x$ over $[0, 1]$ with radius $x^2$', mistake: 'missing-intersection', why: 'The region continues to $x = 2$, where the line meets the x-axis.' },
     ],
@@ -858,38 +860,75 @@ interface SliceCase {
   axis: number;
 }
 
-function sliceValues(c: SliceCase) {
+type SliceMistake =
+  | 'axis-shift-missing'
+  | 'washer-difference-squared'
+  | 'radius-not-squared'
+  | 'axis-shift-sign'
+  | 'washer-as-disk'
+  | 'sign-error';
+
+interface SliceDistractor {
+  value: number;
+  mistake: SliceMistake;
+  why: string;
+}
+
+/** Radii, the correct area (in units of pi) and the realistic wrong areas, split into smaller/larger than correct. */
+function sliceSetup(c: SliceCase) {
   const below = c.axis < 0;
   const k = Math.abs(c.axis);
   const R = below ? c.b + k : c.axis - c.a;
   const r = below ? c.a + k : c.axis - c.b;
+  const far = below ? c.b : c.a;
+  const near = below ? c.a : c.b;
+  const axisTex = below ? `y = -${k}` : `y = ${k}`;
+  const wrongSign = below ? (c.b - k) ** 2 - (c.a - k) ** 2 : (c.b + k) ** 2 - (c.a + k) ** 2;
+  const pool: SliceDistractor[] = [
+    { value: c.b * c.b - c.a * c.a, mistake: 'axis-shift-missing', why: `This is $\\pi(${c.b}^2 - ${c.a}^2)$: both radii were measured from the x-axis instead of from the axis $${axisTex}$.` },
+    { value: R * R - near * near, mistake: 'axis-shift-missing', why: `This is $\\pi(${R}^2 - ${near}^2)$: only the outer radius was measured from $${axisTex}$; the inner edge was measured from the x-axis.` },
+    { value: far * far - r * r, mistake: 'axis-shift-missing', why: `This is $\\pi(${far}^2 - ${r}^2)$: only the inner radius was measured from $${axisTex}$; the outer edge was measured from the x-axis.` },
+    { value: (R - r) * (R - r), mistake: 'washer-difference-squared', why: `This is $\\pi(${R} - ${r})^2$: the difference of the radii was squared instead of subtracting the squares.` },
+    { value: R - r, mistake: 'radius-not-squared', why: `This is $\\pi(${R} - ${r})$: the radii were subtracted but never squared.` },
+    { value: R * R - r, mistake: 'radius-not-squared', why: `This is $\\pi(${R}^2 - ${r})$: the inner radius was not squared.` },
+    {
+      value: wrongSign,
+      mistake: 'axis-shift-sign',
+      why: below
+        ? `This is $\\pi((${c.b} - ${k})^2 - (${c.a} - ${k})^2)$: subtracting ${k} measures distance to $y = ${k}$, not to $y = -${k}$.`
+        : `This is $\\pi((${c.b} + ${k})^2 - (${c.a} + ${k})^2)$: adding ${k} measures distance to $y = -${k}$, not to $y = ${k}$.`,
+    },
+    { value: R * R, mistake: 'washer-as-disk', why: `This is $\\pi \\cdot ${R}^2$: the gap between the axis and the slice (a hole of radius ${r}) was ignored.` },
+    { value: R * R + r * r, mistake: 'sign-error', why: `This is $\\pi(${R}^2 + ${r}^2)$: the area of the hole was added instead of subtracted.` },
+  ];
+  const correct = R * R - r * r;
+  const seen = new Set<number>([correct]);
+  const usable = pool.filter((d) => {
+    if (d.value <= 0 || seen.has(d.value)) return false;
+    seen.add(d.value);
+    return true;
+  });
   return {
     below,
     k,
     R,
     r,
-    correct: R * R - r * r,
-    noShift: c.b * c.b - c.a * c.a,
-    diffSquared: (R - r) * (R - r),
-    notSquared: R - r,
-    wrongSign: below ? (c.b - k) ** 2 - (c.a - k) ** 2 : (c.b + k) ** 2 - (c.a + k) ** 2,
-    disk: R * R,
+    correct,
+    axisTex,
+    smaller: usable.filter((d) => d.value < correct),
+    larger: usable.filter((d) => d.value > correct),
   };
 }
 
-/** Every case whose six option values are positive and pairwise different (so no two options coincide). */
+/** Every case with at least five usable (positive, pairwise different) wrong values. */
 const SLICE_CASES: SliceCase[] = (() => {
   const out: SliceCase[] = [];
   for (let a = 1; a <= 3; a++) {
     for (let b = a + 2; b <= a + 4; b++) {
-      const axes = [-1, -2, -3, b + 1, b + 2, b + 3];
-      for (const axis of axes) {
+      for (const axis of [-1, -2, -3, b + 1, b + 2, b + 3]) {
         if (a === 2 && b === 5 && axis === -1) continue; // same as static item vd-f-001
-        const v = sliceValues({ a, b, axis });
-        const vals = [v.correct, v.noShift, v.diffSquared, v.notSquared, v.wrongSign, v.disk];
-        if (vals.some((x) => x <= 0)) continue;
-        if (new Set(vals).size !== vals.length) continue;
-        out.push({ a, b, axis });
+        const s = sliceSetup({ a, b, axis });
+        if (s.smaller.length + s.larger.length >= 5) out.push({ a, b, axis });
       }
     }
   }
@@ -907,60 +946,41 @@ export const generators: FlashGenerator[] = [
     generate(seed) {
       const rng = mulberry(seed);
       const c = SLICE_CASES[Math.floor(rng() * SLICE_CASES.length)];
-      const v = sliceValues(c);
+      const s = sliceSetup(c);
       const { a, b } = c;
-      const axisTex = v.below ? `y = -${v.k}` : `y = ${v.k}`;
-      const correctOpt = { latex: piLatex(v.correct), expr: `${v.correct}*pi` };
-      const distractors = [
-        {
-          latex: piLatex(v.noShift),
-          expr: `${v.noShift}*pi`,
-          mistake: 'axis-shift-missing' as const,
-          why: `This is $\\pi(${b}^2 - ${a}^2)$: the radii were measured from the x-axis instead of from the axis $${axisTex}$.`,
-        },
-        {
-          latex: piLatex(v.diffSquared),
-          expr: `${v.diffSquared}*pi`,
-          mistake: 'washer-difference-squared' as const,
-          why: `This is $\\pi(${v.R} - ${v.r})^2$: the difference of the radii was squared instead of subtracting the squares.`,
-        },
-        {
-          latex: piLatex(v.notSquared),
-          expr: `${v.notSquared}*pi`,
-          mistake: 'radius-not-squared' as const,
-          why: `This is $\\pi(${v.R} - ${v.r})$: the radii were subtracted but never squared.`,
-        },
-        {
-          latex: piLatex(v.wrongSign),
-          expr: `${v.wrongSign}*pi`,
-          mistake: 'axis-shift-sign' as const,
-          why: v.below
-            ? `This is $\\pi((${b} - ${v.k})^2 - (${a} - ${v.k})^2)$: subtracting ${v.k} measures distance to $y = ${v.k}$, not to $y = -${v.k}$.`
-            : `This is $\\pi((${b} + ${v.k})^2 - (${a} + ${v.k})^2)$: adding ${v.k} measures distance to $y = -${v.k}$, not to $y = ${v.k}$.`,
-        },
-        {
-          latex: piLatex(v.disk),
-          expr: `${v.disk}*pi`,
-          mistake: 'washer-as-disk' as const,
-          why: `This is $\\pi \\cdot ${v.R}^2$: the gap between the axis and the slice (a hole of radius ${v.r}) was ignored.`,
-        },
-      ];
+      // How many wrong values lie below the correct one: varies the rank of the correct value.
+      const jMin = Math.max(0, 5 - s.larger.length);
+      const jMax = Math.min(5, s.smaller.length);
+      const j = jMin + Math.floor(rng() * (jMax - jMin + 1));
+      const pick = (list: SliceDistractor[], n: number): SliceDistractor[] => {
+        const copy = [...list];
+        const out: SliceDistractor[] = [];
+        while (out.length < n) out.push(copy.splice(Math.floor(rng() * copy.length), 1)[0]);
+        return out;
+      };
+      const distractors = [...pick(s.smaller, j), ...pick(s.larger, 5 - j)].map((d) => ({
+        latex: piLatex(d.value),
+        expr: `${d.value}*pi`,
+        mistake: d.mistake,
+        why: d.why,
+      }));
+      const correctOpt = { latex: piLatex(s.correct), expr: `${s.correct}*pi` };
       const pos = Math.floor(rng() * 6);
       const options = [...distractors.slice(0, pos), correctOpt, ...distractors.slice(pos)];
-      const explanation = v.below
-        ? `Distances to $${axisTex}$: $R = ${b} + ${v.k} = ${v.R}$ and $r = ${a} + ${v.k} = ${v.r}$, so $A = \\pi(${v.R}^2 - ${v.r}^2) = ${piLatex(v.correct)}$.`
-        : `Distances to $${axisTex}$: the bottom $y = ${a}$ is farther, $R = ${v.k} - ${a} = ${v.R}$, and the top gives $r = ${v.k} - ${b} = ${v.r}$, so $A = \\pi(${v.R}^2 - ${v.r}^2) = ${piLatex(v.correct)}$.`;
+      const explanation = s.below
+        ? `Distances to $${s.axisTex}$: $R = ${b} + ${s.k} = ${s.R}$ and $r = ${a} + ${s.k} = ${s.r}$, so $A = \\pi(${s.R}^2 - ${s.r}^2) = ${piLatex(s.correct)}$.`
+        : `Distances to $${s.axisTex}$: the bottom $y = ${a}$ is farther, $R = ${s.k} - ${a} = ${s.R}$, and the top gives $r = ${s.k} - ${b} = ${s.r}$, so $A = \\pi(${s.R}^2 - ${s.r}^2) = ${piLatex(s.correct)}$.`;
       return {
         id: `vd-g-washer-slice:${seed}`,
         topic: 'volumes-disks',
         kind: 'concept',
         prompt: {
-          text: `A vertical slice of a region runs from $y = ${a}$ up to $y = ${b}$. The region is rotated about the line $${axisTex}$. What is the area of the washer this slice sweeps out?`,
+          text: `A vertical slice of a region runs from $y = ${a}$ up to $y = ${b}$. The region is rotated about the line $${s.axisTex}$. What is the area of the washer this slice sweeps out?`,
         },
         options,
         correct: pos,
         explanation,
-        check: { kind: 'value', expected: `pi*(${v.R}^2 - ${v.r}^2)` },
+        check: { kind: 'value', expected: `pi*(${s.R}^2 - ${s.r}^2)` },
         difficulty: 1,
       };
     },

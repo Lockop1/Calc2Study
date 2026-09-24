@@ -1401,6 +1401,12 @@ async function playOffline(page, label) {
     q = await read(page);
     if (q.screen !== 'question') break;
     questionChecks(q, `${label} Flash`);
+    if (n === 0) {
+      const fonts = await fontReport(page);
+      metric(`${label} fontsWhileMathOnScreen`, fonts);
+      check(`${label}: KaTeX fonts loaded offline while a question is on screen (none failed)`, fonts.katexNodes > 0 && fonts.errors.length === 0 && fonts.byStatus.loaded >= 2 && fonts.checkMain, JSON.stringify({ katexNodes: fonts.katexNodes, byStatus: fonts.byStatus, loaded: fonts.loaded, checkMain: fonts.checkMain }));
+      await shot(page, `qa-offline-${label.replace(/\W+/g, '-')}-question`);
+    }
     await answer(page, n % 2 ? 'right' : 'wrong', n, { before: q });
     n++;
     if (q.counter === `${q.counter.split('/')[1]}/${q.counter.split('/')[1]}`) await tapTo(page, page.locator('.btn-next'));
