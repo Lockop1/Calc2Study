@@ -1,162 +1,42 @@
 {
-  "1": {
-    "guess": null,
-    "reason": ""
-  },
-  "2": {
-    "guess": null,
-    "reason": ""
-  },
-  "3": {
-    "guess": null,
-    "reason": ""
-  },
-  "4": {
-    "guess": null,
-    "reason": ""
-  },
-  "5": {
-    "guess": null,
-    "reason": ""
-  },
-  "6": {
-    "guess": null,
-    "reason": ""
-  },
-  "7": {
-    "guess": null,
-    "reason": ""
-  },
-  "8": {
-    "guess": null,
-    "reason": ""
-  },
-  "9": {
-    "guess": null,
-    "reason": ""
-  },
-  "10": {
-    "guess": null,
-    "reason": ""
-  },
-  "11": {
-    "guess": null,
-    "reason": ""
-  },
-  "12": {
-    "guess": null,
-    "reason": ""
-  },
-  "13": {
-    "guess": null,
-    "reason": ""
-  },
-  "14": {
-    "guess": null,
-    "reason": ""
-  },
-  "15": {
-    "guess": null,
-    "reason": ""
-  },
-  "16": {
-    "guess": null,
-    "reason": ""
-  },
-  "17": {
-    "guess": null,
-    "reason": ""
-  },
-  "18": {
-    "guess": null,
-    "reason": ""
-  },
-  "19": {
-    "guess": null,
-    "reason": ""
-  },
-  "20": {
-    "guess": null,
-    "reason": ""
-  },
-  "21": {
-    "guess": null,
-    "reason": ""
-  },
-  "22": {
-    "guess": null,
-    "reason": ""
-  },
-  "23": {
-    "guess": null,
-    "reason": ""
-  },
-  "24": {
-    "guess": null,
-    "reason": ""
-  },
-  "25": {
-    "guess": null,
-    "reason": ""
-  },
-  "26": {
-    "guess": null,
-    "reason": ""
-  },
-  "27": {
-    "guess": null,
-    "reason": ""
-  },
-  "28": {
-    "guess": null,
-    "reason": ""
-  },
-  "29": {
-    "guess": null,
-    "reason": ""
-  },
-  "30": {
-    "guess": null,
-    "reason": ""
-  },
-  "31": {
-    "guess": null,
-    "reason": ""
-  },
-  "32": {
-    "guess": null,
-    "reason": ""
-  },
-  "33": {
-    "guess": null,
-    "reason": ""
-  },
-  "34": {
-    "guess": null,
-    "reason": ""
-  },
-  "35": {
-    "guess": null,
-    "reason": ""
-  },
-  "36": {
-    "guess": null,
-    "reason": ""
-  },
-  "37": {
-    "guess": null,
-    "reason": ""
-  },
-  "38": {
-    "guess": null,
-    "reason": ""
-  },
-  "39": {
-    "guess": null,
-    "reason": ""
-  },
-  "40": {
-    "guess": null,
-    "reason": ""
-  }
+  "1": { "guess": 1, "reason": "MATH: -3sin3x (derivative of cos3x) reveals dv = cos(3x)dx; v = (1/3)sin3x. Surface centroid ties 1 vs 5 (+1/3 vs +3), so no surface pick." },
+  "2": { "guess": 1, "reason": "SURFACE: feature centroid - shares sqrt(1-x^2), the minus sign and unit coefficient with most options (+/-, 1/2, 2 variants around it). Math (int x/sqrt(1-x^2)) agrees." },
+  "3": { "guess": 1, "reason": "SURFACE: centroid - every other option changes exactly one feature of it (9 vs 3, +6 vs +4, negated, pi dropped). Math agrees." },
+  "4": { "guess": 2, "reason": "SURFACE: centroid - 1/3 lead, minus sign, (2/3)int xe^{3x} each shared with the majority. Math agrees." },
+  "5": { "guess": 2, "reason": "SURFACE: centroid - x numerator, sqrt(1-x^2) denominator, + sign each majority. Math (v du for int arcsin x) agrees." },
+  "6": { "guess": 3, "reason": "SURFACE: swap pair (u=x,dv=3^x dx)/(u=3^x,dv=x dx) must contain the answer; u=x appears in 3 of 5 options -> pick it. LIATE agrees." },
+  "7": { "guess": 4, "reason": "SURFACE: feature centroid (bracket, -ln x/x, minus before integral, 1/x^2) uniquely picks 4. NOTE: math says 1 (v=-1/x makes -int v du = +int 1/x^2), so the centroid is a decoy here." },
+  "8": { "guess": 4, "reason": "MATH: int_1^5 ln x/x^2 = [-ln x/x - 1/x]_1^5 = 4/5 - ln5/5. Surface centroid ties 1/2/4." },
+  "9": { "guess": 5, "reason": "SURFACE: centroid - bracket, -t^2/2 cos2t, + sign, t cos2t each majority; every other option varies one feature. Math agrees." },
+  "10": { "guess": 1, "reason": "SURFACE: centroid - + sign, reciprocal, sqrt, 1-x^2 all majority features. Math (u = arcsin x) agrees." },
+  "11": { "guess": 1, "reason": "SURFACE: swap pair (u=x,dv=sec^2)/(u=sec^2,dv=x dx); u=x appears 3 of 5 -> pick it. LIATE agrees." },
+  "12": { "guess": 3, "reason": "MATH: int x^2 arctan x, v=x^3/3, du=dx/(1+x^2) -> (x^3/3)arctan x - (1/3)int x^3/(1+x^2). Surface centroid ties 3 vs 5." },
+  "13": { "guess": 4, "reason": "MATH: u=x^2, v=e^{3x}/3, du=2x dx -> (1/3)x^2e^{3x} - (2/3)int xe^{3x}. Surface centroid ties 1 vs 4." },
+  "14": { "guess": 4, "reason": "SURFACE: centroid - xf(x) boundary, minus sign, xf'(x) integrand each majority. Math (u=f, dv=dx) agrees." },
+  "15": { "guess": 2, "reason": "MATH/knowledge: only true statement (bounds apply to uv); others contradict the Keep-in-mind box. No surface tell." },
+  "16": { "guess": 1, "reason": "SURFACE: centroid - 1/2 lead, + sign, sin(3x) integrand each majority. Math (u=cos3x, dv=e^{2x}dx) agrees." },
+  "17": { "guess": 3, "reason": "SURFACE: centroid - bracket, minus, x/2, + sign, cos2x integrand all majority; each other option varies one feature. Math agrees." },
+  "18": { "guess": 5, "reason": "SURFACE: swap pair (u=e^{2x},dv=cos3x)/(u=cos3x,dv=e^{2x}); u=cos3x appears 3 of 5 -> pick it. LIATE (T before E) agrees." },
+  "19": { "guess": 6, "reason": "SURFACE: sign-flip twin -pi/4 and pi-dropped 1/4 both point at pi/4 (centroid). Math (int_0^{pi/2} x sin2x = pi/4) agrees." },
+  "20": { "guess": 3, "reason": "SURFACE: centroid - x^3 numerator, factor 1/3, (1+x^2) denominator each majority. Math (v du for x^2 arctan x) agrees." },
+  "21": { "guess": 3, "reason": "SURFACE: sign-flip twin +3/2 and minus majority -> -3/2. Math (v du = (e^{2x}/2)(-3sin3x)) agrees." },
+  "22": { "guess": 4, "reason": "SURFACE: centroid - /27 majority, shares 14e^3 with one option and -11 with another. Math ((14e^3-11)/27) agrees." },
+  "23": { "guess": 2, "reason": "SURFACE: centroid - x arcsin x, minus, x/sqrt(1-x^2) each majority. Math agrees." },
+  "24": { "guess": 4, "reason": "SURFACE: perfect centroid - each other option differs from it in exactly one feature (3/2 vs 9/4, +I, 1/2 sin, integral instead of I). Math agrees." },
+  "25": { "guess": 1, "reason": "SURFACE: 10e^2-5e is 5x(2e^2-e), and 2e^2, e look like its pieces (upper/lower evaluation) -> pick the combination. Math (t^2e^t on [1,2]) agrees." },
+  "26": { "guess": 5, "reason": "SURFACE: centroid - pi, bounds 1..3, (ln x)^2 each majority. Math (disks about x-axis) agrees." },
+  "27": { "guess": 5, "reason": "SURFACE: centroid - (x^2/2)ln x lead, minus, x^2/4 each shared. Math agrees." },
+  "28": { "guess": 4, "reason": "SURFACE: swap pair (u=x^2,dv=e^{3x})/(u=e^{3x},dv=x^2); u=x^2 appears 3 of 5 -> pick it. LIATE agrees." },
+  "29": { "guess": 3, "reason": "MATH: most options have v = x so the integral is int (ln x)^2 dx; du = 2 ln x/x dx -> x(ln x)^2 - 2 int ln x dx. Surface centroid ties 3 vs 5." },
+  "30": { "guess": 3, "reason": "SURFACE: swap pair (u=cos3x,dv=x)/(u=x,dv=cos3x); u=x appears 3 of 5 -> pick it. LIATE agrees." },
+  "31": { "guess": 4, "reason": "SURFACE: swap pair (u=sec^2,dv=x)/(u=x,dv=sec^2); u=x appears 3 of 5 -> pick it. LIATE agrees." },
+  "32": { "guess": 5, "reason": "SURFACE: centroid - 'uv -' and 'int v du' each majority; also the known formula." },
+  "33": { "guess": 2, "reason": "SURFACE: centroid - minus 2/9 term majority, +2/27 shares sign with 2 options and magnitude with 2. Math agrees." },
+  "34": { "guess": 2, "reason": "MATH: a^2+b^2 = 13 -> e^{2x}(2cos3x+3sin3x)/13. All options have the 2:3 ratio; no surface tell (13 appears twice)." },
+  "35": { "guess": 4, "reason": "MATH: v=e^{2x}/2, du=-3sin3x dx -> +(3/2)int e^{2x}sin3x. Surface centroid ties 1 vs 4." },
+  "36": { "guess": 6, "reason": "MATH: v du = (-cos2t/2)(2t dt) = -t cos2t dt. Surface centroid ties 4 vs 6." },
+  "37": { "guess": 5, "reason": "SURFACE: centroid - x tan x, minus, tan x integrand each majority. Math agrees." },
+  "38": { "guess": 3, "reason": "MATH: second IBP of cyclic integral keeps trig as u, e^{2x} as dv. Swap-pair heuristic ties (e^{2x} and sin3x each appear twice as u)." },
+  "39": { "guess": 4, "reason": "SURFACE: centroid - -(x^2/2)cos2x, +(x/2)sin2x, +1/4cos2x each shared with the majority. Math agrees (derivative = x^2 sin2x)." },
+  "40": { "guess": 3, "reason": "SURFACE: centroid - (x^4/4)ln x, minus, x^4, 1/16 each shared. Math agrees." }
 }

@@ -1109,7 +1109,7 @@ export const flash: FlashItem[] = [
     options: [
       { latex: '\\int u^3(1 + u^2)\\,du', expr: 'indefinite(u^3*(1 + u^2), u)', mistake: 'pythagorean-wrong', why: 'cos²x = 1 − sin²x, not 1 + sin²x.' },
       { latex: '\\int u^3(1 - u^2)\\,du', expr: 'indefinite(u^3*(1 - u^2), u)' },
-      { latex: '-\\int u^3(1 - u^2)\\,du', expr: '-indefinite(u^3*(1 - u^2), u)', mistake: 'sign-error', why: 'u = sin x gives du = +cos x dx; the minus sign belongs to u = cos x.' },
+      { latex: '\\int u^3(1 - u)\\,du', expr: 'indefinite(u^3*(1 - u), u)', mistake: 'formula-wrong-power', why: 'cos²x = 1 − sin²x = 1 − u²; the square on u was dropped.' },
       { latex: '\\int u^3(1 - u^2)^2\\,du', expr: 'indefinite(u^3*(1 - u^2)^2, u)', mistake: 'exponent-arithmetic', why: 'After saving cos x only cos²x = 1 − u² remains; the square belongs to cos⁵x.' },
       { latex: '\\int u^2(1 - u^2)\\,du', expr: 'indefinite(u^2*(1 - u^2), u)', mistake: 'trig-wrong-factor-saved', why: 'A sin x was removed as if it had been saved, but the saved factor is cos x; sin³x stays u³.' },
     ],
@@ -1251,7 +1251,7 @@ export const generators: FlashGenerator[] = [
       const f = isSin ? '+' : '-';
       const k2 = 2 * k;
       const k4 = 4 * k;
-      const { options, correct } = placeCorrect(
+      const { options, correct } = placeCorrect<Option>(
         { latex: `\\frac{x}{2} ${s} \\frac{\\sin ${k2}x}{${k4}} + C`, expr: `x/2 ${s} sin(${k2}*x)/${k4}` },
         [
           {

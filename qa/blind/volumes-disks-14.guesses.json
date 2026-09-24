@@ -1,126 +1,33 @@
 {
-  "1": {
-    "guess": null,
-    "reason": ""
-  },
-  "2": {
-    "guess": null,
-    "reason": ""
-  },
-  "3": {
-    "guess": null,
-    "reason": ""
-  },
-  "4": {
-    "guess": null,
-    "reason": ""
-  },
-  "5": {
-    "guess": null,
-    "reason": ""
-  },
-  "6": {
-    "guess": null,
-    "reason": ""
-  },
-  "7": {
-    "guess": null,
-    "reason": ""
-  },
-  "8": {
-    "guess": null,
-    "reason": ""
-  },
-  "9": {
-    "guess": null,
-    "reason": ""
-  },
-  "10": {
-    "guess": null,
-    "reason": ""
-  },
-  "11": {
-    "guess": null,
-    "reason": ""
-  },
-  "12": {
-    "guess": null,
-    "reason": ""
-  },
-  "13": {
-    "guess": null,
-    "reason": ""
-  },
-  "14": {
-    "guess": null,
-    "reason": ""
-  },
-  "15": {
-    "guess": null,
-    "reason": ""
-  },
-  "16": {
-    "guess": null,
-    "reason": ""
-  },
-  "17": {
-    "guess": null,
-    "reason": ""
-  },
-  "18": {
-    "guess": null,
-    "reason": ""
-  },
-  "19": {
-    "guess": null,
-    "reason": ""
-  },
-  "20": {
-    "guess": null,
-    "reason": ""
-  },
-  "21": {
-    "guess": null,
-    "reason": ""
-  },
-  "22": {
-    "guess": null,
-    "reason": ""
-  },
-  "23": {
-    "guess": null,
-    "reason": ""
-  },
-  "24": {
-    "guess": null,
-    "reason": ""
-  },
-  "25": {
-    "guess": null,
-    "reason": ""
-  },
-  "26": {
-    "guess": null,
-    "reason": ""
-  },
-  "27": {
-    "guess": null,
-    "reason": ""
-  },
-  "28": {
-    "guess": null,
-    "reason": ""
-  },
-  "29": {
-    "guess": null,
-    "reason": ""
-  },
-  "30": {
-    "guess": null,
-    "reason": ""
-  },
-  "31": {
-    "guess": null,
-    "reason": ""
-  }
+  "1": { "guess": 2, "reason": "SURFACE: centroid - R = 3 appears in 4 options and e^y in 3; options 2/4 are a swap pair; 2 combines the modal parts" },
+  "2": { "guess": 4, "reason": "MATH-from-options: negatives impossible for a volume; the rest reverse-engineer to pi*int_1^3 x^-2 dx (52pi/27 = differentiated, pi ln3 = unsquared, 26pi/81 = squared twice), which is 2pi/3" },
+  "3": { "guess": 4, "reason": "SURFACE: centroid - 5 appears in 4 options, (y^2+1) in 3; 4 is the only one with the proper [R^2 - r^2] shape using the modal radii" },
+  "4": { "guess": 1, "reason": "MATH: sphere cross-section r = sqrt(R^2 - z^2) with R = 3 (inferred from the 9); centroid is a tie between 1 and 6 so surface does not decide" },
+  "5": { "guess": 4, "reason": "SURFACE: centroid - bounds 0..4 in dy and squares are modal, 2sqrt(y) appears twice; 4 combines them (narrow margin over option 1)" },
+  "6": { "guess": 5, "reason": "MATH: washer = disk of radius R minus disk of radius r; the other statements are false" },
+  "7": { "guess": 2, "reason": "MATH-from-options: inferred base y = x^2 up to y = 4; horizontal chord at height y is 2sqrt(y) (full width, not half)" },
+  "8": { "guess": 5, "reason": "MATH: curves x = sqrt(y), x = y/2 with axis x = 4 on the right; y/2 is the far curve so R = 4 - y/2, r = 4 - sqrt(y); swap pair 4/5 needed math" },
+  "9": { "guess": 2, "reason": "SURFACE: centroid - R = 4 in 3 options, x^2 in 3; 1/2 swap pair; 2 combines the modal parts" },
+  "10": { "guess": 2, "reason": "SURFACE: centroid - R = 5 in 2 options and x^2+1 in 2; 2/6 swap pair; 2 combines them" },
+  "11": { "guess": 1, "reason": "MATH: diameter = top - bottom = (2 - x^2) - x^2 on [-1, 1]; 2x^2 - 2 is negative there" },
+  "12": { "guess": 1, "reason": "SURFACE: the only option carrying a justification clause ('the axis is the top edge of the region')" },
+  "13": { "guess": 6, "reason": "MATH: sphere of radius 3, V = int_-3^3 pi(9 - z^2) dz (centroid agrees)" },
+  "14": { "guess": 6, "reason": "SURFACE: centroid - 2 - sqrt(y) in 2 options, r = 0 in 4; 6 combines them" },
+  "15": { "guess": 1, "reason": "SURFACE: centroid - 'disks perpendicular to the x-axis' in 3 options, 'in x' in 2, '0 to 2' in 2; 1 combines them" },
+  "16": { "guess": 2, "reason": "SURFACE: centroid - pi*int_0^1 in 3 options, (e^x)^2 in 2; 2 combines them" },
+  "17": { "guess": 5, "reason": "SURFACE/random: 12pi = 36pi/3 looks like the cone-vs-cylinder pair; otherwise no idea" },
+  "18": { "guess": 2, "reason": "SURFACE: centroid - pi*int_0^2 and (4 - 2x)^2 are modal; the standard disk shape" },
+  "19": { "guess": 4, "reason": "MATH: region under both y = x^2 and y = 2 - x above the x-axis: lower curve x^2 on [0,1], 2 - x on [1,2]; the 3/4 swap pair needed math" },
+  "20": { "guess": 4, "reason": "SURFACE: centroid - bounds 0..ln3 in 4 options, [3^2 - (e^y)^2] in 2; (math agrees: y = ln x, x = 3 about the y-axis)" },
+  "21": { "guess": 2, "reason": "MATH: axis y = -1 below the region: R = f + 1 > r = 1; swap pair 1/2 resolved by the sign" },
+  "22": { "guess": 5, "reason": "MATH-from-options: the axis y = 1 story explains every distractor (unsquared, +sqrt(x) shift sign, invented hole, dy version); centroid narrowly agrees" },
+  "23": { "guess": 6, "reason": "SURFACE: centroid - pi*int_0^2 in 3 options and (2x - x^2)^2 in 3; the standard disk shape" },
+  "24": { "guess": 1, "reason": "MATH: computed pi*int_0^ln3 (9 - e^(2y)) dy = pi(9 ln3 - (9 - 1)/2) = pi(9 ln3 - 4)" },
+  "25": { "guess": 4, "reason": "SURFACE: centroid - R = 4 in 4 options, y^2 in 3; (math agrees: lecture Ex. 3.6, x from y^2 to 4)" },
+  "26": { "guess": 5, "reason": "SURFACE: centroid - (sqrt(y) + 1)^2 in 2 options, '- 1^2' in 2, bounds 0..4 in 5; 5 combines them" },
+  "27": { "guess": 2, "reason": "SURFACE: the longest option, the only one with a full justification" },
+  "28": { "guess": 5, "reason": "SURFACE: centroid - bounds -1..2 in 5 options and [(y+2)^2 - (y^2)^2] in 2; 5 combines them" },
+  "29": { "guess": 6, "reason": "SURFACE: centroid - 'y from 0 to 4' in 4 options, R = sqrt(y) in 3, r = y/2 in 2; 6 combines them" },
+  "30": { "guess": 3, "reason": "MATH: equilateral triangle area (sqrt3/4)s^2 (formula recall; centroid also agrees)" },
+  "31": { "guess": 2, "reason": "SURFACE: centroid - 4 - x^2 in 2 options and r = 0 in 3; 2 combines them" }
 }
