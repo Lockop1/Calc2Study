@@ -1,6 +1,6 @@
 {
   "name": "longmath",
-  "startedAt": "2026-10-18T15:42:44.807Z",
+  "startedAt": "2026-10-18T21:00:34.306Z",
   "checks": [
     {
       "name": "long math (widest option, st-s-08#0): page does not scroll sideways",
@@ -33,12 +33,12 @@
       "detail": "html 390 clipped []"
     },
     {
-      "name": "long math (longest option source, im-s-06#1): page does not scroll sideways",
+      "name": "long math (longest option source, sq-f-010): page does not scroll sideways",
       "ok": true,
       "detail": "html 390 body 390"
     },
     {
-      "name": "long math (longest option source, im-s-06#1): overflowing math scrolls inside its own container",
+      "name": "long math (longest option source, sq-f-010): overflowing math scrolls inside its own container",
       "ok": true,
       "detail": "[]"
     },
@@ -57,7 +57,7 @@
     "targets": {
       "widest option": "st-s-08#0",
       "widest prompt": "ad-s-12#0",
-      "longest option source": "im-s-06#1"
+      "longest option source": "sq-f-010"
     },
     "widest option": {
       "id": "st-s-08#0",
@@ -79,7 +79,7 @@
       ]
     },
     "longest option source": {
-      "id": "im-s-06#1",
+      "id": "sq-f-010",
       "scroll": []
     }
   },
