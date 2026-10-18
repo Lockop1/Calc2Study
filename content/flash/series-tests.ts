@@ -182,14 +182,14 @@ export const flash: FlashItem[] = [
         why: 'The square root was ignored: $\\sqrt{n^3+1}$ grows like $n^{3/2}$, not $n^3$ (against $\\frac{1}{n^3}$ the limit is $\\infty$, which says nothing).',
       },
       {
-        text: 'Limit comparison with $\\frac{1}{n^{2/3}}$: $L = 1$, so the series diverges',
-        mistake: 'st-wrong-p',
-        why: '$\\sqrt{n^3} = n^{3/2}$; the exponent was inverted to $\\frac{2}{3}$, which flips the verdict.',
+        text: 'Limit comparison with $\\frac{1}{n^{3}}$: $L = 1$, so the series diverges',
+        mistake: 'st-p-rule-wrong',
+        why: 'The square root was ignored (the comparison series should be $\\frac{1}{n^{3/2}}$), and $\\sum \\frac{1}{n^3}$ converges ($p = 3 > 1$), so even that comparison would not give divergence.',
       },
       {
-        text: 'Limit comparison with $\\frac{1}{n}$: $L = 0$, so the series converges',
+        text: 'Limit comparison with $\\frac{1}{n^{3}}$: $L = 0$, so the series converges',
         mistake: 'st-lct-boundary',
-        why: '$L = 0$ is right, but $L = 0$ against the divergent $\\sum \\frac{1}{n}$ is inconclusive.',
+        why: 'The square root was ignored, and $L = 0$ is the wrong value here; against $\\frac{1}{n^3}$ the limit is actually $\\infty$, which says nothing.',
       },
       {
         text: 'Direct comparison: $a_n \\le \\frac{1}{\\sqrt{n}}$ and $\\sum \\frac{1}{\\sqrt{n}}$ diverges, so the series diverges',
@@ -393,12 +393,12 @@ export const flash: FlashItem[] = [
       {
         text: 'No: $f^{\\prime}(x) = (1+x)e^{-x} > 0$ for all $x \\ge 1$, so $f$ is increasing',
         mistake: 'chain-rule-missing',
-        why: 'Differentiated $e^{-x}$ as $+e^{-x}$ (missing the inner $-1$) and misread the sign.',
+        why: 'Differentiated $e^{-x}$ as $+e^{-x}$ (missing the inner factor $-1$), which gives $(1+x)e^{-x}$; in fact $f^{\\prime}(x) = (1-x)e^{-x}$.',
       },
       {
-        text: 'Yes: $f^{\\prime}(x) = -xe^{-x}$, but only for $x \\ge 2$',
+        text: 'Yes: $f^{\\prime}(x) = -xe^{-x} \\le 0$ for $x \\ge 1$',
         mistake: 'product-rule-missing-term',
-        why: 'Dropped the $e^{-x}$ term of the product rule and misread where it is negative.',
+        why: 'Dropped the $e^{-x}$ term of the product rule: $f^{\\prime}(x) = e^{-x} - xe^{-x} = (1-x)e^{-x}$ (right verdict, wrong derivative).',
       },
       {
         text: 'Yes: $e^{-x}$ is decreasing, so $xe^{-x}$ is decreasing',
@@ -432,10 +432,10 @@ export const flash: FlashItem[] = [
         why: 'Kept only the $uv$ term of integration by parts and also lost its sign.',
       },
       {
-        latex: '\\frac{3}{e}',
-        expr: '3/e',
-        mistake: 'arithmetic-error',
-        why: 'Added the two terms $\\frac{2}{e}$ and $\\frac{1}{e}$ instead of combining them correctly.',
+        latex: '0',
+        expr: '0',
+        mistake: 'ibp-sign-error',
+        why: 'Used $uv + \\int v\\,du$: that gives $(1-x)e^{-x}$, and $\\left[(1-x)e^{-x}\\right]_1^{\\infty} = 0 - 0 = 0$.',
       },
       {
         latex: '\\frac{1}{e}',
@@ -535,7 +535,7 @@ export const flash: FlashItem[] = [
       {
         latex: '\\ln(t\\ln t) - \\ln(2\\ln 2)',
         expr: 'log(t*log(t)) - log(2*log(2))',
-        mistake: 'ln-misapplied',
+        mistake: 'ln-argument-wrong',
         why: 'The log of the whole denominator is not an antiderivative: its derivative is $\\frac{\\ln x + 1}{x\\ln x}$. With $u = \\ln x$ the integrand is $\\frac{du}{u}$.',
       },
       {
@@ -588,18 +588,18 @@ export const flash: FlashItem[] = [
         latex: '-\\frac{\\pi}{2}',
         expr: '-pi/2',
         mistake: 'inverse-trig-value-wrong',
-        why: 'Dropped the $\\arctan 1$ term and swapped the FTC order.',
+        why: 'Took $\\arctan 1 = 0$ (as if it were $\\arctan 0$) and swapped the FTC order: $0 - \\frac{\\pi}{2}$.',
       },
       {
         latex: '-\\frac{3\\pi}{4}',
         expr: '-3*pi/4',
-        mistake: 'arithmetic-error',
-        why: 'Added $\\frac{\\pi}{4}$ instead of subtracting it, with the FTC order swapped.',
+        mistake: 'im-limit-evaluated-wrong',
+        why: 'Took $\\lim_{t\\to\\infty}\\arctan t = -\\frac{\\pi}{2}$ (that is the limit at $-\\infty$): $-\\frac{\\pi}{2} - \\frac{\\pi}{4} = -\\frac{3\\pi}{4}$.',
       },
       {
         latex: '\\frac{\\pi}{2}',
         expr: 'pi/2',
-        mistake: 'inverse-trig-value-wrong',
+        mistake: 'ftc-not-subtracted',
         why: 'Forgot to subtract $\\arctan 1 = \\frac{\\pi}{4}$ from $\\lim_{t\\to\\infty}\\arctan t$.',
       },
     ],
@@ -627,9 +627,9 @@ export const flash: FlashItem[] = [
         why: 'Used the wrong integral, and the integral\'s value is never the sum of the series.',
       },
       {
-        text: '$\\int_0^{\\infty} \\frac{x}{x^2+1}\\,dx = \\frac{\\pi}{4}$, so the series converges',
-        mistake: 'arithmetic-error',
-        why: 'Used the wrong lower bound and the wrong integral.',
+        text: '$\\int_1^{\\infty} \\frac{x}{x^2+1}\\,dx = \\infty$, so the series converges',
+        mistake: 'st-wrong-inference',
+        why: 'Backwards: the series and the integral both converge or both diverge, so a divergent integral means a divergent series.',
       },
       {
         text: '$\\frac{n}{n^2+1} \\to 0$, so the series converges',
@@ -703,13 +703,13 @@ export const flash: FlashItem[] = [
       },
       {
         text: '$p = 3$, so the series converges',
-        mistake: 'exponent-arithmetic',
+        mistake: 'st-wrong-p',
         why: '$n\\sqrt{n} = \\sqrt{n^3}$, and the square root still halves the exponent: $p = \\frac{3}{2}$, not $3$.',
       },
       {
-        text: '$p = \\frac{3}{2}$, so the series diverges',
+        text: '$p = 3$, so the series diverges',
         mistake: 'st-p-rule-wrong',
-        why: '$p = \\frac{3}{2} > 1$, and a $p$-series with $p > 1$ converges.',
+        why: 'Two slips: the square root was ignored ($n\\sqrt{n} = n^{3/2}$, so $p = \\frac{3}{2}$), and the rule was applied backwards ($p = 3 > 1$ would converge).',
       },
     ],
     correct: 0,
@@ -776,9 +776,9 @@ export const flash: FlashItem[] = [
         why: 'The cube root was ignored: $\\sqrt[3]{n^2} = n^{2/3}$.',
       },
       {
-        text: '$p = \\frac{2}{3} < 1$, so the series converges',
+        text: '$p = \\frac{3}{2} > 1$, so the series diverges',
         mistake: 'st-p-rule-wrong',
-        why: 'The rule is backwards: a $p$-series converges only for $p > 1$.',
+        why: 'Two slips: the exponent was inverted ($\\sqrt[3]{n^2} = n^{2/3}$, so $p = \\frac{2}{3}$), and the rule was applied backwards ($p > 1$ means convergence).',
       },
       {
         text: '$p = \\frac{1}{3} \\le 1$, so the series diverges',
@@ -800,9 +800,9 @@ export const flash: FlashItem[] = [
     options: [
       { text: 'It is $\\sum \\frac{1}{n}$ ($p = 1$), so it diverges' },
       {
-        text: 'It is $\\sum \\frac{1}{n}$ ($p = 1$), so it converges',
+        text: 'It is $\\sum \\frac{1}{\\sqrt{n}}$ ($p = \\frac{1}{2}$), so it converges',
         mistake: 'st-p-rule-wrong',
-        why: '$p = 1$ is the harmonic series, which diverges; convergence needs $p > 1$.',
+        why: 'Two slips: $\\frac{3}{2} - \\frac{1}{2} = 1$, not $\\frac{1}{2}$; and the rule was applied backwards ($p = \\frac{1}{2} \\le 1$ would diverge).',
       },
       {
         text: 'It is $\\sum \\frac{1}{n^{3/2}}$ ($p = \\frac{3}{2}$), so it converges',
@@ -820,9 +820,9 @@ export const flash: FlashItem[] = [
         why: '$\\frac{3}{2} - \\frac{1}{2} = 1$, not $\\frac{1}{2}$ (right verdict, wrong $p$).',
       },
       {
-        text: 'It is $\\sum \\frac{1}{n}$, and $\\frac{1}{n} \\to 0$, so it converges',
+        text: 'It is $\\sum \\frac{1}{n^{3/2}}$, and $\\frac{1}{n^{3/2}} \\to 0$, so it converges',
         mistake: 'sb-divergence-test-converse',
-        why: 'Terms tending to $0$ never prove convergence; the harmonic series is the standard counterexample.',
+        why: 'Two slips: the numerator $\\sqrt{n}$ was ignored (the term is $\\frac{1}{n}$), and terms tending to $0$ never prove convergence.',
       },
     ],
     correct: 0,
@@ -939,7 +939,7 @@ export const flash: FlashItem[] = [
     id: 'st-f-026',
     topic: 'series-tests',
     kind: 'concept',
-    prompt: { text: 'Which direct-comparison conclusion is right?', latex: '\\sum_{n=1}^{\\infty} \\frac{1}{n - \\frac{1}{2}}' },
+    prompt: { text: 'Which direct comparison correctly settles this series?', latex: '\\sum_{n=1}^{\\infty} \\frac{1}{n - \\frac{1}{2}}' },
     options: [
       { text: 'Diverges: $\\frac{1}{n-1/2} > \\frac{1}{n}$ and $\\sum \\frac{1}{n}$ diverges' },
       {
@@ -955,7 +955,7 @@ export const flash: FlashItem[] = [
       {
         text: 'No conclusion: $\\frac{1}{n-1/2} < \\frac{2}{n}$ and $\\sum \\frac{2}{n}$ diverges',
         mistake: 'st-wrong-comparison-series',
-        why: 'Chose a true but useless comparison; the series itself does diverge.',
+        why: 'A useless comparison (the bound holds for $n \\ge 2$): being below a divergent series settles nothing, and the series does diverge.',
       },
       {
         text: 'Diverges: $\\frac{1}{n-1/2} < \\frac{2}{n}$ and $\\sum \\frac{2}{n}$ diverges',
@@ -974,7 +974,7 @@ export const flash: FlashItem[] = [
     id: 'st-f-027',
     topic: 'series-tests',
     kind: 'concept',
-    prompt: { text: 'Which direct-comparison conclusion is right?', latex: '\\sum_{n=1}^{\\infty} \\frac{1}{2^n + n}' },
+    prompt: { text: 'Which direct comparison correctly settles this series?', latex: '\\sum_{n=1}^{\\infty} \\frac{1}{2^n + n}' },
     options: [
       { text: 'Converges: $a_n < \\frac{1}{2^n}$ and $\\sum \\frac{1}{2^n}$ converges' },
       {
@@ -995,7 +995,7 @@ export const flash: FlashItem[] = [
       {
         text: 'Diverges: $a_n < \\frac{1}{2^n}$ and $\\sum \\frac{1}{2^n}$ diverges',
         mistake: 'sb-r-boundary',
-        why: 'Thought the geometric series with $r = \\frac{1}{2}$ diverges; it converges.',
+        why: 'Thought the geometric series with $r = \\frac{1}{2}$ diverges (it converges); and being below a divergent series would prove nothing anyway.',
       },
     ],
     correct: 0,
@@ -1059,12 +1059,12 @@ export const flash: FlashItem[] = [
       {
         text: '$a_n \\ge \\frac{1}{n^2}$, and $\\sum \\frac{1}{n^2}$ diverges',
         mistake: 'st-p-rule-wrong',
-        why: 'The inequality is true, but $\\sum \\frac{1}{n^2}$ converges ($p = 2$), so this proves nothing.',
+        why: 'The inequality holds for $n \\ge 2$, but $\\sum \\frac{1}{n^2}$ converges ($p = 2$), so this proves nothing.',
       },
       {
-        text: '$a_n \\le \\frac{1}{\\sqrt{n}}$, and $\\sum \\frac{1}{\\sqrt{n}}$ diverges',
-        mistake: 'st-comparison-wrong-direction',
-        why: 'True, since $n^2 + 1 \\ge n$, but being smaller than a divergent series proves nothing.',
+        text: '$a_n \\ge \\frac{2}{n}$, and $\\sum \\frac{2}{n}$ diverges',
+        mistake: 'algebra-error',
+        why: '$\\sqrt{n^2+1} \\le 2n$ gives $a_n \\ge \\frac{1}{2n}$; the $2$ was moved to the numerator, and $\\frac{1}{\\sqrt{n^2+1}} < \\frac{1}{n} < \\frac{2}{n}$.',
       },
     ],
     correct: 0,
@@ -1328,12 +1328,12 @@ export const flash: FlashItem[] = [
       },
       {
         text: 'Limit comparison with $\\frac{1}{n^2}$: $L = 0$ and $\\sum \\frac{1}{n^2}$ converges, so it converges',
-        mistake: 'st-lct-boundary',
+        mistake: 'st-lct-limit-wrong',
         why: 'The limit against $\\frac{1}{n^2}$ is $\\infty$, not $0$; and $L = \\infty$ with a convergent comparison is inconclusive.',
       },
       {
         text: 'Limit comparison with $\\frac{1}{n}$: $L = 0$ and $\\sum \\frac{1}{n}$ diverges, so it converges',
-        mistake: 'st-wrong-inference',
+        mistake: 'st-lct-boundary',
         why: 'Used the wrong limit, and $L = 0$ with a divergent comparison would be inconclusive, not convergent.',
       },
       {
@@ -1461,11 +1461,13 @@ export const generators: FlashGenerator[] = [
       const options = [
         { text: `$p = ${p}$, so the series ${verdict(conv)}` },
         {
-          text: `$p = ${p}$, so the series ${verdict(!conv)}`,
+          // Inverted p with the rule backwards (two slips): the p-rule distractor must not repeat the
+          // correct p, or the repeated p value gives the answer away.
+          text: `$p = ${fracTex(k, m)}$, so the series ${verdict(conv)}`,
           mistake: 'st-p-rule-wrong' as const,
           why: conv
-            ? `$p = ${p} > 1$, and a $p$-series with $p > 1$ converges; the rule was applied backwards.`
-            : `$p = ${p} \\le 1$, and a $p$-series with $p \\le 1$ diverges (even though $a_n \\to 0$); the rule was applied backwards.`,
+            ? `Two slips: the exponent was inverted ($${root} = n^{${m}/${k}}$, so $p = ${p}$), and the rule was applied backwards ($p = ${fracTex(k, m)} \\le 1$ would diverge).`
+            : `Two slips: the exponent was inverted ($${root} = n^{${m}/${k}}$, so $p = ${p}$), and the rule was applied backwards ($p = ${fracTex(k, m)} > 1$ would converge).`,
         },
         {
           text: `$p = ${fracTex(k, m)}$, so the series ${verdict(k > m)}`,
@@ -1475,7 +1477,7 @@ export const generators: FlashGenerator[] = [
         {
           text: `$p = ${m}$, so the series converges`,
           mistake: 'st-wrong-p' as const,
-          why: `The root was ignored: the ${k === 2 ? 'square' : `${k}th`} root divides the exponent ${m} by ${k}, so $p = ${p}$.`,
+          why: `The root was ignored: the ${k === 2 ? 'square' : k === 3 ? 'cube' : `${k}th`} root divides the exponent ${m} by ${k}, so $p = ${p}$.`,
         },
         {
           text: `$p = ${fracTex(1, k)}$, so the series diverges`,
@@ -1523,9 +1525,10 @@ export const generators: FlashGenerator[] = [
           why: `The ratio was inverted ($\\frac{b_n}{a_n}$); $\\frac{a_n}{b_n} \\to \\frac{${al}}{${ga}}$ (right verdict, wrong $L$).`,
         },
         {
-          text: `$b_n = ${recipPow(q)}$, $L = ${L}$: no conclusion`,
+          // Uses the inverted L so that the correct L value is not the most frequent one.
+          text: `$b_n = ${recipPow(q)}$, $L = ${Linv}$: no conclusion`,
           mistake: 'st-lct-boundary',
-          why: `Any finite $L > 0$ is conclusive, not only $L = 1$: the series behaves like $\\sum ${recipPow(q)}$.`,
+          why: `Two slips: the ratio was inverted ($\\frac{a_n}{b_n} \\to ${L}$), and any finite $L > 0$ is conclusive, not only $L = 1$: the series behaves like $\\sum ${recipPow(q)}$.`,
         },
         {
           text: `$b_n = ${recipPow(b)}$, $L = \\infty$: no conclusion`,
@@ -1551,7 +1554,7 @@ export const generators: FlashGenerator[] = [
         topic: 'series-tests',
         kind: 'concept',
         prompt: {
-          text: 'Limit comparison: which $b_n$, value of $L$ and conclusion are right?',
+          text: 'Limit comparison: which choice of $b_n$, value of $L$ and conclusion settles the series?',
           latex: `\\sum_{n=1}^{\\infty} \\frac{${num}}{${den}}`,
         },
         options: r.items,

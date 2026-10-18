@@ -137,7 +137,7 @@ export const flash: FlashItem[] = [
     kind: 'concept',
     prompt: { text: 'Classify', latex: '\\int_{0}^{\\pi/2} \\tan x\\,dx' },
     options: [
-      { text: 'Type II: $\\tan x \\to \\infty$ as $x \\to \\tfrac{\\pi}{2}^{-}$' },
+      { text: 'Type II at $x = \\tfrac{\\pi}{2}$' },
       {
         text: 'Not improper: finite bounds and a familiar integrand',
         mistake: 'im-hidden-discontinuity',
@@ -169,14 +169,14 @@ export const flash: FlashItem[] = [
     kind: 'concept',
     prompt: { text: 'Classify', latex: '\\int_{0}^{2} \\frac{dx}{x-1}' },
     options: [
-      { text: 'Type II: an interior infinite discontinuity at $x = 1$; split into two integrals' },
+      { text: 'Type II at the interior point $x = 1$' },
       {
         text: 'Not improper: $\\ln|x-1|$ handles the sign',
         mistake: 'im-hidden-discontinuity',
         why: 'Thought the absolute value in the antiderivative removes the problem, but it does not remove the blow-up at x = 1.',
       },
       {
-        text: 'Type II at $x = 0$',
+        text: 'Type II at the endpoint $x = 0$',
         mistake: 'im-wrong-type',
         why: 'Put the discontinuity at the lower endpoint, but the integrand equals −1 at x = 0.',
       },
@@ -186,7 +186,7 @@ export const flash: FlashItem[] = [
         why: 'Called it Type I, but both bounds are finite so the interval is not unbounded.',
       },
       {
-        text: 'Type II at $x = 2$',
+        text: 'Type II at the endpoint $x = 2$',
         mistake: 'im-wrong-type',
         why: 'Put the discontinuity at the upper endpoint, but the integrand equals 1 at x = 2.',
       },
@@ -206,7 +206,7 @@ export const flash: FlashItem[] = [
       { text: '$\\displaystyle\\lim_{t\\to\\infty} \\int_{2}^{t} f(x)\\,dx$' },
       {
         text: '$\\displaystyle\\lim_{t\\to\\infty} \\int_{t}^{\\infty} f(x)\\,dx$',
-        mistake: 'im-split-mishandled',
+        mistake: 'im-plug-infinity',
         why: 'Kept ∞ as a bound inside the limit instead of replacing it by the variable t.',
       },
       {
@@ -332,7 +332,12 @@ export const flash: FlashItem[] = [
     prompt: { text: 'How must this integral be set up?', latex: '\\int_{-\\infty}^{\\infty} x e^{-x^{2}}\\,dx' },
     options: [
       {
-        text: '$\\displaystyle\\int_{-\\infty}^{0} x e^{-x^{2}}dx + \\int_{0}^{\\infty} x e^{-x^{2}}dx$, each as its own limit; both must converge',
+        text: '$\\displaystyle\\lim_{s\\to-\\infty} \\int_{s}^{0} x e^{-x^{2}}\\,dx + \\lim_{t\\to\\infty} \\int_{0}^{t} x e^{-x^{2}}\\,dx$',
+      },
+      {
+        text: '$\\displaystyle\\lim_{t\\to\\infty} \\left(\\int_{-t}^{0} x e^{-x^{2}}\\,dx + \\int_{0}^{t} x e^{-x^{2}}\\,dx\\right)$',
+        mistake: 'im-symmetric-limit',
+        why: 'Split at 0 but used one shared t for both halves, which is still a single symmetric limit; each half needs its own limit.',
       },
       {
         text: '$\\displaystyle\\lim_{t\\to\\infty} \\int_{-t}^{t} x e^{-x^{2}}\\,dx$',
@@ -366,7 +371,7 @@ export const flash: FlashItem[] = [
     kind: 'technique',
     prompt: { text: 'How must this integral be set up?', latex: '\\int_{0}^{3} \\frac{dx}{(x-1)^{2/3}}' },
     options: [
-      { text: '$\\displaystyle\\lim_{s\\to 1^{-}} \\int_{0}^{s} + \\lim_{t\\to 1^{+}} \\int_{t}^{3}$, both must converge' },
+      { text: '$\\displaystyle\\lim_{s\\to 1^{-}} \\int_{0}^{s} + \\lim_{t\\to 1^{+}} \\int_{t}^{3}$' },
       {
         text: 'Apply the FTC straight through $x = 1$',
         mistake: 'im-hidden-discontinuity',
@@ -389,7 +394,7 @@ export const flash: FlashItem[] = [
       },
     ],
     correct: 0,
-    explanation: 'An interior discontinuity splits the integral into two one-sided limits (s → 1⁻ and t → 1⁺).',
+    explanation: 'An interior discontinuity splits the integral into two one-sided limits (s → 1⁻ and t → 1⁺); it converges only if both do.',
     check: { kind: 'none', reason: 'limit set-up with an interior discontinuity' },
   },
 
@@ -398,14 +403,14 @@ export const flash: FlashItem[] = [
     id: 'im-f-013',
     topic: 'improper',
     kind: 'formula',
-    prompt: { latex: '\\int_{1}^{\\infty} \\frac{dx}{x^{2}} = ?' },
+    prompt: { latex: '\\int_{2}^{\\infty} \\frac{dx}{x^{2}} = ?' },
     options: [
-      { latex: '1', expr: '1' },
+      { latex: '\\frac{1}{2}', expr: '1/2' },
       {
-        latex: '-1',
-        expr: '-1',
+        latex: '-\\frac{1}{2}',
+        expr: '-1/2',
         mistake: 'ftc-order-swapped',
-        why: 'Computed F(1) − F(t) instead of F(t) − F(1), which flips the sign.',
+        why: 'Computed F(2) − F(t) instead of F(t) − F(2), which flips the sign.',
       },
       {
         latex: '0',
@@ -414,46 +419,52 @@ export const flash: FlashItem[] = [
         why: 'Wrote F(∞) = 0 and stopped, forgetting to subtract the lower-bound value.',
       },
       {
-        latex: '\\frac{1}{2}',
-        expr: '1/2',
+        latex: '\\frac{1}{8}',
+        expr: '1/8',
         mistake: 'power-rule-int-exponent',
-        why: 'Integrated x^{−2} as −1/(2x²) instead of −1/x.',
+        why: 'Integrated x^{−2} as −1/(2x²) instead of −1/x, giving 1/(2·4) at the lower bound.',
       },
       {
-        latex: '2',
-        expr: '2',
+        latex: '1',
+        expr: '1',
         mistake: 'arithmetic-error',
-        why: 'Subtracted −1 twice when evaluating at the bounds.',
+        why: 'Subtracted −1/2 twice when evaluating at the bounds.',
       },
     ],
     correct: 0,
-    explanation: '$\\lim_{t\\to\\infty} \\left(1 - \\frac{1}{t}\\right) = 1$.',
-    check: { kind: 'improper-integral', integrand: '1/x^2', lower: '1', upper: 'inf', converges: true, value: '1' },
+    explanation: '$\\lim_{t\\to\\infty} \\left(\\frac{1}{2} - \\frac{1}{t}\\right) = \\frac{1}{2}$.',
+    check: { kind: 'improper-integral', integrand: '1/x^2', lower: '2', upper: 'inf', converges: true, value: '1/2' },
   },
   {
     id: 'im-f-014',
     topic: 'improper',
     kind: 'formula',
-    prompt: { latex: '\\int_{1}^{\\infty} \\frac{dx}{x^{3}} = ?' },
+    prompt: { latex: '\\int_{2}^{\\infty} \\frac{dx}{x^{3}} = ?' },
     options: [
-      { latex: '\\frac{1}{2}', expr: '1/2' },
+      { latex: '\\frac{1}{8}', expr: '1/8' },
+      {
+        latex: '-\\frac{1}{8}',
+        expr: '-1/8',
+        mistake: 'ftc-order-swapped',
+        why: 'Computed F(2) − F(t) instead of F(t) − F(2), which flips the sign.',
+      },
       {
         latex: '-\\frac{1}{2}',
         expr: '-1/2',
-        mistake: 'ftc-order-swapped',
-        why: 'Computed F(1) − F(t) instead of F(t) − F(1), which flips the sign.',
-      },
-      {
-        latex: '-1',
-        expr: '-1',
         mistake: 'power-rule-int-exponent',
-        why: 'Treated it like the integral of 1/x², which gives 1, and also swapped the FTC order.',
+        why: 'Treated it like the integral of 1/x², which gives 1/2 from 2 to ∞, and also swapped the FTC order.',
       },
       {
-        latex: '-\\frac{1}{3}',
-        expr: '-1/3',
-        mistake: 'arithmetic-error',
-        why: 'Divided by 3 (the old exponent) instead of by 2 (the new exponent −2), and swapped the FTC order.',
+        latex: '\\frac{1}{12}',
+        expr: '1/12',
+        mistake: 'power-rule-int-coefficient',
+        why: 'Divided by the old exponent −3 instead of the new exponent −2, so used −1/(3x²) as the antiderivative.',
+      },
+      {
+        latex: '-\\frac{1}{12}',
+        expr: '-1/12',
+        mistake: 'power-rule-int-coefficient',
+        why: 'Divided by the old exponent −3 instead of the new exponent −2, and also swapped the FTC order.',
       },
       {
         latex: '0',
@@ -463,44 +474,50 @@ export const flash: FlashItem[] = [
       },
     ],
     correct: 0,
-    explanation: '$\\int x^{-3}\\,dx = -\\frac{1}{2x^{2}}$, and $\\lim_{t\\to\\infty} \\left(\\frac{1}{2} - \\frac{1}{2t^{2}}\\right) = \\frac{1}{2}$.',
-    check: { kind: 'improper-integral', integrand: '1/x^3', lower: '1', upper: 'inf', converges: true, value: '1/2' },
+    explanation: '$\\int x^{-3}\\,dx = -\\frac{1}{2x^{2}}$, and $\\lim_{t\\to\\infty} \\left(\\frac{1}{8} - \\frac{1}{2t^{2}}\\right) = \\frac{1}{8}$.',
+    check: { kind: 'improper-integral', integrand: '1/x^3', lower: '2', upper: 'inf', converges: true, value: '1/8' },
   },
   {
     id: 'im-f-015',
     topic: 'improper',
     kind: 'formula',
-    prompt: { latex: '\\int_{0}^{\\infty} e^{-2x}\\,dx = ?' },
+    prompt: { latex: '\\int_{0}^{\\infty} e^{-x/3}\\,dx = ?' },
     options: [
-      { latex: '\\frac{1}{2}', expr: '1/2' },
+      { latex: '3', expr: '3' },
       {
-        latex: '-\\frac{1}{2}',
-        expr: '-1/2',
+        latex: '-3',
+        expr: '-3',
         mistake: 'sign-error',
-        why: 'Lost the minus sign of the antiderivative −(1/2)e^{−2x} when evaluating.',
+        why: 'Lost the minus sign of the antiderivative −3e^{−x/3} when evaluating.',
       },
       {
         latex: '-1',
         expr: '-1',
         mistake: 'inner-constant-factor-missing',
-        why: 'Forgot the factor 1/2 that comes from the inner derivative of −2x, and lost the sign.',
+        why: 'Forgot the factor 3 = 1/k that comes from the inner derivative of −x/3, and lost the sign.',
       },
       {
-        latex: '-2',
-        expr: '-2',
+        latex: '-\\frac{1}{3}',
+        expr: '-1/3',
         mistake: 'du-constant-wrong',
-        why: 'Multiplied by 2 instead of dividing by 2 for the inner constant, and lost the sign.',
+        why: 'Multiplied by 1/3 instead of dividing by 1/3 for the inner constant, and lost the sign.',
+      },
+      {
+        latex: '\\frac{1}{3}',
+        expr: '1/3',
+        mistake: 'inner-constant-factor-missing',
+        why: 'Multiplied by 1/3 instead of dividing by 1/3 for the inner constant, so used −(1/3)e^{−x/3} as the antiderivative.',
       },
       {
         latex: '0',
         expr: '0',
         mistake: 'im-limit-evaluated-wrong',
-        why: 'Took e^{−2t} → 1 as t → ∞ instead of → 0, so everything cancelled.',
+        why: 'Took e^{−t/3} → 1 as t → ∞ instead of → 0, so everything cancelled.',
       },
     ],
     correct: 0,
-    explanation: '$-\\frac{1}{2}e^{-2t} + \\frac{1}{2} \\to \\frac{1}{2}$ as $t \\to \\infty$.',
-    check: { kind: 'improper-integral', integrand: 'exp(-2*x)', lower: '0', upper: 'inf', converges: true, value: '1/2' },
+    explanation: '$-3e^{-t/3} + 3 \\to 3$ as $t \\to \\infty$.',
+    check: { kind: 'improper-integral', integrand: 'exp(-x/3)', lower: '0', upper: 'inf', converges: true, value: '3' },
   },
   {
     id: 'im-f-016',
@@ -520,6 +537,12 @@ export const flash: FlashItem[] = [
         expr: '-1',
         mistake: 'du-constant-wrong',
         why: 'Forgot the factor 1/2 coming from du = 2x dx, and lost the sign.',
+      },
+      {
+        latex: '\\frac{1}{4}',
+        expr: '1/4',
+        mistake: 'arithmetic-error',
+        why: 'Halved twice, applying the factor 1/2 from du = 2x dx two times.',
       },
       {
         latex: '-\\frac{1}{4}',
@@ -548,7 +571,7 @@ export const flash: FlashItem[] = [
       {
         latex: '1',
         expr: '1',
-        mistake: 'power-rule-int-exponent',
+        mistake: 'power-rule-int-coefficient',
         why: 'Integrated x^{−1/2} as x^{1/2} without the factor 2 from dividing by 1/2.',
       },
       {
@@ -564,10 +587,10 @@ export const flash: FlashItem[] = [
         why: 'Divided by 2 instead of multiplying, since dividing by the exponent 1/2 means multiplying by 2.',
       },
       {
-        latex: '4',
-        expr: '4',
-        mistake: 'arithmetic-error',
-        why: 'Doubled the result twice.',
+        latex: '-1',
+        expr: '-1',
+        mistake: 'power-rule-int-coefficient',
+        why: 'Used x^{1/2} without the factor 2 from dividing by 1/2, and also swapped the FTC order.',
       },
     ],
     correct: 0,
@@ -590,20 +613,20 @@ export const flash: FlashItem[] = [
       {
         latex: '2',
         expr: '2',
-        mistake: 'du-constant-wrong',
+        mistake: 'power-rule-int-coefficient',
         why: 'Dropped the factor 2 in the antiderivative −2√(4 − x).',
+      },
+      {
+        latex: '-2',
+        expr: '-2',
+        mistake: 'power-rule-int-coefficient',
+        why: 'Dropped the factor 2 in the antiderivative −2√(4 − x) and also missed the minus sign from the inner derivative of 4 − x.',
       },
       {
         latex: '0',
         expr: '0',
         mistake: 'im-plug-infinity',
         why: 'Plugged in x = 4, got 0, and stopped without subtracting the lower-bound value.',
-      },
-      {
-        latex: '8',
-        expr: '8',
-        mistake: 'arithmetic-error',
-        why: 'Doubled the result.',
       },
     ],
     correct: 0,
@@ -759,7 +782,7 @@ export const flash: FlashItem[] = [
     kind: 'concept',
     prompt: { latex: '\\int_{1}^{\\infty} \\frac{dx}{\\sqrt{x}}' },
     options: [
-      { text: 'Diverges: $2\\sqrt{t} - 2 \\to \\infty$ (here $p = \\tfrac{1}{2} \\le 1$)' },
+      { text: 'Diverges: $2\\sqrt{t} - 2 \\to \\infty$' },
       {
         text: 'Converges to $2$',
         mistake: 'im-p-rule-wrong',
@@ -855,9 +878,9 @@ export const flash: FlashItem[] = [
     kind: 'concept',
     prompt: { latex: '\\int_{2}^{\\infty} \\frac{dx}{x\\ln x}' },
     options: [
-      { text: 'Diverges: $u = \\ln x$ gives $\\ln(\\ln t) - \\ln(\\ln 2) \\to \\infty$' },
+      { text: 'Diverges: $\\ln(\\ln t) - \\ln(\\ln 2) \\to \\infty$' },
       {
-        text: 'Converges to $\\ln(\\ln 2)$',
+        text: 'Converges to $-\\ln(\\ln 2)$',
         mistake: 'im-limit-evaluated-wrong',
         why: 'Dropped the ln(ln t) term as if it tended to 0, although it tends to ∞.',
       },
@@ -887,7 +910,7 @@ export const flash: FlashItem[] = [
     kind: 'concept',
     prompt: { latex: '\\int_{-\\infty}^{\\infty} x\\,dx' },
     options: [
-      { text: 'Diverges: $\\displaystyle\\int_{0}^{\\infty} x\\,dx = \\lim_{t\\to\\infty} \\tfrac{t^{2}}{2} = \\infty$ already' },
+      { text: 'Diverges: $\\displaystyle\\int_{0}^{\\infty} x\\,dx = \\lim_{t\\to\\infty} \\tfrac{t^{2}}{2} = \\infty$' },
       {
         text: '$= 0$ by symmetry (odd function)',
         mistake: 'im-symmetric-limit',
@@ -958,19 +981,19 @@ export const flash: FlashItem[] = [
         why: 'Plugged ∞ in and forgot to subtract the value at the lower bound.',
       },
       {
-        text: 'Diverges: $e^{-x}$ never reaches $0$',
-        mistake: 'im-wrong-type',
-        why: 'Thought the integrand must vanish for convergence, but the integrand need not reach 0 for the integral to converge.',
+        text: 'Diverges: $\\displaystyle\\lim_{t\\to\\infty} \\left(e^{t} - 1\\right) = \\infty$',
+        mistake: 'exp-antiderivative-wrong',
+        why: 'Integrated e^{−x} as e^{x}, ignoring the inner minus sign, so the limit blew up.',
       },
       {
-        text: 'Converges to $-1$',
+        text: 'Converges to $-1$: $\\displaystyle\\lim_{t\\to\\infty} \\left(e^{-t} - 1\\right) = -1$',
         mistake: 'sign-error',
-        why: 'Lost the minus sign of the antiderivative −e^{−x} when evaluating.',
+        why: 'Lost the minus sign of the antiderivative −e^{−x}, so F(t) − F(0) became e^{−t} − 1.',
       },
       {
-        text: 'Converges to $e$',
+        text: 'Converges to $0$: $\\displaystyle\\lim_{t\\to\\infty} \\left(1 - e^{-t}\\right) = 0$',
         mistake: 'im-limit-evaluated-wrong',
-        why: 'Took e^{−t} → e as t → ∞ instead of → 0.',
+        why: 'Took e^{−t} → 1 as t → ∞ instead of → 0.',
       },
     ],
     correct: 0,
@@ -1039,8 +1062,8 @@ export const flash: FlashItem[] = [
       {
         latex: '\\frac{1}{p}',
         expr: '1/p',
-        mistake: 'power-rule-int-exponent',
-        why: 'Divided by p instead of by 1 − p after raising the exponent.',
+        mistake: 'power-rule-int-coefficient',
+        why: 'Divided by the old exponent −p instead of the new exponent 1 − p after raising the exponent.',
       },
     ],
     correct: 0,
@@ -1092,7 +1115,7 @@ export const flash: FlashItem[] = [
     kind: 'concept',
     prompt: { text: '(Needed for $\\int_{0}^{1} \\ln x\\,dx$.)', latex: '\\lim_{t\\to 0^{+}} t\\ln t = ?' },
     options: [
-      { text: '$0$: write it as $\\dfrac{\\ln t}{1/t}$ and use L\'Hôpital' },
+      { text: '$0$: by L\'Hôpital on $\\dfrac{\\ln t}{1/t}$' },
       {
         text: '$-\\infty$: $\\ln t \\to -\\infty$',
         mistake: 'im-limit-evaluated-wrong',
@@ -1104,9 +1127,9 @@ export const flash: FlashItem[] = [
         why: 'Treated the indeterminate form 0·∞ as 1.',
       },
       {
-        text: '$-1$',
+        text: '$-1$: by L\'Hôpital on $\\dfrac{\\ln t}{1/t}$',
         mistake: 'arithmetic-error',
-        why: 'Made a sign slip after applying L\'Hôpital and stopped at a nonzero value.',
+        why: 'Simplified the L\'Hôpital quotient (1/t)/(−1/t²) to −1 instead of −t, which tends to 0.',
       },
       {
         text: 'DNE: the one-sided limit cannot exist',
@@ -1161,30 +1184,30 @@ export const flash: FlashItem[] = [
     kind: 'technique',
     prompt: { text: 'What is the first step for', latex: '\\int_{0}^{\\infty} \\frac{dx}{1+x^{2}}\\,?' },
     options: [
-      { text: 'Identify the type (Type I: infinite bound) and write $\\displaystyle\\lim_{t\\to\\infty} \\int_{0}^{t} \\frac{dx}{1+x^{2}}$' },
+      { text: 'Type I: write $\\displaystyle\\lim_{t\\to\\infty} \\int_{0}^{t} \\frac{dx}{1+x^{2}}$' },
       {
-        text: 'Plug $\\infty$ into $\\arctan x$',
+        text: 'Not improper: write $\\left[\\arctan x\\right]_{0}^{\\infty}$',
         mistake: 'im-plug-infinity',
-        why: 'Plugged ∞ into the antiderivative, but ∞ is never plugged in; a limit is taken instead.',
+        why: 'An infinite bound makes the integral improper, and ∞ is never plugged into arctan x; a limit is taken instead.',
       },
       {
-        text: 'Split at $x = 0$',
-        mistake: 'im-split-mishandled',
-        why: 'Split the integral without need; splitting is for integrals from −∞ to ∞ or with an interior discontinuity.',
+        text: 'Type I: write $\\displaystyle\\lim_{t\\to\\infty} \\int_{-t}^{t} \\frac{dx}{1+x^{2}}$',
+        mistake: 'im-symmetric-limit',
+        why: 'Used a symmetric limit, which changes the interval to the whole line; this integral starts at 0.',
       },
       {
-        text: 'Compute $\\arctan(\\infty) - \\arctan 0 = \\tfrac{\\pi}{2}$ directly',
-        mistake: 'ftc-order-swapped',
-        why: 'Applied the FTC with ∞ as a bound, but the FTC applies inside the limit, not at ∞.',
+        text: 'Type I: write $\\displaystyle\\lim_{t\\to\\infty} \\int_{t}^{\\infty} \\frac{dx}{1+x^{2}}$',
+        mistake: 'im-plug-infinity',
+        why: 'Replaced the finite bound by t and kept ∞ as a bound; it is the ∞ that must become t.',
       },
       {
-        text: 'Check whether the integrand blows up at $x = 0$ (Type II)',
+        text: 'Type II: write $\\displaystyle\\lim_{t\\to 0^{+}} \\int_{t}^{\\infty} \\frac{dx}{1+x^{2}}$',
         mistake: 'im-wrong-type',
-        why: 'Looked for a Type II problem, but 1/(1 + x²) is continuous; the only bad bound is ∞.',
+        why: 'Looked for a Type II problem at 0, but 1/(1 + x²) is continuous there; the only bad bound is ∞.',
       },
     ],
     correct: 0,
-    explanation: 'Step 1 is to identify the type; here only the upper bound is infinite.',
+    explanation: 'Step 1 is to identify the type: only the upper bound is infinite (Type I), so replace it by $t$ and let $t \\to \\infty$.',
     check: { kind: 'none', reason: 'first step of the procedure' },
   },
 ];
@@ -1266,6 +1289,12 @@ export const generators: FlashGenerator[] = [
             why: 'Multiplied by k instead of dividing by k for the inner constant, and lost the sign.',
           },
           {
+            latex: ql(k),
+            expr: qe(k),
+            mistake: 'inner-constant-factor-missing',
+            why: 'Multiplied by k instead of dividing by k for the inner constant, so used −k·e^{−kx} as the antiderivative.',
+          },
+          {
             latex: '-1',
             expr: '-1',
             mistake: 'inner-constant-factor-missing',
@@ -1300,6 +1329,7 @@ export const generators: FlashGenerator[] = [
       const [n, d] = P_TABLE[(seed - 1) % P_TABLE.length];
       const ans = q(d, n - d); // 1/(p-1)
       const negAns = q(-d, n - d); // 1/(1-p)
+      const invP = q(d, n); // 1/p
       const negInvP = q(-d, n); // -1/p
       const negInvP1 = q(-d, n + d); // -1/(p+1)
       const pl = d === 1 ? `${n}` : `${n}/${d}`; // exponent as printed: x^{3/2}
@@ -1317,10 +1347,16 @@ export const generators: FlashGenerator[] = [
             why: 'Evaluated F(1) − F(t) instead of F(t) − F(1), which flips the sign.',
           },
           {
+            latex: ql(invP),
+            expr: qe(invP),
+            mistake: 'power-rule-int-coefficient',
+            why: 'Divided by the old exponent −p instead of the new exponent 1 − p.',
+          },
+          {
             latex: ql(negInvP),
             expr: qe(negInvP),
-            mistake: 'power-rule-int-exponent',
-            why: 'Divided by p instead of by p − 1 after raising the exponent, and swapped the FTC order.',
+            mistake: 'power-rule-int-coefficient',
+            why: 'Divided by the old exponent −p instead of the new exponent 1 − p, and also swapped the FTC order.',
           },
           {
             latex: ql(negInvP1),

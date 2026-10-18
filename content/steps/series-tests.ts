@@ -81,7 +81,7 @@ export const steps: StepProblem[] = [
           },
           {
             text: 'Converges to $1$, the first term',
-            mistake: 'sb-partial-sum-formula',
+            mistake: 'sb-no-information',
             why: 'The first term is not the sum of the series.',
           },
           {
@@ -158,7 +158,7 @@ export const steps: StepProblem[] = [
             mistake: 'st-wrong-p',
             why: '1/√n = n^{−1/2}, but in Σ1/nᵖ the p is +1/2.',
           },
-          { latex: '1', expr: '1', mistake: 'st-wrong-p', why: 'p = 1 would be the harmonic series, not this one.' },
+          { latex: '1', expr: '1', mistake: 'st-wrong-p', why: 'Treated √n as n; √n = n^{1/2}, so p = 1/2, not the harmonic p = 1.' },
         ],
         correct: 0,
         explanation: '$\\frac{1}{\\sqrt{n}} = \\frac{1}{n^{1/2}}$.',
@@ -214,7 +214,7 @@ export const steps: StepProblem[] = [
       {
         prompt: 'The divergence test gives $\\dfrac{\\ln n}{n} \\to 0$, inconclusive. What next?',
         options: [
-          { text: 'Positive terms; not geometric, telescoping or a $p$-series: compare with $b_n = \\dfrac{1}{n}$ (the dominant growth)' },
+          { text: 'Compare with $b_n = \\dfrac{1}{n}$' },
           {
             text: 'Compare with $b_n = \\dfrac{\\ln n}{n^{2}}$',
             mistake: 'st-wrong-comparison-series',
@@ -237,7 +237,7 @@ export const steps: StepProblem[] = [
           },
         ],
         correct: 0,
-        explanation: 'Choose bₙ from the dominant terms: ln n/n behaves like 1/n (times a slowly growing factor).',
+        explanation: 'Positive terms, and not geometric, telescoping or a p-series: compare, choosing bₙ from the dominant terms (ln n/n behaves like 1/n times a slowly growing factor).',
         result: { latex: 'b_n = \\frac{1}{n}' },
         check: { kind: 'none', reason: 'flowchart' },
       },
@@ -316,7 +316,7 @@ export const steps: StepProblem[] = [
       {
         prompt: 'Which comparison series works?',
         options: [
-          { text: '$b_n = \\dfrac{1}{n^{3/2}}$: a convergent $p$-series that still dominates $\\dfrac{\\ln n}{n^{2}}$' },
+          { text: '$b_n = \\dfrac{1}{n^{3/2}}$' },
           {
             text: '$b_n = \\dfrac{1}{n^{2}}$',
             mistake: 'st-wrong-comparison-series',
@@ -435,7 +435,7 @@ export const steps: StepProblem[] = [
           },
           {
             text: '$L = 0$ with $\\sum \\dfrac{1}{n}$ convergent, so the series converges',
-            mistake: 'st-lct-boundary',
+            mistake: 'st-p-rule-wrong',
             why: 'Σ1/n diverges, and L = 0 with a divergent bₙ is inconclusive.',
           },
           {
@@ -454,22 +454,22 @@ export const steps: StepProblem[] = [
         options: [
           { text: 'Positive, continuous and decreasing on $[2, \\infty)$: all three hold ($x\\ln x$ is positive and increasing)' },
           {
-            text: 'Positive and continuous: both hold',
+            text: 'Positive and continuous on $[2, \\infty)$: both hold ($x\\ln x$ is positive)',
             mistake: 'st-integral-test-conditions',
             why: 'Decreasing is also required by the integral test.',
           },
           {
-            text: 'Positive and continuous: both hold, so the integral equals the sum',
+            text: 'Positive and continuous on $[2, \\infty)$: both hold, so the integral equals the sum',
             mistake: 'st-integral-test-conditions',
             why: 'Decreasing is also required, and the integral is never equal to the sum.',
           },
           {
-            text: 'Positive and continuous: both hold; decreasing is not needed for $x \\ge 2$',
+            text: 'Positive, continuous and decreasing on $[2, \\infty)$: decreasing fails ($x\\ln x$ is increasing, so $f$ is increasing)',
             mistake: 'st-integral-test-conditions',
-            why: 'Decreasing is always required, whatever the interval.',
+            why: 'A positive, increasing denominator makes the reciprocal decreasing: $f = \\frac{1}{x\\ln x}$ decreases, so all three conditions hold.',
           },
           {
-            text: 'Decreasing and $f(x) \\to 0$',
+            text: 'Decreasing and $f(x) \\to 0$ on $[2, \\infty)$: both hold ($x\\ln x$ is increasing)',
             mistake: 'st-integral-test-conditions',
             why: 'Positive and continuous are conditions; f → 0 is not one of them.',
           },
@@ -494,8 +494,8 @@ export const steps: StepProblem[] = [
           {
             latex: '\\ln(\\ln t) - \\ln 2',
             expr: 'log(log(t)) - log(2)',
-            mistake: 'ftc-not-subtracted',
-            why: 'F(2) is ln(ln 2), not ln 2.',
+            mistake: 'bounds-not-converted',
+            why: 'The lower limit was not converted: with u = ln x it is u = ln 2, so the term subtracted is ln(ln 2), not ln 2.',
           },
           {
             latex: '\\ln(\\ln t) + \\ln(\\ln 2)',
@@ -513,7 +513,7 @@ export const steps: StepProblem[] = [
         correct: 0,
         explanation: '$\\int \\frac{du}{u} = \\ln u$, evaluated from $\\ln 2$ to $\\ln t$.',
         result: { latex: '\\lim_{t\\to\\infty}\\left[\\ln(\\ln t) - \\ln(\\ln 2)\\right]' },
-        check: { kind: 'identity', lhs: 'log(log(t)) - log(log(2))' },
+        check: { kind: 'identity', lhs: 'integral(1/(x*log(x)), x, 2, t)' },
       },
       {
         prompt: 'Conclude.',
@@ -526,7 +526,7 @@ export const steps: StepProblem[] = [
           },
           {
             text: '$\\ln(\\ln t) \\to \\infty$: the integral diverges, so the sum is $\\infty$',
-            mistake: 'st-wrong-inference',
+            mistake: 'sb-no-information',
             why: 'Right verdict, but "sum = ∞" is not the conclusion of the test; a divergent series has no sum.',
           },
           {
@@ -593,7 +593,7 @@ export const steps: StepProblem[] = [
         check: { kind: 'limit', term: '1/(n^2+1)', limit: '0' },
       },
       {
-        prompt: 'Which comparison is valid?',
+        prompt: 'Which comparison settles the series?',
         options: [
           { text: '$\\dfrac{1}{n^{2}+1} < \\dfrac{1}{n^{2}}$ and $\\sum \\dfrac{1}{n^{2}}$ converges: converges' },
           {
@@ -628,12 +628,12 @@ export const steps: StepProblem[] = [
           { text: '$0 < a_n \\le b_n$ with $\\sum b_n$ convergent ($p = 2$), so $\\sum a_n$ converges' },
           {
             text: '$\\sum a_n$ converges to $\\sum \\dfrac{1}{n^{2}}$',
-            mistake: 'st-sum-equals-integral',
+            mistake: 'sb-no-information',
             why: 'Comparison bounds the sum; it does not give its value.',
           },
           {
             text: '$\\sum a_n$ converges to $\\sum \\dfrac{1}{n^{2}} - 1$',
-            mistake: 'st-sum-equals-integral',
+            mistake: 'sb-no-information',
             why: 'This is a made-up value; comparison gives no value for the sum.',
           },
           {
@@ -734,18 +734,18 @@ export const steps: StepProblem[] = [
           { text: 'Converges by direct comparison with the geometric series $\\sum \\dfrac{1}{2^{n}}$' },
           {
             text: 'Converges to $1$, the sum of $\\sum \\dfrac{1}{2^{n}}$',
-            mistake: 'st-sum-equals-integral',
+            mistake: 'sb-no-information',
             why: "The comparison series' sum is only an upper bound, not the value of this series.",
           },
           {
             text: 'Converges to $1$, by the divergence test',
-            mistake: 'st-sum-equals-integral',
+            mistake: 'sb-divergence-test-converse',
             why: 'The divergence test gives no sums and never proves convergence.',
           },
           {
-            text: 'Converges to $\\dfrac{1}{2}$, its first term',
-            mistake: 'sb-partial-sum-formula',
-            why: 'The first term is not the sum of the series.',
+            text: 'Converges to $\\dfrac{1}{3}$, its first term',
+            mistake: 'sb-no-information',
+            why: 'The first term a₁ = 1/3 is not the sum of the series.',
           },
           {
             text: 'Diverges: $2^{n} + n \\to \\infty$',
@@ -777,7 +777,7 @@ export const steps: StepProblem[] = [
       {
         prompt: 'Choose $b_n$ from the dominant terms.',
         options: [
-          { text: '$b_n = \\dfrac{n}{n^{3}} = \\dfrac{1}{n^{2}}$' },
+          { text: '$b_n = \\dfrac{1}{n^{2}}$' },
           {
             text: '$b_n = \\dfrac{1}{n^{3}}$',
             mistake: 'st-wrong-comparison-series',
@@ -839,7 +839,7 @@ export const steps: StepProblem[] = [
           },
           {
             text: '$L = 1$, so the sum is $\\sum \\dfrac{1}{n^{2}}$',
-            mistake: 'st-sum-equals-integral',
+            mistake: 'sb-no-information',
             why: 'The test compares behaviour, not values.',
           },
         ],
@@ -880,8 +880,8 @@ export const steps: StepProblem[] = [
           },
           {
             text: 'Positive and continuous; increasing since $f\'(x) = (1 + 2x^{2})e^{-x^{2}} > 0$',
-            mistake: 'product-rule-missing-term',
-            why: 'The derivative is (1 − 2x²)e^{−x²}, which is negative for x ≥ 1, so f is not increasing.',
+            mistake: 'sign-error-derivative',
+            why: 'Differentiated e^{−x²} as +2x e^{−x²}, dropping the minus of the inner derivative −2x; in fact f′(x) = (1 − 2x²)e^{−x²} < 0 for x ≥ 1.',
           },
           {
             text: 'The conditions do not matter for a convergent integral',
@@ -928,7 +928,7 @@ export const steps: StepProblem[] = [
         correct: 0,
         explanation: 'An antiderivative is $-\\frac{1}{2}e^{-x^{2}}$, evaluated from $1$ to $t$.',
         result: { latex: '\\lim_{t\\to\\infty}\\left(\\frac{1}{2e} - \\frac{1}{2}e^{-t^{2}}\\right) = \\frac{1}{2e}' },
-        check: { kind: 'identity', lhs: '1/2*exp(-1) - 1/2*exp(-t^2)' },
+        check: { kind: 'identity', lhs: 'integral(x*exp(-x^2), x, 1, t)' },
       },
       {
         prompt: 'Conclude.',
