@@ -59,9 +59,9 @@ export const steps: StepProblem[] = [
             why: 'Used the wrong condition, and the terms do tend to 0 here because |r| < 1 holds.',
           },
           {
-            text: 'No: $a = 3 > 1$ fails the condition $r > 1$',
-            mistake: 'sb-r-boundary',
-            why: 'The first term a plays no role in whether a geometric series converges; only |r| matters.',
+            text: 'No: $a = 3$ is not less than $1$',
+            mistake: 'sb-wrong-ratio',
+            why: 'Applied the condition |r| < 1 to the first term a instead of r',
           },
           {
             text: 'Yes, because $a_n \\to 0$',
@@ -200,8 +200,8 @@ export const steps: StepProblem[] = [
             why: 'Used a = 1/3 (the n = 1 term) in a/(1 − r), but the series starts at n = 0 with a = 1.',
           },
           {
-            latex: '\\frac{1}{6}',
-            expr: '1/6',
+            latex: '\\frac{2}{9}',
+            expr: '2/9',
             mistake: 'sb-wrong-first-term',
             why: 'Used a = 1/3 and multiplied by 1 − r instead of dividing by it.',
           },
@@ -367,22 +367,22 @@ export const steps: StepProblem[] = [
           { text: 'The divergence test: compute $\\lim a_n$' },
           {
             text: 'Find $S_n$ in closed form',
-            mistake: 'sb-partial-sum-formula',
+            mistake: 'st-divergence-test-skipped',
             why: 'There is no closed form for Sₙ here; taking the limit of the terms is much faster.',
           },
           {
             text: 'Find $S_n$ in closed form, then take $\\lim S_n$',
-            mistake: 'sb-partial-sum-formula',
+            mistake: 'st-divergence-test-skipped',
             why: 'There is no closed form for Sₙ here, so this plan cannot even start.',
           },
           {
             text: 'Find $S_n$ by partial fractions',
-            mistake: 'sb-partial-sum-formula',
+            mistake: 'st-divergence-test-skipped',
             why: 'n/(n+1) is not a telescoping difference, so partial fractions do not produce a closed form.',
           },
           {
             text: 'Check whether it is geometric',
-            mistake: 'sb-wrong-ratio',
+            mistake: 'st-divergence-test-skipped',
             why: 'The ratio aₙ₊₁/aₙ is not constant, so the series is not geometric.',
           },
         ],
@@ -943,14 +943,14 @@ export const steps: StepProblem[] = [
             why: 'Used a = 1, but the n = 1 term is 1/2.',
           },
           {
-            text: 'Converges to $2$, the limit of the terms',
-            mistake: 'sb-wrong-first-term',
-            why: 'Used a wrong first term, and the sum of a series is not a limit of its terms.',
+            text: 'Converges to $\\tfrac{1}{2}$, its first term',
+            mistake: 'sb-partial-sum-formula',
+            why: 'Reported the first term as the sum',
           },
           {
-            text: 'Converges to $2$ by the divergence test',
-            mistake: 'sb-wrong-first-term',
-            why: 'Used a wrong first term, and the divergence test never produces a sum.',
+            text: 'Converges to $\\tfrac{1}{3}$: $\\dfrac{1/2}{1 + 1/2}$',
+            mistake: 'sb-wrong-ratio',
+            why: 'Used 1 + r instead of 1 − r in the denominator',
           },
           {
             text: 'Diverges: $\\tfrac{1}{2^{n}} \\to 0$',

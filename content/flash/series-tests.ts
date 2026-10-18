@@ -248,7 +248,7 @@ export const flash: FlashItem[] = [
       { text: 'Divergence test: $a_n \\to e \\ne 0$, so the series diverges' },
       {
         text: 'Divergence test: $a_n \\to e$, a finite limit, so the series converges',
-        mistake: 'st-wrong-inference',
+        mistake: 'sb-sequence-vs-series',
         why: 'Computed the limit correctly but read a finite limit as convergence of the series.',
       },
       {
@@ -279,13 +279,13 @@ export const flash: FlashItem[] = [
     id: 'st-f-008',
     topic: 'series-tests',
     kind: 'formula',
-    prompt: { text: 'The integral test for $\\sum_{n=k}^{\\infty} a_n$ with $a_n = f(n)$ needs which conditions on $f$ over $[k, \\infty)$?' },
+    prompt: { text: 'The integral test for $\\sum_{n=k}^{\\infty} a_n$ with $a_n = f(n)$ needs which conditions on $f$ over $[k, \\infty)$, as stated in class?' },
     options: [
       { text: '$f$ positive, continuous and decreasing' },
       {
         text: '$f$ continuous and decreasing, with $f(x) \\to 0$',
         mistake: 'st-integral-test-conditions',
-        why: 'Dropped "positive" and added the irrelevant condition $f(x) \\to 0$.',
+        why: 'Dropped "positive" from the hypotheses; the course states all three conditions.',
       },
       {
         text: '$f$ positive and continuous, with $f(x) \\to 0$',
@@ -348,32 +348,32 @@ export const flash: FlashItem[] = [
     id: 'st-f-010',
     topic: 'series-tests',
     kind: 'concept',
-    prompt: { text: 'Can the integral test or a comparison test be used on this series?', latex: '\\sum_{n=1}^{\\infty} \\frac{(-1)^n}{n}' },
+    prompt: { text: 'Can the integral test or a comparison test be used on this series?', latex: '\\sum_{n=1}^{\\infty} \\frac{\\cos n}{n}' },
     options: [
       { text: 'No: its terms are not all positive, and these tests need positive terms' },
       {
         text: 'Yes: compare with $\\sum \\frac{1}{n}$, which diverges, so the series diverges',
         mistake: 'st-positive-terms-required',
-        why: 'Comparison tests need positive terms; every odd-numbered term here is negative, so comparing with $\\sum \\frac{1}{n}$ proves nothing.',
+        why: 'Comparison tests need positive terms; $\\cos n$ is negative for many $n$ (for example $n = 2, 3, 4$), so comparing with $\\sum \\frac{1}{n}$ proves nothing.',
       },
       {
         text: 'Yes: $\\int_1^{\\infty} \\frac{dx}{x} = \\infty$, so the series diverges',
         mistake: 'st-positive-terms-required',
-        why: 'The integral test needs a positive $f$ with $f(n) = a_n$; $\\frac{1}{x}$ matches $|a_n|$, not $a_n$, so the test says nothing here.',
+        why: 'The integral test needs a positive $f$ with $f(n) = a_n$; here $a_n = \\frac{\\cos n}{n}$ takes both signs and $\\frac{1}{x}$ does not match it, so the test says nothing here.',
       },
       {
         text: 'No: its terms do not tend to $0$',
         mistake: 'sq-oscillation-means-divergence',
-        why: 'Sign changes do not stop the terms from tending to $0$: $|a_n| = \\frac{1}{n} \\to 0$.',
+        why: 'Sign changes do not stop the terms from tending to $0$: $-\\frac{1}{n} \\le a_n \\le \\frac{1}{n}$, so $a_n \\to 0$ by the Squeeze Theorem.',
       },
       {
-        text: 'No: $f(x) = \\frac{1}{x}$ is not decreasing',
+        text: 'No: $f(x) = \\frac{\\cos x}{x}$ is not continuous on $[1, \\infty)$',
         mistake: 'st-integral-test-conditions',
-        why: '$\\frac{1}{x}$ is decreasing; what fails is positivity, since the terms change sign.',
+        why: '$\\frac{\\cos x}{x}$ is continuous on $[1, \\infty)$; what fails is positivity, since the terms change sign.',
       },
     ],
     correct: 0,
-    explanation: 'The integral test and both comparison tests are for positive-term series; $\\frac{(-1)^n}{n}$ is negative for every odd $n$, so none of them applies.',
+    explanation: 'The integral test and both comparison tests are for positive-term series; $\\frac{\\cos n}{n}$ is negative for many $n$ (for example $n = 2, 3, 4$), so none of them applies.',
     check: { kind: 'none', reason: 'hypothesis check (positive terms); verified by math-verifier' },
     difficulty: 1,
     tags: ['integral-test'],
@@ -391,14 +391,14 @@ export const flash: FlashItem[] = [
         why: 'The sign change at $x = 1$ is the left endpoint; on $[1, \\infty)$ the derivative is $\\le 0$, so $f$ is decreasing there.',
       },
       {
-        text: 'No: $f^{\\prime}(x) = (1+x)e^{-x}$ changes sign at $x = 1$',
-        mistake: 'product-rule-missing-term',
-        why: 'Differentiated with a sign slip (the derivative is $(1-x)e^{-x}$) and misread the sign.',
+        text: 'No: $f^{\\prime}(x) = (1+x)e^{-x} > 0$ for all $x \\ge 1$, so $f$ is increasing',
+        mistake: 'chain-rule-missing',
+        why: 'Differentiated $e^{-x}$ as $+e^{-x}$ (missing the inner $-1$) and misread the sign.',
       },
       {
-        text: 'No: $f^{\\prime}(x) = -xe^{-x}$ changes sign at $x = 1$',
+        text: 'Yes: $f^{\\prime}(x) = -xe^{-x}$, but only for $x \\ge 2$',
         mistake: 'product-rule-missing-term',
-        why: 'Dropped the $e^{-x}$ term of the product rule and misread the sign.',
+        why: 'Dropped the $e^{-x}$ term of the product rule and misread where it is negative.',
       },
       {
         text: 'Yes: $e^{-x}$ is decreasing, so $xe^{-x}$ is decreasing',
@@ -422,20 +422,20 @@ export const flash: FlashItem[] = [
       {
         latex: '-\\frac{2}{e}',
         expr: '-2/e',
-        mistake: 'sign-error',
+        mistake: 'ftc-order-swapped',
         why: 'Evaluated $F(1) - F(t)$ instead of $F(t) - F(1)$, which flips the sign of the result.',
       },
       {
         latex: '-\\frac{1}{e}',
         expr: '-1/e',
         mistake: 'ibp-v-wrong',
-        why: 'Used $v = e^{-x}$ instead of $-e^{-x}$ and lost the sign of the result.',
+        why: 'Kept only the $uv$ term of integration by parts and also lost its sign.',
       },
       {
-        latex: '-\\frac{3}{e}',
-        expr: '-3/e',
+        latex: '\\frac{3}{e}',
+        expr: '3/e',
         mistake: 'arithmetic-error',
-        why: 'Added the two terms with the wrong sign and coefficient.',
+        why: 'Added the two terms $\\frac{2}{e}$ and $\\frac{1}{e}$ instead of combining them correctly.',
       },
       {
         latex: '\\frac{1}{e}',
