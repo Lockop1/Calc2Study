@@ -189,3 +189,46 @@ magnitude and overflowing windows are skipped. The improper and sequences decks 
 | improper card 14 (orchestrator-added) | — | orchestrator | math-verifier #a875474 | tests/cards.test.ts | PASS WITH FIX | wording matches the spec's five steps in order; the back was 609 px wide and was rewritten as an `aligned` block that fits 324/324 px at 390 px (and 294/294 at 360 px) |
 
 Phase A totals: 74 cards in five new sections (partial-fractions 14, improper 14, sequences 20, series-basics 13, series-tests 14); the 50-card whiteboard deck is unchanged. Full suite 1164 tests green, build green, merged to main.
+
+### Phases B–C — Flash Drill and Step-Through (`content/flash/<topic>.ts`, `content/steps/<topic>.ts`)
+
+Workflow (cost split): the orchestrator designed every item as a plan (`qa/plans/<topic>-{flash,steps}-plan.md`),
+a Sonnet "typist" converted each plan into the content file and ran the mechanical test loop (never changing the
+mathematics), the medoid heuristic flagged option lists that were re-centred by the mechanical decoy-hub rule
+(`qa/briefs/hub-rewrite.md`), and an Opus `math-verifier` that had not written the plan re-derived every answer and
+attacked every distractor (`qa/briefs/topic-verify.md`). The verifiers' mechanical findings were applied by typists
+from the reports; judgment calls were re-derived by the orchestrator (listed under "resolved disagreements").
+Medoid rates are from `scripts/medoid-scan.ts` (flash + generators seeds 1..5 + steps; both measures must be ≤ 30%,
+enforced by `tests/medoid.test.ts`). The blind-option test samples ≥ 30% of the units; a hit counts as a leak only
+when the guesser's stated reason is a surface feature (star centre, longest option, lone verdict, median value,
+repeated value), and every such unit was rewritten around a decoy hub.
+
+| Topic | Flash (static + generators) | Steps (problems / steps) | Verifier | Verdict | Medoid edit / bigram | Blind-option test | Notes |
+|-------|-----------------------------|--------------------------|----------|---------|----------------------|-------------------|-------|
+| partial-fractions | 35 + 3 | 9 / 36 | math-verifier (flash + steps, all answers re-derived; stopped before the final write-up) + orchestrator | PASS WITH FIXES | 4.7% / 11.2% | seed 31: 26 of 74 units, 15 hits (58%), 4 surface leaks (pf-f-008/016/021/030) + 7 inspection leaks rewritten; re-test seed 61 after the fixes: 26 units, 21 hits (81%) of which 5 surface (pf-s-03#1, pf-f-016, pf-f-025, pf-s-08#3, pf-f-032) → rewritten; the rest were standard-form recall (decomposition forms, factorings, discriminants), which the guesser solved from the options | every answer right; 3 distractors that were also correct replaced (pf-s-03#3, pf-s-04#0/#2: "x = tan θ" / "u = x² + 1 directly" are valid alternatives), 3 equal-function distractor pairs replaced (pf-s-01#3, pf-s-06#3, pf-s-09#2), systematic retags (long division on a proper fraction → `technique-wrong`; power rule on a first-power factor → `ln-misapplied`; needless completing-the-square → `technique-wrong`), whys made to produce their option |
+| improper | 35 + 2 | 9 / 34 | math-verifier #a858fa1 | PASS WITH FIXES | 14.3% / 18.6% | seed 47 (drawn before reading the content): 25 of 71 units, 21 hits (84%), 19 by math (most options restate the integral); 2 structural (im-f-017/018, star centre) rewritten; length / "both must converge" tells on im-f-035/029/012, im-s-07#2/03#2 fixed | every answer, result, check and recap right; the "only positive option" tell (every distractor ≤ 0 for a positive integrand) fixed in im-f-014/015/016 and both generators; 6 whys gave a value other than their option (im-f-026/029/031, im-s-04#2, im-s-07#3 …) fixed; `im-split-mishandled` was used for "kept ∞ as a bound" (→ `im-plug-infinity`); justification clauses that appeared only on the correct option removed from 12 units; im-f-013/014/015 duplicated generator instances → bounds / k changed by the orchestrator (∫₂^∞ dx/x², ∫₂^∞ dx/x³, ∫₀^∞ e^{−x/3}) |
+| sequences | 35 + 2 | 9 / 29 | math-verifier #a6c42b1 | SEQUENCES_ROW | | | |
+| series-basics | 35 + 2 | 9 / 27 | math-verifier (flash + steps, all answers and checks re-derived; stopped before the blind test) + orchestrator | PASS WITH FIXES | 13.2% / 16.2% | seed 61 (after the fixes): 23 of 72 units, 10 hits (43%), 4 surface (sb-s-09#1 lone verdict, sb-f-010 longest, sb-s-06#1 longest, sb-f-013 median) → rewritten; 4 of the misses were star-centre guesses that were wrong (the hub rule working) | every answer right; 13 whys did not produce their option (values changed where needed: sb-f-002 → 2/3, sb-f-004 → 2, sb-f-012 and sb-s-02#2 1/6 → 2/9, sb-f-034 → 3 and 5/6); sb-f-021's "a rⁿ⁻¹ → 0" was also correct → "−1 < r ≤ 1" (`sb-sequence-vs-series`); unrealistic sb-s-01#1 / sb-s-09#0 distractors replaced; retags (sb-f-033 → `sb-split-divergent`, sb-s-04#0 → `st-divergence-test-skipped`, telescoping slips → `sb-telescoping-sum-wrong`, …); checks that restated the answer (sb-f-003, sb-f-020) now check the computation; "p-series" wording removed from topic 13 |
+| series-tests | 37 + 3 | 9 / 28 | math-verifier (st-f-001–013) + math-verifier #a598fc2 (the rest, generators, steps) | PASS WITH FIXES | 10.0% / 15.3% | seed 53 (drawn before reading the content): 24 of 68 units, 23 hits (96%), 18 by applying the course rules to the options; 3 structural (st-s-08#0 only option showing work, st-f-029, st-g-p-series repeated p — same pattern fixed in st-f-019/021/022) → rewritten; st-f-005 (middle exponent) re-centred by the orchestrator | every answer right; prompts of st-f-026/027, st-g-lct-rational, st-s-06#1 now ask which argument *settles* the series (a true "L = ∞ against a convergent series: no conclusion" statement was arguably correct under "which conclusion is right?"); st-g-lct-rational's correct L was the most frequent value → boundary distractor uses the inverted L; st-f-010 used Σ(−1)ⁿ/n as its non-positive example → Σ cos n / n (no alternating series anywhere); st-f-011/012/016/017 options now follow from the slip their why names; st-s-05#2 and st-s-09#1 checks compared the answer with itself → now integrate the step's integrand to t; 17 retags (`st-sum-equals-integral` only for the integral's value, `st-lct-limit-wrong` / `st-p-rule-wrong` when the inference is valid but the number is wrong, dropped inner sign → `chain-rule-missing`) |
+
+Resolved disagreements and orchestrator decisions (Phases B–C):
+- *st-f-008 (integral-test hypotheses).* "Positive and decreasing with f → 0" is mathematically sufficient (and
+  "continuous and decreasing with f → 0" forces f ≥ 0), so those distractors are wrong only against the test *as
+  stated in class* (positive, continuous, decreasing). The prompt now says "as stated in class"; the whys say
+  "dropped a stated hypothesis" rather than calling f → 0 irrelevant.
+- *st-f-010 (non-positive terms).* The item used Σ(−1)ⁿ/n to show the positive-term hypothesis failing. No verdict
+  was given and no alternating-series test appeared, but the series itself is the alternating harmonic series; it
+  is replaced by Σ cos n / n (terms of both signs, not an alternating series), still with no verdict.
+- *im-s-06#1 ("the left piece is the same by symmetry").* A strong student could defend this for a divergent
+  interior singularity (one divergent piece is enough), so it stays a distractor only under the course's set-up,
+  which requires both one-sided limits to be written. Kept, tagged `im-split-mishandled`.
+- *st-s-05#3 ("so the sum is ∞").* The spec says a limit of ∞ means divergent, so "the sum is ∞" stays a distractor.
+- *Partial-fraction forms.* Distractors of the shape (Ax + B)/(x + 1)² for a repeated linear factor are accepted as
+  realistic (the "linear numerator over a repeated linear factor" slip), even though the form is not literally
+  unusable.
+- *"Which argument settles the series?" items (series-tests).* A student who knows the rules can often answer from
+  the options alone because only one option is a valid inference; that is the skill the item drills, so it is not
+  counted as a form leak (the medoid rate and decoy hubs still apply).
+- *Duplicates.* Static improper items that coincided with generator instances were changed by the orchestrator
+  rather than removed (the static count must stay ≥ 30).
+
