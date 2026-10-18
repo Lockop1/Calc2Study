@@ -9,6 +9,7 @@ import { TOPICS, TOPIC_IDS, topicById } from '../content/topics';
 import { evaluate, freeVariables, ExprError, parseExpr } from './mathenv';
 import { approxEqual, hashString, isFiniteNumber, mulberry32, numDeriv, uniform } from './numeric';
 import { tryLatexToMath } from './latex2math';
+import { claimExprs, evalClaim, isClaimCheck } from './claims';
 
 export interface Issue {
   level: 'error' | 'warn';
@@ -114,9 +115,18 @@ function checkExprs(check: Check): string[] {
       return [check.lhs];
     case 'value':
       return [check.expected];
+    case 'improper-integral':
+    case 'limit':
+    case 'series':
+      return claimExprs(check);
     case 'none':
       return [];
   }
+}
+
+/** Run a claim check (improper-integral / limit / series) on its own; see checker/claims.ts. */
+export function claimIssues(where: string, check: Check | undefined): Issue[] {
+  return isClaimCheck(check) ? evalClaim(check, where).issues : [];
 }
 
 /**
@@ -176,6 +186,23 @@ export function numericChecks(
   }
   if (issues.some((i) => i.level === 'error')) return issues;
 
+  // Claim checks validate the check itself (convergence / value); the target becomes the reference.
+  let claimTarget: number | undefined;
+  if (isClaimCheck(check)) {
+    const res = evalClaim(check, where);
+    issues.push(...res.issues);
+    if (!res.hasTarget) {
+      issues.push({
+        level: 'error',
+        code: 'claim-target-missing',
+        where,
+        message: `check.${check.kind} has no numeric target (${check.kind === 'limit' ? 'an unbounded / DNE limit' : check.kind === 'series' ? 'no `sum`' : 'no `value`'}), so the correct option must not carry an expr; use text/latex-only options, or add the target`,
+      });
+    }
+    if (issues.some((i) => i.level === 'error')) return issues;
+    claimTarget = res.target;
+  }
+
   // Reference function: what the correct expr must equal, and how to compare an option.
   // For 'antiderivative', options are compared through their derivative.
   const viaDerivative = check?.kind === 'antiderivative';
@@ -201,6 +228,10 @@ export function numericChecks(
         return ev(check.lhs, scope);
       case 'value':
         return ev(check.expected, scope);
+      case 'improper-integral':
+      case 'limit':
+      case 'series':
+        return claimTarget ?? NaN;
       case 'none':
         return null;
     }
@@ -408,7 +439,12 @@ export function validateFlashItem(item: FlashItem, opts: { generated?: boolean }
       });
     }
   }
-  if (item.check.kind !== 'none' && !correctOpt.expr) err('correct-missing-expr', `check.kind "${item.check.kind}" requires the correct option to have an expr`);
+  if (item.check.kind !== 'none' && !isClaimCheck(item.check) && !correctOpt.expr) err('correct-missing-expr', `check.kind "${item.check.kind}" requires the correct option to have an expr`);
+  if (isClaimCheck(item.check) && !correctOpt.expr) {
+    // Verdict item ("converges to …" / "diverges"): the claim itself is checked numerically.
+    issues.push(...claimIssues(where, item.check));
+    if (item.options.some((o) => o.expr)) err('verdict-options-with-expr', 'a verdict item (correct option without expr) must not give exprs on distractors either');
+  }
   if (issues.some((i) => i.level === 'error')) return issues;
 
   if (correctOpt.expr) {
@@ -456,8 +492,12 @@ export function validateStep(problem: StepProblem, step: Step, index: number): I
   if (step.result && !step.result.latex && !step.result.text) err('empty-result', 'step.result needs latex or text');
   if (issues.some((i) => i.level === 'error')) return issues;
   const correctOpt = step.options[step.correct];
-  if (step.check && step.check.kind !== 'none' && !correctOpt.expr) err('correct-missing-expr', `step.check "${step.check.kind}" requires the correct option to have an expr`);
+  if (step.check && step.check.kind !== 'none' && !isClaimCheck(step.check) && !correctOpt.expr) err('correct-missing-expr', `step.check "${step.check.kind}" requires the correct option to have an expr`);
   if (step.check?.kind === 'none' && !step.check.reason) err('check-none-reason', 'check.kind "none" requires a reason');
+  if (isClaimCheck(step.check) && !correctOpt.expr) {
+    issues.push(...claimIssues(where, step.check));
+    if (step.options.some((o) => o.expr)) err('verdict-options-with-expr', 'a verdict step (correct option without expr) must not give exprs on distractors either');
+  }
   if (issues.some((i) => i.level === 'error')) return issues;
   if (correctOpt.expr) {
     const distractors = step.options.filter((_, i) => i !== step.correct).map((o) => ({ label: optionLabel(o), expr: o.expr! }));
@@ -501,12 +541,13 @@ export function validateStepProblem(problem: StepProblem): Issue[] {
     if (!problem.final.check) err('missing-final-check', 'final.check is required');
     else if (problem.final.check.kind === 'none') {
       if (!problem.final.check.reason) err('check-none-reason', 'final.check "none" requires a reason');
-    } else if (!problem.final.expr) err('missing-final-expr', `final.check "${problem.final.check.kind}" requires final.expr`);
+    } else if (!problem.final.expr && !isClaimCheck(problem.final.check)) err('missing-final-expr', `final.check "${problem.final.check.kind}" requires final.expr`);
   }
   if (issues.some((i) => i.level === 'error')) return issues;
 
   problem.steps.forEach((s, i) => issues.push(...validateStep(problem, s, i)));
 
+  if (isClaimCheck(problem.final.check) && !problem.final.expr) issues.push(...claimIssues(`${problem.id}#final`, problem.final.check));
   if (problem.final.check.kind !== 'none' && problem.final.expr) {
     issues.push(
       ...numericChecks(

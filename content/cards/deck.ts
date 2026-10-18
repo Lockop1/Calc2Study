@@ -1,4 +1,9 @@
 import type { Card, CardSection } from '../types';
+import { partialFractionCards } from './partial-fractions';
+import { improperCards } from './improper';
+import { sequenceCards } from './sequences';
+import { seriesBasicsCards } from './series-basics';
+import { seriesTestsCards } from './series-tests';
 
 /** The nine filter groups, in whiteboard order, with their chip labels. */
 export const CARD_SECTIONS: readonly { id: CardSection; label: string }[] = [
@@ -11,10 +16,16 @@ export const CARD_SECTIONS: readonly { id: CardSection; label: string }[] = [
   { id: 'area-volume', label: 'Area & volume' },
   { id: 'arc-length', label: 'Arc length' },
   { id: 'ibp', label: 'IBP' },
+  { id: 'partial-fractions', label: 'Partial fractions' },
+  { id: 'improper', label: 'Improper integrals' },
+  { id: 'sequences', label: 'Sequences' },
+  { id: 'series-basics', label: 'Series basics' },
+  { id: 'series-tests', label: 'Series tests' },
 ];
 
 /** Flashcard deck (whiteboard formulas). Authored by content-author; verified by math-verifier. */
-export const CARDS: Card[] = [
+/** The original whiteboard deck (sections 1–9). Do not change these cards. */
+export const WHITEBOARD_CARDS: Card[] = [
   // ── 1. Derivatives (front = f(x); the UI frames it as d/dx[f(x)]) ──
   {
     id: 'card-derivatives-01',
@@ -528,6 +539,16 @@ export const CARDS: Card[] = [
     back: { latex: '\\int u\\,dv = uv - \\int v\\,du' },
     check: { kind: 'none', reason: 'symbolic formula' },
   },
+];
+
+/** Every card: the whiteboard deck followed by the topic-10–14 decks (one file per topic). */
+export const CARDS: Card[] = [
+  ...WHITEBOARD_CARDS,
+  ...partialFractionCards,
+  ...improperCards,
+  ...sequenceCards,
+  ...seriesBasicsCards,
+  ...seriesTestsCards,
 ];
 
 export function cardsInSection(section: CardSection): Card[] {

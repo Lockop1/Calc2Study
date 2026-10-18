@@ -15,6 +15,9 @@ Legend: ☐ not started · ◐ in progress · ☑ done · ✗ blocked
 | 9 | PWA/offline + mobile QA | ☑ | qa/REPORT.md: 382/384 checks pass at 390×844 incl. offline, storage-unavailable, dark mode; reset double-tap fixed; one minor layout note open |
 
 | 10 | Cards mode (flashcards of the whiteboard formulas; exempt from the 5-option rule) | ☑ | 50 cards in 9 sections, math-verifier PASS; CardsScreen with flip/grade/requeue/summary/filters/reset; 962 tests, Playwright 56/56 at 390×844 incl. offline |
+| 11 | Session 3, Phase A — Cards for topics 10–14 (partial fractions, improper integrals, sequences, series basics, series tests) | ◐ | Infra: new card sections, per-topic card files, claim check kinds (`checker/claims.ts`), mistake tags, Home subtitle "MAC 2312"; 5 authors → verifiers → merge to main |
+| 12 | Session 3, Phase B — Flash Drill for topics 10–14 (≥40 items each, decoy-hub, medoid ≤30%) | ☐ | topics in `content/topics.ts`, `scripts/medoid-scan.ts` + `tests/medoid.test.ts`; 5 authors → verifiers → merge to main |
+| 13 | Session 3, Phase C — Step-Through for topics 10–14 (≥8 problems each) | ☐ | professor's step order; 5 authors → verifiers → `hasStepMinimum` on → merge to main |
 
 ## Log
 
@@ -31,3 +34,4 @@ Legend: ☐ not started · ◐ in progress · ☑ done · ✗ blocked
 - Session 2, Task 10 (Cards): `Card` type added to content/types.ts, deck stub + `tests/cards.test.ts` written by the orchestrator; content-author writing the 50-card deck; ui-builder building CardsScreen; verifier to follow.
 - Task 10 done: deck verified (qa/verification/cards.md), Cards UI built and smoke-tested (qa/cards-smoke.mjs), suite 27 files / 962 tests, build green.
 - Cards polish: 200 ms edge-on flip animation (face and colour swap while the card is edge-on; instant under reduced motion), answer side tinted with an accent border and an “Answer” tag in both themes; verified in Chromium at 390×844 (qa/screenshots/cards-flip-*.png).
+- Session 3 (topics 10–14, Lectures 8–12; spec in CLAUDE.md is the source of truth — no PDFs). Phase A infra done by the orchestrator: `CardSection`/`CardCategory` extended, `content/cards/<topic>.ts` per topic concatenated in `deck.ts`, `tests/cards.test.ts` keeps the exact whiteboard counts and adds minimums for the new sections; check kinds `improper-integral` / `limit` / `series` implemented in `checker/claims.ts` with `tests/claims.test.ts` (90 cases) and `tests/claim-items.test.ts`; 60 new mistake tags (`pf-`, `im-`, `sq-`, `sb-`, `st-`); `scripts/medoid-scan.ts` + `tests/medoid.test.ts` (≤30% for topics 10–14); Home subtitle → "MAC 2312". Five card authors launched in parallel.

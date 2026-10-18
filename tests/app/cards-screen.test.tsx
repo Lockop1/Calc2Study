@@ -107,7 +107,7 @@ describe('filter panel', () => {
     expect(chip('Derivatives').getAttribute('aria-pressed')).toBe('false');
     expect(screen.getByText('5 cards selected')).toBeTruthy();
     expect(stored().filters).toEqual({
-      sections: ['antiderivatives', 'pythagorean', 'double-angle', 'half-angle', 'trig-sub', 'area-volume', 'arc-length', 'ibp'],
+      sections: ['antiderivatives', 'pythagorean', 'double-angle', 'half-angle', 'trig-sub', 'area-volume', 'arc-length', 'ibp', 'partial-fractions', 'improper', 'sequences', 'series-basics', 'series-tests'],
       shuffle: false,
       missedOnly: false,
     });
@@ -120,7 +120,7 @@ describe('filter panel', () => {
     expect(button('Nothing to study')).toHaveProperty('disabled', true);
     expect(screen.getByText('Pick at least one section.')).toBeTruthy();
     click('All');
-    expect(stored().filters.sections).toHaveLength(9);
+    expect(stored().filters.sections).toHaveLength(14);
     fireEvent.click(switchEl(/Missed only/));
     expect(stored().filters.missedOnly).toBe(true);
     expect(screen.getByText(/No missed cards in these sections/)).toBeTruthy();
@@ -303,7 +303,7 @@ describe('reset', () => {
     click('Reset all 7 cards');
     click('Tap again to reset');
     expect(stored().cards).toEqual({});
-    expect(stored().filters.sections).toHaveLength(9);
+    expect(stored().filters.sections).toHaveLength(14);
   });
 
   it('with missed-only on resets only the missed cards', () => {
