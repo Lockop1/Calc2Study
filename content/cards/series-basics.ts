@@ -142,6 +142,9 @@ export const seriesBasicsCards: Card[] = [
     check: { kind: 'none', reason: 'conceptual: no property applies when both series diverge' },
   },
   {
+    // + case: b_n = (a_n + b_n) - a_n; - case: b_n = a_n - (a_n - b_n). Each is a difference of two series
+    // that would both converge, so the difference rule alone gives the contradiction (math-verifier: the
+    // first draft showed only the + case)
     id: 'card-series-basics-13',
     category: 'Series Basics',
     section: 'series-basics',
@@ -149,7 +152,7 @@ export const seriesBasicsCards: Card[] = [
     front: { text: '$\\sum a_n$ converges and $\\sum b_n$ diverges. What can you conclude about ${\\sum (a_n \\pm b_n)}$?' },
     back: {
       latex:
-        '\\begin{aligned} &\\text{diverges: if it converged,} \\\\ &\\textstyle\\sum b_n = \\sum \\bigl[(a_n + b_n) - a_n\\bigr] \\\\ &\\text{would converge too} \\end{aligned}',
+        '\\begin{aligned} &\\text{diverges: if it converged,} \\\\ &\\textstyle\\sum b_n = \\sum \\bigl[(a_n + b_n) - a_n\\bigr] \\\\ &\\textstyle\\phantom{\\sum b_n} \\text{ or } \\sum \\bigl[a_n - (a_n - b_n)\\bigr] \\\\ &\\text{would converge too} \\end{aligned}',
     },
     check: { kind: 'none', reason: 'conceptual: follows from the difference rule applied to convergent series' },
   },
