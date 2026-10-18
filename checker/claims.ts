@@ -344,9 +344,15 @@ function series(check: Extract<Check, { kind: 'series' }>, where: string): Claim
   const scale = Math.max(1, Math.abs(S[3]));
   if (check.converges) {
     const termsToZero = Math.abs(terms[3]) < 1e-2 && Math.abs(terms[3]) <= Math.abs(terms[1]) + 1e-12;
+    // Positive terms: the increment over [5000, 10000] relative to the one over [1000, 5000] is
+    // ln2/ln5 ≈ 0.431 for 1/n and decreases with p (0.403 at p = 1.05, 0.38 at p = 1.1); a ratio
+    // of 0.42 or more means harmonic-or-slower decay, i.e. divergence.
+    const positive = terms.every((t) => t > 0) && inc[2] > 0 && inc[3] > 0;
+    const harmonicLike = positive && inc[3] / inc[2] >= 0.42;
     if (!termsToZero) err('series-claimed-convergent', `the terms do not tend to 0 (divergence test): ${show}`);
     else if (Math.abs(S[3]) > 1e6) err('series-claimed-convergent', `partial sums blow up: ${show}`);
     else if (Math.abs(inc[3]) > 0.5 * scale) err('series-claimed-convergent', `partial sums keep growing: ${show}`);
+    else if (harmonicLike) err('series-claimed-convergent', `partial sums grow like the harmonic series or slower-decaying (increment ratio ${(inc[3] / inc[2]).toFixed(3)} ≥ 0.42): ${show}`);
     if (target !== undefined && !issues.some((i) => i.level === 'error')) {
       const e = S.map((s) => Math.abs(s - target));
       const ok = e[3] <= Math.max(1e-6, 0.05 * Math.abs(target)) && (e[3] <= 1e-9 || e[3] < e[1]);

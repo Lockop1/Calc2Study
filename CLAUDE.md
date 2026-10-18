@@ -77,7 +77,8 @@ Spec for topics 10–14 (condensed from the course):
   Σarⁿ⁻¹ (from n = 1): Sₙ = a(1−rⁿ)/(1−r), converges iff |r| < 1 to a/(1−r), a = first term (watch
   the index). Telescoping Σ(bₙ − bₙ₊₁): Sₙ = b₁ − bₙ₊₁, converges iff lim bₙ = L finite, sum b₁ − L.
   Properties: both convergent ⇒ Σ(aₙ ± bₙ), Σcaₙ converge; never split into divergent pieces;
-  recognize insufficient information.
+  convergent ± divergent ⇒ divergent (by the difference rule); divergent + divergent ⇒ insufficient
+  information (it may converge or diverge).
 - *Series tests* (positive terms). Integral Test: f positive, continuous, decreasing on [k, ∞) ⇒
   Σaₙ and ∫ₖ^∞ f both converge or both diverge; the integral's value ≠ the sum; state all three
   conditions. p-series converges iff p > 1. Direct Comparison (0 < aₙ ≤ bₙ): larger converges ⇒
