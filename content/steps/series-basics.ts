@@ -630,19 +630,19 @@ export const steps: StepProblem[] = [
         options: [
           { latex: '\\frac{1}{2}\\left(1 + \\frac{1}{2} - \\frac{1}{n} - \\frac{1}{n+1}\\right)' },
           {
-            latex: '\\frac{1}{2}\\left(1 - \\frac{1}{n+1}\\right)',
+            latex: '\\frac{1}{2}\\left(1 + \\frac{1}{2} - \\frac{1}{n+1} - \\frac{1}{n+2}\\right)',
             mistake: 'sb-telescoping-sum-wrong',
-            why: 'With a gap of 2 between the indices, two terms survive at each end, not one.',
+            why: 'The last negative terms come from k = n − 1 and k = n, so they are 1/n and 1/(n+1), not 1/(n+1) and 1/(n+2).',
           },
           {
-            latex: '1 - \\frac{1}{n+1}',
-            mistake: 'sb-telescoping-sum-wrong',
-            why: 'Only one term was kept at each end instead of two, and the factor 1/2 was dropped.',
+            latex: '1 + \\frac{1}{2} - \\frac{1}{n+1} - \\frac{1}{n+2}',
+            mistake: 'coefficient-mishandled',
+            why: 'The factor 1/2 in front of every term was dropped, and the tail terms are off by one index.',
           },
           {
-            latex: '\\frac{1}{2}\\left(1 - \\frac{1}{n}\\right)',
-            mistake: 'sb-telescoping-sum-wrong',
-            why: 'Only one term was kept at each end instead of two, and the wrong tail term was kept.',
+            latex: '\\frac{1}{2}\\left(1 + \\frac{1}{2} + \\frac{1}{n+1} + \\frac{1}{n+2}\\right)',
+            mistake: 'sign-error',
+            why: 'The surviving tail terms carry the minus sign of −1/(k+1); they are also off by one index.',
           },
           {
             latex: '\\frac{1}{2}\\left(1 + \\frac{1}{2}\\right)',
@@ -983,9 +983,9 @@ export const steps: StepProblem[] = [
             why: 'Treated 1/n as geometric, but the ratio aₙ₊₁/aₙ is not constant.',
           },
           {
-            text: 'Inconclusive',
-            mistake: 'sb-no-information',
-            why: 'The harmonic series is known to diverge, so the question is settled.',
+            text: 'Diverges, since $\\tfrac{1}{n} \\to 0$ and the divergence test applies',
+            mistake: 'sq-theorem-misattributed',
+            why: 'Right verdict, invalid reason: the divergence test says nothing when the terms tend to 0. The harmonic series diverges because its partial sums grow without bound.',
           },
         ],
         correct: 0,

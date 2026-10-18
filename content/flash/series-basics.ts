@@ -315,22 +315,22 @@ export const flash: FlashItem[] = [
     options: [
       { text: '$\\lim a_n \\ne 0$ (or DNE) $\\Rightarrow \\sum a_n$ diverges; $\\lim a_n = 0$ tells you nothing' },
       {
-        text: '$\\lim a_n = 0 \\Rightarrow \\sum a_n$ converges',
+        text: '$\\lim a_n \\ne 0$ (or DNE) $\\Rightarrow \\sum a_n$ diverges; $\\lim a_n = 0 \\Rightarrow \\sum a_n$ converges',
         mistake: 'sb-divergence-test-converse',
-        why: 'This is the false converse; the harmonic series has aₙ → 0 and diverges.',
+        why: 'The second half is the false converse; the harmonic series has aₙ → 0 and diverges.',
       },
       {
-        text: '$\\lim a_n = 0 \\Rightarrow \\sum a_n$ diverges',
+        text: '$\\lim a_n \\ne 0$ (or DNE) $\\Rightarrow \\sum a_n$ converges; $\\lim a_n = 0 \\Rightarrow \\sum a_n$ diverges',
         mistake: 'sq-theorem-misattributed',
-        why: 'Reversed what the test says: a limit of 0 gives no information, it does not force divergence.',
+        why: 'Both halves are reversed: a nonzero limit forces divergence, and a limit of 0 gives no information.',
       },
       {
-        text: '$\\lim a_n = L \\Rightarrow \\sum a_n = L$',
+        text: '$\\lim a_n = L \\ne 0 \\Rightarrow \\sum a_n = L$; $\\lim a_n = 0 \\Rightarrow \\sum a_n$ converges',
         mistake: 'sb-sum-is-term-limit',
-        why: 'The sum of a series is lim Sₙ, not lim aₙ.',
+        why: 'The sum of a series is lim Sₙ, not lim aₙ; and a limit of 0 never proves convergence.',
       },
       {
-        text: 'It applies only to geometric series',
+        text: '$\\lim a_n \\ne 0$ (or DNE) $\\Rightarrow \\sum a_n$ diverges, for geometric series only; $\\lim a_n = 0$ tells you nothing',
         mistake: 'sq-theorem-misattributed',
         why: 'The divergence test applies to every series, not just geometric ones.',
       },
@@ -427,10 +427,10 @@ export const flash: FlashItem[] = [
         why: 'Used a = 1 although the series starts at n = 1, where the first term is 2/3.',
       },
       {
-        latex: '6',
-        expr: '6',
+        latex: '\\frac{3}{2}',
+        expr: '3/2',
         mistake: 'sb-wrong-first-term',
-        why: 'Used a = 2 (the numerator of the ratio) as the first term.',
+        why: 'Used a = 1 as the first term and then divided it by r = 2/3 instead of by 1 − r.',
       },
       {
         latex: '\\frac{2}{3}',

@@ -358,16 +358,16 @@ export const steps: StepProblem[] = [
             why: 'Forgot to divide by x² + 1 = 2 after plugging in x = 1.',
           },
           {
-            latex: '-1',
-            expr: '-1',
+            latex: '-2',
+            expr: '-2',
             mistake: 'sign-error',
-            why: 'Made a sign slip in 3 − 1, which is +2, so A = +1.',
+            why: 'Read 3 − 1 as −2 and also forgot to divide by x² + 1 = 2.',
           },
           {
-            latex: '\\frac{1}{2}',
-            expr: '1/2',
+            latex: '4',
+            expr: '4',
             mistake: 'arithmetic-error',
-            why: 'Divided 1 by 2 instead of 2 by 2.',
+            why: 'Multiplied 3 − 1 = 2 by x² + 1 = 2 instead of dividing by it.',
           },
           {
             latex: '3',
@@ -1197,10 +1197,10 @@ export const steps: StepProblem[] = [
             why: 'Wrote u² as (x + 1)² but dropped the +4, and also left u as x inside the arctan.',
           },
           {
-            latex: '\\frac{1}{2}\\ln(x^{2}+2x+5) + \\arctan x + C',
-            expr: '1/2*log(x^2+2*x+5) + arctan(x) + C',
+            latex: '\\frac{1}{2}\\ln(x^{2}+2x+5) + \\arctan\\frac{x}{2} + C',
+            expr: '1/2*log(x^2+2*x+5) + arctan(x/2) + C',
             mistake: 'pf-arctan-missing-1-over-k',
-            why: 'Both the factor 1/2 and the division by 2 inside the arctan belong to k = 2; u was also left as x.',
+            why: 'The factor 1/k = 1/2 in front of the arctan was dropped, and u was left as x inside it.',
           },
           {
             latex: '\\frac{1}{2}\\ln(x^{2}+2x+5) - \\frac{1}{2}\\arctan\\frac{x+1}{2} + C',
