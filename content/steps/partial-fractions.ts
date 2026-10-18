@@ -82,16 +82,16 @@ export const steps: StepProblem[] = [
             why: 'Plugged x = 1 into the wrong factor, which swaps the signs of A and B.',
           },
           {
-            latex: 'A = 1,\\quad B = -1',
-            expr: '[1, -1]',
+            latex: 'A = -1,\\quad B = 1',
+            expr: '[-1, 1]',
             mistake: 'pf-coefficient-wrong',
-            why: 'Forgot the factor 2 from x + 1 at x = 1, so A should be 1/2.',
+            why: 'Swapped the signs of A and B and also forgot the factor 2 from x ± 1 at the roots.',
           },
           {
-            latex: 'A = \\frac{1}{2},\\quad B = \\frac{1}{2}',
-            expr: '[1/2, 1/2]',
+            latex: 'A = -\\frac{1}{2},\\quad B = -\\frac{1}{2}',
+            expr: '[-1/2, -1/2]',
             mistake: 'sign-error',
-            why: 'At x = −1 the equation 1 = −2B gives B = −1/2, not +1/2.',
+            why: 'Plugged x = 1 into the wrong factor and also mis-signed the x = −1 equation, so A comes out negative.',
           },
           {
             latex: 'A = 2,\\quad B = -2',
@@ -120,10 +120,10 @@ export const steps: StepProblem[] = [
             why: 'Lost the minus sign: B is negative, so the second log is subtracted.',
           },
           {
-            latex: '\\ln|x-1| - \\ln|x+1| + C',
-            expr: 'log(abs(x-1)) - log(abs(x+1)) + C',
+            latex: '\\ln|x-1| + \\ln|x+1| + C',
+            expr: 'log(abs(x-1)) + log(abs(x+1)) + C',
             mistake: 'pf-coefficient-wrong',
-            why: 'Dropped the coefficients 1/2 in front of each logarithm.',
+            why: 'Dropped the coefficients 1/2 in front of each logarithm and also lost the minus sign on the second log.',
           },
           {
             latex: '\\frac{1}{2}\\ln|x^{2}-1| + C',
@@ -1106,28 +1106,28 @@ export const steps: StepProblem[] = [
         prompt: 'With $u = x+1$ (so $x = u - 1$), rewrite the integrand.',
         variable: 'x',
         options: [
-          { latex: '\\dfrac{u+1}{u^{2}+4}', expr: '(x+2)/((x+1)^2+4)' },
+          { latex: '\\dfrac{u+1}{u^{2}+4}', expr: '(u+1)/(u^2+4)' },
           {
             latex: '\\dfrac{u+2}{u^{2}+4}',
-            expr: '(x+3)/((x+1)^2+4)',
+            expr: '(u+2)/(u^2+4)',
             mistake: 'algebra-error',
             why: 'Left the numerator as u + 2; x + 2 = (u − 1) + 2 = u + 1.',
           },
           {
             latex: '\\dfrac{u}{u^{2}+4}',
-            expr: '(x+1)/((x+1)^2+4)',
+            expr: 'u/(u^2+4)',
             mistake: 'algebra-error',
             why: 'Dropped the constant part of the numerator when substituting x = u − 1.',
           },
           {
             latex: '\\dfrac{u+1}{u^{2}+5}',
-            expr: '(x+2)/((x+1)^2+5)',
+            expr: '(u+1)/(u^2+5)',
             mistake: 'pf-square-not-completed',
             why: 'Completed the square wrongly: it is (x + 1)² + 4, since 5 − 1 = 4.',
           },
           {
             latex: '\\dfrac{u-1}{u^{2}+4}',
-            expr: 'x/((x+1)^2+4)',
+            expr: '(u-1)/(u^2+4)',
             mistake: 'sign-error',
             why: 'Used u − 1 for the numerator, but x + 2 = u + 1.',
           },
@@ -1137,7 +1137,8 @@ export const steps: StepProblem[] = [
         result: {
           latex: '\\int \\frac{u+1}{u^{2}+4}\\,du = \\int \\frac{u}{u^{2}+4}\\,du + \\int \\frac{1}{u^{2}+4}\\,du',
         },
-        check: { kind: 'identity', lhs: '(x+2)/(x^2+2*x+5)' },
+        check: { kind: 'identity', lhs: '((u-1)+2)/((u-1)^2+2*(u-1)+5)' },
+        variable: 'u',
       },
       {
         prompt: 'Integrate in $u$.',
