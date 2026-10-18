@@ -80,19 +80,19 @@ export const flash: FlashItem[] = [
         why: 'Missed that 1/x² blows up at 0, which lies inside the interval, so the FTC cannot be applied directly.',
       },
       {
-        text: 'Type I',
+        text: 'Not improper: $\\dfrac{1}{x^{2}}$ is even, so the two halves cancel the problem',
+        mistake: 'im-symmetric-limit',
+        why: 'Hoped symmetry removes the trouble, but symmetry never removes an interior discontinuity.',
+      },
+      {
+        text: 'Not improper: $\\dfrac{1}{x^{2}}$ is continuous except at one point, which does not matter',
         mistake: 'im-wrong-type',
-        why: 'Called it Type I, but the bounds are finite so the interval is not unbounded.',
+        why: 'Dismissed the single point of discontinuity, but one infinite discontinuity is exactly what makes a Type II integral.',
       },
       {
         text: 'Type II at the endpoints $x = \\pm 1$',
         mistake: 'im-wrong-type',
-        why: 'Put the discontinuities at the endpoints, but the integrand equals 1 at both x = 1 and x = −1.',
-      },
-      {
-        text: 'Not improper: $\\dfrac{1}{x^{2}}$ is even, so the two halves cancel the problem',
-        mistake: 'im-symmetric-limit',
-        why: 'Hoped symmetry removes the trouble, but symmetry never removes an interior discontinuity.',
+        why: 'Put the discontinuities at the endpoints, but the integrand equals 1 at both ends; the blow-up is at 0.',
       },
     ],
     correct: 0,
@@ -112,7 +112,12 @@ export const flash: FlashItem[] = [
         why: 'Invented a discontinuity at 0, but e^{−x} is continuous everywhere.',
       },
       {
-        text: 'Both: $e^{-x} \\to 0$ makes it Type II as well',
+        text: 'Type II: $e^{-x}$ is undefined at $\\infty$',
+        mistake: 'im-plug-infinity',
+        why: 'Treated ∞ as a point where the function is evaluated, but ∞ is a bound, not a point.',
+      },
+      {
+        text: 'Type II: $e^{-x} \\to 0$ as $x \\to \\infty$',
         mistake: 'im-wrong-type',
         why: 'Treated the integrand tending to 0 as a discontinuity, which it is not.',
       },
@@ -120,11 +125,6 @@ export const flash: FlashItem[] = [
         text: 'Not improper: the integrand is bounded',
         mistake: 'im-wrong-type',
         why: 'Assumed a bounded integrand fixes the problem, but boundedness does not fix an infinite interval.',
-      },
-      {
-        text: 'Type II: $e^{-x}$ is undefined at $\\infty$',
-        mistake: 'im-plug-infinity',
-        why: 'Treated ∞ as a point where the function is evaluated, but ∞ is a bound, not a point.',
       },
     ],
     correct: 0,
@@ -210,19 +210,19 @@ export const flash: FlashItem[] = [
         why: 'Kept ∞ as a bound inside the limit instead of replacing it by the variable t.',
       },
       {
+        text: '$\\displaystyle\\lim_{t\\to 2^{+}} \\int_{t}^{\\infty} f(x)\\,dx$',
+        mistake: 'im-wrong-type',
+        why: 'Treated the finite endpoint 2 as the bad one and kept ∞ as a bound.',
+      },
+      {
+        text: '$\\displaystyle\\lim_{t\\to-\\infty} \\int_{t}^{\\infty} f(x)\\,dx$',
+        mistake: 'im-wrong-one-sided-limit',
+        why: 'Sent t to −∞ and kept ∞ as a bound inside the limit.',
+      },
+      {
         text: '$F(\\infty) - F(2)$',
         mistake: 'im-plug-infinity',
         why: 'Plugged ∞ into the antiderivative instead of taking a limit.',
-      },
-      {
-        text: '$\\displaystyle\\lim_{t\\to 2^{+}} \\int_{t}^{\\infty} f(x)\\,dx$',
-        mistake: 'im-wrong-type',
-        why: 'Treated the finite endpoint 2 as the bad one, although the bad bound is ∞.',
-      },
-      {
-        text: '$\\displaystyle\\lim_{t\\to-\\infty} \\int_{t}^{2} f(x)\\,dx$',
-        mistake: 'im-wrong-one-sided-limit',
-        why: 'Sent t to −∞ instead of +∞, which describes the wrong half-line.',
       },
     ],
     correct: 0,
@@ -438,28 +438,28 @@ export const flash: FlashItem[] = [
     options: [
       { latex: '\\frac{1}{2}', expr: '1/2' },
       {
-        latex: '1',
-        expr: '1',
-        mistake: 'power-rule-int-exponent',
-        why: 'Treated it like the integral of 1/x², which gives 1.',
-      },
-      {
         latex: '-\\frac{1}{2}',
         expr: '-1/2',
         mistake: 'ftc-order-swapped',
         why: 'Computed F(1) − F(t) instead of F(t) − F(1), which flips the sign.',
       },
       {
+        latex: '-1',
+        expr: '-1',
+        mistake: 'power-rule-int-exponent',
+        why: 'Treated it like the integral of 1/x², which gives 1, and also swapped the FTC order.',
+      },
+      {
+        latex: '-\\frac{1}{3}',
+        expr: '-1/3',
+        mistake: 'arithmetic-error',
+        why: 'Divided by 3 (the old exponent) instead of by 2 (the new exponent −2), and swapped the FTC order.',
+      },
+      {
         latex: '0',
         expr: '0',
         mistake: 'im-plug-infinity',
         why: 'Wrote F(∞) = 0 and stopped, forgetting to subtract the lower-bound value.',
-      },
-      {
-        latex: '\\frac{1}{3}',
-        expr: '1/3',
-        mistake: 'arithmetic-error',
-        why: 'Divided by 3 (the old exponent) instead of by 2 (the new exponent −2).',
       },
     ],
     correct: 0,
@@ -474,22 +474,22 @@ export const flash: FlashItem[] = [
     options: [
       { latex: '\\frac{1}{2}', expr: '1/2' },
       {
-        latex: '1',
-        expr: '1',
-        mistake: 'inner-constant-factor-missing',
-        why: 'Forgot the factor 1/2 that comes from the inner derivative of −2x.',
-      },
-      {
         latex: '-\\frac{1}{2}',
         expr: '-1/2',
         mistake: 'sign-error',
         why: 'Lost the minus sign of the antiderivative −(1/2)e^{−2x} when evaluating.',
       },
       {
-        latex: '2',
-        expr: '2',
+        latex: '-1',
+        expr: '-1',
+        mistake: 'inner-constant-factor-missing',
+        why: 'Forgot the factor 1/2 that comes from the inner derivative of −2x, and lost the sign.',
+      },
+      {
+        latex: '-2',
+        expr: '-2',
         mistake: 'du-constant-wrong',
-        why: 'Multiplied by 2 instead of dividing by 2 for the inner constant.',
+        why: 'Multiplied by 2 instead of dividing by 2 for the inner constant, and lost the sign.',
       },
       {
         latex: '0',
@@ -510,28 +510,28 @@ export const flash: FlashItem[] = [
     options: [
       { latex: '\\frac{1}{2}', expr: '1/2' },
       {
-        latex: '1',
-        expr: '1',
-        mistake: 'du-constant-wrong',
-        why: 'Forgot the factor 1/2 coming from u = x², du = 2x dx.',
-      },
-      {
         latex: '-\\frac{1}{2}',
         expr: '-1/2',
         mistake: 'sign-error',
         why: 'Lost the minus sign of the antiderivative −(1/2)e^{−x²} when evaluating.',
       },
       {
+        latex: '-1',
+        expr: '-1',
+        mistake: 'du-constant-wrong',
+        why: 'Forgot the factor 1/2 coming from du = 2x dx, and lost the sign.',
+      },
+      {
+        latex: '-\\frac{1}{4}',
+        expr: '-1/4',
+        mistake: 'arithmetic-error',
+        why: 'Halved twice, applying the factor 1/2 two times, and lost the sign.',
+      },
+      {
         latex: '0',
         expr: '0',
         mistake: 'im-plug-infinity',
         why: 'Wrote F(∞) = 0 and stopped, forgetting to subtract the lower-bound value.',
-      },
-      {
-        latex: '\\frac{1}{4}',
-        expr: '1/4',
-        mistake: 'arithmetic-error',
-        why: 'Halved twice, applying the factor 1/2 two times.',
       },
     ],
     correct: 0,
@@ -618,28 +618,28 @@ export const flash: FlashItem[] = [
     options: [
       { latex: '\\frac{\\pi}{4}', expr: 'pi/4' },
       {
-        latex: '\\frac{\\pi}{2}',
-        expr: 'pi/2',
-        mistake: 'inverse-trig-value-wrong',
-        why: 'Forgot to subtract arctan 1 = π/4 at the lower bound.',
-      },
-      {
         latex: '-\\frac{\\pi}{4}',
         expr: '-pi/4',
         mistake: 'ftc-order-swapped',
         why: 'Computed arctan 1 − arctan t instead of arctan t − arctan 1.',
       },
       {
-        latex: '\\pi',
-        expr: 'pi',
+        latex: '-\\frac{\\pi}{2}',
+        expr: '-pi/2',
         mistake: 'inverse-trig-value-wrong',
-        why: 'Took arctan t → π as t → ∞ instead of π/2.',
+        why: 'Dropped the arctan 1 term at the lower bound and also swapped the FTC order.',
       },
       {
-        latex: '\\frac{3\\pi}{4}',
-        expr: '3*pi/4',
+        latex: '-\\frac{3\\pi}{4}',
+        expr: '-3*pi/4',
+        mistake: 'arithmetic-error',
+        why: 'Added π/4 instead of subtracting it, with the FTC order swapped.',
+      },
+      {
+        latex: '\\frac{\\pi}{2}',
+        expr: 'pi/2',
         mistake: 'inverse-trig-value-wrong',
-        why: 'Computed π − π/4, again using the wrong limit π for arctan t.',
+        why: 'Forgot to subtract arctan 1 = π/4 at the lower bound.',
       },
     ],
     correct: 0,
@@ -654,28 +654,28 @@ export const flash: FlashItem[] = [
     options: [
       { latex: '\\pi', expr: 'pi' },
       {
-        latex: '\\frac{\\pi}{2}',
-        expr: 'pi/2',
-        mistake: 'im-one-half-only',
-        why: 'Computed only one half, the integral from 0 to ∞, and forgot the other half.',
-      },
-      {
-        latex: '0',
-        expr: '0',
-        mistake: 'im-plug-infinity',
-        why: 'Wrote arctan(∞) − arctan(−∞) with both as "∞" and cancelled them.',
-      },
-      {
-        latex: '2\\pi',
-        expr: '2*pi',
-        mistake: 'arithmetic-error',
-        why: 'Doubled π instead of doubling the half-line value π/2.',
-      },
-      {
         latex: '-\\pi',
         expr: '-pi',
         mistake: 'sign-error',
         why: 'Subtracted the two halves in the wrong order.',
+      },
+      {
+        latex: '-\\frac{\\pi}{2}',
+        expr: '-pi/2',
+        mistake: 'im-one-half-only',
+        why: 'Computed only one half of the integral and lost the sign.',
+      },
+      {
+        latex: '-2\\pi',
+        expr: '-2*pi',
+        mistake: 'arithmetic-error',
+        why: 'Doubled π instead of doubling the half-line value π/2, and lost the sign.',
+      },
+      {
+        latex: '\\frac{\\pi}{2}',
+        expr: 'pi/2',
+        mistake: 'im-one-half-only',
+        why: 'Computed only one half, the integral from 0 to ∞, and forgot the other half.',
       },
     ],
     correct: 0,
@@ -696,22 +696,22 @@ export const flash: FlashItem[] = [
         why: 'Lost the sign of x ln x − x when evaluating at x = 1.',
       },
       {
-        latex: '0',
-        expr: '0',
-        mistake: 'im-plug-infinity',
-        why: 'Plugged in x = 0 as if ln 0 were 0 and ignored the limit.',
+        latex: '2',
+        expr: '2',
+        mistake: 'arithmetic-error',
+        why: 'Counted the −x term twice and lost the sign.',
+      },
+      {
+        latex: '\\frac{1}{2}',
+        expr: '1/2',
+        mistake: 'ibp-formula-wrong',
+        why: 'Used x ln x − x/2 as the antiderivative of ln x and lost the sign.',
       },
       {
         latex: '-\\frac{1}{2}',
         expr: '-1/2',
         mistake: 'ibp-formula-wrong',
         why: 'Used x ln x − x/2 as the antiderivative of ln x.',
-      },
-      {
-        latex: '-2',
-        expr: '-2',
-        mistake: 'arithmetic-error',
-        why: 'Counted the −x term twice.',
       },
     ],
     correct: 0,
@@ -830,12 +830,12 @@ export const flash: FlashItem[] = [
         why: 'Applied the FTC across the blow-up at 0 inside the interval.',
       },
       {
-        text: '$= 2$, since the integrand is positive',
+        text: '$= 2$ by the FTC, since the integrand is positive',
         mistake: 'im-hidden-discontinuity',
         why: 'Fixed the sign but still ignored the discontinuity at 0.',
       },
       {
-        text: 'Converges to $0$ by symmetry',
+        text: '$= 0$ by the FTC and symmetry',
         mistake: 'im-symmetric-limit',
         why: 'Used symmetry, but symmetry cannot rescue an interior discontinuity.',
       },
@@ -992,19 +992,19 @@ export const flash: FlashItem[] = [
         why: 'Included p = 1, where ln t → ∞ and the integral diverges.',
       },
       {
+        text: '$p \\ge 0$',
+        mistake: 'im-p-rule-wrong',
+        why: 'Included every p from 0 to 1, where the integral diverges.',
+      },
+      {
+        text: '$|p| \\ge 1$',
+        mistake: 'im-p-rule-wrong',
+        why: 'Included p = 1 and negative p, where the integrand grows and the integral diverges.',
+      },
+      {
         text: '$p < 1$',
         mistake: 'im-p-rule-wrong',
         why: 'Reversed the rule: the integral diverges for p < 1.',
-      },
-      {
-        text: '$p > 0$',
-        mistake: 'im-p-rule-wrong',
-        why: 'Assumed any positive p is enough, but 0 < p ≤ 1 still diverges.',
-      },
-      {
-        text: '$p > 1$ or $p < 0$',
-        mistake: 'im-p-rule-wrong',
-        why: 'Added negative p as converging, but a negative p makes the integrand grow.',
       },
     ],
     correct: 0,
@@ -1025,22 +1025,22 @@ export const flash: FlashItem[] = [
         why: 'Lost the sign when evaluating x^{1−p}/(1 − p) at the lower bound.',
       },
       {
+        latex: '\\frac{p}{1-p}',
+        expr: 'p/(1-p)',
+        mistake: 'arithmetic-error',
+        why: 'Multiplied the value by an extra factor of p and lost the sign.',
+      },
+      {
+        latex: '\\frac{2}{1-p}',
+        expr: '2/(1-p)',
+        mistake: 'arithmetic-error',
+        why: 'Doubled the result and lost the sign.',
+      },
+      {
         latex: '\\frac{1}{p}',
         expr: '1/p',
         mistake: 'power-rule-int-exponent',
         why: 'Divided by p instead of by 1 − p after raising the exponent.',
-      },
-      {
-        latex: '\\frac{p}{p-1}',
-        expr: 'p/(p-1)',
-        mistake: 'arithmetic-error',
-        why: 'Multiplied the correct value by an extra factor of p.',
-      },
-      {
-        latex: '\\frac{1}{p+1}',
-        expr: '1/(p+1)',
-        mistake: 'power-rule-int-exponent',
-        why: 'Used p + 1 instead of p − 1, as if the exponent were +p rather than −p.',
       },
     ],
     correct: 0,
@@ -1240,6 +1240,7 @@ export const generators: FlashGenerator[] = [
     generate(seed) {
       const [n, d] = EXP_K[(seed - 1) % EXP_K.length];
       const k = q(n, d);
+      const negK = q(-n, d); // -k
       const inv = q(d, n); // 1/k
       const negInv = q(-d, n); // -1/k
       // exponent as printed: e^{-2x}, e^{-x/2}, e^{-3x/2}, e^{-5x/2}
@@ -1259,16 +1260,16 @@ export const generators: FlashGenerator[] = [
             why: 'Lost the minus sign of the antiderivative −(1/k)e^{−kx} when evaluating.',
           },
           {
-            latex: ql(k),
-            expr: qe(k),
+            latex: ql(negK),
+            expr: qe(negK),
             mistake: 'du-constant-wrong',
-            why: 'Multiplied by k instead of dividing by k for the inner constant.',
+            why: 'Multiplied by k instead of dividing by k for the inner constant, and lost the sign.',
           },
           {
-            latex: '1',
-            expr: '1',
+            latex: '-1',
+            expr: '-1',
             mistake: 'inner-constant-factor-missing',
-            why: 'Forgot the factor 1/k that comes from the inner derivative.',
+            why: 'Forgot the factor 1/k that comes from the inner derivative, and lost the sign.',
           },
           {
             latex: '0',
@@ -1299,8 +1300,8 @@ export const generators: FlashGenerator[] = [
       const [n, d] = P_TABLE[(seed - 1) % P_TABLE.length];
       const ans = q(d, n - d); // 1/(p-1)
       const negAns = q(-d, n - d); // 1/(1-p)
-      const invP = q(d, n); // 1/p
-      const invP1 = q(d, n + d); // 1/(p+1)
+      const negInvP = q(-d, n); // -1/p
+      const negInvP1 = q(-d, n + d); // -1/(p+1)
       const pl = d === 1 ? `${n}` : `${n}/${d}`; // exponent as printed: x^{3/2}
       return {
         id: `im-g-p:${seed}`,
@@ -1316,16 +1317,16 @@ export const generators: FlashGenerator[] = [
             why: 'Evaluated F(1) − F(t) instead of F(t) − F(1), which flips the sign.',
           },
           {
-            latex: ql(invP),
-            expr: qe(invP),
+            latex: ql(negInvP),
+            expr: qe(negInvP),
             mistake: 'power-rule-int-exponent',
-            why: 'Divided by p instead of by p − 1 after raising the exponent.',
+            why: 'Divided by p instead of by p − 1 after raising the exponent, and swapped the FTC order.',
           },
           {
-            latex: ql(invP1),
-            expr: qe(invP1),
+            latex: ql(negInvP1),
+            expr: qe(negInvP1),
             mistake: 'arithmetic-error',
-            why: 'Used p + 1 instead of p − 1 as the new exponent magnitude.',
+            why: 'Used p + 1 instead of p − 1 as the new exponent magnitude, and swapped the FTC order.',
           },
           {
             latex: '0',
