@@ -32,7 +32,7 @@ beforeEach(() => {
 describe('Home', () => {
   it('selects every topic by default and shows the three modes', () => {
     renderApp();
-    expect(chips()).toHaveLength(9);
+    expect(chips()).toHaveLength(14);
     expect(chips().every((c) => c.getAttribute('aria-pressed') === 'true')).toBe(true);
     for (const name of [/Flash Drill/, /Step-Through/, /Review/]) expect(screen.getByRole('button', { name })).toBeTruthy();
     expect(badge()).toBeNull();
@@ -42,7 +42,7 @@ describe('Home', () => {
     const { unmount } = renderApp();
     clickButton('4 Disks/washers');
     expect(chips()[3].getAttribute('aria-pressed')).toBe('false');
-    expect(storedSettings().topics).toHaveLength(8);
+    expect(storedSettings().topics).toHaveLength(13);
     unmount();
 
     renderApp();
@@ -54,7 +54,7 @@ describe('Home', () => {
     expect(screen.getByRole('status').textContent).toMatch(/Pick at least one topic/);
     expect(optionButtons()).toHaveLength(0);
     clickButton('All');
-    expect(storedSettings().topics).toHaveLength(9);
+    expect(storedSettings().topics).toHaveLength(14);
   });
 
   it('shows a friendly message (no crash) when a mode has no content for the selection', () => {
