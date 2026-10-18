@@ -138,6 +138,19 @@ export const sequenceCards: Card[] = [
     category: 'Sequences',
     section: 'sequences',
     kind: 'formula',
+    front: {
+      text: 'Limit laws ($\\lim(a_n \\pm b_n) = \\lim a_n \\pm \\lim b_n$, and likewise for $c\\,a_n$, $a_n b_n$, $\\frac{a_n}{b_n}$): when do they apply?',
+    },
+    back: {
+      latex: '\\begin{aligned} &\\text{both } \\{a_n\\},\\ \\{b_n\\} \\text{ converge} \\\\ &(\\text{for } \\tfrac{a_n}{b_n}\\text{, also } \\lim_{n\\to\\infty} b_n \\ne 0) \\end{aligned}',
+    },
+    check: { kind: 'none', reason: 'theorem (hypotheses of the limit laws); verified by math-verifier' },
+  },
+  {
+    id: 'card-sequences-14',
+    category: 'Sequences',
+    section: 'sequences',
+    kind: 'formula',
     front: { text: 'Continuous Function Theorem for sequences?' },
     back: {
       latex: '\\begin{aligned} &\\text{If } \\lim_{n\\to\\infty} a_n = L \\\\ &\\text{and } f \\text{ is continuous at } L, \\\\ &\\text{then } \\lim_{n\\to\\infty} f(a_n) = f(L) \\end{aligned}',
@@ -146,7 +159,7 @@ export const sequenceCards: Card[] = [
     check: { kind: 'none', reason: 'theorem (hypotheses and conclusion); verified by math-verifier' },
   },
   {
-    id: 'card-sequences-14',
+    id: 'card-sequences-15',
     category: 'Sequences',
     section: 'sequences',
     kind: 'formula',
@@ -156,26 +169,17 @@ export const sequenceCards: Card[] = [
     },
     check: { kind: 'none', reason: 'theorem (hypotheses and conclusion); verified by math-verifier' },
   },
-  {
-    id: 'card-sequences-15',
-    category: 'Sequences',
-    section: 'sequences',
-    kind: 'formula',
-    front: { text: 'Corollary of the Squeeze Theorem (about $|a_n|$)?' },
-    back: {
-      latex: '\\begin{aligned} &\\text{If } \\lim_{n\\to\\infty} |a_n| = 0, \\\\ &\\text{then } \\lim_{n\\to\\infty} a_n = 0 \\end{aligned}',
-    },
-    check: { kind: 'none', reason: 'theorem (corollary of the Squeeze Theorem); verified by math-verifier' },
-  },
+  // example line: |(-1)^n/n| = 1/n -> 0, so (-1)^n/n -> 0 (sign changes alone do not mean divergence)
   {
     id: 'card-sequences-16',
     category: 'Sequences',
     section: 'sequences',
     kind: 'formula',
-    front: { text: 'Use the Squeeze corollary:', latex: '\\lim_{n\\to\\infty} \\frac{(-1)^n}{n} = \\,?' },
-    back: { latex: '0', expr: '0' },
-    check: { kind: 'limit', term: '(-1)^n/n', variable: 'n', limit: '0' },
-    variable: 'n',
+    front: { text: 'Corollary of the Squeeze Theorem (about $|a_n|$)?' },
+    back: {
+      latex: '\\begin{aligned} &\\text{If } \\lim_{n\\to\\infty} |a_n| = 0, \\\\ &\\text{then } \\lim_{n\\to\\infty} a_n = 0 \\\\ &\\text{e.g. } \\frac{(-1)^n}{n} \\to 0 \\ \\ (|a_n| = \\tfrac{1}{n}) \\end{aligned}',
+    },
+    check: { kind: 'none', reason: 'theorem (corollary of the Squeeze Theorem) with its standard example; verified by math-verifier' },
   },
 
   // ── Bounded, monotone, Monotone Convergence Theorem ──

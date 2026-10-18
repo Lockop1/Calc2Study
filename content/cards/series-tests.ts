@@ -123,11 +123,13 @@ export const seriesTestsCards: Card[] = [
     back: {
       latex:
         '\\begin{array}{c} \\text{if } \\sum b_n \\text{ diverges,} \\\\ \\text{then } \\sum a_n \\text{ diverges} \\\\[6pt] ' +
-        '\\small (\\textstyle\\sum b_n \\text{ converges: inconclusive}) \\end{array}',
+        '\\footnotesize (\\textstyle\\sum b_n \\text{ converges: inconclusive}) \\end{array}',
     },
     check: { kind: 'none', reason: 'test statement (symbolic series); verified by math-verifier' },
   },
   {
+    // the choice is valid because a_n/b_n = n^2(n+1)/(n^3+2) -> 1, with 0 < 1 < infinity (and the
+    // sum of 1/n^2 converges, so this series converges); the check verifies that ratio limit
     id: 'card-series-tests-10',
     category: 'Series Tests',
     section: 'series-tests',
@@ -136,7 +138,7 @@ export const seriesTestsCards: Card[] = [
     back: {
       latex: '\\begin{array}{c} \\text{keep the dominant terms:} \\\\[6pt] b_n = \\dfrac{n}{n^3} = \\dfrac{1}{n^2} \\end{array}',
     },
-    check: { kind: 'none', reason: 'choice of comparison series (heuristic); verified by math-verifier' },
+    check: { kind: 'limit', term: '((n+1)/(n^3+2))/(1/n^2)', limit: '1' },
   },
 
   // ── Class examples (verdicts checked numerically) ──
@@ -181,12 +183,35 @@ export const seriesTestsCards: Card[] = [
     front: { text: 'Choosing a test for $\\sum a_n$: what do you check, in order?' },
     back: {
       latex:
-        '\\small \\begin{array}{l} 1.\\ \\text{divergence test:} \\\\ \\phantom{1.}\\ \\lim_{n \\to \\infty} a_n \\ne 0 \\Rightarrow \\text{diverges} \\\\ ' +
+        '\\small \\begin{array}{l} 1.\\ \\text{divergence test:} \\\\ \\phantom{1.}\\ \\lim_{n \\to \\infty} a_n \\ne 0 \\text{ or DNE} \\\\ \\phantom{1.}\\ \\Rightarrow \\text{diverges} \\\\ ' +
         '2.\\ \\text{can } S_n \\text{ be found?} \\\\ \\phantom{2.}\\ \\text{(geometric, telescoping)} \\\\ ' +
         '3.\\ p\\text{-series?} \\\\ ' +
         '4.\\ a_n > 0\\text{: integral test,} \\\\ \\phantom{4.}\\ \\text{direct or limit comparison} \\\\ ' +
         '\\phantom{4.}\\ (b_n \\text{ from dominant terms}) \\end{array}',
     },
     check: { kind: 'none', reason: 'procedure (order of tests); verified by math-verifier' },
+  },
+  {
+    // Spec example (CLAUDE.md, topic 14). f(x) = 1/(x ln x) is positive, continuous and decreasing on
+    // [2, inf) since (x ln x)' = ln x + 1 > 0; u = ln x, du = dx/x: the integral from 2 to t is
+    // ln(ln t) - ln(ln 2) -> inf, so the series diverges. Limit comparison: a_n/(1/n) = 1/ln n -> 0 with
+    // the sum of 1/n divergent; a_n/(1/n^p) = n^(p-1)/ln n -> inf for p > 1 with the p-series convergent;
+    // inconclusive both ways. Verdict card (no back.expr): the divergence claim is checked numerically.
+    id: 'card-series-tests-14',
+    category: 'Series Tests',
+    section: 'series-tests',
+    kind: 'formula',
+    front: { text: 'Which test settles this series, and why does limit comparison not?', latex: '\\sum_{n=2}^{\\infty} \\frac{1}{n \\ln n}' },
+    back: {
+      latex:
+        '\\begin{array}{c} \\textbf{diverges (integral test)} \\\\[6pt] ' +
+        '\\small \\tfrac{1}{x \\ln x} \\text{ positive, continuous,} \\\\ \\small \\text{decreasing on } [2, \\infty) \\\\[6pt] ' +
+        'u = \\ln x\\text{:}\\ \\displaystyle \\int_2^{\\infty} \\frac{dx}{x \\ln x} \\\\[2pt] ' +
+        '\\displaystyle = \\lim_{t \\to \\infty} \\big[\\ln(\\ln t) - \\ln(\\ln 2)\\big] = \\infty \\\\[10pt] ' +
+        '\\text{limit comparison: inconclusive} \\\\[2pt] ' +
+        '\\small L = 0 \\text{ against the divergent } \\textstyle\\sum \\tfrac{1}{n} \\\\ ' +
+        '\\small L = \\infty \\text{ against convergent } p\\text{-series} \\end{array}',
+    },
+    check: { kind: 'series', term: '1/(n*log(n))', from: '2', converges: false },
   },
 ];

@@ -75,7 +75,7 @@ export const improperCards: Card[] = [
     },
     back: {
       latex:
-        '\\begin{aligned}&\\lim_{t\\to-\\infty}\\int_t^c f(x)\\,dx\\\\ +\\ &\\lim_{t\\to\\infty}\\int_c^t f(x)\\,dx\\\\ &\\text{both must converge}\\\\ &\\text{never } \\lim_{t\\to\\infty}\\int_{-t}^{t} f(x)\\,dx\\end{aligned}',
+        '\\begin{aligned}&\\lim_{s\\to-\\infty}\\int_s^c f(x)\\,dx\\\\ +\\ &\\lim_{t\\to\\infty}\\int_c^t f(x)\\,dx\\\\ &\\text{both must converge}\\\\ &\\text{never } \\lim_{t\\to\\infty}\\int_{-t}^{t} f(x)\\,dx\\end{aligned}',
       also: '\\int_{-\\infty}^{c} f(x)\\,dx + \\int_{c}^{\\infty} f(x)\\,dx',
     },
     check: { kind: 'none', reason: 'symbolic split rule for a general f' },
@@ -91,7 +91,7 @@ export const improperCards: Card[] = [
     },
     back: {
       latex:
-        '\\begin{aligned}&\\lim_{t\\to c^-}\\int_a^t f(x)\\,dx\\\\ +\\ &\\lim_{t\\to c^+}\\int_t^b f(x)\\,dx\\\\ &\\text{both must converge}\\end{aligned}',
+        '\\begin{aligned}&\\lim_{s\\to c^-}\\int_a^s f(x)\\,dx\\\\ +\\ &\\lim_{t\\to c^+}\\int_t^b f(x)\\,dx\\\\ &\\text{both must converge}\\end{aligned}',
       also: '\\int_a^c f(x)\\,dx + \\int_c^b f(x)\\,dx',
     },
     check: { kind: 'none', reason: 'symbolic split rule for a general f' },
