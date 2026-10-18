@@ -7,7 +7,8 @@ export type RoundSize = (typeof ROUND_SIZES)[number];
 export const DEFAULT_ROUND_SIZE: RoundSize = 10;
 
 export interface Settings {
-  version: 1;
+  /** 2 since session 3 (topics 10–14). Version-1 saves are migrated: the new topics start selected. */
+  version: 2;
   /** Questions per Flash Drill / Review round; steps per Step-Through round. */
   roundSize: RoundSize;
   /** Selected topics in TOPICS order. Defaults to every topic. */
@@ -15,7 +16,7 @@ export interface Settings {
 }
 
 export function defaultSettings(): Settings {
-  return { version: 1, roundSize: DEFAULT_ROUND_SIZE, topics: [...TOPIC_IDS] };
+  return { version: 2, roundSize: DEFAULT_ROUND_SIZE, topics: [...TOPIC_IDS] };
 }
 
 export function isRoundSize(value: unknown): value is RoundSize {
@@ -32,13 +33,35 @@ export function toggleTopic(topics: readonly TopicId[], id: TopicId): TopicId[] 
   return topics.includes(id) ? topics.filter((t) => t !== id) : normalizeTopics([...topics, id]);
 }
 
-/** Turns anything read from storage into valid settings; unknown shapes fall back to defaults. */
+/** The topics that existed when settings were version 1 (sessions 1–2). */
+const VERSION_1_TOPICS: readonly TopicId[] = [
+  'diff-review',
+  'antiderivatives',
+  'area',
+  'volumes-disks',
+  'volumes-shells',
+  'arc-length',
+  'ibp',
+  'trig-integrals',
+  'trig-sub',
+];
+
+/**
+ * Turns anything read from storage into valid settings; unknown shapes fall back to defaults.
+ * A version-1 save (before topics 10–14 existed) keeps its selection among the original nine topics
+ * and gets every newer topic selected, so new topics default to "on" for returning students.
+ */
 export function sanitizeSettings(raw: unknown): Settings {
   const defaults = defaultSettings();
-  if (!isRecord(raw) || raw.version !== 1) return defaults;
+  if (!isRecord(raw) || (raw.version !== 1 && raw.version !== 2)) return defaults;
+  let topics = defaults.topics;
+  if (Array.isArray(raw.topics)) {
+    topics = normalizeTopics(raw.topics);
+    if (raw.version === 1) topics = normalizeTopics([...topics, ...TOPIC_IDS.filter((id) => !VERSION_1_TOPICS.includes(id))]);
+  }
   return {
-    version: 1,
+    version: 2,
     roundSize: isRoundSize(raw.roundSize) ? raw.roundSize : defaults.roundSize,
-    topics: Array.isArray(raw.topics) ? normalizeTopics(raw.topics) : defaults.topics,
+    topics,
   };
 }

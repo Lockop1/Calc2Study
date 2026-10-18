@@ -32,27 +32,37 @@ afterEach(() => {
 describe('settings', () => {
   it('default to every topic and rounds of 10 when storage is empty', () => {
     const s = loadSettings();
-    expect(s).toEqual({ version: 1, roundSize: 10, topics: [...TOPIC_IDS] });
-    expect(s.topics).toHaveLength(9);
+    expect(s).toEqual({ version: 2, roundSize: 10, topics: [...TOPIC_IDS] });
+    expect(s.topics).toHaveLength(14);
   });
 
   it('round-trip through localStorage under the versioned key', () => {
-    expect(saveSettings({ version: 1, roundSize: 5, topics: ['area', 'ibp'] })).toBe(true);
-    expect(JSON.parse(localStorage.getItem(SETTINGS_KEY)!)).toEqual({ version: 1, roundSize: 5, topics: ['area', 'ibp'] });
-    expect(loadSettings()).toEqual({ version: 1, roundSize: 5, topics: ['area', 'ibp'] });
+    expect(saveSettings({ version: 2, roundSize: 5, topics: ['area', 'ibp'] })).toBe(true);
+    expect(JSON.parse(localStorage.getItem(SETTINGS_KEY)!)).toEqual({ version: 2, roundSize: 5, topics: ['area', 'ibp'] });
+    expect(loadSettings()).toEqual({ version: 2, roundSize: 5, topics: ['area', 'ibp'] });
   });
 
+  it('migrate a version-1 save: keep its selection, select every topic added since (10–14)', () => {
+    localStorage.setItem(SETTINGS_KEY, JSON.stringify({ version: 1, roundSize: 5, topics: ['area'] }));
+    expect(loadSettings()).toEqual({
+      version: 2,
+      roundSize: 5,
+      topics: ['area', 'partial-fractions', 'improper', 'sequences', 'series-basics', 'series-tests'],
+    });
+    localStorage.setItem(SETTINGS_KEY, JSON.stringify({ version: 1, roundSize: 10, topics: [] }));
+    expect(loadSettings().topics).toEqual(['partial-fractions', 'improper', 'sequences', 'series-basics', 'series-tests']);
+  });
   it('keep an explicit empty selection, drop unknown topics, fix bad round sizes', () => {
-    localStorage.setItem(SETTINGS_KEY, JSON.stringify({ version: 1, roundSize: 7, topics: ['ibp', 'nope', 'area', 'ibp'] }));
-    expect(loadSettings()).toEqual({ version: 1, roundSize: 10, topics: ['area', 'ibp'] });
-    localStorage.setItem(SETTINGS_KEY, JSON.stringify({ version: 1, roundSize: 20, topics: [] }));
-    expect(loadSettings()).toEqual({ version: 1, roundSize: 20, topics: [] });
+    localStorage.setItem(SETTINGS_KEY, JSON.stringify({ version: 2, roundSize: 7, topics: ['ibp', 'nope', 'area', 'ibp'] }));
+    expect(loadSettings()).toEqual({ version: 2, roundSize: 10, topics: ['area', 'ibp'] });
+    localStorage.setItem(SETTINGS_KEY, JSON.stringify({ version: 2, roundSize: 20, topics: [] }));
+    expect(loadSettings()).toEqual({ version: 2, roundSize: 20, topics: [] });
   });
 
   it('ignore unparseable data and other versions', () => {
     localStorage.setItem(SETTINGS_KEY, '{not json');
     expect(loadSettings()).toEqual(defaultSettings());
-    localStorage.setItem(SETTINGS_KEY, JSON.stringify({ version: 2, roundSize: 5, topics: ['area'] }));
+    localStorage.setItem(SETTINGS_KEY, JSON.stringify({ version: 3, roundSize: 5, topics: ['area'] }));
     expect(loadSettings()).toEqual(defaultSettings());
     localStorage.setItem(SETTINGS_KEY, 'null');
     expect(loadSettings()).toEqual(defaultSettings());
@@ -83,8 +93,8 @@ describe('when localStorage fails', () => {
       throw new DOMException('quota', 'QuotaExceededError');
     });
     expect(storageAvailable()).toBe(false);
-    expect(saveSettings({ version: 1, roundSize: 20, topics: ['trig-sub'] })).toBe(false);
-    expect(loadSettings()).toEqual({ version: 1, roundSize: 20, topics: ['trig-sub'] });
+    expect(saveSettings({ version: 2, roundSize: 20, topics: ['trig-sub'] })).toBe(false);
+    expect(loadSettings()).toEqual({ version: 2, roundSize: 20, topics: ['trig-sub'] });
     const p = recordAnswer(emptyProgress(), 'ts-f-001', false, NOW);
     expect(saveProgress(p)).toBe(false);
     expect(loadProgress(NOW)).toEqual(p);
@@ -93,14 +103,14 @@ describe('when localStorage fails', () => {
   });
 
   it('memory holds the newest value even if localStorage has an older one', () => {
-    saveSettings({ version: 1, roundSize: 5, topics: ['area'] });
+    saveSettings({ version: 2, roundSize: 5, topics: ['area'] });
     const spy = vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
       throw new Error('blocked');
     });
-    saveSettings({ version: 1, roundSize: 20, topics: ['ibp'] });
+    saveSettings({ version: 2, roundSize: 20, topics: ['ibp'] });
     expect(loadSettings().roundSize).toBe(20);
     spy.mockRestore();
-    expect(saveSettings({ version: 1, roundSize: 10, topics: ['ibp'] })).toBe(true);
+    expect(saveSettings({ version: 2, roundSize: 10, topics: ['ibp'] })).toBe(true);
     expect(loadSettings().roundSize).toBe(10);
   });
 
@@ -125,8 +135,8 @@ describe('when localStorage fails', () => {
     });
     expect(storageAvailable()).toBe(false);
     expect(loadSettings()).toEqual(defaultSettings());
-    expect(saveSettings({ version: 1, roundSize: 5, topics: [] })).toBe(false);
-    expect(loadSettings()).toEqual({ version: 1, roundSize: 5, topics: [] });
+    expect(saveSettings({ version: 2, roundSize: 5, topics: [] })).toBe(false);
+    expect(loadSettings()).toEqual({ version: 2, roundSize: 5, topics: [] });
     spy.mockRestore();
   });
 

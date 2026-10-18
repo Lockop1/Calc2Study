@@ -1,6 +1,7 @@
 /**
- * Exam 1 topics for MAC 2312 (Calculus II, UCF). Order and scope follow the lecture notes in
- * `reference/lectures/`. Do not add topics beyond Exam 1 scope.
+ * Topics for MAC 2312 (Calculus II, UCF). Topics 1–9 (Exam 1) follow the lecture notes in
+ * `reference/lectures/`; topics 10–14 (Lectures 8–12) follow the spec block in CLAUDE.md. Do not add
+ * topics beyond Lectures 1–12.
  */
 export type TopicId =
   | 'diff-review'
@@ -11,7 +12,12 @@ export type TopicId =
   | 'arc-length'
   | 'ibp'
   | 'trig-integrals'
-  | 'trig-sub';
+  | 'trig-sub'
+  | 'partial-fractions'
+  | 'improper'
+  | 'sequences'
+  | 'series-basics'
+  | 'series-tests';
 
 export interface Topic {
   id: TopicId;
@@ -26,7 +32,7 @@ export interface Topic {
   sections: string;
   /** Whether the topic has memorization content (flash minimum of 40 applies). */
   hasFlashMinimum: boolean;
-  /** Whether step-through problems are required (topics 2–9). */
+  /** Whether step-through problems are required (topics 2–14; off for a topic until its Phase C lands). */
   hasStepMinimum: boolean;
 }
 
@@ -129,6 +135,61 @@ export const TOPICS: readonly Topic[] = [
     sections: '§3.3',
     hasFlashMinimum: true,
     hasStepMinimum: true,
+  },
+  {
+    id: 'partial-fractions',
+    num: 10,
+    title: 'Partial fractions',
+    short: 'Partial fractions',
+    prefix: 'pf',
+    lecture: 'Lecture 8',
+    sections: '§3.4',
+    hasFlashMinimum: true,
+    hasStepMinimum: false,
+  },
+  {
+    id: 'improper',
+    num: 11,
+    title: 'Improper integrals',
+    short: 'Improper',
+    prefix: 'im',
+    lecture: 'Lecture 9',
+    sections: '§3.7',
+    hasFlashMinimum: true,
+    hasStepMinimum: false,
+  },
+  {
+    id: 'sequences',
+    num: 12,
+    title: 'Sequences',
+    short: 'Sequences',
+    prefix: 'sq',
+    lecture: 'Lecture 10',
+    sections: '§5.1',
+    hasFlashMinimum: true,
+    hasStepMinimum: false,
+  },
+  {
+    id: 'series-basics',
+    num: 13,
+    title: 'Series: partial sums, divergence test, geometric, telescoping',
+    short: 'Series basics',
+    prefix: 'sb',
+    lecture: 'Lecture 11',
+    sections: '§5.2',
+    hasFlashMinimum: true,
+    hasStepMinimum: false,
+  },
+  {
+    id: 'series-tests',
+    num: 14,
+    title: 'Integral test, direct & limit comparison, choosing a test',
+    short: 'Series tests',
+    prefix: 'st',
+    lecture: 'Lecture 12',
+    sections: '§5.3–5.4',
+    hasFlashMinimum: true,
+    hasStepMinimum: false,
   },
 ] as const;
 

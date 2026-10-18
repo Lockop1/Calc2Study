@@ -13,6 +13,11 @@ import * as f6 from './flash/arc-length';
 import * as f7 from './flash/ibp';
 import * as f8 from './flash/trig-integrals';
 import * as f9 from './flash/trig-sub';
+import * as f10 from './flash/partial-fractions';
+import * as f11 from './flash/improper';
+import * as f12 from './flash/sequences';
+import * as f13 from './flash/series-basics';
+import * as f14 from './flash/series-tests';
 
 import * as s1 from './steps/diff-review';
 import * as s2 from './steps/antiderivatives';
@@ -23,6 +28,11 @@ import * as s6 from './steps/arc-length';
 import * as s7 from './steps/ibp';
 import * as s8 from './steps/trig-integrals';
 import * as s9 from './steps/trig-sub';
+import * as s10 from './steps/partial-fractions';
+import * as s11 from './steps/improper';
+import * as s12 from './steps/sequences';
+import * as s13 from './steps/series-basics';
+import * as s14 from './steps/series-tests';
 
 type FlashModule = { flash: FlashItem[]; generators?: FlashGenerator[] };
 type StepModule = { steps: StepProblem[] };
@@ -37,6 +47,11 @@ const flashModules: Record<TopicId, FlashModule> = {
   ibp: f7,
   'trig-integrals': f8,
   'trig-sub': f9,
+  'partial-fractions': f10,
+  improper: f11,
+  sequences: f12,
+  'series-basics': f13,
+  'series-tests': f14,
 };
 
 const stepModules: Record<TopicId, StepModule> = {
@@ -49,6 +64,11 @@ const stepModules: Record<TopicId, StepModule> = {
   ibp: s7,
   'trig-integrals': s8,
   'trig-sub': s9,
+  'partial-fractions': s10,
+  improper: s11,
+  sequences: s12,
+  'series-basics': s13,
+  'series-tests': s14,
 };
 
 export const CONTENT: readonly TopicContent[] = TOPICS.map((t) => ({
