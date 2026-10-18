@@ -879,10 +879,10 @@ export const steps: StepProblem[] = [
             why: 'Lost the minus sign: B = −1, so the second log is subtracted.',
           },
           {
-            latex: '\\ln|x| - \\ln|x+2| + C',
-            expr: 'log(abs(x)) - log(abs(x+2)) + C',
+            latex: '4\\ln|x| + \\ln|x+2| + C',
+            expr: '4*log(abs(x)) + log(abs(x+2)) + C',
             mistake: 'pf-coefficient-wrong',
-            why: 'Dropped the coefficient of the first log: x = 0 gives 4 = 2A, so A = 2, not 1.',
+            why: 'x = 0 gives 4 = 2A, so A = 2: the 2 was not divided out, and the minus sign on B = −1 was lost.',
           },
           {
             latex: '2\\ln|x| + \\dfrac{1}{2}\\ln|x+2| + C',
