@@ -194,10 +194,10 @@ export const flash: FlashItem[] = [
         why: 'Took the limit at −∞ instead of +∞.',
       },
       {
-        latex: '-\\pi',
-        expr: '-pi',
-        mistake: 'inverse-trig-value-wrong',
-        why: 'Confused the range of arctan with (0, π) and then flipped the sign.',
+        latex: '\\frac{\\pi}{4}',
+        expr: 'pi/4',
+        mistake: 'sq-term-vs-limit',
+        why: 'Evaluated the term at n = 1 (arctan 1 = π/4) instead of taking the limit.',
       },
       {
         latex: '-\\frac{\\pi}{4}',
@@ -1226,7 +1226,7 @@ function quadLatex(k: number): string {
 
 // Rows with d = ±1 made the answer a/c the only fraction among integers; every row now has d ≠ ±1.
 const RATIONAL_TABLE: Array<[number, number, number, number]> = [
-  [3, 1, 1, -5],
+  [5, 1, 3, -2],
   [2, -1, 5, 3],
   [4, 3, 2, 7],
   [5, 2, 3, -4],
