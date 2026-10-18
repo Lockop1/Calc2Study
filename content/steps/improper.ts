@@ -46,7 +46,7 @@ export const steps: StepProblem[] = [
           { text: '$\\displaystyle\\lim_{t\\to\\infty} \\int_{1}^{t} \\frac{dx}{x^{2}}$' },
           {
             text: '$\\displaystyle\\lim_{t\\to\\infty} \\int_{t}^{\\infty} \\frac{dx}{x^{2}}$',
-            mistake: 'im-split-mishandled',
+            mistake: 'im-plug-infinity',
             why: 'The infinity is still left as a bound; it must be replaced by the variable t.',
           },
           {
@@ -89,7 +89,7 @@ export const steps: StepProblem[] = [
           {
             latex: '\\ln t',
             expr: 'log(t)',
-            mistake: 'power-rule-int-exponent',
+            mistake: 'ln-misapplied',
             why: 'This is the antiderivative result for dx/x, not for dx/x².',
           },
           {
@@ -153,7 +153,7 @@ export const steps: StepProblem[] = [
           { text: '$\\displaystyle\\lim_{t\\to\\infty} \\int_{1}^{t} \\frac{dx}{x}$' },
           {
             text: '$\\displaystyle\\lim_{t\\to\\infty} \\int_{t}^{\\infty} \\frac{dx}{x}$',
-            mistake: 'im-split-mishandled',
+            mistake: 'im-plug-infinity',
             why: 'The infinity is still left as a bound; it must be replaced by the variable t.',
           },
           {
@@ -184,7 +184,7 @@ export const steps: StepProblem[] = [
           {
             latex: '\\ln t - 1',
             expr: 'log(t) - 1',
-            mistake: 'ftc-not-subtracted',
+            mistake: 'arithmetic-error',
             why: 'F(1) = ln 1 = 0, not 1, so nothing extra is subtracted.',
           },
           {
@@ -332,20 +332,20 @@ export const steps: StepProblem[] = [
           {
             latex: '1 - \\sqrt{t}',
             expr: '1 - sqrt(t)',
-            mistake: 'power-rule-int-exponent',
+            mistake: 'power-rule-int-coefficient',
             why: 'The antiderivative of x^{−1/2} is 2x^{1/2}, so the coefficient 2 was lost.',
           },
           {
-            latex: '2',
-            expr: '2',
-            mistake: 'ftc-not-subtracted',
-            why: 'F(t) must also be subtracted from F(1); only the upper value was used.',
+            latex: '\\sqrt{t} - 1',
+            expr: 'sqrt(t) - 1',
+            mistake: 'power-rule-int-coefficient',
+            why: 'Lost the coefficient 2 of 2x^{1/2} and also computed F(t) − F(1) instead of F(1) − F(t).',
           },
           {
-            latex: '\\dfrac{1}{2} - \\dfrac{1}{2\\sqrt{t}}',
-            expr: '1/2 - 1/(2*sqrt(t))',
-            mistake: 'power-rule-int-exponent',
-            why: 'This differentiates x^{−1/2} instead of integrating it.',
+            latex: '-2\\sqrt{t}',
+            expr: '-2*sqrt(t)',
+            mistake: 'ftc-not-subtracted',
+            why: 'Only −F(t) was written; F(1) = 2 must also be included in F(1) − F(t).',
           },
         ],
         correct: 0,
@@ -402,7 +402,7 @@ export const steps: StepProblem[] = [
           },
           {
             text: '$\\displaystyle\\lim_{t\\to\\infty} \\int_{t}^{\\infty} e^{-x}\\,dx$',
-            mistake: 'im-split-mishandled',
+            mistake: 'im-plug-infinity',
             why: 'The infinity is still left as a bound; it must be replaced by the variable t.',
           },
           {
@@ -435,7 +435,7 @@ export const steps: StepProblem[] = [
             latex: 'e^{-t} + 1',
             expr: 'exp(-t) + 1',
             mistake: 'sign-error',
-            why: 'The sign of the antiderivative −e^{−x} was lost.',
+            why: 'Dropped the minus sign of F(t) = −e^{−t} but kept −F(0) = +1.',
           },
           {
             latex: '-e^{-t}',
@@ -469,15 +469,15 @@ export const steps: StepProblem[] = [
           },
           { latex: '-1', expr: '-1', mistake: 'sign-error', why: 'A sign slip turned the limit 1 into −1.' },
           {
-            latex: 'e',
-            expr: 'e',
+            latex: '1 - e',
+            expr: '1 - e',
             mistake: 'im-limit-evaluated-wrong',
             why: 'This takes e^{−t} to tend to e, but it tends to 0 as t → ∞.',
           },
           {
-            latex: '\\dfrac{1}{e}',
-            expr: '1/e',
-            mistake: 'arithmetic-error',
+            latex: '1 - \\dfrac{1}{e}',
+            expr: '1 - 1/e',
+            mistake: 'im-limit-evaluated-wrong',
             why: 'This plugs in t = 1 instead of taking the limit as t → ∞.',
           },
         ],
@@ -507,7 +507,7 @@ export const steps: StepProblem[] = [
         prompt: 'Both bounds are infinite. What is the correct set-up?',
         options: [
           {
-            text: 'Split at $c = 0$: $\\displaystyle\\lim_{s\\to-\\infty}\\int_{s}^{0} + \\lim_{t\\to\\infty}\\int_{0}^{t}$, two separate limits',
+            text: '$\\displaystyle\\lim_{s\\to-\\infty}\\int_{s}^{0} + \\lim_{t\\to\\infty}\\int_{0}^{t}$',
           },
           {
             text: '$\\displaystyle\\lim_{t\\to\\infty} \\int_{-t}^{t} \\frac{dx}{1+x^{2}}$',
@@ -658,7 +658,7 @@ export const steps: StepProblem[] = [
         prompt: 'What is special about this integral?',
         options: [
           {
-            text: '$\\dfrac{1}{x^{2}}$ has an infinite discontinuity at $x = 0$, inside the interval: Type II, split at $0$',
+            text: 'Type II at the interior point $x = 0$',
           },
           {
             text: 'Nothing: finite bounds, so use the FTC',
@@ -690,7 +690,7 @@ export const steps: StepProblem[] = [
         prompt: 'Write the set-up.',
         options: [
           {
-            text: '$\\displaystyle\\lim_{s\\to 0^{-}} \\int_{-1}^{s} \\frac{dx}{x^{2}} + \\lim_{t\\to 0^{+}} \\int_{t}^{1} \\frac{dx}{x^{2}}$, both must converge',
+            text: '$\\displaystyle\\lim_{s\\to 0^{-}} \\int_{-1}^{s} \\frac{dx}{x^{2}} + \\lim_{t\\to 0^{+}} \\int_{t}^{1} \\frac{dx}{x^{2}}$',
           },
           {
             text: '$\\displaystyle\\lim_{t\\to 0} \\int_{-1}^{1} \\frac{dx}{x^{2}}$',
@@ -714,7 +714,7 @@ export const steps: StepProblem[] = [
           },
         ],
         correct: 0,
-        explanation: 'An interior discontinuity splits the integral into two one-sided limits.',
+        explanation: 'An interior discontinuity splits the integral into two one-sided limits, and both must converge.',
         result: {
           latex: '\\lim_{t\\to 0^{+}} \\int_{t}^{1}\\frac{dx}{x^{2}} + \\lim_{s\\to 0^{-}} \\int_{-1}^{s}\\frac{dx}{x^{2}}',
         },
@@ -734,12 +734,12 @@ export const steps: StepProblem[] = [
             latex: '-\\dfrac{1}{t}',
             expr: '-1/t',
             mistake: 'ftc-not-subtracted',
-            why: 'F(1) = −1 must be included in the subtraction, which was skipped here.',
+            why: 'Evaluated F only at the bound t, F(t) = −1/t, instead of forming F(1) − F(t).',
           },
           {
             latex: '\\ln t',
             expr: 'log(t)',
-            mistake: 'power-rule-int-exponent',
+            mistake: 'ln-misapplied',
             why: 'This is the shape of the result for 1/x, and it even has the wrong sign.',
           },
           {
@@ -759,14 +759,14 @@ export const steps: StepProblem[] = [
       {
         prompt: 'Evaluate and conclude.',
         options: [
-          { text: '$\\dfrac{1}{t} - 1 \\to \\infty$: the right piece diverges, so the whole integral diverges' },
+          { text: '$\\dfrac{1}{t} - 1 \\to \\infty$: diverges' },
           {
             text: '$\\dfrac{1}{t} - 1 \\to -1$: converges to $-1$',
             mistake: 'im-limit-evaluated-wrong',
             why: 'As t → 0⁺ the term 1/t tends to ∞, so it does not vanish.',
           },
           {
-            text: 'The right piece diverges, but the left piece might cancel it',
+            text: '$\\dfrac{1}{t} - 1 \\to \\infty$, but the left piece might cancel it',
             mistake: 'im-split-mishandled',
             why: 'One divergent piece is enough to make the integral diverge; nothing cancels.',
           },
@@ -776,13 +776,13 @@ export const steps: StepProblem[] = [
             why: 'The FTC does not apply across a discontinuity inside the interval.',
           },
           {
-            text: 'Converges to $\\infty$',
+            text: '$\\dfrac{1}{t} - 1 \\to \\infty$: converges to $\\infty$',
             mistake: 'im-divergent-called-convergent',
             why: 'An infinite limit means the integral diverges; it never converges to infinity.',
           },
         ],
         correct: 0,
-        explanation: 'One piece diverges, so the integral diverges (and −2 was never possible for a positive integrand).',
+        explanation: 'The right piece diverges, so the whole integral diverges (and −2 was never possible for a positive integrand).',
         result: { text: 'Diverges' },
         check: { kind: 'improper-integral', integrand: '1/x^2', lower: '-1', upper: '1', converges: false, split: ['0'] },
       },
@@ -814,7 +814,7 @@ export const steps: StepProblem[] = [
           },
           {
             text: '$\\displaystyle\\lim_{t\\to\\infty} \\int_{t}^{\\infty} x e^{-x^{2}}\\,dx$',
-            mistake: 'im-split-mishandled',
+            mistake: 'im-plug-infinity',
             why: 'The infinity is still left as a bound; it must be replaced by the variable t.',
           },
           {
@@ -852,7 +852,7 @@ export const steps: StepProblem[] = [
           {
             latex: '\\frac{x^{2}}{2}e^{-x^{2}} + C',
             expr: 'x^2/2*exp(-x^2) + C',
-            mistake: 'integrated-instead',
+            mistake: 'product-rule-integral',
             why: 'The factors x and e^{−x²} were integrated separately and multiplied.',
           },
           {
@@ -875,7 +875,7 @@ export const steps: StepProblem[] = [
             latex: '\\dfrac{1}{2}e^{-t^{2}} - \\dfrac{1}{2}',
             expr: '1/2*exp(-t^2) - 1/2',
             mistake: 'ftc-order-swapped',
-            why: 'This computes F(0) − F(t) with the wrong sign; the FTC needs F(t) − F(0).',
+            why: 'This is F(0) − F(t); the FTC needs F(t) − F(0).',
           },
           {
             latex: '-\\dfrac{1}{2}e^{-t^{2}}',
@@ -894,6 +894,12 @@ export const steps: StepProblem[] = [
             expr: '1/2 - 1/2*exp(-t)',
             mistake: 'back-substitution-wrong',
             why: 'Since u = x², the exponent at the upper bound is −t², not −t.',
+          },
+          {
+            latex: '\\dfrac{1}{2}e^{-t} - \\dfrac{1}{2}',
+            expr: '1/2*exp(-t) - 1/2',
+            mistake: 'back-substitution-wrong',
+            why: 'Used e^{−t} instead of e^{−t²} at the upper bound and also computed F(0) − F(t).',
           },
         ],
         correct: 0,
@@ -916,9 +922,9 @@ export const steps: StepProblem[] = [
           { latex: '1', expr: '1', mistake: 'du-constant-wrong', why: 'The factor 1/2 from the substitution was forgotten.' },
           { latex: '-\\frac{1}{2}', expr: '-1/2', mistake: 'sign-error', why: 'A sign slip turned the limit 1/2 into −1/2.' },
           {
-            latex: '\\frac{1}{2e}',
-            expr: '1/(2*e)',
-            mistake: 'arithmetic-error',
+            latex: '\\frac{1}{2} - \\frac{1}{2e}',
+            expr: '1/2 - 1/(2*e)',
+            mistake: 'im-limit-evaluated-wrong',
             why: 'This plugs in t = 1 instead of taking the limit as t → ∞.',
           },
         ],
@@ -950,7 +956,7 @@ export const steps: StepProblem[] = [
           { text: '$\\displaystyle\\lim_{t\\to\\infty} \\int_{2}^{t} \\frac{dx}{x\\ln x}$' },
           {
             text: '$\\displaystyle\\lim_{t\\to\\infty} \\int_{t}^{\\infty} \\frac{dx}{x\\ln x}$',
-            mistake: 'im-split-mishandled',
+            mistake: 'im-plug-infinity',
             why: 'The infinity is still left as a bound; it must be replaced by the variable t.',
           },
           {

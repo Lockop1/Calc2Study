@@ -155,7 +155,7 @@ export function HomeScreen({
         >
           <span className="mode-text">
             <span className="mode-title">Cards</span>
-            <span className="mode-sub">Flip the whiteboard formulas</span>
+            <span className="mode-sub">Flip formulas, identities and theorems</span>
           </span>
           <ChevronIcon />
         </button>

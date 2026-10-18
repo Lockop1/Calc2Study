@@ -1,6 +1,6 @@
 {
   "name": "sweep-flash",
-  "startedAt": "2026-10-18T15:37:54.760Z",
+  "startedAt": "2026-10-18T20:55:49.309Z",
   "checks": [
     {
       "name": "sweep: displayed flash item found in the content key",
@@ -150,7 +150,7 @@
     {
       "name": "sweep: every flash item (static + generator instances at 5 seeds each) displayed",
       "ok": true,
-      "detail": "770/770 distinct items"
+      "detail": "771/771 distinct items"
     },
     {
       "name": "sweep flash: no vertically clipped math/text (overflow-y hidden, >2px)",
@@ -168,11 +168,27 @@
     "unitsWithSideScrollingOptions": 0,
     "widestOptions": [
       {
-        "id": "dr-f-003",
+        "id": "dr-f-005",
         "scrollX": 0
       },
       {
-        "id": "dr-f-018",
+        "id": "dr-f-015",
+        "scrollX": 0
+      },
+      {
+        "id": "dr-f-019",
+        "scrollX": 0
+      },
+      {
+        "id": "dr-f-001",
+        "scrollX": 0
+      },
+      {
+        "id": "dr-f-008",
+        "scrollX": 0
+      },
+      {
+        "id": "dr-f-013",
         "scrollX": 0
       },
       {
@@ -180,33 +196,33 @@
         "scrollX": 0
       },
       {
-        "id": "dr-f-020",
-        "scrollX": 0
-      },
-      {
-        "id": "dr-f-014",
-        "scrollX": 0
-      },
-      {
-        "id": "dr-f-012",
-        "scrollX": 0
-      },
-      {
-        "id": "dr-f-010",
-        "scrollX": 0
-      },
-      {
-        "id": "dr-f-019",
+        "id": "dr-f-018",
         "scrollX": 0
       }
     ],
     "widestPrompts": [
       {
-        "id": "dr-f-003",
+        "id": "dr-f-005",
         "scrollX": 0
       },
       {
-        "id": "dr-f-018",
+        "id": "dr-f-015",
+        "scrollX": 0
+      },
+      {
+        "id": "dr-f-019",
+        "scrollX": 0
+      },
+      {
+        "id": "dr-f-001",
+        "scrollX": 0
+      },
+      {
+        "id": "dr-f-008",
+        "scrollX": 0
+      },
+      {
+        "id": "dr-f-013",
         "scrollX": 0
       },
       {
@@ -214,23 +230,7 @@
         "scrollX": 0
       },
       {
-        "id": "dr-f-020",
-        "scrollX": 0
-      },
-      {
-        "id": "dr-f-014",
-        "scrollX": 0
-      },
-      {
-        "id": "dr-f-012",
-        "scrollX": 0
-      },
-      {
-        "id": "dr-f-010",
-        "scrollX": 0
-      },
-      {
-        "id": "dr-f-019",
+        "id": "dr-f-018",
         "scrollX": 0
       }
     ],
@@ -239,5 +239,5 @@
     "minFirstOptionTop": 430,
     "consoleErrors": []
   },
-  "seconds": 161
+  "seconds": 159
 }

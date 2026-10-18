@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-18T15:37:30.722Z",
+  "generatedAt": "2026-10-18T20:55:48.086Z",
   "counts": {
     "staticFlash": 662,
     "generators": 28,
@@ -94,8 +94,8 @@
     }
   },
   "optionCounts": {
-    "5": 890,
-    "6": 464
+    "5": 875,
+    "6": 479
   },
   "ambiguousKeys": [
     [
@@ -171,10 +171,6 @@
       "pf-g-arctan-term:1000000"
     ],
     [
-      "im-f-015",
-      "im-g-exp:1"
-    ],
-    [
       "im-g-exp:500000",
       "im-g-exp:1000000"
     ],
@@ -231,7 +227,7 @@
     {
       "where": "pf-f-023 opt3",
       "problem": "suspicious text undefined",
-      "source": "{\"l\":\"\\\\frac{3}{2}\\\\ln(2x + 5) + C\",\"w\":\"ln(2x + 5) is undefined for x < −5/2, where the integrand still exists; the antiderivative needs ln|2x + 5|.\"}"
+      "source": "{\"l\":\"3\\\\ln(2x + 5) + C\",\"w\":\"ln(2x + 5) is undefined for x < −5/2, where the integrand still exists; the antiderivative needs ln|2x + 5|. The 1/2 was also drop"
     },
     {
       "where": "im-f-004 opt2",
@@ -456,11 +452,6 @@
   ],
   "longestOptionSources": [
     {
-      "id": "im-s-06#1",
-      "len": 135,
-      "source": "T:$\\displaystyle\\lim_{s\\to 0^{-}} \\int_{-1}^{s} \\frac{dx}{x^{2}} + \\lim_{t\\to 0^{+}} \\int_{t}^{1} \\frac{dx}{x^{2}}$, both must converge"
-    },
-    {
       "id": "sq-f-010",
       "len": 134,
       "source": "T:DNE: $\\sin(x\\pi)$ oscillates between $-1$ and $1$ as $x \\to \\infty$, so by the Underlying Function Theorem the sequence has no limit"
@@ -476,19 +467,14 @@
       "source": "T:Solve $f(x) = g(x)$; the smallest and largest solutions are the limits, and one integral always covers everything between them"
     },
     {
-      "id": "im-f-011",
-      "len": 128,
-      "source": "T:$\\displaystyle\\int_{-\\infty}^{0} x e^{-x^{2}}dx + \\int_{0}^{\\infty} x e^{-x^{2}}dx$, each as its own limit; both must converge"
-    },
-    {
       "id": "ar-f-008",
       "len": 126,
       "source": "T:Solve $f(x) = g(x)$; the smallest and largest solutions are the limits, and solutions between them are possible split points"
     },
     {
-      "id": "im-f-035",
-      "len": 119,
-      "source": "T:Identify the type (Type I: infinite bound) and write $\\displaystyle\\lim_{t\\to\\infty} \\int_{0}^{t} \\frac{dx}{1+x^{2}}$"
+      "id": "sb-f-010",
+      "len": 120,
+      "source": "T:$\\lim a_n \\ne 0$ (or DNE) $\\Rightarrow \\sum a_n$ diverges, for geometric series only; $\\lim a_n = 0$ tells you nothing"
     },
     {
       "id": "st-f-009",
@@ -501,9 +487,9 @@
       "source": "T:$f(x) = \\frac{\\sin^2 x}{x^2}$ is not continuous; limit comparison with $\\frac{1}{n^2}$ gives $L = 1$, so it converges"
     },
     {
-      "id": "im-s-05#0",
-      "len": 118,
-      "source": "T:Split at $c = 0$: $\\displaystyle\\lim_{s\\to-\\infty}\\int_{s}^{0} + \\lim_{t\\to\\infty}\\int_{0}^{t}$, two separate limits"
+      "id": "st-s-05#1",
+      "len": 119,
+      "source": "T:Positive, continuous and decreasing on $[2, \\infty)$: decreasing fails ($x\\ln x$ is increasing, so $f$ is increasing)"
     },
     {
       "id": "st-f-009",
@@ -516,19 +502,29 @@
       "source": "T:If the original integral reappears after integrating by parts, the choice of $u$ was wrong and you must start over."
     },
     {
-      "id": "st-s-03#0",
-      "len": 117,
-      "source": "T:Positive terms; not geometric, telescoping or a $p$-series: compare with $b_n = \\dfrac{1}{n}$ (the dominant growth)"
-    },
-    {
       "id": "ar-s-08#1",
       "len": 116,
       "source": "T:$\\cos x$ on top on $\\left(0, \\frac{\\pi}{4}\\right)$; $\\sin x$ on top on $\\left(\\frac{\\pi}{4}, \\frac{\\pi}{2}\\right)$"
     },
     {
+      "id": "im-f-011",
+      "len": 115,
+      "source": "T:$\\displaystyle\\lim_{s\\to-\\infty} \\int_{s}^{0} x e^{-x^{2}}\\,dx + \\lim_{t\\to\\infty} \\int_{0}^{t} x e^{-x^{2}}\\,dx$"
+    },
+    {
+      "id": "im-s-06#1",
+      "len": 115,
+      "source": "T:$\\displaystyle\\lim_{s\\to 0^{-}} \\int_{-1}^{s} \\frac{dx}{x^{2}} + \\lim_{t\\to 0^{+}} \\int_{t}^{1} \\frac{dx}{x^{2}}$"
+    },
+    {
       "id": "st-f-037",
       "len": 115,
       "source": "T:Direct comparison: $\\sin\\left(\\frac{1}{n}\\right) \\le \\frac{1}{n}$ and $\\sum \\frac{1}{n}$ diverges, so it diverges"
+    },
+    {
+      "id": "al-s-07#0",
+      "len": 113,
+      "source": "T:$L = \\int_0^1 \\sqrt{1 + \\left(\\frac{1}{g'(y)}\\right)^2}\\,dy$, using the slope $\\frac{dy}{dx} = \\frac{1}{g'(y)}$"
     }
   ]
 }

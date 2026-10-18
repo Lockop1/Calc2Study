@@ -32,7 +32,7 @@ export const steps: StepProblem[] = [
           {
             text: "Use L'Hôpital on $\\dfrac{2^{2x+1}}{3^{x}}$",
             mistake: 'sq-theorem-misattributed',
-            why: 'It is allowed in principle, but the geometric rewrite is the intended tool and far quicker.',
+            why: "L'Hôpital never resolves this: each round only multiplies by the constant 2 ln 2 / ln 3 and leaves ∞/∞ again.",
           },
         ],
         correct: 0,
@@ -45,12 +45,6 @@ export const steps: StepProblem[] = [
         options: [
           { latex: '2\\left(\\dfrac{4}{3}\\right)^{n}', expr: '2*(4/3)^n' },
           {
-            latex: '2\\left(\\dfrac{2}{3}\\right)^{n}',
-            expr: '2*(2/3)^n',
-            mistake: 'exponent-arithmetic',
-            why: 'Wrote 2^{2n} as 2^n; in fact 2^{2n} = (2²)ⁿ = 4ⁿ.',
-          },
-          {
             latex: '\\left(\\dfrac{4}{3}\\right)^{n}',
             expr: '(4/3)^n',
             mistake: 'algebra-error',
@@ -60,13 +54,19 @@ export const steps: StepProblem[] = [
             latex: '\\left(\\dfrac{8}{3}\\right)^{n}',
             expr: '(8/3)^n',
             mistake: 'exponent-arithmetic',
-            why: 'Treated 2^{2n+1} as 8ⁿ, but 2^{2n+1} is not 8ⁿ.',
+            why: 'Moved the factor 2 inside the power: 2·4ⁿ is not 8ⁿ.',
+          },
+          {
+            latex: '\\left(\\dfrac{2}{3}\\right)^{n}',
+            expr: '(2/3)^n',
+            mistake: 'exponent-arithmetic',
+            why: 'Two slips: wrote 2^{2n} as 2ⁿ (in fact 2^{2n} = (2²)ⁿ = 4ⁿ) and dropped the factor 2.',
           },
           {
             latex: '4\\left(\\dfrac{4}{3}\\right)^{n}',
             expr: '4*(4/3)^n',
-            mistake: 'arithmetic-error',
-            why: 'Used 4 as the leading constant, but 2^{2n+1} = 2·4ⁿ, not 4·4ⁿ.',
+            mistake: 'exponent-arithmetic',
+            why: 'Read 2^{2n+1} as 2^{2(n+1)} = 4·4ⁿ; the exponent is 2n + 1, so the factor is 2, not 4.',
           },
         ],
         correct: 0,
@@ -79,26 +79,26 @@ export const steps: StepProblem[] = [
       {
         prompt: 'What does the $\\{r^{n}\\}$ rule say here?',
         options: [
-          { text: '$r = \\tfrac{4}{3} > 1$, so $r^{n} \\to \\infty$: the sequence diverges' },
+          { text: '$r = \\tfrac{4}{3}$, so $r^{n} \\to \\infty$: the sequence diverges' },
           {
-            text: '$r = \\tfrac{4}{3}$ is positive, so $r^{n} \\to 1$',
+            text: '$r = \\tfrac{4}{3}$, so $r^{n}$ oscillates: the sequence diverges',
             mistake: 'sq-rn-boundary',
-            why: 'rⁿ → 1 only when r = 1 exactly; positivity of r is not enough.',
+            why: 'Right verdict, wrong behaviour: rⁿ alternates only for negative r; with r = 4/3 > 1 the terms grow without bound.',
           },
           {
-            text: '$r = \\tfrac{4}{3}$, so $r^{n} \\to 0$',
+            text: '$r = \\tfrac{4}{3}$, so $r^{n} \\to 0$: the sequence converges to $0$',
             mistake: 'sq-rn-boundary',
             why: 'rⁿ → 0 needs |r| < 1, and here r is larger than 1.',
           },
           {
-            text: 'The rule needs $-1 < r \\le 1$; since $r > 1$ the rule says nothing',
+            text: '$r = \\tfrac{4}{3}$, so $r^{n} \\to 1$: the sequence converges to $2$',
             mistake: 'sq-rn-boundary',
-            why: 'Outside that interval the rule does say something: {rⁿ} diverges.',
+            why: 'rⁿ → 1 only when r = 1 exactly; r = 4/3 is close to 1 but rⁿ still grows without bound.',
           },
           {
-            text: '$r = \\tfrac{4}{3}$ is close to 1, so the sequence converges to $2$',
-            mistake: 'sq-first-terms',
-            why: 'The terms grow without bound, however slowly they seem to grow at first.',
+            text: '$r = \\tfrac{4}{3}$ is outside $-1 < r \\le 1$, so the rule says nothing',
+            mistake: 'sq-rn-boundary',
+            why: 'Outside that interval the rule does say something: {rⁿ} diverges.',
           },
         ],
         correct: 0,
@@ -125,9 +125,9 @@ export const steps: StepProblem[] = [
       {
         prompt: 'Which rule applies?',
         options: [
-          { text: 'Equal degrees: divide top and bottom by $n^{2}$ (ratio of leading coefficients)' },
+          { text: 'Equal degrees: the limit is the ratio of the leading coefficients' },
           {
-            text: 'Plug in $n = \\infty$: $\\dfrac{\\infty}{\\infty} = 1$',
+            text: 'Plug in $n = \\infty$: top and bottom are both $\\infty$, and $\\dfrac{\\infty}{\\infty} = 1$',
             mistake: 'sq-substitute-infinity',
             why: 'Substituting infinity gives ∞/∞, which is indeterminate rather than equal to 1.',
           },
@@ -142,7 +142,7 @@ export const steps: StepProblem[] = [
             why: 'Both degrees are 2, so the bottom does not dominate.',
           },
           {
-            text: 'Plug in $n = 1$: $a_1 = -1$',
+            text: 'Plug in $n = 1$: the limit is the first term $a_1 = -1$',
             mistake: 'sq-term-vs-limit',
             why: 'A single term of the sequence is not its limit.',
           },
@@ -171,8 +171,8 @@ export const steps: StepProblem[] = [
           {
             latex: '-1',
             expr: '-1',
-            mistake: 'sq-substitute-infinity',
-            why: 'Dropped the powers of n entirely and computed (3 + 1)/(1 − 5).',
+            mistake: 'sq-term-vs-limit',
+            why: 'Dropped the powers of n entirely, which just computes the first term a₁ = (3 + 1)/(1 − 5) = −1.',
           },
           {
             latex: '\\frac{3 + 1/n^{2}}{1 + 5/n^{2}}',
@@ -186,7 +186,7 @@ export const steps: StepProblem[] = [
         result: { latex: 'a_n = \\frac{3 + 1/n^{2}}{1 - 5/n^{2}}' },
         check: { kind: 'identity', lhs: '(3*n^2+1)/(n^2-5)' },
         variable: 'n',
-        domain: { n: [1, 6] },
+        domain: { n: [6, 12] },
       },
       {
         prompt: 'Take the limit.',
@@ -222,24 +222,24 @@ export const steps: StepProblem[] = [
       {
         prompt: "The form is $\\infty/\\infty$. What justifies using L'Hôpital's rule?",
         options: [
-          { text: 'The Underlying Function Theorem: if $f(x) = \\dfrac{\\ln x}{x}$ has $\\lim_{x\\to\\infty} f(x) = L$, then $a_n \\to L$' },
+          { text: 'Underlying Function Theorem: if $f(x) = \\dfrac{\\ln x}{x}$ has $f(x) \\to L$ as $x \\to \\infty$, then $a_n \\to L$' },
           {
-            text: "Nothing: L'Hôpital never applies to sequences",
+            text: "None: L'Hôpital needs a differentiable function, and $a_n$ is defined only at integers",
             mistake: 'sq-theorem-misattributed',
             why: "The Underlying Function Theorem transfers the function's limit to the sequence, so L'Hôpital is available.",
           },
           {
-            text: 'The Continuous Function Theorem',
+            text: 'Continuous Function Theorem: if $a_n \\to L$ and $f$ is continuous at $L$, then $f(a_n) \\to f(L)$',
             mistake: 'sq-theorem-misattributed',
             why: 'That theorem moves a limit through a continuous function f; it does not justify L’Hôpital.',
           },
           {
-            text: 'The Squeeze Theorem',
+            text: 'Squeeze Theorem: if $b_n \\le a_n \\le c_n$ and $b_n, c_n \\to L$, then $a_n \\to L$',
             mistake: 'sq-theorem-misattributed',
             why: 'No upper and lower bounding sequences are being used here.',
           },
           {
-            text: 'The Monotone Convergence Theorem',
+            text: 'Monotone Convergence Theorem: a monotone, bounded sequence converges',
             mistake: 'sq-theorem-misattributed',
             why: 'That theorem gives convergence of a monotone bounded sequence, not the value of a limit.',
           },
@@ -260,10 +260,10 @@ export const steps: StepProblem[] = [
             why: "Applied L'Hôpital upside down, with the derivatives in the wrong places.",
           },
           {
-            text: '$\\dfrac{1}{x}\\cdot\\dfrac{1}{1}$ differentiated again: $-\\dfrac{1}{x^{2}}$',
-            expr: '-1/x^2',
+            latex: '\\dfrac{1/x}{x}',
+            expr: '(1/x)/x',
             mistake: 'algebra-error',
-            why: 'One application is enough; the student kept differentiating after the quotient was already 1/x.',
+            why: "Differentiated only the top; L'Hôpital differentiates the bottom x too, giving 1.",
           },
           {
             latex: '\\dfrac{\\ln x}{1}',
@@ -319,14 +319,14 @@ export const steps: StepProblem[] = [
       {
         prompt: 'The form is $1^{\\infty}$. What is the right move?',
         options: [
-          { text: 'Take logarithms: $\\ln a_n = n\\ln\\!\\left(1 + \\tfrac{2}{n}\\right)$, find its limit, then exponentiate' },
+          { text: 'Take logarithms, find the limit of $\\ln a_n$, then exponentiate' },
           {
-            text: '$1^{\\infty} = 1$, so the limit is $1$',
+            text: 'Use $1^{\\infty} = 1$: the base tends to $1$, so the limit is $1$',
             mistake: 'sq-substitute-infinity',
             why: '1^∞ is an indeterminate form, so it cannot simply be set equal to 1.',
           },
           {
-            text: 'Use the standard limit directly: it equals $e$',
+            text: 'Use the standard limit $(1 + 1/n)^{n} \\to e$ directly: the limit is $e$',
             mistake: 'sq-theorem-misattributed',
             why: 'The standard limit has 1/n inside the parentheses, not 2/n.',
           },
@@ -336,7 +336,7 @@ export const steps: StepProblem[] = [
             why: 'Infinitely many terms matter as n grows, so truncating the expansion changes the limit.',
           },
           {
-            text: 'Squeeze between $1$ and $3^{n}$',
+            text: 'Squeeze it between $1$ and $3^{n}$, since $1 \\le 1 + \\tfrac{2}{n} \\le 3$',
             mistake: 'sq-squeeze-misuse',
             why: 'The squeeze needs both bounds to have the same limit, and these bounds do not.',
           },
@@ -351,9 +351,9 @@ export const steps: StepProblem[] = [
         options: [
           { text: '$\\dfrac{\\ln(1 + 2/x)}{1/x}$, a $0/0$ form' },
           {
-            text: '$\\dfrac{x}{1/\\ln(1+2/x)}$',
+            text: '$\\dfrac{1/x}{\\ln(1 + 2/x)}$, a $0/0$ form',
             mistake: 'algebra-error',
-            why: "The algebra is correct but the shape is wrong for L'Hôpital: the derivative becomes a mess.",
+            why: 'Put the wrong factor in the denominator: (1/x)/ln(1 + 2/x) is the reciprocal of x·ln(1 + 2/x).',
           },
           {
             text: '$\\infty \\cdot 0 = 0$, so $\\ln a_n \\to 0$',
@@ -366,7 +366,7 @@ export const steps: StepProblem[] = [
             why: 'Plugged ∞ into part of the expression while the other factor still grows.',
           },
           {
-            text: '$\\dfrac{\\ln(1 + 2/x)}{x}$',
+            text: '$\\dfrac{\\ln(1 + 2/x)}{x}$, a $0/\\infty$ form',
             mistake: 'algebra-error',
             why: 'That puts n in the denominator, a 0/∞ form, which is not the same quantity as n·ln(1 + 2/n).',
           },
@@ -424,24 +424,24 @@ export const steps: StepProblem[] = [
       {
         prompt: 'The signs alternate. What is the right tool?',
         options: [
-          { text: 'Look at $|a_n| = \\dfrac{1}{n}$ and use the corollary $|a_n| \\to 0 \\Rightarrow a_n \\to 0$' },
+          { text: 'Use the corollary $|a_n| \\to 0 \\Rightarrow a_n \\to 0$ on $|a_n| = \\tfrac{1}{n}$' },
           {
-            text: 'Alternating signs mean the sequence diverges',
+            text: 'Use the signs: alternating terms never settle, so $a_n$ diverges',
             mistake: 'sq-oscillation-means-divergence',
             why: 'Sign changes do not prevent convergence; the size of the terms is what matters.',
           },
           {
-            text: 'Use the $\\{r^{n}\\}$ rule with $r = -1$',
+            text: 'Use the $\\{r^{n}\\}$ rule with $r = -1$: $(-1)^{n}$ diverges, so $a_n$ diverges',
             mistake: 'sq-rn-boundary',
             why: '(−1)ⁿ alone has no limit, but the factor 1/n matters, so the rule does not apply to this term.',
           },
           {
-            text: 'Use L\'Hôpital on $\\dfrac{(-1)^{x}}{x}$',
+            text: "Use L'Hôpital on $\\dfrac{(-1)^{x}}{x}$ through the Underlying Function Theorem",
             mistake: 'sq-theorem-misattributed',
             why: '(−1)ˣ is not a real-valued function, so the Underlying Function Theorem cannot be used.',
           },
           {
-            text: 'The sequence is bounded by $1$, so it converges',
+            text: 'Use boundedness: $|a_n| \\le 1$ for every $n$, so $a_n$ converges',
             mistake: 'sq-bounded-implies-convergent',
             why: 'Boundedness alone does not give convergence.',
           },
@@ -520,34 +520,34 @@ export const steps: StepProblem[] = [
         options: [
           { text: '$\\dfrac{1}{(n+1)(n+2)} > 0$: increasing', expr: '1/((n+1)*(n+2))' },
           {
+            text: '$\\dfrac{-1}{(n+1)(n+2)} < 0$: decreasing',
+            expr: '-1/((n+1)*(n+2))',
+            mistake: 'sign-error',
+            why: 'Subtracted in the wrong order (aₙ − aₙ₊₁), which flips the sign; the true difference is positive.',
+          },
+          {
+            text: '$\\dfrac{2n+1}{(n+1)(n+2)} > 0$: increasing',
+            expr: '(2*n+1)/((n+1)*(n+2))',
+            mistake: 'algebra-error',
+            why: 'Expanded n(n + 2) as n², so the numerator came out as 2n + 1 instead of (n + 1)² − n(n + 2) = 1.',
+          },
+          {
             text: '$\\dfrac{1}{n+1} - \\dfrac{1}{n} < 0$: decreasing',
             expr: '1/(n+1) - 1/n',
             mistake: 'algebra-error',
             why: 'That is the difference of 1/n, not of n/(n+1).',
           },
           {
-            latex: '\\dfrac{1}{n+2} - \\dfrac{1}{n+1}',
-            expr: '1/(n+2) - 1/(n+1)',
+            text: '$\\dfrac{-(2n+1)}{(n+1)(n+2)} < 0$: decreasing',
+            expr: '-(2*n+1)/((n+1)*(n+2))',
             mistake: 'sign-error',
-            why: 'A sign slip: the true difference is positive.',
-          },
-          {
-            latex: '1',
-            expr: '1',
-            mistake: 'algebra-error',
-            why: 'Subtracted the numerators without putting the fractions over a common denominator.',
-          },
-          {
-            latex: '\\dfrac{2n+1}{(n+1)(n+2)}',
-            expr: '(2*n+1)/((n+1)*(n+2))',
-            mistake: 'algebra-error',
-            why: 'An algebra slip in the numerator when combining the two fractions.',
+            why: 'Two slips: subtracted in the wrong order and expanded n(n + 2) as n².',
           },
         ],
         correct: 0,
         explanation: '$\\dfrac{n+1}{n+2} - \\dfrac{n}{n+1} = \\dfrac{(n+1)^{2} - n(n+2)}{(n+1)(n+2)} = \\dfrac{1}{(n+1)(n+2)} > 0$.',
         result: { text: 'Increasing' },
-        check: { kind: 'identity', lhs: '1/((n+1)*(n+2))' },
+        check: { kind: 'identity', lhs: '(n+1)/(n+2) - n/(n+1)' },
         variable: 'n',
         domain: { n: [1, 6] },
       },
@@ -586,28 +586,28 @@ export const steps: StepProblem[] = [
         options: [
           { text: 'Increasing and bounded above, so $\\{a_n\\}$ converges' },
           {
-            text: 'Increasing, so it converges',
-            mistake: 'sq-monotone-implies-convergent',
-            why: 'Both hypotheses (monotone and bounded) are needed.',
+            text: 'Increasing and bounded below, so $\\{a_n\\}$ converges',
+            mistake: 'sq-theorem-misattributed',
+            why: 'Every increasing sequence is bounded below by its first term; the theorem needs an increasing sequence to be bounded ABOVE.',
           },
           {
-            text: 'Bounded, so it converges',
+            text: 'Decreasing and bounded below, so $\\{a_n\\}$ converges',
+            mistake: 'algebra-error',
+            why: 'The monotonicity step showed aₙ₊₁ − aₙ > 0, so the sequence is increasing, not decreasing.',
+          },
+          {
+            text: 'Increasing and bounded, but not decreasing, so the theorem says nothing',
+            mistake: 'sq-theorem-misattributed',
+            why: 'Increasing or decreasing both work, as long as the sequence is bounded in the matching direction.',
+          },
+          {
+            text: 'Bounded above and below, so $\\{a_n\\}$ converges',
             mistake: 'sq-bounded-implies-convergent',
-            why: 'Both hypotheses (monotone and bounded) are needed.',
-          },
-          {
-            text: 'It converges to its upper bound $1$ by the theorem',
-            mistake: 'sq-theorem-misattributed',
-            why: 'The theorem gives convergence, not the value of the limit.',
-          },
-          {
-            text: 'Nothing: the theorem needs the sequence to be decreasing',
-            mistake: 'sq-theorem-misattributed',
-            why: 'Increasing or decreasing both work, as long as the sequence is bounded in the right direction.',
+            why: 'Both hypotheses (monotone and bounded) are needed; boundedness alone does not give convergence.',
           },
         ],
         correct: 0,
-        explanation: 'Monotone AND bounded implies convergent.',
+        explanation: 'Monotone AND bounded in the matching direction (increasing, bounded above) implies convergent.',
         result: { text: 'Converges (MCT)' },
         check: { kind: 'none', reason: 'theorem' },
       },
@@ -774,16 +774,16 @@ export const steps: StepProblem[] = [
       {
         prompt: 'Is it monotone?',
         options: [
-          { text: 'No: the terms go $-1, 1, -1, 1, \\ldots$, neither increasing nor decreasing' },
+          { text: 'No: the terms go $-1, 1, -1, 1, \\ldots$' },
           {
             text: 'Yes, increasing: $-1 < 1$',
             mistake: 'sq-first-terms',
             why: 'Two terms do not make a sequence monotone; every later pair must be checked.',
           },
           {
-            text: 'Yes, decreasing: $1 > -1$',
-            mistake: 'sq-first-terms',
-            why: 'Two terms do not make a sequence monotone; every later pair must be checked.',
+            text: 'No: it diverges, so it cannot be monotone',
+            mistake: 'sq-monotone-implies-convergent',
+            why: 'Right answer, invalid reason: divergent sequences can be monotone ({n} is), so divergence says nothing about monotonicity.',
           },
           {
             text: 'Monotone because $|a_n|$ is constant',
@@ -804,11 +804,11 @@ export const steps: StepProblem[] = [
       {
         prompt: 'Does it converge?',
         options: [
-          { text: 'No: the terms alternate between $-1$ and $1$ and never settle (the limit does not exist)' },
+          { text: 'No: the terms alternate between $-1$ and $1$ and never settle' },
           {
-            text: 'Yes, to $0$: the terms average out',
-            mistake: 'sq-squeeze-misuse',
-            why: 'Squeezing between −1 and 1 gives no limit, since the bounds do not converge to a common value.',
+            text: 'No: it is not monotone, so it cannot converge',
+            mistake: 'sq-theorem-misattributed',
+            why: 'Right answer, invalid reason: monotonicity is not needed for convergence ((−1)ⁿ/n is not monotone and converges to 0).',
           },
           {
             text: 'Yes, to $1$: $|a_n| \\to 1$',
@@ -850,24 +850,24 @@ export const steps: StepProblem[] = [
       {
         prompt: 'What form is this, and what is the right move?',
         options: [
-          { text: "$\\infty\\cdot 0$: write it as $\\dfrac{\\sin(1/x)}{1/x}$ and use the Underlying Function Theorem with L'Hôpital" },
+          { text: "$\\infty\\cdot 0$: rewrite as $\\dfrac{\\sin(1/x)}{1/x}$ for L'Hôpital" },
           {
-            text: '$\\infty\\cdot 0 = 0$',
+            text: '$\\infty\\cdot 0$: the product is $0$, since $\\sin(1/n) \\to 0$',
             mistake: 'sq-limit-law-misuse',
             why: '∞·0 is an indeterminate form, not automatically 0.',
           },
           {
-            text: '$\\sin(1/n)$ is bounded, so $n\\sin(1/n) \\to \\infty$',
+            text: '$\\infty\\cdot$ bounded: $\\sin(1/n)$ is bounded, so $n\\sin(1/n) \\to \\infty$',
             mistake: 'sq-dominant-term',
             why: 'sin(1/n) → 0, so it is not merely bounded; it shrinks and competes with the growing n.',
           },
           {
-            text: '$\\sin$ oscillates, so the limit does not exist',
+            text: 'Oscillation: $\\sin$ oscillates, so the limit does not exist',
             mistake: 'sq-connect-the-dots',
             why: 'The argument 1/n tends to 0, so sin(1/n) does not oscillate.',
           },
           {
-            text: 'Plug in $n = 1$: $\\sin 1$',
+            text: 'No form needed: plug in $n = 1$ to get $\\sin 1$',
             mistake: 'sq-term-vs-limit',
             why: 'A single term of the sequence is not the limit.',
           },
@@ -882,24 +882,24 @@ export const steps: StepProblem[] = [
         options: [
           { text: '$\\dfrac{\\cos(1/x)\\cdot(-1/x^{2})}{-1/x^{2}} = \\cos(1/x)$' },
           {
-            text: '$\\dfrac{\\cos(1/x)}{-1/x^{2}}$',
+            text: '$\\dfrac{\\cos(1/x)\\cdot(-1/x^{2})}{1/x^{2}} = -\\cos(1/x)$',
+            mistake: 'sign-error',
+            why: 'Differentiated the bottom 1/x as +1/x²; its derivative is −1/x², and the two minus signs cancel.',
+          },
+          {
+            text: '$\\dfrac{\\cos(1/x)}{-1/x^{2}} = -x^{2}\\cos(1/x)$',
             mistake: 'chain-rule-missing',
             why: 'The inner derivative of 1/x is missing on top, so the factor −1/x² does not cancel.',
           },
           {
-            text: '$\\dfrac{-\\cos(1/x)}{1/x^{2}}$',
-            mistake: 'sign-error',
-            why: 'The minus signs in the numerator and denominator cancel; they were not tracked correctly.',
-          },
-          {
-            text: '$\\dfrac{\\sin(1/x)}{1}$',
+            text: '$\\dfrac{\\cos(1/x)\\cdot(-1/x^{2})}{1/x} = -\\dfrac{\\cos(1/x)}{x}$',
             mistake: 'algebra-error',
-            why: 'The top was not differentiated.',
+            why: "Differentiated only the top; L'Hôpital differentiates the bottom 1/x too.",
           },
           {
-            text: '$\\dfrac{\\cos(1/x)}{\\ln x}$',
-            mistake: 'log-derivative-wrong',
-            why: 'The derivative of 1/x is −1/x², not ln x.',
+            text: '$\\dfrac{\\cos(1/x)\\cdot(-1/x^{2})}{1/x^{2}} = -\\dfrac{\\cos(1/x)}{x^{4}}$',
+            mistake: 'sign-error',
+            why: 'Two slips: differentiated 1/x as +1/x² on the bottom, and multiplied by 1/x² instead of dividing by it.',
           },
         ],
         correct: 0,

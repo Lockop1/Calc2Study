@@ -161,19 +161,19 @@ export const flash: FlashItem[] = [
         why: 'Treated the indeterminate form ∞·0 as if it were 0.',
       },
       {
-        text: '$\\infty$ — $n \\to \\infty$ and $\\sin(1/n)$ is bounded',
+        text: '$\\infty$ — $\\sin(1/n)$ is bounded, so the factor $n \\to \\infty$ wins',
         mistake: 'sq-dominant-term',
         why: 'Ignored that sin(1/n) → 0 and let the factor n dominate.',
       },
       {
-        text: 'DNE — $\\sin$ oscillates',
+        text: 'DNE — $\\sin$ keeps oscillating between $-1$ and $1$ as $n$ grows',
         mistake: 'sq-connect-the-dots',
         why: 'Pictured sin as oscillating, although its argument 1/n tends to 0 and does not run through many periods.',
       },
       {
-        text: '$\\sin 1$ — the value at $n = 1$',
-        mistake: 'sq-term-vs-limit',
-        why: 'Reported the first term of the sequence instead of the limit.',
+        text: '$\\sin 1$ — move $n$ inside: $n\\sin(1/n) = \\sin\\left(n \\cdot \\tfrac{1}{n}\\right) = \\sin 1$',
+        mistake: 'algebra-error',
+        why: 'Moved the factor n inside the sine; n·sin(1/n) is not sin(n · 1/n).',
       },
     ],
     correct: 0,
@@ -194,10 +194,10 @@ export const flash: FlashItem[] = [
         why: 'Took the limit at −∞ instead of +∞.',
       },
       {
-        latex: '-\\pi',
-        expr: '-pi',
-        mistake: 'inverse-trig-value-wrong',
-        why: 'Confused the range of arctan with (0, π) and then flipped the sign.',
+        latex: '\\frac{\\pi}{4}',
+        expr: 'pi/4',
+        mistake: 'sq-term-vs-limit',
+        why: 'Evaluated the term at n = 1 (arctan 1 = π/4) instead of taking the limit.',
       },
       {
         latex: '-\\frac{\\pi}{4}',
@@ -266,9 +266,9 @@ export const flash: FlashItem[] = [
         why: 'Judged the behaviour of the sequence from its first few terms instead of its long-run behaviour.',
       },
       {
-        text: 'Converges to $1.01$',
-        mistake: 'sq-term-vs-limit',
-        why: 'Reported the first term as the limit.',
+        text: 'Diverges: it is increasing, so it cannot settle',
+        mistake: 'sq-theorem-misattributed',
+        why: 'Right verdict, invalid reason: increasing sequences can converge (n/(n + 1) does); it diverges because r = 1.01 > 1.',
       },
       {
         text: 'Converges: it is monotone',
@@ -293,9 +293,9 @@ export const flash: FlashItem[] = [
         why: 'Squeezed the terms between bounds whose limits differ (−1 and 1), so the Squeeze Theorem does not apply.',
       },
       {
-        text: 'Converges to $1$: $|a_n| = 1 \\to 1$',
-        mistake: 'sq-theorem-misattributed',
-        why: 'Misapplied the corollary of the Squeeze Theorem; only |aₙ| → 0 forces aₙ → 0.',
+        text: 'Diverges: $|a_n| = 1$ does not tend to $0$',
+        mistake: 'sq-squeeze-misuse',
+        why: 'Right verdict, invalid reason: |aₙ| not tending to 0 does not force divergence (the constant sequence 1 converges); only |aₙ| → 0 ⇒ aₙ → 0 is a theorem.',
       },
       {
         text: 'Converges: it is bounded',
@@ -353,24 +353,24 @@ export const flash: FlashItem[] = [
     kind: 'concept',
     prompt: { latex: '\\lim_{n\\to\\infty} \\dfrac{\\cos n}{n} = ?' },
     options: [
-      { text: '$0$: $-\\tfrac{1}{n} \\le \\tfrac{\\cos n}{n} \\le \\tfrac{1}{n}$ and both bounds $\\to 0$ (Squeeze)' },
+      { text: '$0$: $\\left|\\tfrac{\\cos n}{n}\\right| \\le \\tfrac{1}{n}$ and $\\tfrac{1}{n} \\to 0$ (Squeeze)' },
       {
-        text: 'DNE: $\\cos n$ oscillates',
+        text: 'DNE: $\\cos n$ oscillates between $-1$ and $1$, so the quotient never settles',
         mistake: 'sq-oscillation-means-divergence',
         why: 'Assumed oscillation in the numerator makes the limit fail, ignoring the denominator that tends to infinity.',
       },
       {
-        text: '$1$: $1/n \\to 0$ so the limit is $\\cos 0 = 1$',
+        text: '$1$: $\\tfrac{1}{n} \\to 0$, so the limit is $\\cos 0 = 1$',
         mistake: 'sq-theorem-misattributed',
         why: 'Misapplied the Continuous Function Theorem to the wrong expression: cos n is not a function of 1/n.',
       },
       {
-        text: '$0$: because $\\cos n \\to 0$',
+        text: '$0$: $\\cos n \\to 0$ and $\\tfrac{1}{n} \\to 0$, so the product $\\to 0$',
         mistake: 'sq-limit-law-misuse',
-        why: 'Right value but an invalid reason: cos n has no limit, so the limit laws cannot be used.',
+        why: 'Right value but an invalid reason: cos n has no limit, so the product law cannot be used.',
       },
       {
-        text: '$\\cos 1$: the first term',
+        text: '$\\cos 1$: the limit is the value at $n = 1$',
         mistake: 'sq-term-vs-limit',
         why: 'Reported a term of the sequence instead of its limit.',
       },
@@ -402,9 +402,9 @@ export const flash: FlashItem[] = [
         why: 'Replaced the difference of the roots by the difference under the roots.',
       },
       {
-        text: "$\\frac{1}{2}$: L'Hôpital gives $\\dfrac{1}{2\\sqrt{x}}$",
-        mistake: 'arithmetic-error',
-        why: 'Differentiated and then stopped before taking the limit of the derivative expression.',
+        text: '$\\infty$: $\\sqrt{n+1}$ is always bigger than $\\sqrt{n}$, so the gap keeps growing',
+        mistake: 'sq-dominant-term',
+        why: 'The gap is positive but shrinks: √(n+1) − √n = 1/(√(n+1) + √n) → 0.',
       },
     ],
     correct: 0,
@@ -417,14 +417,14 @@ export const flash: FlashItem[] = [
     kind: 'concept',
     prompt: { latex: '\\lim_{n\\to\\infty} n^{1/n} = ?' },
     options: [
-      { text: '$1$: $\\ln\\left(n^{1/n}\\right) = \\dfrac{\\ln n}{n} \\to 0$, so the limit is $e^{0}$' },
+      { text: '$1$: $\\ln a_n = \\dfrac{\\ln n}{n} \\to 0$, so $a_n \\to e^{0}$' },
       {
         text: '$0$: the exponent $\\to 0$ kills the term',
         mistake: 'exponent-arithmetic',
         why: 'Confused x⁰ = 1 with 0, so the vanishing exponent was taken to make the whole term vanish.',
       },
       {
-        text: '$1$: because the exponent $\\to 0$ and $n^{0} = 1$',
+        text: '$1$: the exponent $\\to 0$ and $n^{0} = 1$',
         mistake: 'sq-limit-law-misuse',
         why: 'Right value but an invalid reason: the base n is not fixed, so the exponent cannot simply be replaced by its limit.',
       },
@@ -434,7 +434,7 @@ export const flash: FlashItem[] = [
         why: 'Ignored that ln n / n → 0, so the exponent does tame the growing base.',
       },
       {
-        text: '$e$: the standard limit',
+        text: '$e$: it is the standard limit $(1 + 1/n)^{n}$ in disguise',
         mistake: 'sq-theorem-misattributed',
         why: 'Confused this with the standard limit (1 + 1/n)ⁿ → e.',
       },
@@ -449,14 +449,14 @@ export const flash: FlashItem[] = [
     kind: 'concept',
     prompt: { text: 'Class example: does $\\left\\{\\dfrac{2^{2n+1}}{3^{n}}\\right\\}$ converge?' },
     options: [
-      { text: 'Diverges: $\\dfrac{2^{2n+1}}{3^{n}} = 2\\left(\\tfrac{4}{3}\\right)^{n}$ and $\\tfrac{4}{3} > 1$' },
+      { text: 'Diverges: it equals $2\\left(\\tfrac{4}{3}\\right)^{n}$ and $\\tfrac{4}{3} > 1$' },
       {
-        text: 'Converges to $0$: the ratio is $\\tfrac{2}{3} < 1$',
-        mistake: 'sq-wrong-form',
+        text: 'Converges to $0$: it equals $2\\left(\\tfrac{2}{3}\\right)^{n}$ and $\\tfrac{2}{3} < 1$',
+        mistake: 'exponent-arithmetic',
         why: 'Rewrote 2^{2n} as 2^n and got the ratio 2/3 instead of 4/3.',
       },
       {
-        text: 'Converges to $2$: the factor $2$ is the limit',
+        text: 'Converges to $2$: the constant factor $2$ is the limit',
         mistake: 'sq-term-vs-limit',
         why: 'Reported the coefficient 2 of the geometric form as the limit.',
       },
@@ -466,7 +466,7 @@ export const flash: FlashItem[] = [
         why: 'Right verdict but an invalid reason: the denominator also tends to infinity, so the comparison of growth rates is what matters.',
       },
       {
-        text: 'Converges to $\\tfrac{4}{3}$',
+        text: 'Converges to $\\tfrac{4}{3}$: $r^{n}$ tends to the ratio $r$',
         mistake: 'sq-rn-boundary',
         why: 'Reported the ratio r as the limit instead of noticing that rⁿ with r > 1 is unbounded.',
       },
@@ -481,30 +481,30 @@ export const flash: FlashItem[] = [
     kind: 'concept',
     prompt: { latex: '\\lim_{n\\to\\infty} \\dfrac{\\ln n}{\\sqrt{n}} = ?' },
     options: [
-      { text: "$0$: L'Hôpital on $\\dfrac{\\ln x}{\\sqrt{x}}$ gives $\\dfrac{1/x}{1/(2\\sqrt{x})} = \\dfrac{2}{\\sqrt{x}} \\to 0$" },
+      { text: "$0$: L'Hôpital gives $\\dfrac{2}{\\sqrt{x}} \\to 0$" },
       {
-        text: "$2$: L'Hôpital leaves $\\dfrac{2}{\\sqrt{x}}$",
+        text: "$2$: L'Hôpital gives $\\dfrac{2}{\\sqrt{x}}$, which is $2$ at $x = 1$",
+        mistake: 'sq-term-vs-limit',
+        why: 'Evaluated 2/√x at x = 1 instead of letting x → ∞.',
+      },
+      {
+        text: "$\\infty$: L'Hôpital gives $2\\sqrt{x} \\to \\infty$",
         mistake: 'algebra-error',
-        why: 'Stopped after differentiating without taking the limit of the resulting fraction.',
+        why: 'Simplified (1/x)·2√x to 2√x, dropping the 1/x; the quotient is 2/√x.',
       },
       {
-        text: "$\\frac{1}{2}$: L'Hôpital leaves $\\dfrac{1}{2\\sqrt{x}}$",
-        mistake: 'arithmetic-error',
-        why: 'Reported the derivative of the denominator instead of the limit.',
+        text: "$\\infty$: L'Hôpital gives $\\dfrac{\\sqrt{x}}{2} \\to \\infty$",
+        mistake: 'algebra-error',
+        why: 'Inverted the quotient of derivatives: (1/(2√x))/(1/x) = √x/2 is the reciprocal of the right quotient.',
       },
       {
-        text: "$\\infty$: L'Hôpital leaves $2\\sqrt{x}$",
-        mistake: 'sq-dominant-term',
-        why: 'Inverted the quotient of derivatives, so the result seemed to grow without bound.',
-      },
-      {
-        text: '$1$: $\\infty/\\infty$ cancels',
+        text: '$1$: $\\ln n$ and $\\sqrt{n}$ both $\\to \\infty$, and $\\dfrac{\\infty}{\\infty} = 1$',
         mistake: 'sq-substitute-infinity',
         why: 'Plugged in n = ∞ and cancelled ∞/∞ to 1 instead of comparing growth rates.',
       },
     ],
     correct: 0,
-    explanation: "Any positive power of $n$ beats $\\ln n$; L'Hôpital confirms the limit is $0$.",
+    explanation: "L'Hôpital on $f(x) = \\dfrac{\\ln x}{\\sqrt{x}}$: $\\dfrac{1/x}{1/(2\\sqrt{x})} = \\dfrac{2}{\\sqrt{x}} \\to 0$ (any positive power of $n$ beats $\\ln n$).",
     check: { kind: 'limit', term: 'log(n)/sqrt(n)', limit: '0' },
   },
   {
@@ -513,11 +513,11 @@ export const flash: FlashItem[] = [
     kind: 'concept',
     prompt: { latex: '\\lim_{n\\to\\infty} \\dfrac{(-1)^{n}}{n} = ?' },
     options: [
-      { text: '$0$: $|a_n| = \\tfrac{1}{n} \\to 0$, so $a_n \\to 0$ (Squeeze corollary)' },
+      { text: '$0$: $|a_n| = \\tfrac{1}{n} \\to 0$, so $a_n \\to 0$' },
       {
-        text: '$0$: because $(-1)^{n} \\to 0$',
+        text: '$0$: $(-1)^{n} \\to 0$ and $\\tfrac{1}{n} \\to 0$, so the product $\\to 0$',
         mistake: 'sq-rn-boundary',
-        why: 'Right value but an invalid reason: (−1)ⁿ has no limit, so it cannot be used in a limit law.',
+        why: 'Right value but an invalid reason: (−1)ⁿ has no limit, so it cannot be used in the product law.',
       },
       {
         text: 'DNE: because $(-1)^{n}$ has no limit, the quotient has none',
@@ -525,12 +525,12 @@ export const flash: FlashItem[] = [
         why: 'Assumed sign changes prevent convergence, although the terms shrink to 0 in size.',
       },
       {
-        text: '$1$: because $(-1)^{n}$ is bounded by $1$',
+        text: '$1$: $|a_n| \\le 1$, so the limit is the bound $1$',
         mistake: 'sq-bounded-implies-convergent',
         why: 'Turned a bound on the terms into a limit; a bound is not the limit.',
       },
       {
-        text: '$-1$: the first term',
+        text: '$-1$: the first term $a_1 = -1$ is the limit',
         mistake: 'sq-term-vs-limit',
         why: 'Reported a term of the sequence instead of its limit.',
       },
@@ -654,16 +654,10 @@ export const flash: FlashItem[] = [
     options: [
       { latex: '7 - 3(n-1)', expr: '7-3*(n-1)' },
       {
-        latex: '7 - 3n',
-        expr: '7-3*n',
-        mistake: 'sq-wrong-form',
-        why: 'Forgot the (n − 1) in a + (n − 1)d, so the formula gives 4 at n = 1 instead of 7.',
-      },
-      {
-        latex: '4 - 3n',
-        expr: '4-3*n',
-        mistake: 'arithmetic-error',
-        why: 'Started from the second term 4 and forgot the (n − 1).',
+        latex: '7 + 3(n-1)',
+        expr: '7+3*(n-1)',
+        mistake: 'sign-error',
+        why: 'Used d = +3 for a decreasing sequence; the common difference is −3.',
       },
       {
         latex: '7 + 3n',
@@ -672,10 +666,16 @@ export const flash: FlashItem[] = [
         why: 'Used d = +3 for a decreasing sequence and forgot the (n − 1).',
       },
       {
-        latex: '7 + 3(n-1)',
-        expr: '7+3*(n-1)',
-        mistake: 'sign-error',
-        why: 'Used d = +3 for a decreasing sequence; the common difference is −3.',
+        latex: '7 - 3(n+1)',
+        expr: '7-3*(n+1)',
+        mistake: 'sq-wrong-form',
+        why: 'Shifted the index the wrong way: a + (n + 1)d gives 1 at n = 1 instead of 7.',
+      },
+      {
+        latex: '7 + 3(n+1)',
+        expr: '7+3*(n+1)',
+        mistake: 'sq-wrong-form',
+        why: 'Two slips: used d = +3 for a decreasing sequence and wrote (n + 1) instead of (n − 1).',
       },
     ],
     correct: 0,
@@ -692,12 +692,6 @@ export const flash: FlashItem[] = [
     options: [
       { latex: '2\\left(\\frac{4}{3}\\right)^{n}', expr: '2*(4/3)^n' },
       {
-        latex: '2\\left(\\frac{2}{3}\\right)^{n}',
-        expr: '2*(2/3)^n',
-        mistake: 'exponent-arithmetic',
-        why: 'Treated 2^{2n} as 2^n, so the ratio came out as 2/3 instead of 4/3.',
-      },
-      {
         latex: '\\left(\\frac{4}{3}\\right)^{n}',
         expr: '(4/3)^n',
         mistake: 'algebra-error',
@@ -707,13 +701,19 @@ export const flash: FlashItem[] = [
         latex: '\\left(\\frac{8}{3}\\right)^{n}',
         expr: '(8/3)^n',
         mistake: 'exponent-arithmetic',
-        why: 'Treated 2^{2n+1} as 8ⁿ, multiplying the exponent and the base incorrectly.',
+        why: 'Moved the factor 2 inside the power: 2 · 4ⁿ is not 8ⁿ.',
+      },
+      {
+        latex: '\\left(\\frac{2}{3}\\right)^{n}',
+        expr: '(2/3)^n',
+        mistake: 'exponent-arithmetic',
+        why: 'Two slips: treated 2^{2n} as 2ⁿ (ratio 2/3 instead of 4/3) and dropped the leftover factor 2.',
       },
       {
         latex: '4\\left(\\frac{4}{3}\\right)^{n}',
         expr: '4*(4/3)^n',
-        mistake: 'arithmetic-error',
-        why: 'Wrote 2^{2n+1} = 4 · 4ⁿ, using the factor 2² instead of 2¹.',
+        mistake: 'exponent-arithmetic',
+        why: 'Read 2^{2n+1} as 2^{2(n+1)} = 4 · 4ⁿ; the exponent is 2n + 1, so the factor is 2, not 4.',
       },
     ],
     correct: 0,
@@ -793,24 +793,24 @@ export const flash: FlashItem[] = [
     kind: 'concept',
     prompt: { text: "Which theorem lets you use L'Hôpital's rule to find $\\lim_{n\\to\\infty} \\dfrac{\\ln n}{n}$?" },
     options: [
-      { text: 'Underlying Function Theorem: if $f(n) = a_n$ and $\\lim_{x\\to\\infty} f(x) = L$, then $\\lim a_n = L$' },
+      { text: 'Underlying Function Theorem: if $f(n) = a_n$ and $f(x) \\to L$ as $x \\to \\infty$, then $a_n \\to L$' },
       {
-        text: 'Continuous Function Theorem',
+        text: 'Continuous Function Theorem: if $a_n \\to L$ and $f$ is continuous at $L$, then $f(a_n) \\to f(L)$',
         mistake: 'sq-theorem-misattributed',
         why: 'That theorem moves a limit through a continuous function f; it does not create a function limit to differentiate.',
       },
       {
-        text: 'Squeeze Theorem',
+        text: 'Squeeze Theorem: if $b_n \\le a_n \\le c_n$ and $b_n, c_n \\to L$, then $a_n \\to L$',
         mistake: 'sq-theorem-misattributed',
         why: 'No bounding sequences are involved in this argument.',
       },
       {
-        text: 'Monotone Convergence Theorem',
+        text: 'Monotone Convergence Theorem: a monotone, bounded sequence converges',
         mistake: 'sq-theorem-misattributed',
-        why: 'Monotone and bounded gives convergence, but not the value of the limit.',
+        why: 'Monotone and bounded gives convergence, but not the value of the limit, and it says nothing about derivatives.',
       },
       {
-        text: "None: L'Hôpital cannot be used on sequences",
+        text: "None: L'Hôpital needs a differentiable function, and $a_n$ is defined only at integers",
         mistake: 'sq-theorem-misattributed',
         why: 'The Underlying Function Theorem exactly justifies it, via the function f(x) = ln x / x.',
       },
@@ -827,22 +827,22 @@ export const flash: FlashItem[] = [
     options: [
       { text: '$2$: $\\sqrt{x}$ is continuous at $4$ (Continuous Function Theorem)' },
       {
-        text: '$4$: the limit passes through unchanged',
+        text: '$4$: the limit passes through the square root unchanged',
         mistake: 'sq-theorem-misattributed',
         why: 'Forgot to apply the function f to the limit; the theorem gives f(4), not 4.',
       },
       {
-        text: 'Cannot be determined without knowing $a_n$',
+        text: 'Cannot be determined without a formula for $a_n$',
         mistake: 'sq-theorem-misattributed',
         why: 'The theorem needs only the limit of aₙ and the continuity of f at that limit.',
       },
       {
-        text: '$16$',
+        text: '$16$: the limit gets squared, $4^{2} = 16$',
         mistake: 'algebra-error',
         why: 'Squared the limit instead of taking its square root.',
       },
       {
-        text: '$2$, but only if $\\{a_n\\}$ is monotone',
+        text: '$2$, but only if $\\{a_n\\}$ is monotone (Monotone Convergence Theorem)',
         mistake: 'sq-theorem-misattributed',
         why: 'Added a hypothesis (monotonicity) that the Continuous Function Theorem does not need.',
       },
@@ -859,22 +859,22 @@ export const flash: FlashItem[] = [
     options: [
       { text: '$0 \\le \\dfrac{\\cos^{2} n}{n^{2}} \\le \\dfrac{1}{n^{2}}$ and both bounds $\\to 0$ (Squeeze Theorem)' },
       {
-        text: '$\\cos^{2} n \\to 0$, so the product $\\to 0$',
+        text: '$\\cos^{2} n \\to 0$ and $\\dfrac{1}{n^{2}} \\to 0$, so the product $\\to 0$ (product law)',
         mistake: 'sq-limit-law-misuse',
         why: 'cos² n has no limit, so the product law does not apply.',
       },
       {
-        text: '$\\cos^{2} n$ is bounded, so the sequence converges',
+        text: '$\\cos^{2} n$ is bounded, so the sequence converges (bounded sequences converge)',
         mistake: 'sq-bounded-implies-convergent',
-        why: 'Boundedness of one factor alone gives no limit for the sequence.',
+        why: 'Bounded does not imply convergent, and boundedness of one factor alone gives no limit for the sequence.',
       },
       {
-        text: '$\\dfrac{1}{n^{2}} \\to 0$ and $\\dfrac{1}{n^{2}} \\le \\dfrac{\\cos^{2} n}{n^{2}}$',
+        text: '$\\dfrac{1}{n^{2}} \\le \\dfrac{\\cos^{2} n}{n^{2}}$ and $\\dfrac{1}{n^{2}} \\to 0$ (Squeeze Theorem)',
         mistake: 'sq-squeeze-misuse',
-        why: 'The inequality points the wrong way: cos² n ≤ 1 gives cos² n / n² ≤ 1/n², not the reverse.',
+        why: 'The inequality points the wrong way (cos² n ≤ 1 gives cos² n / n² ≤ 1/n²), and one bound alone squeezes nothing.',
       },
       {
-        text: 'The terms oscillate, so the sequence diverges',
+        text: 'The terms oscillate with $\\cos^{2} n$, so the sequence diverges',
         mistake: 'sq-oscillation-means-divergence',
         why: 'Oscillation in the numerator does not prevent convergence when the denominator tends to infinity.',
       },
@@ -921,30 +921,30 @@ export const flash: FlashItem[] = [
     kind: 'concept',
     prompt: { text: '$a_n = \\dfrac{n}{n+1}$. Which argument uses the Monotone Convergence Theorem correctly?' },
     options: [
-      { text: 'Increasing ($a_{n+1} - a_n > 0$) and bounded above by $1$, so it converges' },
+      { text: 'Increasing and bounded above by $1$, so it converges' },
       {
-        text: 'Increasing, so it converges',
-        mistake: 'sq-monotone-implies-convergent',
-        why: 'Monotone alone is not enough; the sequence must also be bounded.',
+        text: 'Increasing and bounded below by $\\tfrac{1}{2}$, so it converges',
+        mistake: 'sq-theorem-misattributed',
+        why: 'An increasing sequence is always bounded below by its first term; the theorem needs an increasing sequence to be bounded ABOVE.',
       },
       {
-        text: 'Bounded by $1$, so it converges',
+        text: 'Decreasing and bounded below by $\\tfrac{1}{2}$, so it converges',
+        mistake: 'algebra-error',
+        why: 'The sequence is increasing, not decreasing: aₙ₊₁ − aₙ = 1/((n + 1)(n + 2)) > 0.',
+      },
+      {
+        text: 'Bounded above by $1$ and below by $\\tfrac{1}{2}$, so it converges',
         mistake: 'sq-bounded-implies-convergent',
-        why: 'Bounded alone is not enough; the sequence must also be monotone.',
+        why: 'Bounded alone is not enough; the theorem also needs the sequence to be monotone.',
       },
       {
-        text: '$\\tfrac{1}{2}, \\tfrac{2}{3}, \\tfrac{3}{4}$ approach $1$, so it converges',
+        text: '$\\tfrac{1}{2}, \\tfrac{2}{3}, \\tfrac{3}{4}$ increase toward $1$, so it converges',
         mistake: 'sq-first-terms',
         why: 'Judged convergence from the first few terms, which is not a proof.',
       },
-      {
-        text: 'Decreasing and bounded below by $0$, so it converges',
-        mistake: 'algebra-error',
-        why: 'The sequence is increasing, not decreasing: the terms 1/2, 2/3, 3/4 grow.',
-      },
     ],
     correct: 0,
-    explanation: 'Both hypotheses, monotone AND bounded, are needed; here both hold.',
+    explanation: '$a_{n+1} - a_n = \\dfrac{1}{(n+1)(n+2)} > 0$ (increasing) and $a_n < 1$ (bounded above): monotone AND bounded in the matching direction.',
     check: { kind: 'none', reason: 'theorem application' },
   },
   {
@@ -971,7 +971,7 @@ export const flash: FlashItem[] = [
       },
       {
         text: 'Oscillating sequences converge to the average of their values',
-        mistake: 'sq-squeeze-misuse',
+        mistake: 'sq-theorem-misattributed',
         why: 'Squeezing between −1 and 1 gives no limit; there is no averaging rule for oscillating sequences.',
       },
     ],
@@ -1019,28 +1019,28 @@ export const flash: FlashItem[] = [
     options: [
       { text: 'Nothing: the quotient law needs $\\lim b_n \\ne 0$' },
       {
-        text: 'It is $\\infty$, since $2/0 = \\infty$',
+        text: 'Nothing: the quotient law needs $\\lim a_n \\ne 0$',
+        mistake: 'sq-theorem-misattributed',
+        why: 'Right conclusion, wrong hypothesis: the quotient law needs the DENOMINATOR limit to be nonzero (and here lim aₙ = 2 ≠ 0 anyway).',
+      },
+      {
+        text: 'It is $\\infty$: the quotient law gives $\\dfrac{\\lim a_n}{\\lim b_n} = \\dfrac{2}{0} = \\infty$',
         mistake: 'sq-limit-law-misuse',
-        why: 'Applied the quotient law with a zero denominator limit; the law does not apply, and the result need not be infinite.',
+        why: 'Applied the quotient law with a zero denominator limit; the law does not apply, and the quotient can tend to −∞ or have no limit (e.g. bₙ = (−1)ⁿ/n).',
       },
       {
-        text: 'It is $0$, because $b_n \\to 0$ wins',
-        mistake: 'sq-dominant-term',
-        why: 'Let the denominator dominate without justification, although a denominator tending to 0 makes the quotient large.',
+        text: 'It is $0$: anything with a factor tending to $0$ tends to $0$',
+        mistake: 'sq-limit-law-misuse',
+        why: 'A denominator tending to 0 makes the quotient large in size, not small.',
       },
       {
-        text: 'It is $2$',
+        text: 'It is $2$: once $b_n \\to 0$ is dropped, only $\\lim a_n = 2$ remains',
         mistake: 'algebra-error',
-        why: 'Ignored the denominator entirely and reported the limit of the numerator.',
-      },
-      {
-        text: 'It does not exist',
-        mistake: 'sq-limit-law-misuse',
-        why: 'The laws are silent here; the limit may or may not exist, depending on the particular sequences.',
+        why: 'Ignored the denominator; a denominator tending to 0 cannot be dropped.',
       },
     ],
     correct: 0,
-    explanation: 'The quotient law requires a nonzero denominator limit; otherwise anything can happen (e.g. $a_n = 2$, $b_n = 1/n$ gives $\\infty$; $b_n = -1/n$ gives $-\\infty$).',
+    explanation: 'The quotient law requires $\\lim b_n \\ne 0$, so the laws give no value; in fact $|a_n/b_n| \\to \\infty$ and the sign of $b_n$ decides ($b_n = 1/n$ gives $\\infty$, $b_n = -1/n$ gives $-\\infty$, $b_n = (-1)^n/n$ gives no limit).',
     check: { kind: 'none', reason: 'conceptual' },
   },
   {
@@ -1069,10 +1069,10 @@ export const flash: FlashItem[] = [
         why: 'Dropped the bₙ² term and reported only 2·3.',
       },
       {
-        latex: '-5',
-        expr: '-5',
-        mistake: 'sign-error',
-        why: 'Flipped the sign of the whole result.',
+        latex: '8',
+        expr: '8',
+        mistake: 'exponent-arithmetic',
+        why: 'Treated bₙ² as 2bₙ: 2·3 − 2·(−1) = 8 instead of 2·3 − (−1)² = 5.',
       },
     ],
     correct: 0,
@@ -1087,24 +1087,24 @@ export const flash: FlashItem[] = [
     options: [
       { text: '$0,\\ 1,\\ \\infty$' },
       {
-        text: '$0,\\ 1,\\ \\text{DNE}$',
-        mistake: 'sq-oscillation-means-divergence',
-        why: 'Confused unbounded growth with oscillation; (3/2)ⁿ increases steadily to ∞.',
-      },
-      {
         text: '$0,\\ \\text{DNE},\\ \\infty$',
         mistake: 'sq-substitute-infinity',
         why: 'Treated 1^∞ as indeterminate with no limit, but 1ⁿ = 1 for every n.',
       },
       {
-        text: '$1,\\ 1,\\ \\infty$',
-        mistake: 'sq-rn-boundary',
-        why: 'Thought (2/3)ⁿ tends to 1, but a ratio with |r| < 1 tends to 0.',
+        text: '$0,\\ e,\\ \\infty$',
+        mistake: 'sq-theorem-misattributed',
+        why: 'Confused 1ⁿ with the standard limit (1 + 1/n)ⁿ → e; here the base is exactly 1, so 1ⁿ = 1.',
       },
       {
-        text: '$0,\\ 0,\\ \\infty$',
-        mistake: 'sq-rn-boundary',
-        why: 'Treated r = 1 like the case |r| < 1, but 1ⁿ = 1 for every n.',
+        text: '$0,\\ \\text{DNE},\\ \\tfrac{3}{2}$',
+        mistake: 'sq-term-vs-limit',
+        why: 'Two slips: treated 1ⁿ as having no limit, and reported the first term 3/2 as the limit of (3/2)ⁿ, which grows without bound.',
+      },
+      {
+        text: '$\\tfrac{2}{3},\\ \\text{DNE},\\ \\infty$',
+        mistake: 'sq-term-vs-limit',
+        why: 'Two slips: reported the first term 2/3 as the limit of (2/3)ⁿ (which tends to 0), and treated 1ⁿ as having no limit.',
       },
     ],
     correct: 0,
@@ -1122,7 +1122,7 @@ export const flash: FlashItem[] = [
         latex: '2',
         expr: '2',
         mistake: 'algebra-error',
-        why: 'Wrote ln(n²) as (ln n)/2 instead of 2 ln n.',
+        why: 'Inverted the ratio: computed ln(n²)/ln n = 2 instead of ln n/ln(n²).',
       },
       {
         latex: '0',
@@ -1137,10 +1137,16 @@ export const flash: FlashItem[] = [
         why: 'Plugged in n = ∞ and cancelled ∞/∞ to 1 instead of simplifying.',
       },
       {
+        latex: '\\frac{1}{\\ln 2}',
+        expr: '1/log(2)',
+        mistake: 'algebra-error',
+        why: 'Wrote ln(n²) as (ln 2)(ln n) instead of 2 ln n.',
+      },
+      {
         latex: '\\ln 2',
         expr: 'log(2)',
-        mistake: 'arithmetic-error',
-        why: 'Reduced ln(n²)/ln n to ln 2 by "cancelling" the ln n factors.',
+        mistake: 'algebra-error',
+        why: 'Two slips: wrote ln(n²) as (ln 2)(ln n) and then inverted the ratio.',
       },
     ],
     correct: 0,
@@ -1153,30 +1159,30 @@ export const flash: FlashItem[] = [
     kind: 'concept',
     prompt: { text: '$a_n = \\dfrac{n+1}{n}$. Which statement is right?' },
     options: [
-      { text: 'Decreasing and bounded below by $1$, so it converges (Monotone Convergence Theorem)' },
+      { text: 'Decreasing and bounded below by $1$, so it converges' },
       {
-        text: 'Increasing, since $n$ grows, so it diverges',
+        text: 'Decreasing and bounded above by $2$, so it converges',
+        mistake: 'sq-theorem-misattributed',
+        why: 'A decreasing sequence is always bounded above by its first term; the Monotone Convergence Theorem needs a decreasing sequence to be bounded BELOW.',
+      },
+      {
+        text: 'Increasing and bounded above by $2$, so it converges',
         mistake: 'algebra-error',
         why: '(n+1)/n = 1 + 1/n decreases as n grows; the growth of n alone does not make the sequence increase.',
       },
       {
-        text: 'Decreasing, so it converges to $0$',
-        mistake: 'sq-dominant-term',
-        why: 'A decreasing bounded sequence converges to its greatest lower bound, here 1, not automatically to 0.',
+        text: 'Decreasing and bounded below by $0$, so it converges to $0$',
+        mistake: 'sq-theorem-misattributed',
+        why: 'The theorem gives convergence, not the value; a lower bound need not be the limit (here the limit is 1).',
       },
       {
-        text: 'Not monotone: $a_1 = 2$ and $a_2 = \\tfrac{3}{2}$ are just two terms',
-        mistake: 'sq-first-terms',
-        why: 'Monotonicity is about every n, and 1 + 1/n does decrease for all n.',
-      },
-      {
-        text: 'Bounded, so it converges to its bound $2$',
+        text: 'Bounded between $1$ and $2$, so it converges',
         mistake: 'sq-bounded-implies-convergent',
-        why: 'A bound is not a limit: the sequence converges to 1, not to its upper bound 2.',
+        why: 'Bounded alone does not give convergence; the theorem also needs monotonicity.',
       },
     ],
     correct: 0,
-    explanation: '$a_n = 1 + \\tfrac{1}{n}$ decreases toward $1$ and is bounded below, so the Monotone Convergence Theorem applies.',
+    explanation: '$a_n = 1 + \\tfrac{1}{n}$ decreases and stays above $1$, so the Monotone Convergence Theorem (monotone AND bounded in the matching direction) applies.',
     check: { kind: 'none', reason: 'monotonicity and MCT reasoning' },
   },
 ];
@@ -1218,13 +1224,14 @@ function quadLatex(k: number): string {
   return k === 1 ? 'n^{2}' : `${k}n^{2}`;
 }
 
+// Rows with d = ±1 made the answer a/c the only fraction among integers; every row now has d ≠ ±1.
 const RATIONAL_TABLE: Array<[number, number, number, number]> = [
-  [3, 1, 1, -5],
-  [2, -1, 5, 1],
+  [5, 1, 3, -2],
+  [2, -1, 5, 3],
   [4, 3, 2, 7],
-  [5, 2, 3, -1],
+  [5, 2, 3, -4],
   [6, 1, 2, 3],
-  [7, -2, 4, 1],
+  [7, -2, 4, 3],
   [1, 3, 2, 5],
   [9, 1, 3, 4],
 ];
@@ -1332,18 +1339,24 @@ export const generators: FlashGenerator[] = [
             why: 'Reported the first term (the ratio r itself) as the limit.',
           },
           alternates
-            ? { text: 'Diverges: alternates without settling' }
-            : {
-                text: 'Diverges: alternates without settling',
-                mistake: 'sq-oscillation-means-divergence',
-                why: 'Assumed a negative ratio means divergence, or that sign changes prevent settling.',
-              },
+            ? { text: 'Diverges: the terms alternate and never settle' }
+            : r < 0
+              ? {
+                  text: 'Diverges: the terms alternate and never settle',
+                  mistake: 'sq-oscillation-means-divergence',
+                  why: 'Assumed that sign changes prevent convergence; with |r| < 1 the alternating terms still shrink to 0.',
+                }
+              : {
+                  text: 'Diverges: the terms alternate and never settle',
+                  mistake: 'sq-rn-boundary',
+                  why: 'Mixed up the divergent cases of the {rⁿ} rule: only r ≤ −1 makes the terms alternate, and this r is positive.',
+                },
           unbounded
-            ? { text: 'Diverges: unbounded' }
+            ? { text: 'Diverges: the terms grow and never settle' }
             : {
-                text: 'Diverges: unbounded',
+                text: 'Diverges: the terms grow and never settle',
                 mistake: 'sq-rn-boundary',
-                why: 'Misjudged |r| against 1; the terms of this sequence do not grow in the way described.',
+                why: 'Misjudged |r| against 1; |rⁿ| = |r|ⁿ does not grow here, since |r| ≤ 1.',
               },
         ],
         correct: absLess1 ? 0 : alternates ? 3 : 4,

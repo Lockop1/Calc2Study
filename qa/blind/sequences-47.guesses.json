@@ -1,98 +1,26 @@
 {
-  "1": {
-    "guess": null,
-    "reason": ""
-  },
-  "2": {
-    "guess": null,
-    "reason": ""
-  },
-  "3": {
-    "guess": null,
-    "reason": ""
-  },
-  "4": {
-    "guess": null,
-    "reason": ""
-  },
-  "5": {
-    "guess": null,
-    "reason": ""
-  },
-  "6": {
-    "guess": null,
-    "reason": ""
-  },
-  "7": {
-    "guess": null,
-    "reason": ""
-  },
-  "8": {
-    "guess": null,
-    "reason": ""
-  },
-  "9": {
-    "guess": null,
-    "reason": ""
-  },
-  "10": {
-    "guess": null,
-    "reason": ""
-  },
-  "11": {
-    "guess": null,
-    "reason": ""
-  },
-  "12": {
-    "guess": null,
-    "reason": ""
-  },
-  "13": {
-    "guess": null,
-    "reason": ""
-  },
-  "14": {
-    "guess": null,
-    "reason": ""
-  },
-  "15": {
-    "guess": null,
-    "reason": ""
-  },
-  "16": {
-    "guess": null,
-    "reason": ""
-  },
-  "17": {
-    "guess": null,
-    "reason": ""
-  },
-  "18": {
-    "guess": null,
-    "reason": ""
-  },
-  "19": {
-    "guess": null,
-    "reason": ""
-  },
-  "20": {
-    "guess": null,
-    "reason": ""
-  },
-  "21": {
-    "guess": null,
-    "reason": ""
-  },
-  "22": {
-    "guess": null,
-    "reason": ""
-  },
-  "23": {
-    "guess": null,
-    "reason": ""
-  },
-  "24": {
-    "guess": null,
-    "reason": ""
-  }
+  "1": { "guess": 3, "reason": "longest, only full L'Hopital chain; ln x / sqrt x -> 0 (surface + math)" },
+  "2": { "guess": 1, "reason": "union of fragments 2 and 4; Monotone Convergence Theorem (surface + math)" },
+  "3": { "guess": 1, "reason": "only options 1-2 have the (n-1) form; picked the one with the hub's sign (surface)" },
+  "4": { "guess": 5, "reason": "only option citing the law's hypothesis (surface + math)" },
+  "5": { "guess": 4, "reason": "longest, only one naming the Squeeze Theorem (surface + math)" },
+  "6": { "guess": 4, "reason": "decoy hub around -pi/2; pi/2 is the arctan limit (surface)" },
+  "7": { "guess": 3, "reason": "longest, only one with a how-to parenthetical (surface)" },
+  "8": { "guess": 2, "reason": "only valid reason, names the corollary, longest (surface + math)" },
+  "9": { "guess": 3, "reason": "only fraction, combines the 5 and 2 seen in other options (surface)" },
+  "10": { "guess": 4, "reason": "0 < n/(n+1) < 1 (math)" },
+  "11": { "guess": 1, "reason": "far the longest, only one stating a theorem (surface + math)" },
+  "12": { "guess": 3, "reason": "Squeeze corollary (math)" },
+  "13": { "guess": 4, "reason": "Squeeze corollary, also the most specific option (math)" },
+  "14": { "guess": 2, "reason": "lone Diverges; 1.01^n -> infinity (surface + math)" },
+  "15": { "guess": 5, "reason": "longest, names two tools; n sin(1/n) -> 1 (surface + math)" },
+  "16": { "guess": 2, "reason": "medoid (hub) (surface)" },
+  "17": { "guess": 3, "reason": "pure guess: avoided hub 2, took its reciprocal mutation (surface)" },
+  "18": { "guess": 5, "reason": "longest, how-to parenthetical, union of 2 and 3 (surface)" },
+  "19": { "guess": 2, "reason": "e is the limit-to-know constant; 1 looks like the 1^infinity trap (surface)" },
+  "20": { "guess": 4, "reason": "conjugate for infinity - infinity, also longest (math)" },
+  "21": { "guess": 4, "reason": "pure guess: avoided hub 5 (surface)" },
+  "22": { "guess": 4, "reason": "longest, states the corollary (surface + math)" },
+  "23": { "guess": 4, "reason": "(4/3)^n -> infinity, also the lone diverges (math)" },
+  "24": { "guess": 4, "reason": "|(-1)^n| = 1 (math)" }
 }

@@ -27,7 +27,7 @@ export const flash: FlashItem[] = [
       },
       {
         text: '$a_n$ decreases to $0$',
-        mistake: 'sq-monotone-implies-convergent',
+        mistake: 'sb-divergence-test-converse',
         why: 'The harmonic series has terms that decrease to 0 and yet it diverges, so this is not enough.',
       },
     ],
@@ -51,14 +51,14 @@ export const flash: FlashItem[] = [
       {
         latex: '\\frac{1}{2}',
         expr: '1/2',
-        mistake: 'sb-wrong-first-term',
+        mistake: 'sq-term-vs-limit',
         why: 'Reported S₁ = 1/2, the first partial sum, instead of lim Sₙ.',
       },
       {
-        latex: '2',
-        expr: '2',
-        mistake: 'arithmetic-error',
-        why: 'Inverted the ratio, working with (n+1)/n instead of n/(n+1) when taking the limit.',
+        latex: '\\frac{2}{3}',
+        expr: '2/3',
+        mistake: 'sq-term-vs-limit',
+        why: 'Reported S₂ = 2/3, an early partial sum, instead of lim Sₙ.',
       },
       {
         latex: '-1',
@@ -88,7 +88,7 @@ export const flash: FlashItem[] = [
         latex: '\\frac{2}{n}',
         expr: '2/n',
         mistake: 'algebra-error',
-        why: 'Dropped the Sₙ₋₁ part of the difference Sₙ − Sₙ₋₁ and kept only the variable piece of Sₙ.',
+        why: 'Dropped the Sₙ₋₁ part of the difference Sₙ − Sₙ₋₁ and kept only the variable piece −2/n of Sₙ, losing its sign.',
       },
       {
         latex: '\\frac{2}{n^{2}}',
@@ -107,7 +107,7 @@ export const flash: FlashItem[] = [
     explanation: 'aₙ = Sₙ − Sₙ₋₁ = −2/n + 2/(n − 1) = 2/(n(n − 1)).',
     variable: 'n',
     domain: { n: [2, 8] },
-    check: { kind: 'identity', lhs: '2/(n*(n-1))' },
+    check: { kind: 'identity', lhs: '(3 - 2/n) - (3 - 2/(n-1))' },
   },
   {
     id: 'sb-f-004',
@@ -135,10 +135,10 @@ export const flash: FlashItem[] = [
         why: 'Reported S₄ = 15, the previous partial sum, instead of S₅ − S₄.',
       },
       {
-        latex: '1',
-        expr: '1',
-        mistake: 'sb-sum-is-term-limit',
-        why: 'Differenced only the constants (−1 − (−1) and so on) and ignored the 2ⁿ parts.',
+        latex: '2',
+        expr: '2',
+        mistake: 'algebra-error',
+        why: 'Subtracted the exponents, 2⁵ − 2⁴ = 2^{5−4} = 2, instead of subtracting the values.',
       },
     ],
     correct: 0,
@@ -198,7 +198,7 @@ export const flash: FlashItem[] = [
       },
       {
         text: 'The series diverges, because $a_n \\ne 0$ for every $n$',
-        mistake: 'algebra-error',
+        mistake: 'sq-term-vs-limit',
         why: 'The test is about lim aₙ, not about whether individual terms are nonzero.',
       },
       {
@@ -220,7 +220,7 @@ export const flash: FlashItem[] = [
       { text: 'Diverges: $\\lim (-1)^{n}$ does not exist' },
       {
         text: 'Converges to $0$: the terms cancel in pairs',
-        mistake: 'sb-partial-sum-formula',
+        mistake: 'sb-no-information',
         why: 'The partial sums alternate between −1 and 0 and never settle, so pairing terms does not give a sum.',
       },
       {
@@ -315,22 +315,22 @@ export const flash: FlashItem[] = [
     options: [
       { text: '$\\lim a_n \\ne 0$ (or DNE) $\\Rightarrow \\sum a_n$ diverges; $\\lim a_n = 0$ tells you nothing' },
       {
-        text: '$\\lim a_n = 0 \\Rightarrow \\sum a_n$ converges',
+        text: '$\\lim a_n \\ne 0$ (or DNE) $\\Rightarrow \\sum a_n$ diverges; $\\lim a_n = 0 \\Rightarrow \\sum a_n$ converges',
         mistake: 'sb-divergence-test-converse',
-        why: 'This is the false converse; the harmonic series has aₙ → 0 and diverges.',
+        why: 'The second half is the false converse; the harmonic series has aₙ → 0 and diverges.',
       },
       {
-        text: '$\\lim a_n = 0 \\Rightarrow \\sum a_n$ diverges',
-        mistake: 'sb-sequence-vs-series',
-        why: 'Reversed what the test says: a limit of 0 gives no information, it does not force divergence.',
+        text: '$\\lim a_n \\ne 0$ (or DNE) $\\Rightarrow \\sum a_n$ converges; $\\lim a_n = 0 \\Rightarrow \\sum a_n$ diverges',
+        mistake: 'sq-theorem-misattributed',
+        why: 'Both halves are reversed: a nonzero limit forces divergence, and a limit of 0 gives no information.',
       },
       {
-        text: '$\\lim a_n = L \\Rightarrow \\sum a_n = L$',
+        text: '$\\lim a_n = L \\ne 0 \\Rightarrow \\sum a_n = L$; $\\lim a_n = 0 \\Rightarrow \\sum a_n$ converges',
         mistake: 'sb-sum-is-term-limit',
-        why: 'The sum of a series is lim Sₙ, not lim aₙ.',
+        why: 'The sum of a series is lim Sₙ, not lim aₙ; and a limit of 0 never proves convergence.',
       },
       {
-        text: 'It applies only to geometric series',
+        text: '$\\lim a_n \\ne 0$ (or DNE) $\\Rightarrow \\sum a_n$ diverges, for geometric series only; $\\lim a_n = 0$ tells you nothing',
         mistake: 'sq-theorem-misattributed',
         why: 'The divergence test applies to every series, not just geometric ones.',
       },
@@ -364,7 +364,7 @@ export const flash: FlashItem[] = [
         latex: '12',
         expr: '12',
         mistake: 'arithmetic-error',
-        why: 'Doubled the correct result 6 by an arithmetic slip.',
+        why: 'Used the n = 0 term 3·(1/2)⁻¹ = 6 as a, giving 6/(1/2) = 12.',
       },
       {
         latex: '0',
@@ -397,8 +397,8 @@ export const flash: FlashItem[] = [
         why: 'Reported the n = 1 term as the sum instead of summing the whole series.',
       },
       {
-        latex: '\\frac{1}{6}',
-        expr: '1/6',
+        latex: '\\frac{2}{9}',
+        expr: '2/9',
         mistake: 'arithmetic-error',
         why: 'Computed a(1 − r) with a = 1/3 instead of a/(1 − r).',
       },
@@ -427,10 +427,10 @@ export const flash: FlashItem[] = [
         why: 'Used a = 1 although the series starts at n = 1, where the first term is 2/3.',
       },
       {
-        latex: '6',
-        expr: '6',
+        latex: '\\frac{3}{2}',
+        expr: '3/2',
         mistake: 'sb-wrong-first-term',
-        why: 'Used a = 2 (the numerator of the ratio) as the first term.',
+        why: 'Used a = 1 as the first term and then divided it by r = 2/3 instead of by 1 − r.',
       },
       {
         latex: '\\frac{2}{3}',
@@ -442,7 +442,7 @@ export const flash: FlashItem[] = [
         latex: '1',
         expr: '1',
         mistake: 'arithmetic-error',
-        why: 'Made an arithmetic slip when evaluating (2/3)/(1/3).',
+        why: 'Divided the first term by r = 2/3 instead of by 1 − r, getting (2/3)/(2/3) = 1.',
       },
     ],
     correct: 0,
@@ -478,7 +478,7 @@ export const flash: FlashItem[] = [
         latex: '\\frac{5}{4}',
         expr: '5/4',
         mistake: 'arithmetic-error',
-        why: 'Made an arithmetic slip when evaluating (5/16)/(3/4).',
+        why: 'Divided the first term 5/16 by r = 1/4 instead of by 1 − r.',
       },
     ],
     correct: 0,
@@ -538,7 +538,7 @@ export const flash: FlashItem[] = [
         latex: '\\frac{1}{9}',
         expr: '1/9',
         mistake: 'sb-wrong-first-term',
-        why: 'Used a = 1/3 as the first term and then halved it, ignoring the 2ⁿ factor in the numerator.',
+        why: 'Used a = 1/3 as the first term and multiplied by 1 − r instead of dividing by it.',
       },
       {
         latex: '\\frac{4}{9}',
@@ -550,7 +550,7 @@ export const flash: FlashItem[] = [
         latex: '2',
         expr: '2',
         mistake: 'sb-wrong-first-term',
-        why: 'Used a = 2/3 (the n = 0 term) although the series starts at n = 1.',
+        why: 'Dropped the 1/3 from 3^{n+1} = 3·3ⁿ, so the series became Σ(2/3)ⁿ, which sums to 2.',
       },
     ],
     correct: 0,
@@ -648,13 +648,13 @@ export const flash: FlashItem[] = [
         latex: '9',
         expr: '9',
         mistake: 'arithmetic-error',
-        why: 'Forgot to divide by 10, treating the first term as 9.',
+        why: 'Divided the first term by r = 1/10 instead of by 1 − r, getting (9/10)/(1/10) = 9.',
       },
       {
         latex: '\\frac{1}{9}',
         expr: '1/9',
-        mistake: 'sb-wrong-ratio',
-        why: 'Inverted the ratio r = 1/10 in the formula instead of using it as given.',
+        mistake: 'sb-wrong-first-term',
+        why: 'Dropped the 9 and used a = 1/10 as the first term, giving (1/10)/(9/10) = 1/9.',
       },
     ],
     correct: 0,
@@ -672,19 +672,19 @@ export const flash: FlashItem[] = [
         latex: '2\\left(3^{n} - 1\\right)',
         expr: '2*(3^n - 1)',
         mistake: 'sb-partial-sum-formula',
-        why: 'Forgot to divide by 1 − r = −2, which cancels the factor 2 in the numerator.',
+        why: 'Forgot to divide by r − 1 = 2 in a(rⁿ − 1)/(r − 1), which would cancel the factor 2.',
       },
       {
         latex: '2\\left(3^{n} + 1\\right)',
         expr: '2*(3^n + 1)',
         mistake: 'sign-error',
-        why: 'Forgot to divide by 1 − r and flipped the sign of the 1.',
+        why: 'Forgot to divide by r − 1 = 2 and flipped the sign of the 1.',
       },
       {
         latex: '2\\left(3^{n-1} - 1\\right)',
         expr: '2*(3^(n-1) - 1)',
         mistake: 'exponent-arithmetic',
-        why: 'Forgot to divide by 1 − r and used rⁿ⁻¹ in the partial-sum formula instead of rⁿ.',
+        why: 'Forgot to divide by r − 1 = 2 and used rⁿ⁻¹ in the partial-sum formula instead of rⁿ.',
       },
       {
         latex: '-1',
@@ -697,7 +697,7 @@ export const flash: FlashItem[] = [
     explanation: 'Sₙ = a(1 − rⁿ)/(1 − r) = 2(1 − 3ⁿ)/(−2) = 3ⁿ − 1.',
     variable: 'n',
     domain: { n: [1, 6] },
-    check: { kind: 'identity', lhs: '3^n - 1' },
+    check: { kind: 'identity', lhs: '2*(1 - 3^n)/(1 - 3)' },
   },
   {
     id: 'sb-f-021',
@@ -722,9 +722,9 @@ export const flash: FlashItem[] = [
         why: 'Looked at the first term instead of the ratio; the first term does not affect convergence.',
       },
       {
-        text: '$a r^{n-1} \\to 0$',
-        mistake: 'sb-divergence-test-converse',
-        why: 'Terms tending to 0 is necessary but not sufficient in general (though for geometric series it happens to coincide).',
+        text: '$-1 < r \\le 1$',
+        mistake: 'sb-sequence-vs-series',
+        why: 'Used the convergence condition of the sequence {rⁿ} instead of the series',
       },
     ],
     correct: 0,
@@ -829,13 +829,13 @@ export const flash: FlashItem[] = [
         latex: '2',
         expr: '2',
         mistake: 'sb-telescoping-sum-wrong',
-        why: 'Added b₁ and the limit instead of subtracting, getting 1 + 1 instead of 1 − 0.',
+        why: 'Counted b₁ twice (Sₙ = 2 − 1/n), so the limit comes out as 2.',
       },
       {
         latex: '\\frac{3}{2}',
         expr: '3/2',
         mistake: 'arithmetic-error',
-        why: 'Made an arithmetic slip in the surviving terms, adding 1 + 1/2.',
+        why: 'Kept the two leading terms 1 + 1/2, as if the gap were 2.',
       },
     ],
     correct: 0,
@@ -870,8 +870,8 @@ export const flash: FlashItem[] = [
       {
         latex: '\\frac{1}{n+1}',
         expr: '1/(n+1)',
-        mistake: 'sb-partial-sum-formula',
-        why: 'Kept only the last surviving term and forgot the first term b₁ = 1.',
+        mistake: 'sb-telescoping-sum-wrong',
+        why: 'Kept only the last surviving term (with its minus sign dropped) and forgot the first term b₁ = 1.',
       },
     ],
     correct: 0,
@@ -958,8 +958,8 @@ export const flash: FlashItem[] = [
       {
         latex: '1',
         expr: '1',
-        mistake: 'sb-wrong-first-term',
-        why: 'Used the sum of Σ 1/(n(n+1)) without accounting for the index shift.',
+        mistake: 'sb-telescoping-sum-wrong',
+        why: 'Used the sum of Σ 1/(n(n+1)) without accounting for the index shift: the first surviving term is 1/2, not 1.',
       },
       {
         latex: '\\frac{1}{6}',
@@ -1007,7 +1007,7 @@ export const flash: FlashItem[] = [
         latex: '\\frac{1}{4}',
         expr: '1/4',
         mistake: 'arithmetic-error',
-        why: 'Made an arithmetic slip in (1/2)(1 + 1/2).',
+        why: 'Computed (1/2)(1/2) instead of (1/2)(1 + 1/2), keeping only one surviving term.',
       },
       {
         latex: '0',
@@ -1050,8 +1050,8 @@ export const flash: FlashItem[] = [
       {
         latex: '4',
         expr: '4',
-        mistake: 'algebra-error',
-        why: 'Computed 2(3 − 1), applying the factor 2 to both sums.',
+        mistake: 'coefficient-mishandled',
+        why: 'Dropped the factor 2 on the first sum, computing 3 − (−1) = 4.',
       },
     ],
     correct: 0,
@@ -1114,7 +1114,7 @@ export const flash: FlashItem[] = [
       },
       {
         text: 'Converges to $0$',
-        mistake: 'sb-sum-is-term-limit',
+        mistake: 'sb-no-information',
         why: 'There is no basis for assigning a value; the combined series may not even converge.',
       },
     ],
@@ -1136,7 +1136,7 @@ export const flash: FlashItem[] = [
       },
       {
         text: '$\\displaystyle\\sum \\left(\\frac{1}{n} + \\frac{1}{n^{2}}\\right) = \\sum \\frac{1}{n} + \\sum \\frac{1}{n^{2}}$',
-        mistake: 'sb-no-information',
+        mistake: 'sb-split-divergent',
         why: 'The sum rule needs both series to be convergent, and Σ1/n diverges.',
       },
       {
@@ -1162,10 +1162,10 @@ export const flash: FlashItem[] = [
     options: [
       { latex: '2', expr: '2' },
       {
-        latex: '1',
-        expr: '1',
+        latex: '3',
+        expr: '3',
         mistake: 'sb-wrong-first-term',
-        why: 'Used 1/(1 − r) for both pieces as if they started at n = 0, instead of the sums starting at n = 1.',
+        why: 'Treated both pieces as if they started at n = 0, getting 3·2 − 2·(3/2) = 3, instead of starting at n = 1.',
       },
       {
         latex: '4',
@@ -1174,10 +1174,10 @@ export const flash: FlashItem[] = [
         why: 'Added the two sums instead of subtracting the second.',
       },
       {
-        latex: '\\frac{2}{3}',
-        expr: '2/3',
+        latex: '\\frac{5}{6}',
+        expr: '5/6',
         mistake: 'sb-partial-sum-formula',
-        why: 'Reported the first term of the combined series as the sum.',
+        why: 'Reported the first term of the combined series, 3/2 − 2/3 = 5/6, as the sum.',
       },
       {
         latex: '0',
