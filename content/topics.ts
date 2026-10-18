@@ -32,7 +32,7 @@ export interface Topic {
   sections: string;
   /** Whether the topic has memorization content (flash minimum of 40 applies). */
   hasFlashMinimum: boolean;
-  /** Whether step-through problems are required (topics 2–14; off for a topic until its Phase C lands). */
+  /** Whether step-through problems are required (topics 2–14). */
   hasStepMinimum: boolean;
 }
 
@@ -145,7 +145,7 @@ export const TOPICS: readonly Topic[] = [
     lecture: 'Lecture 8',
     sections: '§3.4',
     hasFlashMinimum: true,
-    hasStepMinimum: false,
+    hasStepMinimum: true,
   },
   {
     id: 'improper',
@@ -156,7 +156,7 @@ export const TOPICS: readonly Topic[] = [
     lecture: 'Lecture 9',
     sections: '§3.7',
     hasFlashMinimum: true,
-    hasStepMinimum: false,
+    hasStepMinimum: true,
   },
   {
     id: 'sequences',
@@ -167,7 +167,7 @@ export const TOPICS: readonly Topic[] = [
     lecture: 'Lecture 10',
     sections: '§5.1',
     hasFlashMinimum: true,
-    hasStepMinimum: false,
+    hasStepMinimum: true,
   },
   {
     id: 'series-basics',
@@ -178,7 +178,7 @@ export const TOPICS: readonly Topic[] = [
     lecture: 'Lecture 11',
     sections: '§5.2',
     hasFlashMinimum: true,
-    hasStepMinimum: false,
+    hasStepMinimum: true,
   },
   {
     id: 'series-tests',
@@ -189,7 +189,7 @@ export const TOPICS: readonly Topic[] = [
     lecture: 'Lecture 12',
     sections: '§5.3–5.4',
     hasFlashMinimum: true,
-    hasStepMinimum: false,
+    hasStepMinimum: true,
   },
 ] as const;
 

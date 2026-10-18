@@ -70,6 +70,36 @@ export const steps: StepProblem[] = [
         result: { text: '$p$-series, $p = 2 > 1$: converges' },
         check: { kind: 'none', reason: 'recognition' },
       },
+      {
+        prompt: 'Conclude.',
+        options: [
+          { text: 'Converges; the $p$-series rule gives no value for the sum' },
+          {
+            text: 'Converges to $1$, the value of $\\int_1^{\\infty} dx/x^{2}$',
+            mistake: 'st-sum-equals-integral',
+            why: "The integral's value is never the sum of the series.",
+          },
+          {
+            text: 'Converges to $1$, the first term',
+            mistake: 'sb-partial-sum-formula',
+            why: 'The first term is not the sum of the series.',
+          },
+          {
+            text: 'Converges to $1$, by the $p$-rule: $\\frac{1}{p-1}$ with $p = 2$',
+            mistake: 'st-sum-equals-integral',
+            why: '1/(p − 1) is the value of the improper integral, not the sum of the series.',
+          },
+          {
+            text: 'Converges to $0$, since the terms tend to $0$',
+            mistake: 'sb-sum-is-term-limit',
+            why: 'The limit of the terms is not the sum of the series.',
+          },
+        ],
+        correct: 0,
+        explanation: 'The tests decide convergence; none of them gives the sum of $\\sum 1/n^{2}$.',
+        result: { text: 'Converges (value not given by the test)' },
+        check: { kind: 'series', term: '1/n^2', converges: true },
+      },
     ],
     final: {
       latex: '\\text{converges } (p\\text{-series}, p = 2)',
@@ -86,6 +116,36 @@ export const steps: StepProblem[] = [
     difficulty: 1,
     statement: { text: 'Decide whether the series converges, naming the test.', latex: '\\sum_{n=1}^{\\infty} \\frac{1}{\\sqrt{n}}' },
     steps: [
+      {
+        prompt: 'Divergence test first: what does it say?',
+        options: [
+          { text: '$\\frac{1}{\\sqrt{n}} \\to 0$: inconclusive, move on in the flowchart' },
+          {
+            text: '$\\frac{1}{\\sqrt{n}} \\to 0$: the series converges',
+            mistake: 'sb-divergence-test-converse',
+            why: 'The divergence test never proves convergence.',
+          },
+          {
+            text: '$\\frac{1}{\\sqrt{n}} \\to 0$: the series converges to $0$',
+            mistake: 'sb-sum-is-term-limit',
+            why: 'The test never proves convergence, and the limit of the terms is not the sum.',
+          },
+          {
+            text: '$\\frac{1}{\\sqrt{n}} \\to 0$: the series diverges',
+            mistake: 'st-wrong-inference',
+            why: 'The divergence test says nothing when the limit is 0.',
+          },
+          {
+            text: '$\\frac{1}{\\sqrt{n}} \\to 1$: the series diverges',
+            mistake: 'im-limit-evaluated-wrong',
+            why: 'Right verdict, wrong limit: 1/√n → 0, and the test is inconclusive.',
+          },
+        ],
+        correct: 0,
+        explanation: 'The terms tend to 0, so the divergence test is inconclusive.',
+        result: { text: 'Divergence test inconclusive' },
+        check: { kind: 'limit', term: '1/sqrt(n)', limit: '0' },
+      },
       {
         prompt: 'Write the term as $\\dfrac{1}{n^{p}}$. What is $p$?',
         options: [
@@ -503,6 +563,36 @@ export const steps: StepProblem[] = [
     statement: { text: 'Decide whether the series converges, naming the test.', latex: '\\sum_{n=1}^{\\infty} \\frac{1}{n^{2}+1}' },
     steps: [
       {
+        prompt: 'Divergence test first, then where in the flowchart?',
+        options: [
+          { text: '$\\frac{1}{n^{2}+1} \\to 0$: inconclusive; positive terms and not exactly a $p$-series, so compare it with one' },
+          {
+            text: '$\\frac{1}{n^{2}+1} \\to 0$: the series converges',
+            mistake: 'sb-divergence-test-converse',
+            why: 'The divergence test never proves convergence.',
+          },
+          {
+            text: '$\\frac{1}{n^{2}+1} \\to 0$: the series converges to $0$',
+            mistake: 'sb-sum-is-term-limit',
+            why: 'The test never proves convergence, and the limit of the terms is not the sum.',
+          },
+          {
+            text: '$\\frac{1}{n^{2}+1} \\to 0$: the series converges because it is geometric with $r = \\tfrac{1}{2}$',
+            mistake: 'sb-wrong-ratio',
+            why: 'The test never proves convergence, and the ratio of consecutive terms is not constant.',
+          },
+          {
+            text: 'It is a $p$-series with $p = 2$, so it converges',
+            mistake: 'st-wrong-p',
+            why: 'The +1 means it is not a p-series; a comparison is needed (the verdict happens to be right).',
+          },
+        ],
+        correct: 0,
+        explanation: 'Terms → 0 is inconclusive; the next flowchart step for positive terms is a comparison.',
+        result: { text: 'Divergence test inconclusive; compare with a $p$-series' },
+        check: { kind: 'limit', term: '1/(n^2+1)', limit: '0' },
+      },
+      {
         prompt: 'Which comparison is valid?',
         options: [
           { text: '$\\dfrac{1}{n^{2}+1} < \\dfrac{1}{n^{2}}$ and $\\sum \\dfrac{1}{n^{2}}$ converges: converges' },
@@ -578,6 +668,36 @@ export const steps: StepProblem[] = [
     difficulty: 1,
     statement: { text: 'Decide whether the series converges, naming the test.', latex: '\\sum_{n=1}^{\\infty} \\frac{1}{2^{n}+n}' },
     steps: [
+      {
+        prompt: 'Divergence test first, then choose the comparison.',
+        options: [
+          { text: '$\\frac{1}{2^{n}+n} \\to 0$: inconclusive; the dominant term is $2^{n}$, so compare with $\\frac{1}{2^{n}}$' },
+          {
+            text: '$\\frac{1}{2^{n}+n} \\to 0$: the series converges',
+            mistake: 'sb-divergence-test-converse',
+            why: 'The divergence test never proves convergence.',
+          },
+          {
+            text: '$\\frac{1}{2^{n}+n} \\to 0$: the series converges to $0$',
+            mistake: 'sb-sum-is-term-limit',
+            why: 'The test never proves convergence, and the limit of the terms is not the sum.',
+          },
+          {
+            text: '$\\frac{1}{2^{n}+n} \\to 0$: the series converges because it is geometric with $r = \\tfrac{1}{2}$',
+            mistake: 'sb-wrong-ratio',
+            why: 'The test never proves convergence, and the series is not geometric.',
+          },
+          {
+            text: 'The dominant term is $n$, so compare with $\\frac{1}{n}$',
+            mistake: 'st-wrong-comparison-series',
+            why: '2ⁿ dominates n; comparing with 1/n gives no information.',
+          },
+        ],
+        correct: 0,
+        explanation: 'Terms → 0 is inconclusive; pick the comparison from the dominant term $2^{n}$.',
+        result: { text: 'Compare with $1/2^{n}$' },
+        check: { kind: 'limit', term: '1/(2^n+n)', limit: '0' },
+      },
       {
         prompt: 'Which comparison is valid?',
         options: [
