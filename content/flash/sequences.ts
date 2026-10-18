@@ -397,9 +397,9 @@ export const flash: FlashItem[] = [
         why: 'Right value but an invalid reason: ∞ − ∞ is not 0 in general.',
       },
       {
-        text: '$1$: the numbers under the roots differ by $1$',
+        text: '$1$: $\\infty - \\infty$ is indeterminate, so subtract the radicands instead: $(n+1) - n = 1$',
         mistake: 'algebra-error',
-        why: 'Subtracted inside the roots, treating √(n+1) − √n as √((n+1) − n) = 1.',
+        why: 'Replaced the difference of the roots by the difference under the roots.',
       },
       {
         text: "$\\frac{1}{2}$: L'Hôpital gives $\\dfrac{1}{2\\sqrt{x}}$",
@@ -419,24 +419,24 @@ export const flash: FlashItem[] = [
     options: [
       { text: '$1$: $\\ln\\left(n^{1/n}\\right) = \\dfrac{\\ln n}{n} \\to 0$, so the limit is $e^{0}$' },
       {
-        text: '$\\infty$: $n$ grows without bound',
-        mistake: 'sq-dominant-term',
-        why: 'Ignored the exponent 1/n → 0 and let the growing base n dominate.',
-      },
-      {
         text: '$0$: the exponent $\\to 0$ kills the term',
         mistake: 'exponent-arithmetic',
         why: 'Confused x⁰ = 1 with 0, so the vanishing exponent was taken to make the whole term vanish.',
       },
       {
+        text: '$1$: because the exponent $\\to 0$ and $n^{0} = 1$',
+        mistake: 'sq-limit-law-misuse',
+        why: 'Right value but an invalid reason: the base n is not fixed, so the exponent cannot simply be replaced by its limit.',
+      },
+      {
+        text: '$\\infty$: the exponent $\\to 0$ too slowly to tame $n$',
+        mistake: 'sq-dominant-term',
+        why: 'Ignored that ln n / n → 0, so the exponent does tame the growing base.',
+      },
+      {
         text: '$e$: the standard limit',
         mistake: 'sq-theorem-misattributed',
         why: 'Confused this with the standard limit (1 + 1/n)ⁿ → e.',
-      },
-      {
-        text: '$1$: because $1/n \\to 0$ and $n^{0} = 1$',
-        mistake: 'sq-limit-law-misuse',
-        why: 'Right value but an invalid reason: the base n is not fixed, so the exponent cannot simply be replaced by its limit.',
       },
     ],
     correct: 0,
@@ -483,24 +483,24 @@ export const flash: FlashItem[] = [
     options: [
       { text: "$0$: L'Hôpital on $\\dfrac{\\ln x}{\\sqrt{x}}$ gives $\\dfrac{1/x}{1/(2\\sqrt{x})} = \\dfrac{2}{\\sqrt{x}} \\to 0$" },
       {
-        text: '$\\infty$: $\\ln n$ grows without bound',
+        text: "$2$: L'Hôpital leaves $\\dfrac{2}{\\sqrt{x}}$",
+        mistake: 'algebra-error',
+        why: 'Stopped after differentiating without taking the limit of the resulting fraction.',
+      },
+      {
+        text: "$\\frac{1}{2}$: L'Hôpital leaves $\\dfrac{1}{2\\sqrt{x}}$",
+        mistake: 'arithmetic-error',
+        why: 'Reported the derivative of the denominator instead of the limit.',
+      },
+      {
+        text: "$\\infty$: L'Hôpital leaves $2\\sqrt{x}$",
         mistake: 'sq-dominant-term',
-        why: 'Ignored that √n grows faster than ln n, so the denominator wins.',
+        why: 'Inverted the quotient of derivatives, so the result seemed to grow without bound.',
       },
       {
         text: '$1$: $\\infty/\\infty$ cancels',
         mistake: 'sq-substitute-infinity',
         why: 'Plugged in n = ∞ and cancelled ∞/∞ to 1 instead of comparing growth rates.',
-      },
-      {
-        text: "$2$: L'Hôpital leaves $2/\\sqrt{x}$",
-        mistake: 'algebra-error',
-        why: "Stopped after differentiating (the numerator 2 of 2/√x) without taking the limit of the whole fraction.",
-      },
-      {
-        text: '$\\frac{1}{2}$: from the $\\tfrac{1}{2\\sqrt{x}}$',
-        mistake: 'arithmetic-error',
-        why: 'Reported the coefficient from the derivative of the denominator instead of the limit.',
       },
     ],
     correct: 0,
@@ -515,17 +515,17 @@ export const flash: FlashItem[] = [
     options: [
       { text: '$0$: $|a_n| = \\tfrac{1}{n} \\to 0$, so $a_n \\to 0$ (Squeeze corollary)' },
       {
-        text: 'DNE: the terms alternate in sign',
-        mistake: 'sq-oscillation-means-divergence',
-        why: 'Assumed sign changes prevent convergence, although the terms shrink to 0 in size.',
-      },
-      {
         text: '$0$: because $(-1)^{n} \\to 0$',
         mistake: 'sq-rn-boundary',
         why: 'Right value but an invalid reason: (−1)ⁿ has no limit, so it cannot be used in a limit law.',
       },
       {
-        text: '$1$: $|a_n| \\le 1$ so it converges to $1$',
+        text: 'DNE: because $(-1)^{n}$ has no limit, the quotient has none',
+        mistake: 'sq-oscillation-means-divergence',
+        why: 'Assumed sign changes prevent convergence, although the terms shrink to 0 in size.',
+      },
+      {
+        text: '$1$: because $(-1)^{n}$ is bounded by $1$',
         mistake: 'sq-bounded-implies-convergent',
         why: 'Turned a bound on the terms into a limit; a bound is not the limit.',
       },
@@ -547,24 +547,24 @@ export const flash: FlashItem[] = [
     options: [
       { text: "$0$: L'Hôpital twice on $\\dfrac{x^{2}}{e^{x}}$ gives $\\dfrac{2}{e^{x}} \\to 0$" },
       {
-        text: '$\\infty$: $n^{2}$ grows without bound',
-        mistake: 'sq-dominant-term',
-        why: 'Ignored that eⁿ grows faster than any power of n.',
-      },
-      {
-        text: '$1$: $\\infty/\\infty$ cancels',
-        mistake: 'sq-substitute-infinity',
-        why: 'Plugged in n = ∞ and cancelled ∞/∞ to 1 instead of comparing growth rates.',
-      },
-      {
         text: "$2$: after L'Hôpital twice the numerator is $2$",
         mistake: 'algebra-error',
         why: 'Stopped before taking the limit of 2/eˣ, reporting only the numerator 2.',
       },
       {
-        text: "DNE: L'Hôpital cannot be used on a sequence",
+        text: "$1$: after L'Hôpital twice it is still $\\infty/\\infty$, which cancels",
+        mistake: 'sq-substitute-infinity',
+        why: 'Plugged in ∞ instead of finishing: after two rounds the quotient is 2/eˣ, not ∞/∞.',
+      },
+      {
+        text: "DNE: L'Hôpital twice is not allowed for a sequence",
         mistake: 'sq-theorem-misattributed',
         why: "Forgot the Underlying Function Theorem, which lets L'Hôpital be applied to f(x) with f(n) = aₙ.",
+      },
+      {
+        text: '$\\infty$: $n^{2}$ grows without bound',
+        mistake: 'sq-dominant-term',
+        why: 'Ignored that eⁿ grows faster than any power of n.',
       },
     ],
     correct: 0,
@@ -616,28 +616,28 @@ export const flash: FlashItem[] = [
     options: [
       { latex: '2 \\cdot 3^{n-1}', expr: '2*3^(n-1)' },
       {
-        latex: '2 \\cdot 3^{n}',
-        expr: '2*3^n',
-        mistake: 'exponent-arithmetic',
-        why: 'Used rⁿ instead of rⁿ⁻¹ for a sequence starting at n = 1; this formula gives 6 at n = 1.',
-      },
-      {
-        latex: '2 + 4(n-1)',
-        expr: '2+4*(n-1)',
-        mistake: 'sq-wrong-form',
-        why: 'Used the arithmetic form a + (n − 1)d for a sequence with a constant ratio.',
-      },
-      {
         latex: '3 \\cdot 2^{n-1}',
         expr: '3*2^(n-1)',
         mistake: 'arithmetic-error',
         why: 'Swapped the first term and the ratio: the first term is 2 and the ratio is 3.',
       },
       {
-        latex: '2 \\cdot 3^{n+1}',
-        expr: '2*3^(n+1)',
+        latex: '3 \\cdot 2^{n}',
+        expr: '3*2^n',
         mistake: 'exponent-arithmetic',
-        why: 'Shifted the exponent the wrong way, n + 1 instead of n − 1.',
+        why: 'Swapped a and r and used rⁿ instead of rⁿ⁻¹.',
+      },
+      {
+        latex: '3 \\cdot 2^{n+1}',
+        expr: '3*2^(n+1)',
+        mistake: 'exponent-arithmetic',
+        why: 'Swapped a and r and shifted the exponent the wrong way.',
+      },
+      {
+        latex: '2 + 4(n-1)',
+        expr: '2+4*(n-1)',
+        mistake: 'sq-wrong-form',
+        why: 'Used the arithmetic form a + (n − 1)d for a sequence with a constant ratio.',
       },
     ],
     correct: 0,
@@ -660,22 +660,22 @@ export const flash: FlashItem[] = [
         why: 'Forgot the (n − 1) in a + (n − 1)d, so the formula gives 4 at n = 1 instead of 7.',
       },
       {
-        latex: '7 \\cdot (-3)^{n-1}',
-        expr: '7*(-3)^(n-1)',
-        mistake: 'sq-wrong-form',
-        why: 'Used the geometric form for an arithmetic sequence (constant difference, not constant ratio).',
+        latex: '4 - 3n',
+        expr: '4-3*n',
+        mistake: 'arithmetic-error',
+        why: 'Started from the second term 4 and forgot the (n − 1).',
+      },
+      {
+        latex: '7 + 3n',
+        expr: '7+3*n',
+        mistake: 'sign-error',
+        why: 'Used d = +3 for a decreasing sequence and forgot the (n − 1).',
       },
       {
         latex: '7 + 3(n-1)',
         expr: '7+3*(n-1)',
         mistake: 'sign-error',
         why: 'Used d = +3 for a decreasing sequence; the common difference is −3.',
-      },
-      {
-        latex: '4 - 3(n-1)',
-        expr: '4-3*(n-1)',
-        mistake: 'arithmetic-error',
-        why: 'Started from the second term 4 instead of the first term 7.',
       },
     ],
     correct: 0,
@@ -736,19 +736,19 @@ export const flash: FlashItem[] = [
         why: 'Excluded r = 1, where rⁿ = 1 for all n and the sequence converges to 1.',
       },
       {
-        text: '$-1 \\le r \\le 1$',
+        text: '$|r| \\le 1$',
         mistake: 'sq-rn-boundary',
         why: 'Included r = −1, where rⁿ alternates between −1 and 1 and never settles.',
+      },
+      {
+        text: '$|r| < 1$ or $r = -1$',
+        mistake: 'sq-rn-boundary',
+        why: 'Swapped the boundary cases: r = 1 converges, r = −1 does not.',
       },
       {
         text: '$0 < r \\le 1$',
         mistake: 'sq-oscillation-means-divergence',
         why: 'Excluded negative r because the terms alternate in sign, although for −1 < r < 0 they still tend to 0.',
-      },
-      {
-        text: '$r \\le 1$',
-        mistake: 'sq-rn-boundary',
-        why: 'Included r < −1, where |rⁿ| grows without bound.',
       },
     ],
     correct: 0,
@@ -1087,24 +1087,24 @@ export const flash: FlashItem[] = [
     options: [
       { text: '$0,\\ 1,\\ \\infty$' },
       {
-        text: '$0,\\ 0,\\ \\infty$',
-        mistake: 'sq-rn-boundary',
-        why: 'Treated r = 1 like the case |r| < 1, but 1ⁿ = 1 for every n.',
-      },
-      {
-        text: '$0,\\ 1,\\ 1$',
-        mistake: 'sq-rn-boundary',
-        why: 'Thought r > 1 still converges (to 1), but (3/2)ⁿ grows without bound.',
-      },
-      {
-        text: '$1,\\ 1,\\ 1$',
-        mistake: 'sq-substitute-infinity',
-        why: 'Took "anything to the power ∞" to be 1 instead of using the size of the base.',
-      },
-      {
         text: '$0,\\ 1,\\ \\text{DNE}$',
         mistake: 'sq-oscillation-means-divergence',
         why: 'Confused unbounded growth with oscillation; (3/2)ⁿ increases steadily to ∞.',
+      },
+      {
+        text: '$0,\\ \\text{DNE},\\ \\infty$',
+        mistake: 'sq-substitute-infinity',
+        why: 'Treated 1^∞ as indeterminate with no limit, but 1ⁿ = 1 for every n.',
+      },
+      {
+        text: '$1,\\ 1,\\ \\infty$',
+        mistake: 'sq-rn-boundary',
+        why: 'Thought (2/3)ⁿ tends to 1, but a ratio with |r| < 1 tends to 0.',
+      },
+      {
+        text: '$0,\\ 0,\\ \\infty$',
+        mistake: 'sq-rn-boundary',
+        why: 'Treated r = 1 like the case |r| < 1, but 1ⁿ = 1 for every n.',
       },
     ],
     correct: 0,
@@ -1234,7 +1234,7 @@ const GEOMETRIC_TABLE: Array<[number, number]> = [
   [4, 5],
   [-1, 1],
   [6, 5],
-  [-5, 4],
+  [-4, 5],
   [1, 2],
   [-1, 2],
   [3, 2],
@@ -1304,10 +1304,10 @@ export const generators: FlashGenerator[] = [
       const rTex = q === 1 ? `${p}` : p < 0 ? `-\\tfrac{${-p}}{${q}}` : `\\tfrac{${p}}{${q}}`;
       const baseTex = q === 1 ? `(${p})` : p < 0 ? `\\left(-\\tfrac{${-p}}{${q}}\\right)` : `\\left(\\tfrac{${p}}{${q}}\\right)`;
       const absLess1 = Math.abs(r) < 1;
-      const alternates = r <= -1;
+      const alternates = r === -1;
       const unbounded = r > 1;
       const limit = absLess1 ? '0' : unbounded ? 'infinity' : 'dne';
-      const ruleText = 'The rule: $|r| < 1$ gives limit $0$; $r = 1$ gives $1$; $r = -1$ or $|r| > 1$ diverges (unbounded for $r > 1$, alternating or unbounded for $r < -1$).';
+      const ruleText = 'The rule: $|r| < 1$ gives limit $0$; $r = 1$ gives $1$; $r = -1$ or $|r| > 1$ diverges (alternating for $r = -1$, unbounded for $r > 1$).';
       return {
         id: `sq-g-geometric:${seed}`,
         topic: 'sequences',
