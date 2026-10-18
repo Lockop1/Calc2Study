@@ -1,98 +1,26 @@
 {
-  "1": {
-    "guess": null,
-    "reason": ""
-  },
-  "2": {
-    "guess": null,
-    "reason": ""
-  },
-  "3": {
-    "guess": null,
-    "reason": ""
-  },
-  "4": {
-    "guess": null,
-    "reason": ""
-  },
-  "5": {
-    "guess": null,
-    "reason": ""
-  },
-  "6": {
-    "guess": null,
-    "reason": ""
-  },
-  "7": {
-    "guess": null,
-    "reason": ""
-  },
-  "8": {
-    "guess": null,
-    "reason": ""
-  },
-  "9": {
-    "guess": null,
-    "reason": ""
-  },
-  "10": {
-    "guess": null,
-    "reason": ""
-  },
-  "11": {
-    "guess": null,
-    "reason": ""
-  },
-  "12": {
-    "guess": null,
-    "reason": ""
-  },
-  "13": {
-    "guess": null,
-    "reason": ""
-  },
-  "14": {
-    "guess": null,
-    "reason": ""
-  },
-  "15": {
-    "guess": null,
-    "reason": ""
-  },
-  "16": {
-    "guess": null,
-    "reason": ""
-  },
-  "17": {
-    "guess": null,
-    "reason": ""
-  },
-  "18": {
-    "guess": null,
-    "reason": ""
-  },
-  "19": {
-    "guess": null,
-    "reason": ""
-  },
-  "20": {
-    "guess": null,
-    "reason": ""
-  },
-  "21": {
-    "guess": null,
-    "reason": ""
-  },
-  "22": {
-    "guess": null,
-    "reason": ""
-  },
-  "23": {
-    "guess": null,
-    "reason": ""
-  },
-  "24": {
-    "guess": null,
-    "reason": ""
-  }
+  "1": { "guess": 3, "reason": "S: bare numbers, no math possible; 1 is the commonest LCT limit (plausibility)" },
+  "2": { "guess": 1, "reason": "S: only option that shows the dominant-term computation n/n^3 = 1/n^2; 1/n^3 is the hub (3 options)" },
+  "3": { "guess": 1, "reason": "M/recall: options 1, 4, 5 are valid inferences; 1 matches the class example ln n/n^2 vs 1/n^(3/2)" },
+  "4": { "guess": 5, "reason": "M: the term 1/(n^2+1) is visible; the valid comparison is below the convergent 1/n^2" },
+  "5": { "guess": 5, "reason": "M: integral test needs positive, continuous AND decreasing (also the longest option: possible form leak)" },
+  "6": { "guess": 1, "reason": "M: majority form says a_n = n^(3/2); only option 1 draws a valid conclusion for that term" },
+  "7": { "guess": 4, "reason": "M: lim a_n = 0 is inconclusive in the divergence test" },
+  "8": { "guess": 3, "reason": "M: integral-test hypotheses are positive, continuous, decreasing" },
+  "9": { "guess": 5, "reason": "M/recall: class example ln n/n vs 1/n gives L = lim ln n = infinity" },
+  "10": { "guess": 3, "reason": "M: only valid inference (0<L<inf with convergent b_n); also the most complete option: possible form leak" },
+  "11": { "guess": 2, "reason": "M: integral of 1/(x ln x) from 2 to t with u = ln x" },
+  "12": { "guess": 3, "reason": "M: LCT with 1/n^2 gives lim sin^2 n, which DNE; direct comparison a_n <= 1/n^2 works" },
+  "13": { "guess": 3, "reason": "M: being below a divergent series gives nothing" },
+  "14": { "guess": 5, "reason": "S: cross-reference with unit 6 (n^(3/2) hub there); otherwise a symmetric set" },
+  "15": { "guess": 3, "reason": "M: the integral's value is not the sum" },
+  "16": { "guess": 4, "reason": "M: a_n -> 1/2 != 0, divergence test" },
+  "17": { "guess": 2, "reason": "M: p-series rule p > 1" },
+  "18": { "guess": 2, "reason": "M: 1/(n-1/2) > 1/n and the harmonic series diverges, so the larger diverges" },
+  "19": { "guess": 2, "reason": "S: options 2 and 3 are both valid forms; 3 looks like the hub, so pick its mutation 1/(2n) (anti-hub)" },
+  "20": { "guess": 5, "reason": "S: three valid LCT options; 3/2 is the middle exponent / commonest textbook case" },
+  "21": { "guess": 4, "reason": "M: divergence test inconclusive at limit 0 (also the longest option)" },
+  "22": { "guess": 4, "reason": "M: p = 2 > 1 converges (hub says p-series with p = 2)" },
+  "23": { "guess": 2, "reason": "S: hub p = 3/2; among the valid-inference options picked the hub-adjacent one" },
+  "24": { "guess": 5, "reason": "M/recall: class example ln n/n vs 1/n, L = infinity with divergent harmonic" }
 }
