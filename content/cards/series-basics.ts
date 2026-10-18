@@ -141,4 +141,16 @@ export const seriesBasicsCards: Card[] = [
     },
     check: { kind: 'none', reason: 'conceptual: no property applies when both series diverge' },
   },
+  {
+    id: 'card-series-basics-13',
+    category: 'Series Basics',
+    section: 'series-basics',
+    kind: 'formula',
+    front: { text: '$\\sum a_n$ converges and $\\sum b_n$ diverges. What can you conclude about ${\\sum (a_n \\pm b_n)}$?' },
+    back: {
+      latex:
+        '\\begin{aligned} &\\text{diverges: if it converged,} \\\\ &\\textstyle\\sum b_n = \\sum \\bigl[(a_n + b_n) - a_n\\bigr] \\\\ &\\text{would converge too} \\end{aligned}',
+    },
+    check: { kind: 'none', reason: 'conceptual: follows from the difference rule applied to convergent series' },
+  },
 ];
