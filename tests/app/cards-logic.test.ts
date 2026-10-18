@@ -138,6 +138,11 @@ describe('filters', () => {
       'area-volume',
       'arc-length',
       'ibp',
+      'partial-fractions',
+      'improper',
+      'sequences',
+      'series-basics',
+      'series-tests',
     ]);
     expect(isFilterActive(s.filters)).toBe(false);
     expect(filterCards(DECK, s)).toEqual(DECK);

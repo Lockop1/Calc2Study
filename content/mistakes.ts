@@ -21,7 +21,11 @@ export interface MistakeDef {
     | 'trig-integrals'
     | 'trig-sub'
     | 'algebra'
-    | 'technique';
+    | 'technique'
+    | 'partial-fractions'
+    | 'improper'
+    | 'sequences'
+    | 'series';
 }
 
 export const MISTAKES = {
@@ -803,6 +807,295 @@ export const MISTAKES = {
     label: 'Algebra slip',
     description: 'A plausible algebraic error (expanding, factoring, combining fractions). Use sparingly; prefer a specific tag.',
     group: 'algebra',
+  },
+  // ───────────── topic 10: partial fractions (Lecture 8, §3.4) ─────────────
+  'pf-improper-not-divided': {
+    label: 'Decomposed an improper fraction without long division',
+    description: 'deg(numerator) ≥ deg(denominator) but the fraction was decomposed directly; divide first: p/s = q + r/s.',
+    group: 'partial-fractions',
+  },
+  'pf-not-fully-factored': {
+    label: 'Denominator not factored completely',
+    description: 'Wrote the decomposition over a factor that still factors (e.g. kept x² − 1 or x² − 4 as a “quadratic”).',
+    group: 'partial-fractions',
+  },
+  'pf-constant-over-quadratic': {
+    label: 'Constant numerator over an irreducible quadratic',
+    description: 'Used A/(ax² + bx + c); an irreducible quadratic factor needs a linear numerator (Ax + B).',
+    group: 'partial-fractions',
+  },
+  'pf-missing-repeated-power': {
+    label: 'Missing a term for a power of a repeated factor',
+    description: 'For (ax + b)ⁿ wrote only A/(ax + b)ⁿ (or only the first power); one term is needed for EACH power 1…n.',
+    group: 'partial-fractions',
+  },
+  'pf-linear-over-repeated-linear': {
+    label: 'Linear numerator over a repeated linear factor',
+    description: 'Wrote (Ax + B)/(ax + b)² instead of A/(ax + b) + B/(ax + b)²; linear factors take constant numerators.',
+    group: 'partial-fractions',
+  },
+  'pf-irreducible-misjudged': {
+    label: 'Misjudged whether a quadratic is irreducible',
+    description: 'Did not check b² − 4ac (treated x² + 4 as factorable, or x² − 5x + 6 as irreducible).',
+    group: 'partial-fractions',
+  },
+  'pf-coefficient-wrong': {
+    label: 'Coefficient solved incorrectly',
+    description: 'A wrong root was plugged in, a sign was dropped, or coefficients were equated wrongly, giving a wrong A, B or C.',
+    group: 'partial-fractions',
+  },
+  'pf-division-wrong': {
+    label: 'Long division done incorrectly',
+    description: 'The quotient or the remainder of p ÷ s is wrong (e.g. remainder not reduced, or quotient term missing).',
+    group: 'partial-fractions',
+  },
+  'pf-missing-1-over-a': {
+    label: 'Dropped the 1/a in ∫A/(ax + b) dx',
+    description: 'Integrated A/(ax + b) as A·ln|ax + b| without dividing by a (u = ax + b gives du = a dx).',
+    group: 'partial-fractions',
+  },
+  'pf-arctan-missing-1-over-k': {
+    label: 'Dropped the 1/k in ∫1/(x² + k²) dx',
+    description: 'Wrote arctan(x/k) without the factor 1/k (or used arctan(x) with the wrong argument).',
+    group: 'partial-fractions',
+  },
+  'pf-ln-arctan-swapped': {
+    label: 'ln and arctan pieces confused',
+    description: 'For (Ax + B)/(x² + k²) the x-part gives ln(x² + k²) and the constant part gives arctan; the roles were swapped or merged.',
+    group: 'partial-fractions',
+  },
+  'pf-square-not-completed': {
+    label: 'Did not complete the square',
+    description: 'Treated ax² + bx + c with b ≠ 0 as x² + k² (used arctan or ln without first completing the square).',
+    group: 'partial-fractions',
+  },
+  'pf-power-term-as-ln': {
+    label: 'Integrated A/(ax + b)ⁿ (n ≥ 2) as a logarithm',
+    description: 'Used ln for a repeated-factor term; for n ≥ 2 it is a power rule: −A/(a(n − 1)(ax + b)ⁿ⁻¹).',
+    group: 'partial-fractions',
+  },
+  // ───────────── topic 11: improper integrals (Lecture 9, §3.7) ─────────────
+  'im-plug-infinity': {
+    label: 'Plugged ∞ into the antiderivative',
+    description: 'Treated ∞ (or the singular endpoint) as a number instead of writing a limit lim_{t→∞} ∫ₐᵗ.',
+    group: 'improper',
+  },
+  'im-hidden-discontinuity': {
+    label: 'Missed a hidden (Type II) discontinuity',
+    description: 'Integrated across a point where the integrand blows up (e.g. ∫₋₁¹ 1/x² dx = −2) as if it were an ordinary integral.',
+    group: 'improper',
+  },
+  'im-wrong-one-sided-limit': {
+    label: 'Wrong one-sided limit',
+    description: 'Approached the bad endpoint from outside the interval (t → a⁻ instead of t → a⁺) or used the wrong endpoint.',
+    group: 'improper',
+  },
+  'im-symmetric-limit': {
+    label: 'Single symmetric limit for ∫₋∞^∞',
+    description: 'Wrote lim_{t→∞} ∫₋ₜᵗ instead of two separate limits; the two halves must be checked independently.',
+    group: 'improper',
+  },
+  'im-one-half-only': {
+    label: 'Checked only one half of a split integral',
+    description: 'Concluded convergence (or a value) from one piece of a split integral without checking the other piece.',
+    group: 'improper',
+  },
+  'im-divergent-called-convergent': {
+    label: 'Called a divergent integral “convergent to ∞”',
+    description: 'A limit equal to ∞ (or that does not exist) means the integral DIVERGES; it does not converge to ∞.',
+    group: 'improper',
+  },
+  'im-wrong-type': {
+    label: 'Misidentified the type of improper integral',
+    description: 'Confused an unbounded interval (Type I) with an infinite discontinuity (Type II), so the wrong limit was set up.',
+    group: 'improper',
+  },
+  'im-p-rule-wrong': {
+    label: 'p-rule applied backwards or at p = 1',
+    description: 'Said ∫₁^∞ 1/xᵖ converges for p < 1 (or for p = 1); it converges only when p > 1.',
+    group: 'improper',
+  },
+  'im-limit-evaluated-wrong': {
+    label: 'Limit evaluated incorrectly',
+    description: 'The antiderivative is right but its limit is wrong (e.g. lim e⁻ᵗ = 1, lim arctan t = π, lim ln t finite).',
+    group: 'improper',
+  },
+  'im-split-mishandled': {
+    label: 'Split rule mishandled',
+    description: 'Did not split a two-sided improper integral, or thought the choice of split point c changes the answer.',
+    group: 'improper',
+  },
+  // ───────────── topic 12: sequences (Lecture 10, §5.1) ─────────────
+  'sq-connect-the-dots': {
+    label: 'Treated the sequence as a continuous graph',
+    description: 'Read a limit off the “connected” curve (e.g. sin(nπ) oscillates) instead of the values at integers n.',
+    group: 'sequences',
+  },
+  'sq-term-vs-limit': {
+    label: 'Confused aₙ with lim aₙ',
+    description: 'Reported a term (or the formula for aₙ) where the limit was asked, or the limit where a term was asked.',
+    group: 'sequences',
+  },
+  'sq-substitute-infinity': {
+    label: 'Substituted n = ∞',
+    description: 'Plugged ∞ into the formula (∞/∞ = 1, ∞ − ∞ = 0, 1^∞ = 1) instead of taking a limit.',
+    group: 'sequences',
+  },
+  'sq-oscillation-means-divergence': {
+    label: 'Assumed oscillation ⇒ divergence',
+    description: 'Sign changes do not imply divergence: (−1)ⁿ/n → 0 (Squeeze corollary |aₙ| → 0 ⇒ aₙ → 0).',
+    group: 'sequences',
+  },
+  'sq-bounded-implies-convergent': {
+    label: 'Bounded ⇒ convergent',
+    description: 'Used “bounded” alone to conclude convergence; {(−1)ⁿ} is bounded and divergent. The converse (convergent ⇒ bounded) is the true one.',
+    group: 'sequences',
+  },
+  'sq-monotone-implies-convergent': {
+    label: 'Monotone ⇒ convergent',
+    description: 'Used “monotone” alone to conclude convergence; {n} is monotone and divergent. Monotone AND bounded is needed.',
+    group: 'sequences',
+  },
+  'sq-first-terms': {
+    label: 'Concluded from the first few terms',
+    description: 'Judged convergence, monotonicity or the limit from a handful of early terms rather than the formula.',
+    group: 'sequences',
+  },
+  'sq-rn-boundary': {
+    label: '{rⁿ} boundary cases wrong',
+    description: 'Misstated the rule: {rⁿ} converges iff −1 < r ≤ 1 (limit 0 for |r| < 1, 1 for r = 1; r = −1 and |r| > 1 diverge).',
+    group: 'sequences',
+  },
+  'sq-wrong-form': {
+    label: 'Wrong closed form',
+    description: 'Mixed up arithmetic a + (n − 1)d and geometric a·rⁿ⁻¹, or used rⁿ where rⁿ⁻¹ is needed (off-by-one in the exponent).',
+    group: 'sequences',
+  },
+  'sq-limit-law-misuse': {
+    label: 'Limit law applied where a limit does not exist',
+    description: 'Split a limit into pieces whose limits do not exist or are infinite (∞ − ∞, 0·∞), or applied the laws to a DNE limit.',
+    group: 'sequences',
+  },
+  'sq-dominant-term': {
+    label: 'Wrong dominant growth',
+    description: 'Compared growth rates incorrectly (polynomial vs exponential vs logarithm, or the degrees of a rational term).',
+    group: 'sequences',
+  },
+  'sq-squeeze-misuse': {
+    label: 'Squeeze Theorem misused',
+    description: 'Squeezed between bounds with different limits, or ignored that |aₙ| → 0 is what forces aₙ → 0.',
+    group: 'sequences',
+  },
+  'sq-theorem-misattributed': {
+    label: 'Wrong theorem or hypothesis cited',
+    description: 'Justified a (possibly correct) limit with a theorem whose hypotheses are not met or that says something else.',
+    group: 'sequences',
+  },
+  // ───────────── topics 13–14: series (Lectures 11–12, §5.2–5.4) ─────────────
+  'sb-divergence-test-converse': {
+    label: 'Divergence test used to conclude convergence',
+    description: 'lim aₙ = 0 is inconclusive; the Divergence Test can only prove divergence (Σ1/n has aₙ → 0 and diverges).',
+    group: 'series',
+  },
+  'sb-sequence-vs-series': {
+    label: 'Sequence convergence confused with series convergence',
+    description: 'Took aₙ → L (or Sₙ, or aₙ) for the series behaviour: Σaₙ converges iff the partial sums Sₙ converge.',
+    group: 'series',
+  },
+  'sb-sum-is-term-limit': {
+    label: 'Sum taken to be lim aₙ',
+    description: 'Reported the limit of the terms (or of a term formula) as the sum of the series; the sum is lim Sₙ.',
+    group: 'series',
+  },
+  'sb-wrong-first-term': {
+    label: 'Wrong first term a',
+    description: 'Used the coefficient as a when the series starts at n = 0 or n = 2, etc.; a is the actual first term.',
+    group: 'series',
+  },
+  'sb-wrong-ratio': {
+    label: 'Wrong common ratio r',
+    description: 'Misidentified r (inverted it, dropped its sign, or read it from the wrong factor).',
+    group: 'series',
+  },
+  'sb-r-boundary': {
+    label: 'Geometric condition misstated',
+    description: 'Used |r| ≤ 1 (or r < 1) as the convergence condition; a geometric series converges iff |r| < 1.',
+    group: 'series',
+  },
+  'sb-partial-sum-formula': {
+    label: 'Partial-sum formula wrong',
+    description: 'Sₙ = a(1 − rⁿ)/(1 − r) misremembered (missing 1 − rⁿ, wrong exponent, or a/(1 − r) used for a finite sum).',
+    group: 'series',
+  },
+  'sb-telescoping-sum-wrong': {
+    label: 'Telescoping sum wrong',
+    description: 'The surviving terms were misread: Σ(bₙ − bₙ₊₁) has Sₙ = b₁ − bₙ₊₁ and sum b₁ − lim bₙ (not b₁, not b₁ − b₂).',
+    group: 'series',
+  },
+  'sb-split-divergent': {
+    label: 'Split into divergent pieces',
+    description: 'Wrote Σ(aₙ + bₙ) = Σaₙ + Σbₙ (or Σ(aₙ − bₙ) = Σaₙ − Σbₙ) when a piece diverges; the properties need both to converge.',
+    group: 'series',
+  },
+  'sb-no-information': {
+    label: 'Conclusion without a theorem',
+    description: 'Concluded something no result supports (e.g. Σaₙ and Σbₙ diverge ⇒ Σ(aₙ + bₙ) diverges; or any claim about a divergent sum).',
+    group: 'series',
+  },
+  'st-integral-test-conditions': {
+    label: 'Integral test without checking its conditions',
+    description: 'Applied the integral test without f positive, continuous and decreasing on [k, ∞) (or did not state them).',
+    group: 'series',
+  },
+  'st-sum-equals-integral': {
+    label: 'Sum taken to be the integral value',
+    description: 'The integral test says the series and ∫ₖ^∞ f both converge or both diverge; the integral is not the sum.',
+    group: 'series',
+  },
+  'st-comparison-wrong-direction': {
+    label: 'Direct comparison in the inconclusive direction',
+    description: 'Smaller than a divergent series, or larger than a convergent one, gives no information.',
+    group: 'series',
+  },
+  'st-lct-boundary': {
+    label: 'Limit comparison boundary case misread',
+    description: 'L = 0 or L = ∞ handled wrongly: L = 0 transfers convergence from Σbₙ to Σaₙ; L = ∞ transfers divergence from Σbₙ to Σaₙ; nothing else.',
+    group: 'series',
+  },
+  'st-lct-limit-wrong': {
+    label: 'Limit comparison limit computed wrong',
+    description: 'The limit aₙ/bₙ was evaluated incorrectly (wrong dominant terms or degrees), giving the wrong case.',
+    group: 'series',
+  },
+  'st-wrong-p': {
+    label: 'Wrong p for a p-series',
+    description: 'Misread the exponent (√n³ = n^{3/2}, 1/(n√n) = n^{-3/2}, n·n^{1/2} …) or confused a p-series with a geometric one.',
+    group: 'series',
+  },
+  'st-p-rule-wrong': {
+    label: 'p-series rule backwards or at p = 1',
+    description: 'Said Σ1/nᵖ converges for p ≤ 1 or at p = 1 (the harmonic series diverges); it converges iff p > 1.',
+    group: 'series',
+  },
+  'st-positive-terms-required': {
+    label: 'Test needing positive terms used on a non-positive series',
+    description: 'Integral / comparison tests require positive terms (eventually); the series here does not have them.',
+    group: 'series',
+  },
+  'st-wrong-comparison-series': {
+    label: 'Comparison series not from the dominant terms',
+    description: 'Chose bₙ that does not match the dominant growth of aₙ, so the comparison fails or says nothing.',
+    group: 'series',
+  },
+  'st-divergence-test-skipped': {
+    label: 'Divergence test skipped',
+    description: 'Reached for integral/comparison tests when lim aₙ ≠ 0 already settles it (the flowchart starts with the divergence test).',
+    group: 'series',
+  },
+  'st-wrong-inference': {
+    label: 'Right test, wrong inference',
+    description: 'The test was computed correctly but the conclusion drawn from it is backwards (e.g. integral diverges ⇒ series converges).',
+    group: 'series',
   },
 } as const satisfies Record<string, MistakeDef>;
 

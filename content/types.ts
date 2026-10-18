@@ -50,6 +50,25 @@ export type Check =
   | { kind: 'identity'; lhs: string }
   /** The correct option's expr equals `expected` (a constant or an expression) at random points. */
   | { kind: 'value'; expected: string }
+  /**
+   * Improper integral (topics 11+). `lower`/`upper` are exprs or 'inf' / '-inf'; `split` lists
+   * interior singularities (exprs). Convergent: the numeric value must equal `value` (and the correct
+   * option's expr, when it has one). Divergent: truncated integrals must keep growing as the cutoff
+   * moves toward the bad endpoint.
+   */
+  | { kind: 'improper-integral'; integrand: string; lower: string; upper: string; converges: boolean; value?: string; split?: string[] }
+  /**
+   * Limit of a term as its variable → ∞ (sequences / limits to know). `limit` is an expr, or
+   * 'infinity' / '-infinity' (unbounded), or 'dne' (bounded but never settles). The term is sampled
+   * at large n (10^3 … 10^6) and must approach the limit; the correct option's expr (if any) must equal it.
+   */
+  | { kind: 'limit'; term: string; variable?: string; limit: string }
+  /**
+   * Series Σ term from n = `from` (default 1). `converges` is checked for plausibility from how the
+   * partial-sum increments behave between N = 10^3, 10^4, 10^5 (only clear contradictions fail);
+   * when `sum` is given the partial sums must approach it and the correct option's expr must equal it.
+   */
+  | { kind: 'series'; term: string; from?: string; converges: boolean; sum?: string }
   /** No numeric check is possible (conceptual/technique items). Verified by math-verifier only. */
   | { kind: 'none'; reason: string };
 
@@ -166,7 +185,12 @@ export type CardCategory =
   | 'Trig Substitution'
   | 'Area & Volume'
   | 'Arc Length'
-  | 'Integration by Parts';
+  | 'Integration by Parts'
+  | 'Partial Fractions'
+  | 'Improper Integrals'
+  | 'Sequences'
+  | 'Series Basics'
+  | 'Series Tests';
 
 /** The nine numbered groups of the whiteboard list; the Cards filter offers these. */
 export type CardSection =
@@ -178,7 +202,12 @@ export type CardSection =
   | 'trig-sub'
   | 'area-volume'
   | 'arc-length'
-  | 'ibp';
+  | 'ibp'
+  | 'partial-fractions'
+  | 'improper'
+  | 'sequences'
+  | 'series-basics'
+  | 'series-tests';
 
 /**
  * How the front is framed by the UI and verified by the tests:

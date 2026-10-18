@@ -142,3 +142,50 @@ reference examples).
   (`domain` only; no answer changed; 54/54 still pass).
 - Formula cards (area, disk, washer, shell, both arc-length forms, IBP) have `check: none` and were
   verified by hand against the course conventions.
+
+## Session 3 — topics 10–14 (Lectures 8–12)
+
+No lecture PDFs exist for these topics; the spec block in CLAUDE.md ("Spec for topics 10–14") is the
+source of truth. Every content file below was written by one content-author instance and verified by
+a different math-verifier instance that re-derived every answer by hand (and, where noted, with an
+independent CAS/numeric sweep). Cards are not multiple choice, so no blind-option test applies to
+Phase A; Flash and Step content (Phases B–C) carry the medoid rate from `scripts/medoid-scan.ts`.
+
+### Spec corrections (orchestrator re-derived; recorded as resolved disagreements)
+
+- *Series tests, integral-test example.* The session brief wrote the class example as
+  "Σ 1/(√n ln n) defeats limit comparison → integral test with u = ln x". That series is settled by
+  limit comparison with 1/n (L = lim √n/ln n = ∞ and Σ1/n diverges ⇒ diverges), and the substitution
+  u = ln x turns its integral into ∫ e^{u/2}/u du, which has no elementary antiderivative. The
+  standard example with exactly the described behaviour is Σ 1/(n ln n): L = 0 against the divergent
+  1/n and L = ∞ against every convergent p-series (inconclusive both ways), while the integral test
+  with u = ln x gives ∫₂^∞ dx/(x ln x) = lim ln(ln t) − ln(ln 2) = ∞ ⇒ diverges. CLAUDE.md and the
+  briefs now use 1/(n ln n). (Raised by the series-tests card author; re-derived by the orchestrator.)
+- *Series basics, "insufficient information".* The brief said to answer "insufficient information"
+  whenever neither property applies. Convergent ± divergent is in fact always divergent (if
+  Σ(aₙ + bₙ) converged, Σbₙ = Σ(aₙ + bₙ) − Σaₙ would converge); only divergent + divergent is
+  undetermined. CLAUDE.md states this precisely. (Raised by the series-basics card author.)
+- *Checker.* A "converges" claim on a positive-term series whose partial-sum increments decay like the
+  harmonic series or slower (increment ratio over [5000, 10000] vs [1000, 5000] ≥ 0.42, where 1/n
+  gives ln 2/ln 5 ≈ 0.431 and 1/n^{1.05} gives 0.403) is now rejected (`series-claimed-convergent`).
+  Found by the series-basics author's mutation test (Σ1/n claimed convergent passed before).
+
+### Phase A — Cards (`content/cards/<topic>.ts`)
+
+| Deck | Cards | Author instance | Verifier instance | Automated checks | Verdict | Notes |
+|------|-------|-----------------|-------------------|------------------|---------|-------|
+| partial-fractions | 14 | content-author #a5c8a84 | math-verifier #a883334 | tests/cards.test.ts (all cards) | PASS WITH FIXES | card 08 wording → "equate the remaining coefficients" (spec wording); verifier re-derived every card by hand, with sympy (apart/integrate, symbolic n) and a 2000-point plain-JS sweep per card over wide domains (both signs of ax + b, k < 0, both sides of the pole); 40 mutations rejected, 7 equivalent forms accepted; 390 px render clean |
+| improper | 14 | content-author #a5b3fde | math-verifier #a875474 | tests/cards.test.ts (all cards) | PASS WITH FIXES | cards 07/08: the two limits of a split integral now use different letters (s, t) so the allowed form looks unlike the forbidden single symmetric limit; verifier re-derived every card by hand and with sympy/mpmath, 10 claim mutations rejected (wrong value, missing split, flipped verdict), p-rule instances p = 1/2, 1, 3/2, 2, 3 checked; 390/360 px render clean. Card 14 (five-step procedure) added by the orchestrator afterwards and checked by the same verifier (see below) |
+| series-tests | 14 | content-author #afef6ca | math-verifier #a6e40b4 | tests/cards.test.ts (all cards) | PASS WITH FIXES | card 09 `\small` → `\footnotesize` (327 px row overflowed the 324 px box at 390 px); card 10 `none` → `limit` check on L = lim aₙ/bₙ = 1 (rejects bₙ = 1/n³, 1/n, L = 2); card 13 step 1 reads "lim aₙ ≠ 0 or DNE ⇒ diverges" (spec wording); card 14 added (Σ 1/(n ln n): integral test with u = ln x diverges, limit comparison inconclusive both ways — see spec corrections). Verifier re-derived every card by hand and through the claim checker with negative controls; known limit: the series checks on cards 12 and 14 cannot tell the verdicts apart (ln n/n² vs 1/n^{3/2}; ln ln N growth), so those verdicts rest on the hand derivations (also re-derived by the orchestrator: ∫₂^∞ dx/(x ln x) = lim ln ln t = ∞; ln n/√n → 0 with Σ1/n^{3/2} convergent) |
+| series-basics | 13 | content-author #a303bdd | math-verifier #a39ee0e | tests/cards.test.ts (all cards) | PASS WITH FIXES | card 05: hypothesis a ≠ 0 added to the front ("diverges if |r| ≥ 1" is false for a = 0); every card re-derived by hand (n/(n+1) − (n−1)/n = 1/(n(n+1)); sums 1, 3/2, 1; Sₙ = b₁ − bₙ₊₁), 10 check mutations rejected (wrong sums, wrong start index, 1/n "converges", wrong aₙ); 390 px widths measured (widest back 318/323 px). Card 13 (convergent ± divergent ⇒ divergent, the spec correction above) added by the orchestrator afterwards and checked by the same verifier (see below) |
+| series-basics card 13 (orchestrator-added) | — | orchestrator | math-verifier #a39ee0e | tests/cards.test.ts | FIXED → ok | the back's argument covered only the + case; now shows both identities Σbₙ = Σ[(aₙ + bₙ) − aₙ] and Σ[aₙ − (aₙ − bₙ)] (difference rule only); back 297/323 px at 390 px |
+| sequences | 20 | content-author #a2d7439 | math-verifier #ae379cc | tests/cards.test.ts (all cards) | PASS (0 fixes) | every theorem's hypotheses checked against the spec (and OpenStax §5.1 wording for ≤/≥ monotone); 2^{2n+1}/3ⁿ = 2(4/3)ⁿ confirmed exactly (BigInt, n ≤ 200); every limit claim mutation-tested (05: 0/dne/−∞/2/8/3; 07: 0/1/∞; 09: dne/−∞/1/0; 11: π/4/π/∞/1/−π/2; 12: 1/∞/e²/2.7 all rejected); widest back 299/324 px at 390 px |
+
+Checker fixes prompted by the sequences verifier (orchestrator; tests added in `tests/claims.test.ts`):
+the finite-limit branch sampled only even n, so "(−1)ⁿ → 1" passed — each scale is now sampled at n
+and n + 1; the `dne` branch measured a window's spread against the global magnitude, so unbounded
+oscillation such as (−1.0001)ⁿ or (−2)ⁿ was rejected — it is now measured against the window's own
+magnitude and overflowing windows are skipped. The improper and sequences decks still pass unchanged.
+| improper card 14 (orchestrator-added) | — | orchestrator | math-verifier #a875474 | tests/cards.test.ts | PASS WITH FIX | wording matches the spec's five steps in order; the back was 609 px wide and was rewritten as an `aligned` block that fits 324/324 px at 390 px (and 294/294 at 360 px) |
+
+Phase A totals: 74 cards in five new sections (partial-fractions 14, improper 14, sequences 20, series-basics 13, series-tests 14); the 50-card whiteboard deck is unchanged. Full suite 1164 tests green, build green, merged to main.

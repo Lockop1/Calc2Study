@@ -71,7 +71,7 @@ export function HomeScreen({
       <header className="home-header">
         <div>
           <h1 className="home-title">Calc 2 Study</h1>
-          <p className="muted">MAC 2312 · Exam 1</p>
+          <p className="muted">MAC 2312</p>
         </div>
         <button type="button" className="icon-btn" aria-label="Settings" onClick={onSettings}>
           <GearIcon />

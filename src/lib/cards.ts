@@ -55,6 +55,11 @@ const SECTION_SET: Record<CardSection, true> = {
   'area-volume': true,
   'arc-length': true,
   ibp: true,
+  'partial-fractions': true,
+  improper: true,
+  sequences: true,
+  'series-basics': true,
+  'series-tests': true,
 };
 
 /** Every section, in whiteboard order. */
