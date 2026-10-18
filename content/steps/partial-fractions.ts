@@ -972,10 +972,10 @@ export const steps: StepProblem[] = [
             why: 'Introduced a minus sign (none appears at x = 0) and also inverted 1 = 4A.',
           },
           {
-            latex: '\\frac{1}{2}',
-            expr: '1/2',
+            latex: '2',
+            expr: '2',
             mistake: 'arithmetic-error',
-            why: 'Used √4 instead of 4 when evaluating x² + 4 at x = 0.',
+            why: 'Used √4 instead of 4 when evaluating x² + 4 at x = 0, and also inverted 1 = 2A.',
           },
         ],
         correct: 0,
