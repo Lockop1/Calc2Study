@@ -129,7 +129,7 @@ export const seriesTestsCards: Card[] = [
   },
   {
     // the choice is valid because a_n/b_n = n^2(n+1)/(n^3+2) -> 1, with 0 < 1 < infinity (and the
-    // sum of 1/n^2 converges, so this series converges); the check verifies that ratio limit
+    // sum of 1/n^2 converges, so this series converges); the check verifies that limit of a_n/b_n
     id: 'card-series-tests-10',
     category: 'Series Tests',
     section: 'series-tests',
@@ -196,7 +196,9 @@ export const seriesTestsCards: Card[] = [
     // [2, inf) since (x ln x)' = ln x + 1 > 0; u = ln x, du = dx/x: the integral from 2 to t is
     // ln(ln t) - ln(ln 2) -> inf, so the series diverges. Limit comparison: a_n/(1/n) = 1/ln n -> 0 with
     // the sum of 1/n divergent; a_n/(1/n^p) = n^(p-1)/ln n -> inf for p > 1 with the p-series convergent;
-    // inconclusive both ways. Verdict card (no back.expr): the divergence claim is checked numerically.
+    // inconclusive both ways. Verdict card (no back.expr): the series check passes "diverges", but it
+    // would also pass "converges" (partial sums grow like ln ln N), so the verdict rests on the
+    // integral test above (math-verifier).
     id: 'card-series-tests-14',
     category: 'Series Tests',
     section: 'series-tests',

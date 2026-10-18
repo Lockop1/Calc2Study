@@ -156,4 +156,16 @@ export const improperCards: Card[] = [
     },
     check: { kind: 'improper-integral', integrand: '1/x^2', lower: '-1', upper: '1', converges: false, split: ['0'] },
   },
+  {
+    id: 'card-improper-14',
+    category: 'Improper Integrals',
+    section: 'improper',
+    kind: 'formula',
+    front: { text: 'The five steps for evaluating an improper integral, in order?' },
+    back: {
+      latex:
+        '\\begin{array}{l}1.\\text{ identify the type (}\\infty\\text{ bound / infinite discontinuity)}\\\\ 2.\\text{ bad bound }\\to t\\text{, write the limit(s) (split if needed)}\\\\ 3.\\text{ FTC inside the limit}\\\\ 4.\\text{ evaluate the limit(s)}\\\\ 5.\\text{ conclude: converges (value) or diverges}\\end{array}',
+    },
+    check: { kind: 'none', reason: 'procedure stated in words; nothing numeric to check' },
+  },
 ];
