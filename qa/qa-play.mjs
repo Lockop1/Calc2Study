@@ -32,20 +32,25 @@ const SHOTS = 'qa/screenshots';
 const RESULTS = 'qa/results';
 const PHONE = { width: 390, height: 844 };
 const GUARD_WAIT = 420;
-const TOPIC_IDS = ['diff-review', 'antiderivatives', 'area', 'volumes-disks', 'volumes-shells', 'arc-length', 'ibp', 'trig-integrals', 'trig-sub'];
+const TOPIC_IDS = ['diff-review', 'antiderivatives', 'area', 'volumes-disks', 'volumes-shells', 'arc-length', 'ibp', 'trig-integrals', 'trig-sub',
+  'partial-fractions', 'improper', 'sequences', 'series-basics', 'series-tests'];
 const SHORT = {
   Derivatives: 'diff-review', 'u-sub': 'antiderivatives', Area: 'area', 'Disks/washers': 'volumes-disks', Shells: 'volumes-shells',
   'Arc length': 'arc-length', IBP: 'ibp', 'Trig integrals': 'trig-integrals', 'Trig sub': 'trig-sub',
+  'Partial fractions': 'partial-fractions', Improper: 'improper', Sequences: 'sequences', 'Series basics': 'series-basics', 'Series tests': 'series-tests',
 };
 const TITLE = {
   'Differentiation review': 'diff-review', 'Antiderivatives & u-substitution': 'antiderivatives', 'Area between curves': 'area',
   'Volumes: slicing, disks & washers': 'volumes-disks', 'Volumes: cylindrical shells & method selection': 'volumes-shells',
   'Arc length': 'arc-length', 'Integration by parts': 'ibp', 'Trigonometric integrals': 'trig-integrals', 'Trigonometric substitution': 'trig-sub',
+  'Partial fractions': 'partial-fractions', 'Improper integrals': 'improper', Sequences: 'sequences',
+  'Series: partial sums, divergence test, geometric, telescoping': 'series-basics',
+  'Integral test, direct & limit comparison, choosing a test': 'series-tests',
 };
 // Content text that legitimately contains the word "undefined" (found by qa/qa-content.ts).
 const SHOT_ONCE = new Set();
 const PENDING_SHOT = [];
-const LEGIT_UNDEFINED = [/is undefined at/, /is undefined for/, /ln u is undefined/, /where ln u is undefined/];
+const LEGIT_UNDEFINED = [/is undefined at/, /is undefined for/, /ln u is undefined/, /where ln u is undefined/, /as undefined and wrote 0/, /treated arctan\(∞\) as undefined/i];
 
 mkdirSync(SHOTS, { recursive: true });
 mkdirSync(RESULTS, { recursive: true });
@@ -619,8 +624,8 @@ async function scenarioHome(browser) {
   const { context, page, errors } = await newCtx(browser);
   await open(page);
   let q = await read(page);
-  check('9 topic chips, all selected by default', q.home.chips.length === 9 && q.home.chips.every((c) => c.pressed), q.home.chips.map((c) => `${c.label}:${c.pressed}`).join(', '));
-  check('topic counter shows 9/9', q.home.count === '9/9', q.home.count);
+  check('14 topic chips, all selected by default', q.home.chips.length === 14 && q.home.chips.every((c) => c.pressed), q.home.chips.map((c) => `${c.label}:${c.pressed}`).join(', '));
+  check('topic counter shows 14/14', q.home.count === '14/14', q.home.count);
   check('Review badge absent on a fresh device', q.home.badge === 0, `badge ${q.home.badge}`);
   recordLayout('Home', q);
   metric('home', q.home);
@@ -632,13 +637,13 @@ async function scenarioHome(browser) {
   q = await read(page);
   const selected = TOPIC_IDS.filter((_, i) => !off.includes(i));
   const pattern = q.home.chips.map((c) => c.pressed);
-  check('deselecting 4 chips updates aria-pressed and the counter (5/9)', pattern.every((p, i) => p === !off.includes(i)) && q.home.count === '5/9', `${pattern.join(',')} ${q.home.count}`);
+  check('deselecting 4 chips updates aria-pressed and the counter (10/14)', pattern.every((p, i) => p === !off.includes(i)) && q.home.count === '10/14', `${pattern.join(',')} ${q.home.count}`);
   await shot(page, 'qa-home-4-deselected');
   await page.reload();
   await page.waitForSelector('.home');
   q = await read(page);
   const after = q.home.chips.map((c) => c.pressed);
-  check('selection persists across reload', after.join() === pattern.join() && q.home.count === '5/9', `${after.join(',')} ${q.home.count}`);
+  check('selection persists across reload', after.join() === pattern.join() && q.home.count === '10/14', `${after.join(',')} ${q.home.count}`);
   const stored = await page.evaluate(() => localStorage.getItem('calc2study:settings'));
   metric('storedSettings', stored);
 
@@ -685,7 +690,7 @@ async function scenarioHome(browser) {
   q = await read(page);
   const progress = await getProgress(page);
   const missedIds = Object.entries(progress?.units ?? {}).filter(([, v]) => v.misses > 0).map(([id]) => id);
-  const prefixOf = { dr: 'diff-review', ad: 'antiderivatives', ar: 'area', vd: 'volumes-disks', vs: 'volumes-shells', al: 'arc-length', ip: 'ibp', ti: 'trig-integrals', ts: 'trig-sub' };
+  const prefixOf = { dr: 'diff-review', ad: 'antiderivatives', ar: 'area', vd: 'volumes-disks', vs: 'volumes-shells', al: 'arc-length', ip: 'ibp', ti: 'trig-integrals', ts: 'trig-sub', pf: 'partial-fractions', im: 'improper', sq: 'sequences', sb: 'series-basics', st: 'series-tests' };
   const missedByTopic = {};
   for (const id of missedIds) missedByTopic[prefixOf[id.slice(0, 2)]] = (missedByTopic[prefixOf[id.slice(0, 2)]] ?? 0) + 1;
   check('Review badge = number of missed units in the selected topics', q.home.badge === missedIds.length, `badge ${q.home.badge}, missed units ${missedIds.length} ${JSON.stringify(missedByTopic)}`);
@@ -713,14 +718,14 @@ async function scenarioHome(browser) {
   await page.getByRole('button', { name: 'None', exact: true }).tap();
   await sleep(100);
   q = await read(page);
-  check('"None" deselects all; Home asks to pick a topic', q.home.count === '0/9' && /Pick at least one topic/.test(q.home.notice), `${q.home.count} "${q.home.notice}"`);
+  check('"None" deselects all; Home asks to pick a topic', q.home.count === '0/14' && /Pick at least one topic/.test(q.home.notice), `${q.home.count} "${q.home.notice}"`);
   const started = await tapTo(page, modeButton(page, 'Flash Drill'), 1200);
   q = await read(page);
   check('with no topics, Flash Drill stays on Home with a message', !started && q.screen === 'home' && q.home.notice.length > 0, `"${q.home.notice}"`);
   await page.getByRole('button', { name: 'All', exact: true }).tap();
   await sleep(100);
   q = await read(page);
-  check('"All" reselects all 9', q.home.count === '9/9', q.home.count);
+  check('"All" reselects all 14', q.home.count === '14/14', q.home.count);
   metric('consoleErrors', errors);
   check('no console errors / page errors', errors.length === 0, errors.slice(0, 3).join(' | '));
   await context.close();
@@ -989,7 +994,7 @@ async function scenarioReview(browser) {
   await page.locator('.chip').nth(8).tap();
   await sleep(100);
   let q = await read(page);
-  check('only "Trig sub" selected', q.home.count === '1/9', q.home.count);
+  check('only "Trig sub" selected', q.home.count === '1/14', q.home.count);
   check('Review with nothing missed stays on Home with a friendly notice', !(await tapTo(page, modeButton(page, 'Review'), 1200)) && /Nothing to review/.test((await read(page)).home.notice), (await read(page)).home.notice);
   await tapTo(page, modeButton(page, 'Flash Drill'));
   const missedKeys = [];
@@ -1236,7 +1241,7 @@ async function scenarioStorage(browser) {
     await page.locator('.chip').nth(0).tap(); // topic toggles work (in memory)
     await sleep(100);
     let q = await read(page);
-    check(`[${name}] topic toggle works in memory`, q.home.count === '8/9', q.home.count);
+    check(`[${name}] topic toggle works in memory`, q.home.count === '13/14', q.home.count);
     check(`[${name}] Flash round starts`, await tapTo(page, modeButton(page, 'Flash Drill')));
     let misses = 0;
     let n = 0;

@@ -234,6 +234,11 @@ deck change goes through a `math-verifier` that did not author it.
 - Every content file goes through `math-verifier` (a different instance than the author) before merging.
 - If verifier and author disagree, the orchestrator re-derives and logs the decision in `content/VERIFICATION_LOG.md`.
 - Subagent prompts are self-contained: schema, topic, lecture text, distractor rules.
+- Cost split (session 3): the orchestrator designs item plans (`qa/plans/<topic>-{flash,steps}-plan.md`); a
+  cheaper "typist" agent converts a plan into the content file and runs the mechanical test loop
+  (`qa/briefs/flash-typist.md`, `qa/briefs/steps-typist.md`), never changing the mathematics; option
+  lists the medoid heuristic flags are re-centred by the mechanical decoy-hub rule in
+  `qa/briefs/hub-rewrite.md`; `math-verifier` (`qa/briefs/topic-verify.md`) stays the quality gate.
 
 ## Commands
 
