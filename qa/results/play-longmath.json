@@ -1,14 +1,14 @@
 {
   "name": "longmath",
-  "startedAt": "2026-09-24T16:22:54.724Z",
+  "startedAt": "2026-10-18T15:42:44.807Z",
   "checks": [
     {
-      "name": "long math (widest option, dr-f-018): page does not scroll sideways",
+      "name": "long math (widest option, st-s-08#0): page does not scroll sideways",
       "ok": true,
       "detail": "html 390 body 390"
     },
     {
-      "name": "long math (widest option, dr-f-018): overflowing math scrolls inside its own container",
+      "name": "long math (widest option, st-s-08#0): overflowing math scrolls inside its own container",
       "ok": true,
       "detail": "[]"
     },
@@ -33,12 +33,12 @@
       "detail": "html 390 clipped []"
     },
     {
-      "name": "long math (longest option source, ar-s-08#1): page does not scroll sideways",
+      "name": "long math (longest option source, im-s-06#1): page does not scroll sideways",
       "ok": true,
       "detail": "html 390 body 390"
     },
     {
-      "name": "long math (longest option source, ar-s-08#1): overflowing math scrolls inside its own container",
+      "name": "long math (longest option source, im-s-06#1): overflowing math scrolls inside its own container",
       "ok": true,
       "detail": "[]"
     },
@@ -55,12 +55,12 @@
   ],
   "metrics": {
     "targets": {
-      "widest option": "dr-f-018",
+      "widest option": "st-s-08#0",
       "widest prompt": "ad-s-12#0",
-      "longest option source": "ar-s-08#1"
+      "longest option source": "im-s-06#1"
     },
     "widest option": {
-      "id": "dr-f-018",
+      "id": "st-s-08#0",
       "scroll": []
     },
     "widest prompt": {
@@ -79,9 +79,9 @@
       ]
     },
     "longest option source": {
-      "id": "ar-s-08#1",
+      "id": "im-s-06#1",
       "scroll": []
     }
   },
-  "seconds": 5
+  "seconds": 4
 }

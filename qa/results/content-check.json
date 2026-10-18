@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-09-24T16:04:15.313Z",
+  "generatedAt": "2026-10-18T15:37:30.722Z",
   "counts": {
-    "staticFlash": 485,
-    "generators": 16,
-    "problems": 89,
-    "steps": 398,
-    "sweepUnits": 963,
+    "staticFlash": 662,
+    "generators": 28,
+    "problems": 134,
+    "steps": 552,
+    "sweepUnits": 1354,
     "perTopic": {
       "diff-review": {
         "flash": 54,
@@ -60,12 +60,42 @@
         "generators": 0,
         "problems": 10,
         "steps": 50
+      },
+      "partial-fractions": {
+        "flash": 35,
+        "generators": 3,
+        "problems": 9,
+        "steps": 36
+      },
+      "improper": {
+        "flash": 35,
+        "generators": 2,
+        "problems": 9,
+        "steps": 34
+      },
+      "sequences": {
+        "flash": 35,
+        "generators": 2,
+        "problems": 9,
+        "steps": 29
+      },
+      "series-basics": {
+        "flash": 35,
+        "generators": 2,
+        "problems": 9,
+        "steps": 27
+      },
+      "series-tests": {
+        "flash": 37,
+        "generators": 3,
+        "problems": 9,
+        "steps": 28
       }
     }
   },
   "optionCounts": {
-    "5": 548,
-    "6": 415
+    "5": 890,
+    "6": 464
   },
   "ambiguousKeys": [
     [
@@ -124,6 +154,62 @@
     [
       "ti-g-half-angle-kx:4242",
       "ti-g-half-angle-kx:500000"
+    ],
+    [
+      "pf-g-linear-term:20",
+      "pf-g-linear-term:500000",
+      "pf-g-linear-term:1000000"
+    ],
+    [
+      "pf-g-power-term:20",
+      "pf-g-power-term:500000",
+      "pf-g-power-term:1000000"
+    ],
+    [
+      "pf-g-arctan-term:20",
+      "pf-g-arctan-term:500000",
+      "pf-g-arctan-term:1000000"
+    ],
+    [
+      "im-f-015",
+      "im-g-exp:1"
+    ],
+    [
+      "im-g-exp:500000",
+      "im-g-exp:1000000"
+    ],
+    [
+      "im-g-p:500000",
+      "im-g-p:1000000"
+    ],
+    [
+      "sq-g-rational:500000",
+      "sq-g-rational:1000000"
+    ],
+    [
+      "sq-g-geometric:500000",
+      "sq-g-geometric:1000000"
+    ],
+    [
+      "sb-f-028",
+      "sb-g-telescoping:1"
+    ],
+    [
+      "sb-g-geometric-sum:500000",
+      "sb-g-geometric-sum:1000000"
+    ],
+    [
+      "sb-g-telescoping:500000",
+      "sb-g-telescoping:1000000"
+    ],
+    [
+      "st-g-lct-rational:20",
+      "st-g-lct-rational:500000",
+      "st-g-lct-rational:1000000"
+    ],
+    [
+      "st-g-comparison-direction:500000",
+      "st-g-comparison-direction:1000000"
     ]
   ],
   "renderIssues": [
@@ -141,6 +227,61 @@
       "where": "vd-s-06#0 opt4",
       "problem": "suspicious text undefined",
       "source": "{\"t\":\"Washers perpendicular to the x-axis, $x$ from $-1$ to 1\",\"w\":\"$\\\\sqrt{x}$ is undefined for $x < 0$; $\\\\sqrt{x} = x^2$ gives $x = 0$ or $x = 1$.\"}"
+    },
+    {
+      "where": "pf-f-023 opt3",
+      "problem": "suspicious text undefined",
+      "source": "{\"l\":\"\\\\frac{3}{2}\\\\ln(2x + 5) + C\",\"w\":\"ln(2x + 5) is undefined for x < −5/2, where the integrand still exists; the antiderivative needs ln|2x + 5|.\"}"
+    },
+    {
+      "where": "im-f-004 opt2",
+      "problem": "suspicious text undefined",
+      "source": "{\"t\":\"Type II: $e^{-x}$ is undefined at $\\\\infty$\",\"w\":\"Treated ∞ as a point where the function is evaluated, but ∞ is a bound, not a point.\"}"
+    },
+    {
+      "where": "im-f-023 opt4",
+      "problem": "suspicious text undefined",
+      "source": "{\"t\":\"Diverges: $\\\\dfrac{1}{\\\\sqrt{x}}$ is undefined at $\\\\infty$\",\"w\":\"Right verdict but an invalid reason: ∞ is a bound, not a point where the function is eva"
+    },
+    {
+      "where": "im-f-032 opt2",
+      "problem": "suspicious text undefined",
+      "source": "{\"l\":\"0\",\"w\":\"Treated arctan ∞ as undefined and wrote 0 instead of finding the limit.\"}"
+    },
+    {
+      "where": "im-s-01#1 opt3",
+      "problem": "suspicious text Infinity",
+      "source": "{\"t\":\"$\\\\left[-\\\\dfrac{1}{x}\\\\right]_{1}^{\\\\infty}$ directly\",\"w\":\"Infinity is never plugged into the antiderivative; a limit must be taken instead.\"}"
+    },
+    {
+      "where": "im-s-02#0 opt2",
+      "problem": "suspicious text Infinity",
+      "source": "{\"t\":\"$\\\\left[\\\\ln x\\\\right]_{1}^{\\\\infty}$ directly\",\"w\":\"Infinity is never plugged into the antiderivative; a limit must be taken instead.\"}"
+    },
+    {
+      "where": "im-s-04#0 opt1",
+      "problem": "suspicious text Infinity",
+      "source": "{\"t\":\"$\\\\left[-e^{-x}\\\\right]_{0}^{\\\\infty}$ directly\",\"w\":\"Infinity is never plugged into the antiderivative; a limit must be taken instead.\"}"
+    },
+    {
+      "where": "im-s-05#0 opt3",
+      "problem": "suspicious text Infinity",
+      "source": "{\"t\":\"$\\\\arctan(\\\\infty) - \\\\arctan(-\\\\infty)$\",\"w\":\"Infinity is never plugged into the antiderivative; limits must be taken instead.\"}"
+    },
+    {
+      "where": "im-s-05#1 opt3",
+      "problem": "suspicious text undefined",
+      "source": "{\"l\":\"0\",\"w\":\"Treated arctan(∞) as undefined and wrote 0 instead of taking the limit π/2.\"}"
+    },
+    {
+      "where": "im-s-07#0 opt3",
+      "problem": "suspicious text Infinity",
+      "source": "{\"t\":\"$\\\\left[-\\\\tfrac{1}{2}e^{-x^{2}}\\\\right]_{0}^{\\\\infty}$ directly\",\"w\":\"Infinity is never plugged into the antiderivative; a limit must be taken instead.\"}"
+    },
+    {
+      "where": "im-s-08#0 opt4",
+      "problem": "suspicious text Infinity",
+      "source": "{\"t\":\"$\\\\left[\\\\ln(\\\\ln x)\\\\right]_{2}^{\\\\infty}$ directly\",\"w\":\"Infinity is never plugged into the antiderivative; a limit must be taken instead.\"}"
     }
   ],
   "fuzz": [
@@ -239,23 +380,95 @@
       "seedsTested": 400,
       "failing": 0,
       "examples": []
+    },
+    {
+      "generator": "pf-g-linear-term",
+      "seedsTested": 400,
+      "failing": 0,
+      "examples": []
+    },
+    {
+      "generator": "pf-g-power-term",
+      "seedsTested": 400,
+      "failing": 0,
+      "examples": []
+    },
+    {
+      "generator": "pf-g-arctan-term",
+      "seedsTested": 400,
+      "failing": 0,
+      "examples": []
+    },
+    {
+      "generator": "im-g-exp",
+      "seedsTested": 400,
+      "failing": 0,
+      "examples": []
+    },
+    {
+      "generator": "im-g-p",
+      "seedsTested": 400,
+      "failing": 0,
+      "examples": []
+    },
+    {
+      "generator": "sq-g-rational",
+      "seedsTested": 400,
+      "failing": 0,
+      "examples": []
+    },
+    {
+      "generator": "sq-g-geometric",
+      "seedsTested": 400,
+      "failing": 0,
+      "examples": []
+    },
+    {
+      "generator": "sb-g-geometric-sum",
+      "seedsTested": 400,
+      "failing": 0,
+      "examples": []
+    },
+    {
+      "generator": "sb-g-telescoping",
+      "seedsTested": 400,
+      "failing": 0,
+      "examples": []
+    },
+    {
+      "generator": "st-g-p-series",
+      "seedsTested": 400,
+      "failing": 0,
+      "examples": []
+    },
+    {
+      "generator": "st-g-lct-rational",
+      "seedsTested": 400,
+      "failing": 0,
+      "examples": []
+    },
+    {
+      "generator": "st-g-comparison-direction",
+      "seedsTested": 400,
+      "failing": 0,
+      "examples": []
     }
   ],
   "longestOptionSources": [
     {
-      "id": "ar-s-08#1",
-      "len": 204,
-      "source": "T:$\\cos x$ on $\\left(0, \\frac{\\pi}{4}\\right)$ (at $\\frac{\\pi}{6}$: $\\frac{\\sqrt3}{2} > \\frac12$); $\\sin x$ on $\\left(\\frac{\\pi}{4}, \\frac{\\pi}{2}\\right)$ (at $\\frac{\\pi}{3}$: $\\frac{\\sqrt3}{2} > \\frac12$)"
+      "id": "im-s-06#1",
+      "len": 135,
+      "source": "T:$\\displaystyle\\lim_{s\\to 0^{-}} \\int_{-1}^{s} \\frac{dx}{x^{2}} + \\lim_{t\\to 0^{+}} \\int_{t}^{1} \\frac{dx}{x^{2}}$, both must converge"
     },
     {
-      "id": "ar-s-02#1",
-      "len": 142,
-      "source": "T:On $(-1, 0)$ the parabola is on top (at $x = -\\tfrac12$: $-1.75 > -3.5$); on $(0, 1)$ the line is on top (at $x = \\tfrac12$: $-2.5 > -3.75$)"
+      "id": "sq-f-010",
+      "len": 134,
+      "source": "T:DNE: $\\sin(x\\pi)$ oscillates between $-1$ and $1$ as $x \\to \\infty$, so by the Underlying Function Theorem the sequence has no limit"
     },
     {
-      "id": "ar-f-007",
-      "len": 136,
-      "source": "T:When every horizontal segment runs between the same two curves, but vertical segments would need different formulas in different parts"
+      "id": "sb-f-033",
+      "len": 130,
+      "source": "T:$\\displaystyle\\sum \\left(\\frac{1}{2^{n}} + \\frac{1}{3^{n}}\\right) = \\sum \\frac{1}{2^{n}} + \\sum \\frac{1}{3^{n}}$ (both converge)"
     },
     {
       "id": "ar-f-008",
@@ -263,19 +476,39 @@
       "source": "T:Solve $f(x) = g(x)$; the smallest and largest solutions are the limits, and one integral always covers everything between them"
     },
     {
-      "id": "ar-s-10#1",
-      "len": 126,
-      "source": "T:$y = x^3$ on $(-1, 0)$ (at $-\\tfrac12$: $-\\tfrac18 > -\\tfrac12$); $y = x$ on $(0, 1)$ (at $\\tfrac12$: $\\tfrac12 > \\tfrac18$)"
-    },
-    {
-      "id": "ar-f-009",
-      "len": 124,
-      "source": "T:Evaluate both functions at one point strictly between $a$ and $c$; the larger value marks the top curve on all of $(a, c)$"
+      "id": "im-f-011",
+      "len": 128,
+      "source": "T:$\\displaystyle\\int_{-\\infty}^{0} x e^{-x^{2}}dx + \\int_{0}^{\\infty} x e^{-x^{2}}dx$, each as its own limit; both must converge"
     },
     {
       "id": "ar-f-008",
-      "len": 121,
-      "source": "T:Solve $f(x) = g(x)$; the smallest and largest solutions are the limits, and any solutions between them are split points"
+      "len": 126,
+      "source": "T:Solve $f(x) = g(x)$; the smallest and largest solutions are the limits, and solutions between them are possible split points"
+    },
+    {
+      "id": "im-f-035",
+      "len": 119,
+      "source": "T:Identify the type (Type I: infinite bound) and write $\\displaystyle\\lim_{t\\to\\infty} \\int_{0}^{t} \\frac{dx}{1+x^{2}}$"
+    },
+    {
+      "id": "st-f-009",
+      "len": 119,
+      "source": "T:$f(x) = \\frac{\\sin^2 x}{x^2}$ is not decreasing; limit comparison with $\\frac{1}{n^2}$ gives $L = 1$, so it converges"
+    },
+    {
+      "id": "st-f-009",
+      "len": 119,
+      "source": "T:$f(x) = \\frac{\\sin^2 x}{x^2}$ is not continuous; limit comparison with $\\frac{1}{n^2}$ gives $L = 1$, so it converges"
+    },
+    {
+      "id": "im-s-05#0",
+      "len": 118,
+      "source": "T:Split at $c = 0$: $\\displaystyle\\lim_{s\\to-\\infty}\\int_{s}^{0} + \\lim_{t\\to\\infty}\\int_{0}^{t}$, two separate limits"
+    },
+    {
+      "id": "st-f-009",
+      "len": 118,
+      "source": "T:$f(x) = \\frac{\\sin^2 x}{x^2}$ is not decreasing; limit comparison with $\\frac{1}{n^2}$ gives $L = 1$, so it diverges"
     },
     {
       "id": "ip-f-009",
@@ -283,39 +516,19 @@
       "source": "T:If the original integral reappears after integrating by parts, the choice of $u$ was wrong and you must start over."
     },
     {
-      "id": "ar-f-005",
-      "len": 113,
-      "source": "T:It is a signed total: $x - x^3 < 0$ on $(-1, 0)$, so that piece cancels the piece on $(0, 1)$; split at $x = 0$"
+      "id": "st-s-03#0",
+      "len": 117,
+      "source": "T:Positive terms; not geometric, telescoping or a $p$-series: compare with $b_n = \\dfrac{1}{n}$ (the dominant growth)"
     },
     {
-      "id": "ar-f-006",
-      "len": 113,
-      "source": "T:The integrand is bottom − top: at $x = 0$ the line ($2$) is above the parabola ($0$), so the area is $\\tfrac92$"
+      "id": "ar-s-08#1",
+      "len": 116,
+      "source": "T:$\\cos x$ on top on $\\left(0, \\frac{\\pi}{4}\\right)$; $\\sin x$ on top on $\\left(\\frac{\\pi}{4}, \\frac{\\pi}{2}\\right)$"
     },
     {
-      "id": "ar-f-038",
-      "len": 112,
-      "source": "T:In $x$: two integrals, since the parabola crosses the $x$-axis at $x = 2$ and the integrand changes sign there"
-    },
-    {
-      "id": "ip-f-009",
-      "len": 112,
-      "source": "T:A non-constant factor of the integrand may be left out of both $u$ and $dv$ and multiplied back in at the end."
-    },
-    {
-      "id": "ar-f-041",
-      "len": 111,
-      "source": "T:One integral, $\\int_{-1}^{1} (x^2 - x^4)\\,dx$, because $x^2 \\ge x^4$ on $[-1, 1]$; at $x = 0$ they only touch"
-    },
-    {
-      "id": "ar-s-03#3",
-      "len": 111,
-      "source": "T:Test $y = 0$: the line gives $x = 1$, the parabola $x = -3$; so $R(y) = y + 1$ and $L(y) = \\frac{y^2}{2} - 3$"
-    },
-    {
-      "id": "ar-f-044",
-      "len": 108,
-      "source": "T:$y = x^3 - 3x$ on $(-\\sqrt3, 0)$ and $y = x$ on $(0, \\sqrt3)$, since the cubic changes sign at $\\pm\\sqrt3$"
+      "id": "st-f-037",
+      "len": 115,
+      "source": "T:Direct comparison: $\\sin\\left(\\frac{1}{n}\\right) \\le \\frac{1}{n}$ and $\\sum \\frac{1}{n}$ diverges, so it diverges"
     }
   ]
 }
