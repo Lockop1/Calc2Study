@@ -8,7 +8,7 @@ export const seriesBasicsCards: Card[] = [
     category: 'Series Basics',
     section: 'series-basics',
     kind: 'formula',
-    front: { text: 'With $S_n = a_1 + a_2 + \\cdots + a_n$: when does $\\sum a_n$ converge, and what is its sum?' },
+    front: { text: 'With $S_n = {a_1 + a_2 + \\cdots + a_n}$: when does $\\sum a_n$ converge, and what is its sum?' },
     back: {
       latex: '\\begin{aligned} &\\text{exactly when } \\{S_n\\} \\text{ converges} \\\\ &\\sum_{n=1}^{\\infty} a_n = \\lim_{n\\to\\infty} S_n \\end{aligned}',
     },
@@ -56,7 +56,7 @@ export const seriesBasicsCards: Card[] = [
     category: 'Series Basics',
     section: 'series-basics',
     kind: 'formula',
-    front: { text: 'Geometric series $\\sum_{n=1}^{\\infty} a r^{n-1} = a + ar + ar^2 + \\cdots$: what is its sum, and when does it converge?' },
+    front: { text: 'Geometric series ${\\sum_{n=1}^{\\infty} a r^{n-1}} = {a + ar + ar^2 + \\cdots}$: its sum? When does it converge?' },
     back: {
       latex: '\\begin{aligned} &\\frac{a}{1-r} \\quad (a = \\text{first term}) \\\\ &\\text{if } |r| < 1;\\ \\text{diverges if } |r| \\ge 1 \\end{aligned}',
     },
@@ -67,7 +67,7 @@ export const seriesBasicsCards: Card[] = [
     category: 'Series Basics',
     section: 'series-basics',
     kind: 'formula',
-    front: { text: 'Geometric series: the partial sum $S_n = a + ar + \\cdots + ar^{n-1}$ equals?' },
+    front: { text: 'Geometric series: the partial sum $S_n = {a + ar + \\cdots + ar^{n-1}}$ equals?' },
     back: { latex: 'S_n = \\frac{a(1 - r^n)}{1 - r} \\quad (r \\ne 1)' },
     check: { kind: 'none', reason: 'symbolic formula: geometric partial sum (a, r, n general)' },
   },
@@ -98,7 +98,7 @@ export const seriesBasicsCards: Card[] = [
     category: 'Series Basics',
     section: 'series-basics',
     kind: 'formula',
-    front: { text: 'Telescoping series $\\sum_{n=1}^{\\infty} (b_n - b_{n+1})$: what is $S_n$, and what is the sum?' },
+    front: { text: 'Telescoping series ${\\sum_{n=1}^{\\infty} (b_n - b_{n+1})}$: what is $S_n$, and what is the sum?' },
     back: {
       latex: '\\begin{aligned} S_n &= b_1 - b_{n+1} \\\\ \\text{sum} &= b_1 - \\lim_{n\\to\\infty} b_n \\ \\text{(if finite)} \\end{aligned}',
     },
@@ -121,7 +121,7 @@ export const seriesBasicsCards: Card[] = [
     category: 'Series Basics',
     section: 'series-basics',
     kind: 'formula',
-    front: { text: 'When may you use $\\sum (a_n \\pm b_n) = \\sum a_n \\pm \\sum b_n$ and $\\sum c\\,a_n = c\\sum a_n$?' },
+    front: { text: 'When may you use ${\\sum (a_n \\pm b_n)} = {\\sum a_n \\pm \\sum b_n}$ and ${\\sum c\\,a_n} = {c\\sum a_n}$?' },
     back: {
       latex: '\\begin{aligned} &\\text{if } \\textstyle\\sum a_n \\text{ and } \\sum b_n \\text{ converge} \\\\ &\\text{(never for divergent pieces)} \\end{aligned}',
     },
@@ -133,7 +133,7 @@ export const seriesBasicsCards: Card[] = [
     category: 'Series Basics',
     section: 'series-basics',
     kind: 'formula',
-    front: { text: 'Both $\\sum a_n$ and $\\sum b_n$ diverge. What can you conclude about $\\sum (a_n + b_n)$?' },
+    front: { text: 'Both $\\sum a_n$ and $\\sum b_n$ diverge. What can you conclude about ${\\sum (a_n + b_n)}$?' },
     back: {
       latex: '\\begin{aligned} &\\text{insufficient information:} \\\\ &\\text{it may converge or diverge} \\end{aligned}',
     },

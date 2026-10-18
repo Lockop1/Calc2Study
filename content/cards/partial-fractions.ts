@@ -8,7 +8,7 @@ export const partialFractionCards: Card[] = [
     category: 'Partial Fractions',
     section: 'partial-fractions',
     kind: 'formula',
-    front: { text: 'Partial fractions for $R = \\frac{p}{s}$: the six steps, in order?' },
+    front: { text: 'Partial fractions for ${R = \\frac{p}{s}}$: the six steps, in order?' },
     back: {
       latex:
         '\\begin{array}{l}' +
@@ -30,7 +30,7 @@ export const partialFractionCards: Card[] = [
     category: 'Partial Fractions',
     section: 'partial-fractions',
     kind: 'formula',
-    front: { text: 'When is a rational function $R = \\frac{p}{s}$ proper? When is it improper?' },
+    front: { text: 'When is a rational function ${R = \\frac{p}{s}}$ proper? When is it improper?' },
     back: {
       latex: '\\begin{array}{l}\\text{proper: } \\deg p < \\deg s \\\\ \\text{improper: } \\deg p \\ge \\deg s\\end{array}',
     },
@@ -43,7 +43,7 @@ export const partialFractionCards: Card[] = [
     category: 'Partial Fractions',
     section: 'partial-fractions',
     kind: 'formula',
-    front: { text: 'When is the quadratic $ax^2 + bx + c$ irreducible (no real linear factors)?' },
+    front: { text: 'When is the quadratic ${ax^2 + bx + c}$ irreducible (no real linear factors)?' },
     back: { latex: 'b^2 - 4ac < 0' },
     check: { kind: 'none', reason: 'criterion (an inequality on the discriminant), not an expression' },
   },
@@ -54,7 +54,7 @@ export const partialFractionCards: Card[] = [
     category: 'Partial Fractions',
     section: 'partial-fractions',
     kind: 'formula',
-    front: { text: 'Decomposition term for a linear factor $ax + b$ of the denominator?' },
+    front: { text: 'Linear factor ${ax + b}$ in the denominator: which decomposition term?' },
     back: { latex: '\\frac{A}{ax + b}' },
     check: { kind: 'none', reason: 'decomposition form (the constant A is solved for in each problem)' },
   },
@@ -63,7 +63,7 @@ export const partialFractionCards: Card[] = [
     category: 'Partial Fractions',
     section: 'partial-fractions',
     kind: 'formula',
-    front: { text: 'Decomposition terms for a repeated linear factor $(ax + b)^n$?' },
+    front: { text: 'Repeated linear factor ${(ax + b)^n}$: which decomposition terms?' },
     back: {
       latex: '\\begin{aligned}&\\frac{A_1}{ax + b} + \\frac{A_2}{(ax + b)^2} \\\\ &+ \\cdots + \\frac{A_n}{(ax + b)^n}\\end{aligned}',
       also: '\\displaystyle\\sum_{k=1}^{n} \\frac{A_k}{(ax + b)^k}',
@@ -75,7 +75,7 @@ export const partialFractionCards: Card[] = [
     category: 'Partial Fractions',
     section: 'partial-fractions',
     kind: 'formula',
-    front: { text: 'Decomposition term for an irreducible quadratic factor $ax^2 + bx + c$?' },
+    front: { text: 'Irreducible quadratic factor ${ax^2 + bx + c}$: which decomposition term?' },
     back: { latex: '\\frac{Ax + B}{ax^2 + bx + c}' },
     check: { kind: 'none', reason: 'decomposition form (A and B are solved for in each problem)' },
   },
@@ -84,7 +84,7 @@ export const partialFractionCards: Card[] = [
     category: 'Partial Fractions',
     section: 'partial-fractions',
     kind: 'formula',
-    front: { text: 'Decomposition terms for a repeated irreducible quadratic $(ax^2 + bx + c)^n$?' },
+    front: { text: 'Repeated irreducible quadratic ${(ax^2 + bx + c)^n}$: which decomposition terms?' },
     back: {
       latex:
         '\\begin{aligned}&\\frac{A_1x + B_1}{ax^2 + bx + c} \\\\ ' +
@@ -184,7 +184,7 @@ export const partialFractionCards: Card[] = [
     category: 'Partial Fractions',
     section: 'partial-fractions',
     kind: 'identity',
-    front: { text: 'Irreducible with $b \\neq 0$: complete the square first.', latex: 'x^2 + bx + c' },
+    front: { text: 'Irreducible with ${b \\neq 0}$: complete the square first.', latex: 'x^2 + bx + c' },
     back: {
       latex: '\\left(x + \\frac{b}{2}\\right)^2 + c - \\frac{b^2}{4}',
       also: '\\left(x + \\frac{b}{2}\\right)^2 + \\frac{4c - b^2}{4}',

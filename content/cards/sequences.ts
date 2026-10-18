@@ -105,8 +105,8 @@ export const sequenceCards: Card[] = [
     section: 'sequences',
     kind: 'formula',
     front: {
-      text: 'By degrees (top degree $m$, bottom degree $k$, leading coefficients $a, b$):',
-      latex: '\\lim_{x\\to\\infty} \\frac{a x^m + \\cdots}{b x^k + \\cdots}',
+      text: 'Rational function by degrees (top degree $m$, bottom degree $k$, leading coefficients $a, b$):',
+      latex: '\\lim_{x\\to\\infty} \\frac{a x^m + \\cdots}{b x^k + \\cdots} = \\,?',
     },
     back: {
       latex: '\\begin{aligned} m < k &:\\ 0 \\\\ m = k &:\\ \\frac{a}{b} \\\\ m > k &:\\ \\pm\\infty\\ (\\text{sign of } \\tfrac{a}{b}) \\end{aligned}',
@@ -196,10 +196,10 @@ export const sequenceCards: Card[] = [
     section: 'sequences',
     kind: 'formula',
     front: { text: 'When is $\\{a_n\\}$ monotone?' },
-    // "(all n)" sits inside each alternative: (a_n ≤ a_{n+1} for every n) OR (a_n ≥ a_{n+1} for every n);
+    // "all n" sits inside each alternative: (a_n ≤ a_{n+1} for every n) OR (a_n ≥ a_{n+1} for every n);
     // "for all n, one of the two" would be true of every sequence
     back: {
-      latex: '\\begin{aligned} \\text{increasing:}\\ & a_n \\le a_{n+1} \\ (\\text{all } n) \\\\ & \\text{or} \\\\ \\text{decreasing:}\\ & a_n \\ge a_{n+1} \\ (\\text{all } n) \\end{aligned}',
+      latex: '\\begin{aligned} \\text{increasing:}\\ & a_n \\le a_{n+1},\\ \\text{all } n \\\\ & \\text{or} \\\\ \\text{decreasing:}\\ & a_n \\ge a_{n+1},\\ \\text{all } n \\end{aligned}',
     },
     check: { kind: 'none', reason: 'definition (no numeric content)' },
   },
