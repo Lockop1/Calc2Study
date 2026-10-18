@@ -186,3 +186,6 @@ the finite-limit branch sampled only even n, so "(−1)ⁿ → 1" passed — eac
 and n + 1; the `dne` branch measured a window's spread against the global magnitude, so unbounded
 oscillation such as (−1.0001)ⁿ or (−2)ⁿ was rejected — it is now measured against the window's own
 magnitude and overflowing windows are skipped. The improper and sequences decks still pass unchanged.
+| improper card 14 (orchestrator-added) | — | orchestrator | math-verifier #a875474 | tests/cards.test.ts | PASS WITH FIX | wording matches the spec's five steps in order; the back was 609 px wide and was rewritten as an `aligned` block that fits 324/324 px at 390 px (and 294/294 at 360 px) |
+
+Phase A totals: 74 cards in five new sections (partial-fractions 14, improper 14, sequences 20, series-basics 13, series-tests 14); the 50-card whiteboard deck is unchanged. Full suite 1164 tests green, build green, merged to main.
