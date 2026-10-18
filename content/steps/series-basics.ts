@@ -160,6 +160,36 @@ export const steps: StepProblem[] = [
         check: { kind: 'value', expected: '[1, 1/3]' },
       },
       {
+        prompt: 'Does the series converge?',
+        options: [
+          { text: 'Yes: $|r| = \\tfrac{1}{3} < 1$' },
+          {
+            text: 'No: $r = \\tfrac{1}{3} \\le 1$ fails the condition $r > 1$',
+            mistake: 'sb-r-boundary',
+            why: 'Misstated the condition; it is |r| < 1.',
+          },
+          {
+            text: 'No: $r = \\tfrac{1}{3} \\le 1$ fails the condition, and the terms do not tend to $0$',
+            mistake: 'sb-r-boundary',
+            why: 'Misstated the condition, and the terms do tend to 0.',
+          },
+          {
+            text: 'No: $a = 1$ fails the condition $|a| < 1$',
+            mistake: 'sb-r-boundary',
+            why: 'Misstated the condition and applied it to a, which plays no role.',
+          },
+          {
+            text: 'Yes, because the terms tend to $0$',
+            mistake: 'sb-divergence-test-converse',
+            why: 'Right verdict, invalid reason: terms → 0 never proves convergence.',
+          },
+        ],
+        correct: 0,
+        explanation: 'A geometric series converges exactly when $|r| < 1$.',
+        result: { text: 'Converges ($|r| < 1$)' },
+        check: { kind: 'none', reason: 'convergence condition stated in words' },
+      },
+      {
         prompt: '$|r| < 1$, so compute the sum.',
         options: [
           { latex: '\\frac{3}{2}', expr: '3/2' },
@@ -826,6 +856,36 @@ export const steps: StepProblem[] = [
         explanation: 'First term (3/2)¹, ratio 3/2.',
         result: { latex: 'a = r = \\frac{3}{2}' },
         check: { kind: 'value', expected: '[3/2, 3/2]' },
+      },
+      {
+        prompt: 'What does the divergence test say?',
+        options: [
+          { text: '$(3/2)^{n} \\to \\infty \\ne 0$: the series diverges' },
+          {
+            text: '$(3/2)^{n} \\to 0$: inconclusive',
+            mistake: 'sq-rn-boundary',
+            why: 'Took rⁿ → 0 although r = 3/2 > 1.',
+          },
+          {
+            text: '$(3/2)^{n} \\to 0$: the series converges',
+            mistake: 'sb-divergence-test-converse',
+            why: 'Wrong limit, and terms → 0 would not prove convergence anyway.',
+          },
+          {
+            text: '$(3/2)^{n} \\to 0$: the series converges to $0$',
+            mistake: 'sb-sum-is-term-limit',
+            why: 'Wrong limit, and the limit of the terms is never the sum.',
+          },
+          {
+            text: '$(3/2)^{n} \\to \\tfrac{3}{2}$: the series diverges',
+            mistake: 'sq-term-vs-limit',
+            why: 'Right verdict, but 3/2 is the first term, not the limit.',
+          },
+        ],
+        correct: 0,
+        explanation: 'For $r > 1$, $r^{n}$ grows without bound, so the terms do not tend to $0$.',
+        result: { text: 'Terms $\\to \\infty$: diverges' },
+        check: { kind: 'limit', term: '(3/2)^n', limit: 'infinity' },
       },
       {
         prompt: 'Does it converge?',
