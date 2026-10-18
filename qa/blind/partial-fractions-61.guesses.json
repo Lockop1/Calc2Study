@@ -1,106 +1,106 @@
 {
   "1": {
-    "guess": null,
-    "reason": ""
+    "guess": 1,
+    "reason": "MATH: linear factor gets A, irreducible quadratic gets Bx+C"
   },
   "2": {
-    "guess": null,
-    "reason": ""
+    "guess": 5,
+    "reason": "MATH: int 1/(5-2x) = -1/2 ln|5-2x|"
   },
   "3": {
-    "guess": null,
-    "reason": ""
+    "guess": 5,
+    "reason": "SURFACE: centre option (others are one edit from A=2, B=3)"
   },
   "4": {
-    "guess": null,
-    "reason": ""
+    "guess": 1,
+    "reason": "MATH: x^3+1 over x^2-4 gives x + (4x+1)/(x^2-4)"
   },
   "5": {
-    "guess": null,
-    "reason": ""
+    "guess": 3,
+    "reason": "MATH: x^3-x = x(x-1)(x+1), factor completely"
   },
   "6": {
-    "guess": null,
-    "reason": ""
+    "guess": 2,
+    "reason": "MATH: repeated linear gets two terms, irreducible quadratic gets Cx+D"
   },
   "7": {
-    "guess": null,
-    "reason": ""
+    "guess": 1,
+    "reason": "SURFACE: centre option (others one edit away)"
   },
   "8": {
-    "guess": null,
-    "reason": ""
+    "guess": 5,
+    "reason": "SURFACE: median/+- twin 1 and -1, no math available"
   },
   "9": {
-    "guess": null,
-    "reason": ""
+    "guess": 1,
+    "reason": "MATH: x^2(x+1)^2 needs A/x+B/x^2+C/(x+1)+D/(x+1)^2"
   },
   "10": {
-    "guess": null,
-    "reason": ""
+    "guess": 1,
+    "reason": "SURFACE: centre option, polynomial part x for an improper fraction"
   },
   "11": {
-    "guess": null,
-    "reason": ""
+    "guess": 1,
+    "reason": "SURFACE+MATH: centre option; matches class example (2x+2)/(x^2+1)"
   },
   "12": {
-    "guess": null,
-    "reason": ""
+    "guess": 1,
+    "reason": "SURFACE+MATH: centre option, completed-square arctan((x+1)/2)"
   },
   "13": {
-    "guess": null,
-    "reason": ""
+    "guess": 4,
+    "reason": "MATH: x^2+2x+5 = (x+1)^2+4"
   },
   "14": {
-    "guess": null,
-    "reason": ""
+    "guess": 1,
+    "reason": "SURFACE: centre option (median coefficient 3, keeps abs value)"
   },
   "15": {
-    "guess": null,
-    "reason": ""
+    "guess": 5,
+    "reason": "MATH: x^2+2x = x(x+2) factors, no need to complete square"
   },
   "16": {
-    "guess": null,
-    "reason": ""
+    "guess": 5,
+    "reason": "MATH: 1/(x^2-1) -> 1/2 ln|x-1| - 1/2 ln|x+1|"
   },
   "17": {
-    "guess": null,
-    "reason": ""
+    "guess": 5,
+    "reason": "MATH: int 1/((x+1)^2+4) = 1/2 arctan((x+1)/2)"
   },
   "18": {
-    "guess": null,
-    "reason": ""
+    "guess": 2,
+    "reason": "MATH: repeated irreducible quadratic needs (Bx+C) and (Dx+E)"
   },
   "19": {
-    "guess": null,
-    "reason": ""
+    "guess": 3,
+    "reason": "MATH: distinct linear factors, A/(x-1)+B/(x+1)"
   },
   "20": {
-    "guess": null,
-    "reason": ""
+    "guess": 5,
+    "reason": "SURFACE: centre option; others are one-coefficient edits of it"
   },
   "21": {
-    "guess": null,
-    "reason": ""
+    "guess": 3,
+    "reason": "MATH: p/s = q + r/s"
   },
   "22": {
-    "guess": null,
-    "reason": ""
+    "guess": 1,
+    "reason": "MATH: x^2-5x+6 has discriminant 1 and factors (x-2)(x-3); others are sign slips"
   },
   "23": {
-    "guess": null,
-    "reason": ""
+    "guess": 1,
+    "reason": "MATH: x^2+4 has discriminant -16 < 0"
   },
   "24": {
-    "guess": null,
-    "reason": ""
+    "guess": 5,
+    "reason": "SURFACE: centre option (options 2 and 4 are single edits of it)"
   },
   "25": {
-    "guess": null,
-    "reason": ""
+    "guess": 4,
+    "reason": "MATH: 1/(x^2-4) is the one needing partial fractions"
   },
   "26": {
-    "guess": null,
-    "reason": ""
+    "guess": 4,
+    "reason": "SURFACE: centre option (others one edit from A=2, B=1)"
   }
 }
