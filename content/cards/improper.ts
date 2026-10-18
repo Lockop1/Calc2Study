@@ -164,7 +164,7 @@ export const improperCards: Card[] = [
     front: { text: 'The five steps for evaluating an improper integral, in order?' },
     back: {
       latex:
-        '\\begin{array}{l}1.\\text{ identify the type (}\\infty\\text{ bound / infinite discontinuity)}\\\\ 2.\\text{ bad bound }\\to t\\text{, write the limit(s) (split if needed)}\\\\ 3.\\text{ FTC inside the limit}\\\\ 4.\\text{ evaluate the limit(s)}\\\\ 5.\\text{ conclude: converges (value) or diverges}\\end{array}',
+        '\\begin{aligned}1.\\ &\\text{identify the type}\\\\ 2.\\ &\\text{bad bound} \\to t\\text{,}\\\\ &\\text{write the limit(s)}\\\\ &\\text{(split if needed)}\\\\ 3.\\ &\\text{FTC inside the limit}\\\\ 4.\\ &\\text{evaluate the limit(s)}\\\\ 5.\\ &\\text{conclude: conv. or div.}\\end{aligned}',
     },
     check: { kind: 'none', reason: 'procedure stated in words; nothing numeric to check' },
   },

@@ -72,6 +72,10 @@ describe('claims: limits of sequences', () => {
     { kind: 'limit', term: 'sin(n)', limit: 'dne' },
     { kind: 'limit', term: 'cos(pi*n)', limit: 'dne' },
     { kind: 'limit', term: 'x/(x+1)', variable: 'x', limit: '1' },
+    { kind: 'limit', term: '(-1.0001)^n', limit: 'dne' },
+    { kind: 'limit', term: '(-2)^n', limit: 'dne' },
+    { kind: 'limit', term: '(-1)^n*n/(n+1)', limit: 'dne' },
+    { kind: 'limit', term: '(-1)^n/n + 1', limit: '1' },
   ];
   for (const c of ok) it(`accepts ${JSON.stringify(c)}`, () => expect(codes(c)).toEqual([]));
   const bad: Check[] = [
@@ -85,6 +89,10 @@ describe('claims: limits of sequences', () => {
     { kind: 'limit', term: '(1+1/n)^n', limit: '1' },
     { kind: 'limit', term: '(4/3)^n', limit: '0' },
     { kind: 'limit', term: 'n^2', limit: '-infinity' },
+    { kind: 'limit', term: '(-1)^n', limit: '1' },
+    { kind: 'limit', term: '(-1)^n*n/(n+1)', limit: '1' },
+    { kind: 'limit', term: '(-2)^n', limit: 'infinity' },
+    { kind: 'limit', term: 'cos(pi*n)', limit: '1' },
   ];
   for (const c of bad) it(`rejects ${JSON.stringify(c)}`, () => expect(codes(c)).toContain('limit-claim-wrong'));
 });

@@ -268,13 +268,16 @@ function limit(check: Extract<Check, { kind: 'limit' }>, where: string): ClaimRe
   const err = (code: string, message: string) => issues.push({ level: 'error', code, where, message });
   const v = check.variable ?? singleVariable(check.term, 'n', 'term');
   const a = compiled(check.term, v);
-  const vals = LIMIT_SAMPLES.map(a);
+  // Each scale is sampled at n and n + 1 so both parities are seen ((−1)^n must not look constant).
+  const pairs = LIMIT_SAMPLES.map((n) => [a(n), a(n + 1)]);
+  const vals = pairs.map((p) => p[0]);
   const spec = check.limit.trim().toLowerCase();
-  const show = `a(${LIMIT_SAMPLES.map((n) => n.toExponential(0)).join(', ')}) = ${vals.map(fmt).join(', ')}`;
+  const show = `a(${LIMIT_SAMPLES.map((n) => n.toExponential(0)).join(', ')}) = ${vals.map(fmt).join(', ')}; a(n+1) = ${pairs.map((p) => fmt(p[1])).join(', ')}`;
   if (spec === 'infinity' || spec === '-infinity') {
     const sgn = spec === 'infinity' ? 1 : -1;
+    const all = pairs.flat();
     const ok =
-      vals.every((x) => isFiniteNumber(x) && Math.sign(x) === sgn || (x === sgn * Infinity)) &&
+      all.every((x) => (isFiniteNumber(x) && Math.sign(x) === sgn) || x === sgn * Infinity) &&
       vals.every((x, i) => i === 0 || Math.abs(x) > Math.abs(vals[i - 1]) || x === sgn * Infinity) &&
       Math.abs(vals[3]) >= 1.5 * Math.abs(vals[0]) &&
       Math.abs(vals[3]) > 5;
@@ -282,18 +285,22 @@ function limit(check: Extract<Check, { kind: 'limit' }>, where: string): ClaimRe
     return { issues, hasTarget: false };
   }
   if (spec === 'dne') {
-    // Not settling: spread over a window of consecutive integers at two scales.
-    const windows = [1e4, 1e6].map((n0) => Array.from({ length: 25 }, (_, i) => a(n0 + i)));
-    const bad = windows.some((w) => w.some((x) => !isFiniteNumber(x)));
+    // Not settling: the spread over a window of consecutive integers, at three scales. A window whose
+    // values overflow is skipped (unbounded oscillation such as (−2)^n); at least one finite window
+    // must exist and no finite window may settle (spread tiny relative to max(1, its own magnitude)).
+    const windows = [1e2, 1e4, 1e6].map((n0) => Array.from({ length: 25 }, (_, i) => a(n0 + i)));
+    const finite = windows.filter((w) => w.every(isFiniteNumber));
     const spread = (w: number[]) => Math.max(...w) - Math.min(...w);
-    const mag = Math.max(1, ...windows.flat().map((x) => Math.abs(x)));
-    if (bad) err('limit-claim-wrong', `the term is not finite at large ${v}: ${show}; use 'infinity' / '-infinity' for unbounded terms`);
-    else if (windows.some((w) => spread(w) <= 1e-3 * mag)) err('limit-claim-wrong', `the term settles (window spread ${windows.map((w) => fmt(spread(w))).join(', ')}); it does not "not exist": ${show}`);
+    const mag = (w: number[]) => Math.max(1, ...w.map((x) => Math.abs(x)));
+    if (finite.length === 0) err('limit-claim-wrong', `the term is not finite at any sampled ${v}: ${show}; use 'infinity' / '-infinity' for terms of fixed sign`);
+    else if (finite.some((w) => spread(w) <= 1e-3 * mag(w))) {
+      err('limit-claim-wrong', `the term settles (window spreads ${windows.map((w) => (w.every(isFiniteNumber) ? fmt(spread(w)) : 'overflow')).join(', ')}); it does not "not exist": ${show}`);
+    }
     return { issues, hasTarget: false };
   }
   const L = constant(check.limit, 'limit');
-  const errs = vals.map((x) => Math.abs(x - L));
-  const finite = vals.every(isFiniteNumber);
+  const errs = pairs.map((p) => Math.max(Math.abs(p[0] - L), Math.abs(p[1] - L)));
+  const finite = pairs.flat().every(isFiniteNumber);
   const shrinking = errs.every((e, i) => i === 0 || e <= errs[i - 1] + 1e-12);
   const close = errs[3] <= 0.1 * Math.max(1, Math.abs(L)) && (errs[3] <= 1e-9 || errs[3] <= 0.6 * errs[0]);
   if (!finite || !shrinking || !close) err('limit-claim-wrong', `the term does not approach ${check.limit} = ${fmt(L)}: ${show}`);
