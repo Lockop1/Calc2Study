@@ -107,7 +107,7 @@ export const flash: FlashItem[] = [
     explanation: 'aₙ = Sₙ − Sₙ₋₁ = −2/n + 2/(n − 1) = 2/(n(n − 1)).',
     variable: 'n',
     domain: { n: [2, 8] },
-    check: { kind: 'identity', lhs: '2/(n*(n-1))' },
+    check: { kind: 'identity', lhs: '(3 - 2/n) - (3 - 2/(n-1))' },
   },
   {
     id: 'sb-f-004',
@@ -198,7 +198,7 @@ export const flash: FlashItem[] = [
       },
       {
         text: 'The series diverges, because $a_n \\ne 0$ for every $n$',
-        mistake: 'algebra-error',
+        mistake: 'sq-term-vs-limit',
         why: 'The test is about lim aₙ, not about whether individual terms are nonzero.',
       },
       {
@@ -220,7 +220,7 @@ export const flash: FlashItem[] = [
       { text: 'Diverges: $\\lim (-1)^{n}$ does not exist' },
       {
         text: 'Converges to $0$: the terms cancel in pairs',
-        mistake: 'sb-partial-sum-formula',
+        mistake: 'sb-no-information',
         why: 'The partial sums alternate between −1 and 0 and never settle, so pairing terms does not give a sum.',
       },
       {
@@ -321,7 +321,7 @@ export const flash: FlashItem[] = [
       },
       {
         text: '$\\lim a_n = 0 \\Rightarrow \\sum a_n$ diverges',
-        mistake: 'sb-sequence-vs-series',
+        mistake: 'sq-theorem-misattributed',
         why: 'Reversed what the test says: a limit of 0 gives no information, it does not force divergence.',
       },
       {
@@ -697,7 +697,7 @@ export const flash: FlashItem[] = [
     explanation: 'Sₙ = a(1 − rⁿ)/(1 − r) = 2(1 − 3ⁿ)/(−2) = 3ⁿ − 1.',
     variable: 'n',
     domain: { n: [1, 6] },
-    check: { kind: 'identity', lhs: '3^n - 1' },
+    check: { kind: 'identity', lhs: '2*(1 - 3^n)/(1 - 3)' },
   },
   {
     id: 'sb-f-021',
@@ -870,7 +870,7 @@ export const flash: FlashItem[] = [
       {
         latex: '\\frac{1}{n+1}',
         expr: '1/(n+1)',
-        mistake: 'sb-partial-sum-formula',
+        mistake: 'sb-telescoping-sum-wrong',
         why: 'Kept only the last surviving term (with its minus sign dropped) and forgot the first term b₁ = 1.',
       },
     ],
@@ -958,8 +958,8 @@ export const flash: FlashItem[] = [
       {
         latex: '1',
         expr: '1',
-        mistake: 'sb-wrong-first-term',
-        why: 'Used the sum of Σ 1/(n(n+1)) without accounting for the index shift.',
+        mistake: 'sb-telescoping-sum-wrong',
+        why: 'Used the sum of Σ 1/(n(n+1)) without accounting for the index shift: the first surviving term is 1/2, not 1.',
       },
       {
         latex: '\\frac{1}{6}',
@@ -1114,7 +1114,7 @@ export const flash: FlashItem[] = [
       },
       {
         text: 'Converges to $0$',
-        mistake: 'sb-sum-is-term-limit',
+        mistake: 'sb-no-information',
         why: 'There is no basis for assigning a value; the combined series may not even converge.',
       },
     ],

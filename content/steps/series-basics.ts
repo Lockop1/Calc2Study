@@ -531,7 +531,7 @@ export const steps: StepProblem[] = [
           {
             latex: '\\frac{1}{n+1}',
             expr: '1/(n+1)',
-            mistake: 'sb-partial-sum-formula',
+            mistake: 'sb-telescoping-sum-wrong',
             why: 'Kept only the last surviving term and lost the first term b₁ = 1.',
           },
         ],
@@ -646,7 +646,7 @@ export const steps: StepProblem[] = [
           },
           {
             latex: '\\frac{1}{2}\\left(1 + \\frac{1}{2}\\right)',
-            mistake: 'sb-sequence-vs-series',
+            mistake: 'sq-term-vs-limit',
             why: 'That value is the limit of the partial sums, not the partial sum Sₙ itself.',
           },
         ],
@@ -731,7 +731,7 @@ export const steps: StepProblem[] = [
           {
             latex: '\\dfrac{\\ln n}{\\ln(n+1)}',
             expr: 'log(n)/log(n+1)',
-            mistake: 'ln-misapplied',
+            mistake: 'algebra-error',
             why: 'The log of a quotient is not a quotient of logs.',
           },
         ],
@@ -985,11 +985,11 @@ export const steps: StepProblem[] = [
           {
             text: 'Inconclusive',
             mistake: 'sb-no-information',
-            why: 'The harmonic series is known to diverge (p-series with p = 1), so the question is settled.',
+            why: 'The harmonic series is known to diverge, so the question is settled.',
           },
         ],
         correct: 0,
-        explanation: 'Σ1/n diverges (p = 1).',
+        explanation: 'Σ1/n is the harmonic series, which diverges.',
         result: { text: '$\\sum 1/n$ diverges' },
         check: { kind: 'series', term: '1/n', converges: false },
       },
