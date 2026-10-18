@@ -109,7 +109,7 @@ export const steps: StepProblem[] = [
       {
         prompt: 'Evaluate the limit and conclude.',
         options: [
-          { text: '$1$: converges', expr: '1' },
+          { latex: '1', expr: '1' },
           {
             latex: '0',
             expr: '0',
