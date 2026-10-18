@@ -271,10 +271,10 @@ export const flash: FlashItem[] = [
     options: [
       { latex: '(x + 1)^2 + 4', expr: '(x + 1)^2 + 4' },
       {
-        latex: '(x + 2)^2 + 1',
-        expr: '(x + 2)^2 + 1',
+        latex: '(x + 2)^2 + 5',
+        expr: '(x + 2)^2 + 5',
         mistake: 'algebra-error',
-        why: 'The shift is b/2 = 1, not b = 2: (x + 2)² = x² + 4x + 4 has middle term 4x.',
+        why: 'The shift is b/2 = 1, not b = 2: (x + 2)² = x² + 4x + 4 has middle term 4x. The constant 5 was also left unadjusted.',
       },
       {
         latex: '(x + 1)^2 + 5',
@@ -289,10 +289,10 @@ export const flash: FlashItem[] = [
         why: 'The 1 inside (x + 1)² must be subtracted from 5, not added: 5 − 1 = 4.',
       },
       {
-        latex: '(x - 1)^2 + 4',
-        expr: '(x - 1)^2 + 4',
+        latex: '(x - 1)^2 + 5',
+        expr: '(x - 1)^2 + 5',
         mistake: 'sign-error',
-        why: '(x − 1)² = x² − 2x + 1 has middle term −2x. A middle term +2x needs (x + 1)².',
+        why: '(x − 1)² = x² − 2x + 1 has middle term −2x. A middle term +2x needs (x + 1)². The constant 5 was also left unadjusted.',
       },
     ],
     correct: 0,
@@ -523,14 +523,14 @@ export const flash: FlashItem[] = [
     options: [
       { latex: '\\frac{A}{x} + \\frac{B}{x - 3} + \\frac{C}{x + 3}' },
       {
-        latex: '\\frac{A}{x} + \\frac{Bx + C}{x^2 - 9}',
+        latex: '\\frac{A}{x} + \\frac{B}{x^2 - 9}',
         mistake: 'pf-not-fully-factored',
-        why: 'x² − 9 = (x − 3)(x + 3) still factors, so keeping it as a quadratic is not the full decomposition.',
+        why: 'x² − 9 = (x − 3)(x + 3) still factors, so keeping it as one quadratic factor is not the full decomposition.',
       },
       {
-        latex: '\\frac{A}{x} + \\frac{B}{x - 9} + \\frac{C}{x + 9}',
+        latex: '\\frac{A}{x} + \\frac{B}{x - 3} + \\frac{C}{x + 9}',
         mistake: 'sqrt-constant-not-rooted',
-        why: 'x² − 9 = (x − 3)(x + 3): the roots are ±√9 = ±3, not ±9.',
+        why: 'x² − 9 = (x − 3)(x + 3): the second root is −√9 = −3, so the factor is x + 3, not x + 9.',
       },
       {
         latex: '\\frac{A}{x} + \\frac{B}{x - 3} + \\frac{C}{(x - 3)^2}',
@@ -538,9 +538,9 @@ export const flash: FlashItem[] = [
         why: '(x − 3)² = x² − 6x + 9, not x² − 9. The factors are x − 3 and x + 3.',
       },
       {
-        latex: '\\frac{A}{x - 3} + \\frac{B}{x + 3}',
+        latex: '\\frac{A}{x} + \\frac{B}{x - 3}',
         mistake: 'algebra-error',
-        why: 'x³ − 9x = x(x² − 9): the common factor x was dropped, and it needs its own A/x term.',
+        why: 'x³ − 9x = x(x − 3)(x + 3): the factor x + 3 was dropped, and it needs its own C/(x + 3) term.',
       },
     ],
     correct: 0,
@@ -561,9 +561,9 @@ export const flash: FlashItem[] = [
         why: 'Degree 3 over degree 2 is improper: long division first gives the polynomial part x, then the remainder is decomposed.',
       },
       {
-        latex: 'x + \\frac{Ax + B}{x^2 - 1}',
+        latex: '\\frac{Ax + B}{x^2 - 1}',
         mistake: 'pf-not-fully-factored',
-        why: 'x² − 1 = (x − 1)(x + 1) factors, so the remainder still splits into A/(x − 1) + B/(x + 1).',
+        why: 'x² − 1 = (x − 1)(x + 1) factors, so it splits into A/(x − 1) + B/(x + 1). The long division of the improper fraction was also skipped.',
       },
       {
         latex: 'x^2 + \\frac{A}{x - 1} + \\frac{B}{x + 1}',
@@ -571,9 +571,9 @@ export const flash: FlashItem[] = [
         why: 'x³ ÷ x² = x, not x²: the quotient of the long division is x.',
       },
       {
-        latex: '1 + \\frac{A}{x - 1} + \\frac{B}{x + 1}',
-        mistake: 'pf-division-wrong',
-        why: 'A constant quotient comes from equal degrees. Here x³ ÷ x² gives the quotient x.',
+        latex: '\\frac{Ax + B}{x - 1} + \\frac{Cx + D}{x + 1}',
+        mistake: 'pf-linear-over-repeated-linear',
+        why: 'Each linear factor takes a constant numerator, not a linear one. The long division of the improper fraction was also skipped.',
       },
     ],
     correct: 0,
@@ -662,16 +662,16 @@ export const flash: FlashItem[] = [
     options: [
       { latex: 'A = 1,\\quad B = -2,\\quad C = -2', expr: '[1, -2, -2]' },
       {
-        latex: 'A = 2,\\quad B = -3,\\quad C = -1',
-        expr: '[2, -3, -1]',
+        latex: 'A = 2,\\quad B = 2,\\quad C = -2',
+        expr: '[2, 2, -2]',
         mistake: 'pf-coefficient-wrong',
-        why: 'At x = 1: 3 − 1 = 2 = A(1 + 1), so A = 1. Keeping A = 2 (the 2 not divided out) then forces C = A − 3 = −1 and B = −1 − A = −3.',
+        why: 'At x = 1: 3 − 1 = 2 = A(1 + 1), so A = 1. The 2 was not divided out (A = 2), and B = +2 comes from the sign slip in the x² terms.',
       },
       {
-        latex: 'A = 1,\\quad B = -2,\\quad C = 2',
-        expr: '[1, -2, 2]',
+        latex: 'A = 1,\\quad B = 2,\\quad C = 2',
+        expr: '[1, 2, 2]',
         mistake: 'sign-error',
-        why: 'At x = 0: 3 = A(1) + C(0 − 1) = A − C, so C = A − 3 = −2. Dropping the sign of (0 − 1) gives C = +2.',
+        why: 'At x = 0: 3 = A − C, so C = A − 3 = −2. Dropping the sign of (0 − 1) gives C = +2, on top of the sign slip that makes B = +2.',
       },
       {
         latex: 'A = 1,\\quad B = 0,\\quad C = -2',
@@ -740,10 +740,10 @@ export const flash: FlashItem[] = [
     options: [
       { latex: '\\frac{1}{x} + \\frac{x + 1}{x^2 + 4}', expr: '1/x + (x + 1)/(x^2 + 4)' },
       {
-        latex: '\\frac{4}{x} + \\frac{1 - 2x}{x^2 + 4}',
-        expr: '4/x + (1 - 2*x)/(x^2 + 4)',
+        latex: '\\frac{4}{x} + \\frac{4 - 2x}{x^2 + 4}',
+        expr: '4/x + (4 - 2*x)/(x^2 + 4)',
         mistake: 'pf-coefficient-wrong',
-        why: 'x = 0 gives 4 = 4A, so A = 1. Keeping A = 4 then forces B = 2 − A = −2 from the x² terms.',
+        why: 'x = 0 gives 4 = 4A, so A = 1. Keeping A = 4 forces B = 2 − A = −2 from the x² terms, and the constant 4 was also matched to C.',
       },
       {
         latex: '\\frac{1}{x} + \\frac{x + 4}{x^2 + 4}',
@@ -752,10 +752,10 @@ export const flash: FlashItem[] = [
         why: 'The constant 4 of the numerator was matched to C, but it is already used up by 4A. The x terms give C = 1.',
       },
       {
-        latex: '\\frac{1}{x} + \\frac{1}{x^2 + 4}',
-        expr: '1/x + 1/(x^2 + 4)',
+        latex: '\\frac{1}{x} + \\frac{4}{x^2 + 4}',
+        expr: '1/x + 4/(x^2 + 4)',
         mistake: 'pf-constant-over-quadratic',
-        why: 'With only a constant B over x² + 4 the equations cannot all hold; reading B = 1 off the x terms gives a sum that is not the fraction.',
+        why: 'Only a constant numerator was put over x² + 4 (the 4 of the original numerator); the x² and x terms need the linear numerator x + 1.',
       },
       {
         latex: '\\frac{1}{x} + \\frac{x}{x^2 + 4}',
@@ -778,10 +778,10 @@ export const flash: FlashItem[] = [
     options: [
       { latex: '-\\frac{3}{x} + \\frac{3}{x - 1} + \\frac{1}{x + 1}', expr: '-3/x + 3/(x - 1) + 1/(x + 1)' },
       {
-        latex: '\\frac{3}{x} + \\frac{6}{x - 1} + \\frac{2}{x + 1}',
-        expr: '3/x + 6/(x - 1) + 2/(x + 1)',
+        latex: '\\frac{3}{x} + \\frac{6}{x - 1} + \\frac{1}{x + 1}',
+        expr: '3/x + 6/(x - 1) + 1/(x + 1)',
         mistake: 'pf-coefficient-wrong',
-        why: 'These are just the numerator values at the roots (3, 6, 2). Each must still be divided by the other factors there: −1, 2 and 2.',
+        why: 'At x = 1 the numerator is 6 and the other factors give 1 · 2 = 2, so B = 3. The 2 was not divided out; the sign of A was also lost.',
       },
       {
         latex: '\\frac{3}{x} + \\frac{3}{x - 1} + \\frac{1}{x + 1}',
@@ -790,16 +790,16 @@ export const flash: FlashItem[] = [
         why: 'At x = 0 the other factors give (0 − 1)(0 + 1) = −1, so 3 = −A and A = −3. That sign was lost.',
       },
       {
-        latex: '-\\frac{3}{x} + \\frac{3}{x - 1} - \\frac{1}{x + 1}',
-        expr: '-3/x + 3/(x - 1) - 1/(x + 1)',
+        latex: '\\frac{3}{x} + \\frac{3}{x - 1} - \\frac{1}{x + 1}',
+        expr: '3/x + 3/(x - 1) - 1/(x + 1)',
         mistake: 'sign-error',
-        why: 'At x = −1 the other factors give (−1)(−1 − 1) = +2, so 2 = 2C and C = 1. The product was taken as −2.',
+        why: 'At x = −1 the other factors give (−1)(−1 − 1) = +2, so 2 = 2C and C = 1. The product was taken as −2; the sign of A was also lost.',
       },
       {
-        latex: '-\\frac{3}{x} + \\frac{1}{x - 1} + \\frac{3}{x + 1}',
-        expr: '-3/x + 1/(x - 1) + 3/(x + 1)',
+        latex: '\\frac{3}{x} + \\frac{3}{x - 1} + \\frac{2}{x + 1}',
+        expr: '3/x + 3/(x - 1) + 2/(x + 1)',
         mistake: 'pf-coefficient-wrong',
-        why: 'The roots were matched to the wrong terms: x = 1 isolates the term over x − 1 (B = 3), and x = −1 the term over x + 1 (C = 1).',
+        why: 'At x = −1 the numerator is 2 and the other factors give (−1)(−2) = 2, so C = 1. The 2 was not divided out; the sign of A was also lost.',
       },
     ],
     correct: 0,
@@ -832,10 +832,10 @@ export const flash: FlashItem[] = [
         why: 'This multiplies by 2 instead of dividing: dx = du/2, not 2 du.',
       },
       {
-        latex: '\\frac{3}{2}\\ln(2x + 5) + C',
-        expr: '3/2*log(2*x + 5)',
+        latex: '3\\ln(2x + 5) + C',
+        expr: '3*log(2*x + 5)',
         mistake: 'abs-dropped',
-        why: 'ln(2x + 5) is undefined for x < −5/2, where the integrand still exists; the antiderivative needs ln|2x + 5|.',
+        why: 'ln(2x + 5) is undefined for x < −5/2, where the integrand still exists; the antiderivative needs ln|2x + 5|. The 1/2 was also dropped.',
       },
       {
         latex: '-\\frac{6}{(2x + 5)^2} + C',
@@ -1025,10 +1025,10 @@ export const flash: FlashItem[] = [
     options: [
       { latex: '\\ln|x - 1| - \\ln(x^2 + 1) - 2\\arctan x + C', expr: 'log(abs(x - 1)) - log(x^2 + 1) - 2*arctan(x)' },
       {
-        latex: '\\ln|x - 1| - 2\\ln(x^2 + 1) - 2\\arctan x + C',
-        expr: 'log(abs(x - 1)) - 2*log(x^2 + 1) - 2*arctan(x)',
+        latex: '\\ln|x - 1| - 2\\ln(x^2 + 1) + 2\\arctan x + C',
+        expr: 'log(abs(x - 1)) - 2*log(x^2 + 1) + 2*arctan(x)',
         mistake: 'du-constant-wrong',
-        why: 'With u = x² + 1, du = 2x dx is exactly the 2x on top, so −∫2x/(x² + 1) dx = −ln(x² + 1). The 2 was counted twice.',
+        why: 'With u = x² + 1, du = 2x dx is exactly the 2x on top, so −∫2x/(x² + 1) dx = −ln(x² + 1). The 2 was counted twice, and the arctan sign was also lost.',
       },
       {
         latex: '\\ln|x - 1| - \\ln(x^2 + 1) + 2\\arctan x + C',
@@ -1037,10 +1037,10 @@ export const flash: FlashItem[] = [
         why: '−(2x + 2)/(x² + 1) = −2x/(x² + 1) − 2/(x² + 1). The minus sign was given only to the first piece.',
       },
       {
-        latex: '\\ln|x - 1| - \\frac{1}{2}\\ln(x^2 + 1) - 2\\arctan x + C',
-        expr: 'log(abs(x - 1)) - 1/2*log(x^2 + 1) - 2*arctan(x)',
+        latex: '\\ln|x - 1| - \\frac{1}{2}\\ln(x^2 + 1) + 2\\arctan x + C',
+        expr: 'log(abs(x - 1)) - 1/2*log(x^2 + 1) + 2*arctan(x)',
         mistake: 'du-constant-wrong',
-        why: 'The 1/2 belongs to ∫x/(x² + 1) dx. Here the piece is 2x/(x² + 1), which is exactly du/u.',
+        why: 'The 1/2 belongs to ∫x/(x² + 1) dx. Here the piece is 2x/(x² + 1), which is exactly du/u. The arctan sign was also lost.',
       },
       {
         latex: '2\\ln|x - 1| - \\frac{3}{2}\\ln(x^2 + 1) - \\arctan x + C',
@@ -1110,28 +1110,22 @@ export const flash: FlashItem[] = [
         why: 'x = −2 gives −2 + 4 = 2 = B(−2), so B = −1. The sign of the −2 was lost.',
       },
       {
-        latex: '4\\ln|x| - \\ln|x + 2| + C',
-        expr: '4*log(abs(x)) - log(abs(x + 2))',
+        latex: '4\\ln|x| + \\ln|x + 2| + C',
+        expr: '4*log(abs(x)) + log(abs(x + 2))',
         mistake: 'pf-coefficient-wrong',
-        why: 'x = 0 gives 4 = A(0 + 2) = 2A, so A = 2. The 2 was not divided out.',
+        why: 'x = 0 gives 4 = A(0 + 2) = 2A, so A = 2. The 2 was not divided out; the sign of B was also lost.',
       },
       {
-        latex: '-\\ln|x| + 2\\ln|x + 2| + C',
-        expr: '-log(abs(x)) + 2*log(abs(x + 2))',
+        latex: '\\ln|x| + \\ln|x + 2| + C',
+        expr: 'log(abs(x)) + log(abs(x + 2))',
         mistake: 'pf-coefficient-wrong',
-        why: 'The coefficients were attached to the wrong factors: A = 2 belongs to x and B = −1 to x + 2.',
+        why: 'Matched only the x coefficients (1 = A + B) with A = B = 1 and ignored the constant equation 4 = 2A, which gives A = 2.',
       },
       {
         latex: '2\\ln|x| + 3\\ln|x + 2| + C',
         expr: '2*log(abs(x)) + 3*log(abs(x + 2))',
         mistake: 'pf-coefficient-wrong',
         why: 'B was found by plugging in x = 2 instead of the root x = −2 of the factor x + 2.',
-      },
-      {
-        latex: '-2\\ln|x| + 3\\ln|x - 2| + C',
-        expr: '-2*log(abs(x)) + 3*log(abs(x - 2))',
-        mistake: 'algebra-error',
-        why: 'x² + 2x was factored as x(x − 2); it is x(x + 2). The wrong factor then changes both coefficients.',
       },
     ],
     correct: 0,
@@ -1154,22 +1148,22 @@ export const flash: FlashItem[] = [
         why: 'x³ − x(x² + 1) = −x, so the remainder is −x. Its sign was lost, giving + x/(x² + 1).',
       },
       {
-        latex: '\\frac{x^2}{2} - \\ln(x^2 + 1) + C',
-        expr: 'x^2/2 - log(x^2 + 1)',
+        latex: '\\frac{x^2}{2} + \\ln(x^2 + 1) + C',
+        expr: 'x^2/2 + log(x^2 + 1)',
         mistake: 'du-constant-wrong',
-        why: 'With u = x² + 1, x dx = du/2, so ∫x/(x² + 1) dx = (1/2) ln(x² + 1). The 1/2 was dropped.',
+        why: 'With u = x² + 1, x dx = du/2, so ∫x/(x² + 1) dx = (1/2) ln(x² + 1). The 1/2 was dropped, and the remainder sign was also lost.',
       },
       {
-        latex: '\\frac{x^2}{2} - \\arctan x + C',
-        expr: 'x^2/2 - arctan(x)',
+        latex: '\\frac{x^2}{2} + \\arctan x + C',
+        expr: 'x^2/2 + arctan(x)',
         mistake: 'pf-division-wrong',
-        why: 'x(x² + 1) was multiplied out as x³ + 1, giving the remainder −1 instead of −x.',
+        why: 'x(x² + 1) was multiplied out as x³ + 1, giving the remainder −1 instead of −x. The remainder sign was also lost.',
       },
       {
-        latex: 'x^2 - \\frac{1}{2}\\ln(x^2 + 1) + C',
-        expr: 'x^2 - 1/2*log(x^2 + 1)',
+        latex: 'x^2 + \\frac{1}{2}\\ln(x^2 + 1) + C',
+        expr: 'x^2 + 1/2*log(x^2 + 1)',
         mistake: 'power-rule-int-coefficient',
-        why: '∫x dx = x²/2. The division by the new exponent 2 was skipped.',
+        why: '∫x dx = x²/2. The division by the new exponent 2 was skipped, and the remainder sign was also lost.',
       },
     ],
     correct: 0,

@@ -14,10 +14,10 @@ export const steps: StepProblem[] = [
       {
         prompt: 'What is the first thing to check?',
         options: [
-          { text: 'Is it proper? Yes: $\\deg 1 < \\deg 2$ — so factor the denominator next' },
+          { text: 'Is it proper? Yes: $\\deg 0 < \\deg 2$ — so factor the denominator next' },
           {
             text: 'Divide first: $x^{2} - 1$ into $1$',
-            mistake: 'pf-improper-not-divided',
+            mistake: 'technique-wrong',
             why: 'Long division is only needed for improper fractions, and this fraction is proper.',
           },
           {
@@ -62,7 +62,7 @@ export const steps: StepProblem[] = [
           },
           {
             text: '$\\dfrac{A}{x-1} + \\dfrac{Bx + C}{(x+1)^{2}}$',
-            mistake: 'pf-missing-repeated-power',
+            mistake: 'pf-linear-over-repeated-linear',
             why: 'Squared the factor x + 1, which is not repeated here, and also gave it a linear numerator.',
           },
         ],
@@ -91,7 +91,7 @@ export const steps: StepProblem[] = [
             latex: 'A = -\\frac{1}{2},\\quad B = -\\frac{1}{2}',
             expr: '[-1/2, -1/2]',
             mistake: 'sign-error',
-            why: 'Plugged x = 1 into the wrong factor and also mis-signed the x = −1 equation, so A comes out negative.',
+            why: 'Made a sign slip at x = 1: the equation 1 = 2A gives A = +1/2, not −1/2 (B = −1/2 is correct).',
           },
           {
             latex: 'A = 2,\\quad B = -2',
@@ -126,15 +126,15 @@ export const steps: StepProblem[] = [
             why: 'Dropped the coefficients 1/2 in front of each logarithm and also lost the minus sign on the second log.',
           },
           {
-            latex: '\\frac{1}{2}\\ln|x^{2}-1| + C',
-            expr: '1/2*log(abs(x^2-1)) + C',
-            mistake: 'ln-misapplied',
-            why: 'The integral of 1/(x² − 1) is not (1/2) ln|x² − 1|; that would need a numerator of x.',
+            latex: '\\ln|x-1| - \\ln|x+1| + C',
+            expr: 'log(abs(x-1)) - log(abs(x+1)) + C',
+            mistake: 'pf-coefficient-wrong',
+            why: 'Dropped the coefficients 1/2 in front of both logarithms; A = 1/2 and B = −1/2, not ±1.',
           },
           {
             latex: '-\\frac{1}{2(x-1)} + \\frac{1}{2(x+1)} + C',
             expr: '-1/(2*(x-1)) + 1/(2*(x+1)) + C',
-            mistake: 'pf-power-term-as-ln',
+            mistake: 'ln-misapplied',
             why: 'Used the power rule on first-power factors, which integrate to logarithms.',
           },
         ],
@@ -173,17 +173,17 @@ export const steps: StepProblem[] = [
           },
           {
             text: '$\\dfrac{Ax + B}{(x-1)(x+2)}$',
-            mistake: 'pf-constant-over-quadratic',
-            why: 'Put one numerator over the whole product and also made it linear, which cannot represent the fraction.',
+            mistake: 'pf-not-fully-factored',
+            why: 'Kept the two factors together over one denominator instead of giving each linear factor its own term.',
           },
           {
             text: 'Long division first, then $\\dfrac{Ax + B}{x-1} + \\dfrac{Cx + D}{x+2}$',
-            mistake: 'pf-improper-not-divided',
+            mistake: 'technique-wrong',
             why: 'Divided although degree 1 < degree 2 makes it proper, and also used linear numerators.',
           },
           {
             text: '$\\dfrac{A}{x-1} + \\dfrac{B}{x+2} + \\dfrac{C}{x^{2}+x-2}$',
-            mistake: 'pf-missing-repeated-power',
+            mistake: 'pf-not-fully-factored',
             why: 'Added an extra term for the quadratic, which is just the product of the two factors.',
           },
         ],
@@ -289,7 +289,7 @@ export const steps: StepProblem[] = [
           {
             latex: '-\\frac{2}{3(x-1)} - \\frac{13}{3(x+2)} + C',
             expr: '-2/(3*(x-1)) - 13/(3*(x+2)) + C',
-            mistake: 'pf-power-term-as-ln',
+            mistake: 'ln-misapplied',
             why: 'Used the power rule instead of the logarithm on first-power factors.',
           },
         ],
@@ -398,16 +398,16 @@ export const steps: StepProblem[] = [
             why: 'The x² coefficient gives −1 = A + B, so B = −2, not 2; C also had its sign flipped.',
           },
           {
-            latex: 'C = 3,\\quad B = -1',
-            expr: '[3, -1]',
+            latex: 'C = 3,\\quad B = -2',
+            expr: '[3, -2]',
             mistake: 'pf-coefficient-wrong',
             why: 'Forgot the A(x² + 1) contribution at x = 0, which is A = 1, and also flipped the sign of C.',
           },
           {
-            latex: 'C = -2,\\quad B = 0',
-            expr: '[-2, 0]',
-            mistake: 'pf-coefficient-wrong',
-            why: 'Compared the x coefficients only, which say C − B = 0 and so give B = C.',
+            latex: 'C = 2,\\quad B = 0',
+            expr: '[2, 0]',
+            mistake: 'sign-error',
+            why: 'Flipped the sign of C, and read the x² equation −1 = A + B as +1 = A + B, which gives B = 0.',
           },
         ],
         correct: 0,
@@ -425,13 +425,13 @@ export const steps: StepProblem[] = [
             why: 'The constant part 2/(x² + 1) is not a multiple of du, so it gives an arctan, not a log.',
           },
           {
-            text: '$x = \\tan\\theta$ for the whole term',
-            mistake: 'pf-ln-arctan-swapped',
-            why: 'The 2x part is a simple u-substitution; only the constant part needs an arctan.',
+            text: 'Split the denominator: $\\dfrac{2x+2}{x^{2}+1} = \\dfrac{2x}{x^{2}} + \\dfrac{2}{1}$',
+            mistake: 'algebra-error',
+            why: 'Split the fraction across the terms of the denominator, which is never valid',
           },
           {
             text: 'Complete the square first',
-            mistake: 'pf-square-not-completed',
+            mistake: 'technique-wrong',
             why: 'There is no x term, so x² + 1 is already a sum of squares.',
           },
           {
@@ -517,9 +517,9 @@ export const steps: StepProblem[] = [
             why: 'Tried to factor x² + 1, which is irreducible over the reals.',
           },
           {
-            text: 'Substitute $u = x^{2} + 1$ directly',
-            mistake: 'technique-wrong',
-            why: 'x³ dx is not a multiple of du = 2x dx without first dividing.',
+            text: 'Split the denominator: $\\dfrac{x^{3}}{x^{2}+1} = \\dfrac{x^{3}}{x^{2}} + \\dfrac{x^{3}}{1}$',
+            mistake: 'algebra-error',
+            why: 'Split the fraction across the terms of the denominator, which is never valid',
           },
           {
             text: 'Write $\\dfrac{A}{x^{2}+1} + \\dfrac{Bx}{x^{2}+1}$',
@@ -572,9 +572,9 @@ export const steps: StepProblem[] = [
         options: [
           { text: '$u = x^{2}+1$, $du = 2x\\,dx$: it becomes $\\frac{1}{2}\\int \\frac{du}{u}$' },
           {
-            text: '$x = \\tan\\theta$',
-            mistake: 'pf-ln-arctan-swapped',
-            why: 'The x on top makes this a u-substitution (a log), not an arctan.',
+            text: 'Cancel an $x$: $\\dfrac{x}{x^{2}+1} = \\dfrac{1}{x+1}$',
+            mistake: 'algebra-error',
+            why: 'Cancelled x against x² + 1, which is not a product',
           },
           {
             text: '$x = \\tan\\theta$, then partial fractions over $x^{2}+1$',
@@ -588,7 +588,7 @@ export const steps: StepProblem[] = [
           },
           {
             text: 'Power rule: $\\dfrac{x^{2}/2}{x^{3}/3 + x}$',
-            mistake: 'ln-misapplied',
+            mistake: 'product-rule-integral',
             why: 'There is no quotient rule for integrals; the numerator and denominator cannot be integrated separately.',
           },
         ],
@@ -730,8 +730,8 @@ export const steps: StepProblem[] = [
             why: 'The integral of (x + 1)^(−2) is −(x + 1)^(−1); the minus sign was lost.',
           },
           {
-            latex: '2\\ln|x+1| + \\ln|x+1|^{2} + C',
-            expr: '2*log(abs(x+1)) + log(abs(x+1))^2 + C',
+            latex: '2\\ln|x+1| + \\ln\\left((x+1)^{2}\\right) + C',
+            expr: '2*log(abs(x+1)) + log((x+1)^2) + C',
             mistake: 'pf-power-term-as-ln',
             why: 'The squared factor integrates by the power rule, not as a logarithm.',
           },
@@ -777,7 +777,7 @@ export const steps: StepProblem[] = [
           { text: 'Factor completely: $x^{2} + 2x = x(x+2)$' },
           {
             text: 'Complete the square: $(x+1)^{2} - 1$',
-            mistake: 'pf-square-not-completed',
+            mistake: 'technique-wrong',
             why: 'Completing the square is for irreducible quadratics; this one factors.',
           },
           {
@@ -787,7 +787,7 @@ export const steps: StepProblem[] = [
           },
           {
             text: 'Complete the square, then divide first',
-            mistake: 'pf-improper-not-divided',
+            mistake: 'technique-wrong',
             why: 'Completed the square instead of factoring and divided although the fraction is proper.',
           },
           {
@@ -807,7 +807,7 @@ export const steps: StepProblem[] = [
           { text: '$\\dfrac{A}{x} + \\dfrac{B}{x+2}$' },
           {
             text: '$\\dfrac{A}{x} + \\dfrac{B}{(x+2)^{2}}$',
-            mistake: 'pf-missing-repeated-power',
+            mistake: 'technique-wrong',
             why: 'Squared the factor x + 2, which is not repeated.',
           },
           {
@@ -857,7 +857,7 @@ export const steps: StepProblem[] = [
             latex: 'A = 1,\\quad B = 1',
             expr: '[1, 1]',
             mistake: 'pf-coefficient-wrong',
-            why: 'Matched the x coefficients only (1 = A + B) and guessed the split.',
+            why: 'Matched the x coefficients (1 = A + B) but ignored the constant term; 4 = 2A gives A = 2, not 1.',
           },
         ],
         correct: 0,
@@ -879,15 +879,15 @@ export const steps: StepProblem[] = [
             why: 'Lost the minus sign: B = −1, so the second log is subtracted.',
           },
           {
-            latex: '\\ln|x| + \\ln|x+2| + C',
-            expr: 'log(abs(x)) + log(abs(x+2)) + C',
+            latex: '\\ln|x| - \\ln|x+2| + C',
+            expr: 'log(abs(x)) - log(abs(x+2)) + C',
             mistake: 'pf-coefficient-wrong',
-            why: 'Dropped the coefficient of the first log (A = 2, not 1) and also lost the minus sign on the second.',
+            why: 'Dropped the coefficient of the first log: x = 0 gives 4 = 2A, so A = 2, not 1.',
           },
           {
             latex: '2\\ln|x| + \\dfrac{1}{2}\\ln|x+2| + C',
             expr: '2*log(abs(x)) + 1/2*log(abs(x+2)) + C',
-            mistake: 'pf-missing-1-over-a',
+            mistake: 'coefficient-mishandled',
             why: 'Added a 1/a factor that does not belong (the coefficient of x in x + 2 is 1) and lost the minus sign.',
           },
           {
@@ -1093,7 +1093,7 @@ export const steps: StepProblem[] = [
           },
           {
             text: 'Divide first',
-            mistake: 'pf-improper-not-divided',
+            mistake: 'technique-wrong',
             why: 'Divided although degree 1 < degree 2 means the fraction is proper.',
           },
         ],
@@ -1238,7 +1238,7 @@ export const steps: StepProblem[] = [
           { text: '$\\dfrac{A}{x} + \\dfrac{B}{x-1}$' },
           {
             text: '$\\dfrac{A}{x} + \\dfrac{B}{(x-1)^{2}}$',
-            mistake: 'pf-missing-repeated-power',
+            mistake: 'technique-wrong',
             why: 'Squared the factor x − 1, which is not repeated.',
           },
           {
@@ -1253,7 +1253,7 @@ export const steps: StepProblem[] = [
           },
           {
             text: 'Long division first',
-            mistake: 'pf-improper-not-divided',
+            mistake: 'technique-wrong',
             why: 'Divided although degree 0 < degree 2 means the fraction is already proper.',
           },
         ],
@@ -1270,7 +1270,7 @@ export const steps: StepProblem[] = [
             latex: 'A = 1,\\quad B = -1',
             expr: '[1, -1]',
             mistake: 'sign-error',
-            why: 'At x = 0 the equation 1 = −A gives A = −1, not +1.',
+            why: 'Flipped both signs: x = 0 gives 1 = −A, so A = −1, and x = 1 gives 1 = B, so B = +1.',
           },
           {
             latex: 'A = 1,\\quad B = 1',
@@ -1311,10 +1311,10 @@ export const steps: StepProblem[] = [
             why: 'Attached the signs to the wrong logs: A = −1 goes with 1/x.',
           },
           {
-            latex: '-\\ln|x-1| - \\ln|x| + C',
-            expr: '-log(abs(x-1)) - log(abs(x)) + C',
-            mistake: 'pf-coefficient-wrong',
-            why: 'Used +ln|x|, but A is negative; the sign of the ln|x − 1| term was also flipped.',
+            latex: '\\ln|x-1| + \\ln|x| + C',
+            expr: 'log(abs(x-1)) + log(abs(x)) + C',
+            mistake: 'sign-error',
+            why: 'Lost the minus sign on the ln|x| term: A = −1, so that log is subtracted.',
           },
           {
             latex: '-\\ln|x^{2}-x| + C',
@@ -1325,7 +1325,7 @@ export const steps: StepProblem[] = [
           {
             latex: '-\\dfrac{1}{x-1} + \\dfrac{1}{x} + C',
             expr: '-1/(x-1) + 1/x + C',
-            mistake: 'pf-power-term-as-ln',
+            mistake: 'ln-misapplied',
             why: 'Used the power rule; first-power factors give logarithms.',
           },
         ],
@@ -1360,7 +1360,7 @@ export const steps: StepProblem[] = [
             latex: '\\ln\\frac{1}{2}',
             expr: 'log(1/2)',
             mistake: 'ftc-not-subtracted',
-            why: 'Only F(2) = ln(1/2) was computed, and with the wrong sign.',
+            why: 'Only F(2) = ln(1/2) was computed; F(4) was never used and nothing was subtracted.',
           },
         ],
         correct: 0,
