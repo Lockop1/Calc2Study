@@ -85,7 +85,11 @@ Spec for topics 10–14 (condensed from the course):
   Limit Comparison L = lim aₙ/bₙ: 0 < L < ∞ ⇒ same behaviour; L = 0 and Σbₙ converges ⇒ Σaₙ
   converges; L = ∞ and Σbₙ diverges ⇒ Σaₙ diverges; otherwise inconclusive; pick bₙ from the dominant
   terms. Examples: ln n/n vs 1/n (L = ∞ ⇒ diverges); ln n/n² vs 1/n^{3/2} (L = 0 ⇒ converges);
-  1/(√n ln n) defeats LCT → integral test with u = ln x. Flowchart: divergence test → Sₙ findable
+  1/(n ln n) defeats LCT (L = 0 against the divergent 1/n, L = ∞ against any convergent p-series)
+  → integral test with u = ln x (diverges). (The session brief wrote this example as 1/(√n ln n);
+  that series is settled by LCT with 1/n (L = ∞, diverges) and its integral has no elementary
+  antiderivative, so the intended example is the standard 1/(n ln n) — logged in
+  VERIFICATION_LOG.md.) Flowchart: divergence test → Sₙ findable
   (geometric/telescoping)? → p-series? → positive terms: integral / direct / limit comparison.
 
 Course conventions to respect: trig substitution is written `ax = b sin(θ)`, `ax = b tan(θ)`,

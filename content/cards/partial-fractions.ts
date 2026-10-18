@@ -13,9 +13,10 @@ export const partialFractionCards: Card[] = [
       latex:
         '\\begin{array}{l}' +
         '\\text{1. Proper? } (\\deg p < \\deg s) \\\\ ' +
-        '\\text{2. If not, long division: } \\frac{p}{s} = q + \\frac{r}{s} \\\\ ' +
+        '\\text{2. If not, long division:} \\\\ ' +
+        '\\qquad \\dfrac{p}{s} = q + \\dfrac{r}{s} \\\\ ' +
         '\\text{3. Factor } s \\text{ completely} \\\\ ' +
-        '\\text{4. Write the decomposition form} \\\\ ' +
+        '\\text{4. Write the decomposition} \\\\ ' +
         '\\text{5. Solve for the coefficients} \\\\ ' +
         '\\text{6. Integrate each term}' +
         '\\end{array}',
@@ -65,6 +66,7 @@ export const partialFractionCards: Card[] = [
     front: { text: 'Decomposition terms for a repeated linear factor $(ax + b)^n$?' },
     back: {
       latex: '\\begin{aligned}&\\frac{A_1}{ax + b} + \\frac{A_2}{(ax + b)^2} \\\\ &+ \\cdots + \\frac{A_n}{(ax + b)^n}\\end{aligned}',
+      also: '\\displaystyle\\sum_{k=1}^{n} \\frac{A_k}{(ax + b)^k}',
     },
     check: { kind: 'none', reason: 'decomposition form (one term per power; the constants are solved for in each problem)' },
   },
@@ -85,9 +87,10 @@ export const partialFractionCards: Card[] = [
     front: { text: 'Decomposition terms for a repeated irreducible quadratic $(ax^2 + bx + c)^n$?' },
     back: {
       latex:
-        '\\begin{aligned}&\\frac{A_1x + B_1}{ax^2 + bx + c} + \\frac{A_2x + B_2}{(ax^2 + bx + c)^2} \\\\ ' +
+        '\\begin{aligned}&\\frac{A_1x + B_1}{ax^2 + bx + c} \\\\ ' +
+        '&+ \\frac{A_2x + B_2}{(ax^2 + bx + c)^2} \\\\ ' +
         '&+ \\cdots + \\frac{A_nx + B_n}{(ax^2 + bx + c)^n}\\end{aligned}',
-      also: '\\sum_{k=1}^{n} \\frac{A_kx + B_k}{(ax^2 + bx + c)^k}',
+      also: '\\displaystyle\\sum_{k=1}^{n} \\frac{A_kx + B_k}{(ax^2 + bx + c)^k}',
     },
     check: { kind: 'none', reason: 'decomposition form (one term for each power k = 1, ..., n)' },
   },
@@ -102,9 +105,9 @@ export const partialFractionCards: Card[] = [
     back: {
       latex:
         '\\begin{array}{l}' +
-        '\\text{1. plug in the roots of the linear factors} \\\\ ' +
-        '\\text{2. then plug in } x = 0 \\\\ ' +
-        '\\text{3. equate the remaining coefficients}' +
+        'x = \\text{roots of linear factors} \\\\ ' +
+        '\\text{then } x = 0 \\\\ ' +
+        '\\text{then equate coefficients}' +
         '\\end{array}',
     },
     check: { kind: 'none', reason: 'procedure (the order of substitutions), not a formula' },
@@ -141,12 +144,13 @@ export const partialFractionCards: Card[] = [
     category: 'Partial Fractions',
     section: 'partial-fractions',
     kind: 'antiderivative',
-    front: { text: 'Repeated linear term, $n \\ge 2$:', latex: '\\frac{A}{(ax+b)^n}' },
+    // the braces keep KaTeX from breaking the line after the relation sign
+    front: { text: 'Repeated linear term, ${n \\ge 2}$:', latex: '\\frac{A}{(ax+b)^n}' },
     back: { latex: '-\\frac{A}{a(n-1)(ax+b)^{n-1}} + C', expr: '-A/(a*(n-1)*(a*x+b)^(n-1)) + C' },
     check: { kind: 'antiderivative', integrand: 'A/(a*x+b)^n' },
     domain: { n: [2, 4] },
   },
-  // Both signs of x are sampled; k > 0.
+  // The B part of the split (with B = 1). Both signs of x are sampled; k > 0.
   {
     id: 'card-partial-fractions-12',
     category: 'Partial Fractions',
@@ -157,19 +161,21 @@ export const partialFractionCards: Card[] = [
     check: { kind: 'antiderivative', integrand: '1/(x^2 + k^2)' },
     domain: { x: [-2, 2], k: [0.5, 2] },
   },
-  // Ax part: u = x^2 + k^2 (no absolute value needed, x^2 + k^2 > 0); B part: the arctan card above.
+  // The Ax part of the split: u = x^2 + k^2, du = 2x dx (no absolute value needed, x^2 + k^2 > 0).
+  // The combined answer (A/2) ln(x^2 + k^2) + (B/k) arctan(x/k) + C is wider than a 390 px screen
+  // on one line, so the split is stated on the front and the arctan part is the card above.
   {
     id: 'card-partial-fractions-13',
     category: 'Partial Fractions',
     section: 'partial-fractions',
     kind: 'antiderivative',
-    front: { text: 'Split into the $Ax$ part and the $B$ part:', latex: '\\frac{Ax + B}{x^2 + k^2}' },
-    back: {
-      latex: '\\frac{A}{2}\\ln(x^2 + k^2) + \\frac{B}{k}\\arctan\\left(\\frac{x}{k}\\right) + C',
-      expr: 'A/2*log(x^2 + k^2) + B/k*arctan(x/k) + C',
+    front: {
+      text: 'Split $\\frac{Ax + B}{x^2 + k^2}$: the $B$ part gives an $\\arctan$. The $Ax$ part?',
+      latex: '\\frac{Ax}{x^2 + k^2}',
     },
-    check: { kind: 'antiderivative', integrand: '(A*x + B)/(x^2 + k^2)' },
-    domain: { x: [-2, 2], k: [0.5, 2], A: [-2, 2], B: [-2, 2] },
+    back: { latex: '\\frac{A}{2}\\ln(x^2 + k^2) + C', expr: 'A/2*log(x^2 + k^2) + C' },
+    check: { kind: 'antiderivative', integrand: 'A*x/(x^2 + k^2)' },
+    domain: { x: [-2, 2], k: [0.5, 2], A: [-2, 2] },
   },
   // When b is not 0: complete the square, then u = x + b/2 gives u^2 + k^2 with k^2 = c - b^2/4 > 0
   // (positive exactly because b^2 - 4c < 0). The algebraic identity holds for all x, b, c.
@@ -178,7 +184,7 @@ export const partialFractionCards: Card[] = [
     category: 'Partial Fractions',
     section: 'partial-fractions',
     kind: 'identity',
-    front: { text: 'Irreducible, $b \\neq 0$: complete the square.', latex: 'x^2 + bx + c' },
+    front: { text: 'Irreducible with $b \\neq 0$: complete the square first.', latex: 'x^2 + bx + c' },
     back: {
       latex: '\\left(x + \\frac{b}{2}\\right)^2 + c - \\frac{b^2}{4}',
       also: '\\left(x + \\frac{b}{2}\\right)^2 + \\frac{4c - b^2}{4}',
