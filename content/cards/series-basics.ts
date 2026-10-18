@@ -52,15 +52,17 @@ export const seriesBasicsCards: Card[] = [
 
   // ── Geometric series ──
   {
+    // a != 0 on the front (math-verifier): with a = 0 every term is 0 and the series converges for every r,
+    // so "diverges if |r| >= 1" needs the hypothesis
     id: 'card-series-basics-05',
     category: 'Series Basics',
     section: 'series-basics',
     kind: 'formula',
-    front: { text: 'Geometric series ${\\sum_{n=1}^{\\infty} a r^{n-1}} = {a + ar + ar^2 + \\cdots}$: its sum? When does it converge?' },
+    front: { text: 'Geometric series ${\\sum_{n=1}^{\\infty} a r^{n-1}} = {a + ar + ar^2 + \\cdots}$ with $a \\ne 0$: its sum? When does it converge?' },
     back: {
       latex: '\\begin{aligned} &\\frac{a}{1-r} \\quad (a = \\text{first term}) \\\\ &\\text{if } |r| < 1;\\ \\text{diverges if } |r| \\ge 1 \\end{aligned}',
     },
-    check: { kind: 'none', reason: 'symbolic formula: geometric sum and its convergence condition (a, r general)' },
+    check: { kind: 'none', reason: 'symbolic formula: geometric sum and its convergence condition (a nonzero, r general)' },
   },
   {
     id: 'card-series-basics-06',
