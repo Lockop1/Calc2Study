@@ -107,7 +107,8 @@ export const partialFractionCards: Card[] = [
         '\\begin{array}{l}' +
         'x = \\text{roots of linear factors} \\\\ ' +
         '\\text{then } x = 0 \\\\ ' +
-        '\\text{then equate coefficients}' +
+        '\\text{then equate the remaining} \\\\ ' +
+        '\\qquad \\text{coefficients}' +
         '\\end{array}',
     },
     check: { kind: 'none', reason: 'procedure (the order of substitutions), not a formula' },

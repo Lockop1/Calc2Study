@@ -142,3 +142,36 @@ reference examples).
   (`domain` only; no answer changed; 54/54 still pass).
 - Formula cards (area, disk, washer, shell, both arc-length forms, IBP) have `check: none` and were
   verified by hand against the course conventions.
+
+## Session 3 — topics 10–14 (Lectures 8–12)
+
+No lecture PDFs exist for these topics; the spec block in CLAUDE.md ("Spec for topics 10–14") is the
+source of truth. Every content file below was written by one content-author instance and verified by
+a different math-verifier instance that re-derived every answer by hand (and, where noted, with an
+independent CAS/numeric sweep). Cards are not multiple choice, so no blind-option test applies to
+Phase A; Flash and Step content (Phases B–C) carry the medoid rate from `scripts/medoid-scan.ts`.
+
+### Spec corrections (orchestrator re-derived; recorded as resolved disagreements)
+
+- *Series tests, integral-test example.* The session brief wrote the class example as
+  "Σ 1/(√n ln n) defeats limit comparison → integral test with u = ln x". That series is settled by
+  limit comparison with 1/n (L = lim √n/ln n = ∞ and Σ1/n diverges ⇒ diverges), and the substitution
+  u = ln x turns its integral into ∫ e^{u/2}/u du, which has no elementary antiderivative. The
+  standard example with exactly the described behaviour is Σ 1/(n ln n): L = 0 against the divergent
+  1/n and L = ∞ against every convergent p-series (inconclusive both ways), while the integral test
+  with u = ln x gives ∫₂^∞ dx/(x ln x) = lim ln(ln t) − ln(ln 2) = ∞ ⇒ diverges. CLAUDE.md and the
+  briefs now use 1/(n ln n). (Raised by the series-tests card author; re-derived by the orchestrator.)
+- *Series basics, "insufficient information".* The brief said to answer "insufficient information"
+  whenever neither property applies. Convergent ± divergent is in fact always divergent (if
+  Σ(aₙ + bₙ) converged, Σbₙ = Σ(aₙ + bₙ) − Σaₙ would converge); only divergent + divergent is
+  undetermined. CLAUDE.md states this precisely. (Raised by the series-basics card author.)
+- *Checker.* A "converges" claim on a positive-term series whose partial-sum increments decay like the
+  harmonic series or slower (increment ratio over [5000, 10000] vs [1000, 5000] ≥ 0.42, where 1/n
+  gives ln 2/ln 5 ≈ 0.431 and 1/n^{1.05} gives 0.403) is now rejected (`series-claimed-convergent`).
+  Found by the series-basics author's mutation test (Σ1/n claimed convergent passed before).
+
+### Phase A — Cards (`content/cards/<topic>.ts`)
+
+| Deck | Cards | Author instance | Verifier instance | Automated checks | Verdict | Notes |
+|------|-------|-----------------|-------------------|------------------|---------|-------|
+| partial-fractions | 14 | content-author #a5c8a84 | math-verifier #a883334 | tests/cards.test.ts (all cards) | PASS WITH FIXES | card 08 wording → "equate the remaining coefficients" (spec wording); verifier re-derived every card by hand, with sympy (apart/integrate, symbolic n) and a 2000-point plain-JS sweep per card over wide domains (both signs of ax + b, k < 0, both sides of the pole); 40 mutations rejected, 7 equivalent forms accepted; 390 px render clean |

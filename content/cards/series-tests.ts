@@ -204,13 +204,14 @@ export const seriesTestsCards: Card[] = [
     front: { text: 'Which test settles this series, and why does limit comparison not?', latex: '\\sum_{n=2}^{\\infty} \\frac{1}{n \\ln n}' },
     back: {
       latex:
-        '\\begin{array}{c} \\textbf{diverges (integral test)} \\\\[6pt] ' +
-        '\\small \\tfrac{1}{x \\ln x} \\text{ positive, continuous,} \\\\ \\small \\text{decreasing on } [2, \\infty) \\\\[6pt] ' +
-        'u = \\ln x\\text{:}\\ \\displaystyle \\int_2^{\\infty} \\frac{dx}{x \\ln x} \\\\[2pt] ' +
-        '\\displaystyle = \\lim_{t \\to \\infty} \\big[\\ln(\\ln t) - \\ln(\\ln 2)\\big] = \\infty \\\\[10pt] ' +
-        '\\text{limit comparison: inconclusive} \\\\[2pt] ' +
-        '\\small L = 0 \\text{ against the divergent } \\textstyle\\sum \\tfrac{1}{n} \\\\ ' +
-        '\\small L = \\infty \\text{ against convergent } p\\text{-series} \\end{array}',
+        '\\begin{array}{c} \\textbf{diverges}\\text{ (integral test)} \\\\[4pt] ' +
+        '\\small \\tfrac{1}{x \\ln x} \\text{ positive, continuous,} \\\\ \\small \\text{decreasing on } [2, \\infty) \\\\[4pt] ' +
+        'u = \\ln x\\text{:}\\ \\displaystyle \\int_2^{\\infty} \\frac{dx}{x \\ln x} \\\\ ' +
+        '\\displaystyle = \\lim_{t \\to \\infty} \\big[\\ln(\\ln t) - \\ln(\\ln 2)\\big] \\\\ = \\infty \\\\[6pt] ' +
+        '\\text{limit comparison:} \\\\ ' +
+        '\\small L = 0 \\text{ vs divergent } \\textstyle\\sum \\tfrac{1}{n}\\text{,} \\\\ ' +
+        '\\small L = \\infty \\text{ vs convergent } \\textstyle\\sum \\tfrac{1}{n^p}\\text{:} \\\\ ' +
+        '\\small \\text{both inconclusive} \\end{array}',
     },
     check: { kind: 'series', term: '1/(n*log(n))', from: '2', converges: false },
   },
